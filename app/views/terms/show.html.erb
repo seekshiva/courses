@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Course:</b>
+  <%= link_to @term.course.subject_code + " - " + @term.course.name, @term.course %>
+</p>
+
+<p>
+  <b>Academic year:</b>
+  <%= "#{@term.academic_year}-#{@term.academic_year+1}" %>
+</p>
+
+<p>
+  <b>Semester:</b>
+  <%= @term.semester %>
+</p>
+
+
+<%= link_to 'Edit', edit_term_path(@term) %> |
+<%= link_to 'Back', terms_path %>

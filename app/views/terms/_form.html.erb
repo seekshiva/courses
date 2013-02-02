@@ -1,0 +1,39 @@
+<%= form_for(@term) do |f| %>
+  <% if @term.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@term.errors.count, "error") %> prohibited this term from being saved:</h2>
+
+      <ul>
+      <% @term.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <fieldset>
+    <legend><%= @legend %></legend>
+
+    <div class="field">
+      <%= f.label :course_id %><br />
+      
+      <% if @term.course_id.nil? %>
+      <%= select_tag(:term_course_id, options_for_select(@course_array)) %>
+      <% else %>
+      <%= select_tag(:term_course_id, options_for_select(@course_array, @term.course_id)) %>
+      <% end %>
+    </div>
+    <div class="field">
+      <%= f.label :academic_year %><br />
+      <%= f.number_field :academic_year %>
+    </div>
+    <div class="field">
+      <%= f.label :semester %><br />
+      <%= f.number_field :semester %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </fieldset>
+<% end %>

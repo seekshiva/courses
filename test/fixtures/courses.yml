@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subject_code: MyString
+  name: MyString
+  credits: 1
+
+two:
+  subject_code: MyString
+  name: MyString
+  credits: 1

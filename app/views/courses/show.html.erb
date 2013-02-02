@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= @course.subject_code %></strong> - <%= @course.name %>
+</p>
+<p>
+  Credits: <%= @course.credits %>
+</p>
+
+<p>
+  <b>History:</b>
+  <% if @course.term.empty? %>
+  <p>
+    This course has not been held so far. <%= link_to "Add new Term", new_term_path %>
+  </p>
+  <% else %>
+  <ul>
+    <% @course.term.each do |term| %>
+    <li><%= link_to "#{term.academic_year}-#{term.academic_year+1} - #{term.semester.ordinalize} semester", term %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

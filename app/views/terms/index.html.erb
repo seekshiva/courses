@@ -1,0 +1,28 @@
+<table class="table table-hover">
+  <caption><h3>Listing Terms</h3></caption>
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Academic year</th>
+      <th>Semester</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @terms.each do |term| %>
+    <tr>
+      <td><%= term.course.subject_code + " - " + term.course.name %></td>
+      <td><%= "#{term.academic_year}-#{term.academic_year+1}" %></td>
+      <td><%= term.semester %></td>
+      <td><%= link_to 'Show', term %></td>
+      <td><%= link_to 'Edit', edit_term_path(term) %></td>
+      <td><%= link_to 'Destroy', term, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Term', new_term_path %>

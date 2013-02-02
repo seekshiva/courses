@@ -1,0 +1,31 @@
+<table class="table">
+  <caption>
+    <h4>
+      Listing topics for course <%= link_to "#{@course.subject_code}-#{@course.name}", course_path(@course.id) %>
+    </h4>
+  </caption>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @topics.each do |topic| %>
+    <tr>
+      <td><%= topic.title %></td>
+      <td><%= topic.description %></td>
+      <td><%= link_to 'Show', course_topic_path(topic.course, topic) %></td>
+      <td><%= link_to 'Edit', edit_course_topic_path(topic.course, topic) %></td>
+      <td><%= link_to 'Destroy', url_for([topic.course, topic]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Topic', new_course_topic_path %>
