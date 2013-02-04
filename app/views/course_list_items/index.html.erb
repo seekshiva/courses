@@ -1,0 +1,30 @@
+<table class="table">
+  <caption><h3>Listing course_list_items</h3></caption>
+  <thead>
+    <tr>
+      <th>Department</th>
+      <th>Course</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @course_list_items.each do |course_list_item| %>
+    <tr>
+      <td>
+	<strong><%= course_list_item.department.short %></strong>
+	<%= course_list_item.department.name %></td>
+      <td>
+	<strong><%= course_list_item.course.subject_code %></strong>
+	<%= course_list_item.course.name %>
+      </td>
+      <td><%= link_to 'Show', course_list_item %></td>
+      <td><%= link_to 'Edit', edit_course_list_item_path(course_list_item) %></td>
+      <td><%= link_to 'Destroy', course_list_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Course list item', new_course_list_item_path %>

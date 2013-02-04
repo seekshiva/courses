@@ -32,6 +32,10 @@ class TopicsController < ApplicationController
   def new
     @topic = Topic.new
     @course = Course.find(params[:course_id])
+    @topic = @course.topics.build
+
+    logger.debug "################################################################ #{@course}"
+    logger.debug "################################################################ #{@topic}"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -73,7 +77,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
+        format.html { redirect_to [@topic.course, @topic], notice: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,5 +1,11 @@
 Courses::Application.routes.draw do
 
+  resources :course_list_items
+
+
+  resources :departments
+
+
   resources :courses do
     resources :topics
   end

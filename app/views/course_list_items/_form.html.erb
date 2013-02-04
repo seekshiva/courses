@@ -1,0 +1,25 @@
+<%= form_for(@course_list_item) do |f| %>
+  <% if @course_list_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course_list_item.errors.count, "error") %> prohibited this course_list_item from being saved:</h2>
+
+      <ul>
+      <% @course_list_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :department_id %><br />
+    <%= select_tag(:course_list_item_department_id, options_for_select(@departments_array)) %>
+  </div>
+  <div class="field">
+    <%= f.label :course_id %><br />
+    <%= select_tag(:course_list_item_course_id, options_for_select(@courses_array)) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

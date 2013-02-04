@@ -24,7 +24,9 @@ class TermsController < ApplicationController
   # GET /terms/new
   # GET /terms/new.json
   def new
-    @course_array = Course.all.map {|course| ["#{course.subject_code} - #{course.name}", course.id] }
+    @courses_array = Course.all.map do |course|
+      ["#{course.subject_code} - #{course.name}", course.id]
+    end
     @term = Term.new
     @legend = "New Term"
     
@@ -36,7 +38,9 @@ class TermsController < ApplicationController
 
   # GET /terms/1/edit
   def edit
-    @course_array = Course.all.map {|course| ["#{course.subject_code} - #{course.name}", course.id] }
+    @courses_array = Course.all.map do |course|
+      ["#{course.subject_code} - #{course.name}", course.id]
+    end
     @term = Term.find(params[:id])
     @legend = "Editing Term"
 

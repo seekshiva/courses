@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= @department.name %>
+  <strong>(<%= @department.short %>)</strong>
+</p>
+
+<p>
+  <b>Hod:</b>
+  <%= @department.hod %>
+</p>
+
+<p>
+  <b>Courses:</b>
+  <% if @department.courses.length==0 %>
+  No course found for this department.
+  <% else %>
+  <ul>
+    <% @department.courses.each do |course| %>
+    <li>
+      <%= course.subject_code %>
+      <%= course.name %>
+    </li>
+    <% end %>
+  </ul>
+  <% end %>
+</p>
+
+
+
+
+<%= form_for(@course_list_item) do |f| %>
+  <% if @course_list_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course_list_item.errors.count, "error") %> prohibited this course_list_item from being saved:</h2>
+
+      <ul>
+      <% @course_list_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :department_id, :value => @department.id %>
+
+    <%= f.label :add_new_course %>
+    <%= f.select(:course_id, options_for_select(@courses_array)) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_department_path(@department) %> |
+<%= link_to 'Back', departments_path %>

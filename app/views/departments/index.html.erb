@@ -1,0 +1,34 @@
+<table class="table">
+  <caption><h3>Listing Departments</h3></caption>
+  <thead>
+    <tr>
+      <th>Short</th>
+      <th>Name</th>
+      <th>Hod</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @departments.length == 0 %>
+    <tr>
+      <td colspan="6">
+	No was department found in the database. Click <%= link_to "here", new_department_path %> to add new department.
+      </td>
+    </tr>
+    <% else %>
+    <% @departments.each do |department| %>
+    <tr>
+      <td><strong>(<%= department.short %>)</strong> <%= department.name %></td>
+      <td><%= department.hod %></td>
+      <td><%= link_to 'Show', department %></td>
+      <td><%= link_to 'Edit', edit_department_path(department) %></td>
+      <td><%= link_to 'Destroy', department, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Department', new_department_path %>

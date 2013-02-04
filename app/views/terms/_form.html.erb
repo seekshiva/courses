@@ -19,9 +19,9 @@
       <%= f.label :course_id %><br />
       
       <% if @term.course_id.nil? %>
-      <%= select_tag(:term_course_id, options_for_select(@course_array)) %>
+      <%= select_tag(:term_course_id, options_for_select(@courses_array)) %>
       <% else %>
-      <%= select_tag(:term_course_id, options_for_select(@course_array, @term.course_id)) %>
+      <%= select_tag(:term_course_id, options_for_select(@courses_array, @term.course_id)) %>
       <% end %>
     </div>
     <div class="field">
