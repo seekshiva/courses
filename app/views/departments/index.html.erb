@@ -2,27 +2,27 @@
   <caption><h3>Listing Departments</h3></caption>
   <thead>
     <tr>
-      <th>Short</th>
       <th>Name</th>
       <th>Hod</th>
-      <th colspan="3">Actions</th>
+      <th>Courses</th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% if @departments.length == 0 %>
     <tr>
-      <td colspan="6">
+      <td colspan="5">
 	No was department found in the database. Click <%= link_to "here", new_department_path %> to add new department.
       </td>
     </tr>
     <% else %>
     <% @departments.each do |department| %>
     <tr>
-      <td><strong>(<%= department.short %>)</strong> <%= department.name %></td>
+      <td><%= link_to department.name, department, class: 'btn btn-small btn-link' %></td>
       <td><%= department.hod %></td>
-      <td><%= link_to 'Show', department %></td>
-      <td><%= link_to 'Edit', edit_department_path(department) %></td>
-      <td><%= link_to 'Destroy', department, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= department.courses.length %></td>
+      <td><%= link_to 'Edit', edit_department_path(department), class: 'btn btn-mini' %></td>
+      <td><%= link_to 'Destroy', department, class: 'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
     <% end %>
@@ -31,4 +31,4 @@
 
 <br />
 
-<%= link_to 'New Department', new_department_path %>
+<%= link_to 'New Department', new_department_path, class: 'btn btn-small btn-primary' %>

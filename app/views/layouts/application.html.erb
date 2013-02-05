@@ -2,11 +2,11 @@
 <html>
 <head>
   <title>Courses</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="navbar">
+  <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <div class="container">
 	<a class="brand" href="/">Courses</a>
@@ -14,14 +14,24 @@
 	  <li><a href="/departments">Departments</a></li>
 	  <li><a href="/courses">Courses</a></li>
 	  <li><a href="/terms">Terms</a></li>
+	  <li><a href="/course_list_items">CL Items</a></li>
 	</ul>
       </div>
     </div>
   </div>
-  <div class="container">
-    <%= yield %>
+  <div id="wrap">
+    <div class="container">
+      <%= yield %>
+    </div>
+    <div id="push"></div>
   </div>
-
+  <div id="footer">
+    <div class="container">
+      <p class="muted credit">
+	&copy; 2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
+      </p>
+    </div>
+  </div>
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>
 </body>

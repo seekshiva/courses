@@ -17,8 +17,8 @@ class DepartmentsController < ApplicationController
     @courses_array = Course.all.map do |course|
       ["#{course.subject_code} - #{course.name}", course.id]
     end
-    
     @course_list_item = CourseListItem.new
+    @currently_showing = nil
 
     respond_to do |format|
       format.html # show.html.erb

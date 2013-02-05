@@ -12,12 +12,11 @@
   <tbody>
     <% @terms.each do |term| %>
     <tr>
-      <td><%= term.course.subject_code + " - " + term.course.name %></td>
+      <td><%= link_to "#{term.course.subject_code} - #{term.course.name}", term, class: "btn btn-small btn-link" %></td>
       <td><%= "#{term.academic_year}-#{term.academic_year+1}" %></td>
       <td><%= term.semester %></td>
-      <td><%= link_to 'Show', term %></td>
-      <td><%= link_to 'Edit', edit_term_path(term) %></td>
-      <td><%= link_to 'Destroy', term, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Edit', edit_term_path(term), class: "btn btn-mini" %></td>
+      <td><%= link_to 'Destroy', term, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %></td>
     </tr>
     <% end %>
   </tbody>
@@ -25,4 +24,4 @@
 
 <br />
 
-<%= link_to 'New Term', new_term_path %>
+<%= link_to 'New Term', new_term_path, class: "btn btn-small btn-primary" %>

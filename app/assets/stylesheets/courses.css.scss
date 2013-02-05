@@ -2,14 +2,3 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.current {
-    &:before {
-	content: "current";
-	color: white;
-	background-color: red;
-	padding: 3px;
-	margin: 5px;
-	border-radius: 5px;
-	
-    }
-}

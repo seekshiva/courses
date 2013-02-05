@@ -14,6 +14,12 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id])
+    @new_term = Term.new
+    @courses_array = Course.all.map do |course|
+      ["#{course.subject_code} - #{course.name}", course.id]
+    end
+    @current_ac_year = Time.now.year.to_i
+    @current_ac_year -= Time.now.month<6 ? 1 : 0
 
     respond_to do |format|
       format.html # show.html.erb

@@ -59,14 +59,11 @@ class CourseListItemsController < ApplicationController
   # POST /course_list_items.json
   def create
     @course_list_item = CourseListItem.new(params[:course_list_item])
-    logger.debug "################################################"
-    logger.debug params
-    logger.debug params[:course_list_item]
-    logger.debug "################################################"
+    @department = @course_list_item.department
 
     respond_to do |format|
       if @course_list_item.save
-        format.html { redirect_to @course_list_item, notice: 'Course list item was successfully created.' }
+        format.html { redirect_to @department, notice: 'Course was successfully added to the department.' }
         format.json { render json: @course_list_item, status: :created, location: @course_list_item }
       else
         format.html { render action: "new" }
@@ -95,10 +92,11 @@ class CourseListItemsController < ApplicationController
   # DELETE /course_list_items/1.json
   def destroy
     @course_list_item = CourseListItem.find(params[:id])
+    @department = @course_list_item.department
     @course_list_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to course_list_items_url }
+      format.html { redirect_to @department, notice: 'Course was successfully removed from this department.' }
       format.json { head :no_content }
     end
   end
