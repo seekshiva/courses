@@ -4,6 +4,8 @@ class Course < ActiveRecord::Base
   has_many :topics, :dependent => :destroy
   has_many :course_list_items, :dependent => :destroy
   has_many :departments, :through => :course_list_items
+  
+  validates :name, :uniqueness => true
 
   def current_term
     current = nil
