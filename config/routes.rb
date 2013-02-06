@@ -1,5 +1,11 @@
 Courses::Application.routes.draw do
 
+  resources :book_authors
+
+
+  resources :authors
+
+
   resources :books
 
 
@@ -58,7 +64,7 @@ Courses::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'course#index'
+  root :to => 'departments#index'
 
   # See how all your routes lay out with "rake routes"
 

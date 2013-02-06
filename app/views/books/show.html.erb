@@ -12,29 +12,40 @@
       <h3>Book Details</h3>
     </caption>
   </thead>
-  <tbody>
+  <tbody>  
     <tr>
-      <th>Title:</th>
+      <th>Title</th>
       <td><%= @book.title %></td>
     </tr>
-
     <tr>
-      <th>Publisher:</th>
+      <th>Author(s)</th>
+      <td>
+	<% if @book.authors.length == 0 %>
+	No author found for this book.
+	<a href="<%= new_book_author_path %>" class="btn btn-mini btn-primary">Add new author</a>
+	<% else %>
+	<ul>
+	  <% @book.authors.each do |author| %>
+	  <li><%= link_to author.name, author %></li>
+	  <% end %>
+	</ul>
+	<% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>Publisher</th>
       <td><%= @book.publisher %></td>
     </tr>
-
     <tr>
-      <th>Edition:</th>
+      <th>Edition</th>
       <td><%= @book.edition %></td>
     </tr>
-
     <tr>
-      <th>Isbn:</th>
+      <th>ISBN</th>
       <td><%= @book.isbn %></td>
     </tr>
-
     <tr>
-      <th>Year:</th>
+      <th>Year</th>
       <td><%= @book.year %></td>
     </tr>
   </tbody>

@@ -1,0 +1,29 @@
+<table class="table table-hover">
+  <caption>
+    <h4>Listing book_authors</h4>
+  </caption>
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>Author</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @book_authors.each do |book_author| %>
+    <tr>
+      <td><%= link_to book_author.book.title, book_author.book %></td>
+      <td><%= link_to book_author.author.name, book_author.author %></td>
+      <td>
+	<%= link_to "Show", book_author, class: "btn btn-mini" %>
+	<%= link_to "Edit", edit_book_author_path(book_author), class: "btn btn-mini" %>
+	<%= link_to "Destroy", book_author, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Book author', new_book_author_path, class: "btn btn-small btn-primary" %>

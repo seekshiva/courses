@@ -5,6 +5,8 @@ class Course < ActiveRecord::Base
   has_many :course_list_items, :dependent => :destroy
   has_many :departments, :through => :course_list_items
   
+  default_scope order("subject_code ASC")
+  
   validates :name, :uniqueness => true
 
   def current_term

@@ -11,15 +11,21 @@
       <div class="container">
 	<a class="brand" href="/">Courses</a>
 	<ul class="nav">
-	  <li><a href="/departments">Departments</a></li>
+	  <li class="dropdown">
+	    <a href="/">
+	      Departments
+	    </a>
+	  </li>
 	  <li><a href="/courses">Courses</a></li>
 	  <li><a href="/books">Books</a></li>
+	  <li><a href="/authors">Authors</a></li>
 	</ul>
       </div>
     </div>
   </div>
   <div id="wrap">
     <div class="container">
+      <div class="s-push"></div>
       <%= yield %>
     </div>
     <div class="push"></div>
