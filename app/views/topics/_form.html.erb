@@ -11,15 +11,19 @@
     </div>
   <% end %>
   
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description, :rows => 4 %>
-  </div>
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
-  </div>
+  <fieldset>
+    <legend><%= @legend %></legend>
+    <div class="field">
+      <%= f.label :title %><br />
+      <%= f.text_field :title %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br />
+      <%= f.text_area :description, :rows => 4 %>
+    </div>
+    <div class="actions">
+      <%= f.submit class: 'btn btn-primary' %>
+      <%= link_to "Back", [@course, @topic], class: "btn btn-small" %>
+    </div>
+  </fieldset>
 <% end %>

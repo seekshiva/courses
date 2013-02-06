@@ -1,15 +1,12 @@
 Courses::Application.routes.draw do
 
-  resources :course_list_items
+  resources :books
 
 
-  resources :departments
-
-
+  resources :course_list_items, :departments, :terms
   resources :courses do
     resources :topics
   end
-  resources :terms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -15,6 +15,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
     @new_term = Term.new
+    @new_topic = @course.topics.build
     @courses_array = Course.all.map do |course|
       ["#{course.subject_code} - #{course.name}", course.id]
     end

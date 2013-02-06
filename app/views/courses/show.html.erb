@@ -23,7 +23,7 @@
   It is a <strong><%= @course.credits %></strong> credit course.
 </p>
 
-<p>
+<div>
   <strong>Course History:</strong>
   <% if @course.terms.empty? %>
   <p>
@@ -44,9 +44,34 @@
     <% end %>
   </ul>
   <% end %>
-</p>
+</div>
 
+<div class="push"></div>
+<table class="table table-hover">
+  <thead>
+    <caption><h4>
+	Topics
+    </h4></caption>
+  </thead>
+  <tbody>
+    <% if @course.topics.length == 1 %>
+    <tr><td>
+      No topic found for this course.
+    </td></tr>
+    <% else %>
+    <% @course.topics.each do |topic| %>
+    <% unless topic.new_record? %>
+    <tr><td>
+	<strong><%= link_to topic.title, [@course, topic], class: "" %></strong>
+	<p><%= topic.description %></p>
+    </td></tr>
+    <% end %>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
 
+<div class="push"></div>
 
 
 <div class="accordion" id="accordion2">
@@ -84,3 +109,37 @@
     </div>
   </div>
 </div>
+
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Add New Topic
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">
+
+	<%= form_for [@course, @new_topic] do |f| %>
+	<fieldset>
+	  <legend><%= @legend %></legend>
+	  <div class="field">
+	    <%= f.label :title %><br />
+	    <%= f.text_field :title %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :description %><br />
+	    <%= f.text_area :description, :rows => 4 %>
+	  </div>
+	  <div class="actions">
+	    <%= f.submit class: 'btn btn-primary' %>
+	  </div>
+	</fieldset>
+	<% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

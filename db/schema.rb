@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204204740) do
+ActiveRecord::Schema.define(:version => 20130205232301) do
+
+  create_table "books", :force => true do |t|
+    t.string   "title"
+    t.string   "publisher"
+    t.string   "edition"
+    t.string   "isbn"
+    t.integer  "year"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "course_list_items", :force => true do |t|
     t.integer  "department_id"

@@ -1,15 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @topic.title %>
-</p>
+<%= link_to "Edit", edit_course_topic_path(@course, @topic), class: "btn btn-small pull-right" %>
+<%= link_to "Back", course_topics_path, class: "btn btn-small pull-right" %>
+
+<dl>
+  <dt><%= @topic.title %></dt>
+  <dd><%= @topic.description %></dd>
+</dl>
 
 <p>
-  <b>Description:</b>
-  <%= @topic.description %>
+  <span class="label label-info"><%= @topic.course.subject_code %></span>
+  <%= link_to @topic.course.name, @topic.course, class: "btn btn-small btn-link" %>
 </p>
-
-
-<%= link_to 'Edit', edit_course_topic_path(@topic.course, @topic) %> |
-<%= link_to 'Back', course_topics_path %>

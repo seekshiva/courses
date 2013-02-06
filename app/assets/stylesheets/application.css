@@ -24,7 +24,10 @@ html, body {
 }
 
 
-#push,
+.s-push {
+    height: 20px;
+}
+.push,
 #footer {
     height: 60px;
 }
@@ -48,4 +51,8 @@ html, body {
 }
 .container .credit {
     margin: 20px 0;
+}
+
+.long-input {
+    width: 600px;
 }

@@ -2,24 +2,21 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    #begin
-      @course = Course.find(params[:course_id])
-      @topics = Topic.all
+    @course = Course.find(params[:course_id])
+    @topics = Topic.find_all_by_course_id(@course.id)
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @topics }
+    end
 
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @topics }
-      end
-    #rescue
-    #  redirect_to courses_path
-    #end
   end
 
   # GET /topics/1
   # GET /topics/1.json
   def show
-    @topic = Topic.find(params[:id])
     @course = Course.find(params[:course_id])
+    @topic = @course.topics.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -30,12 +27,9 @@ class TopicsController < ApplicationController
   # GET /topics/new
   # GET /topics/new.json
   def new
-    @topic = Topic.new
     @course = Course.find(params[:course_id])
     @topic = @course.topics.build
-
-    logger.debug "################################################################ #{@course}"
-    logger.debug "################################################################ #{@topic}"
+    @legend = "New topic"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,8 +39,9 @@ class TopicsController < ApplicationController
 
   # GET /topics/1/edit
   def edit
+    @legend = "Edit Topic"
     @course = Course.find(params[:course_id])
-    @topic = Topic.find(params[:id])
+    @topic = @course.topics.find(params[:id])
 
     respond_to do |format|
       format.html # edit.html.erb
@@ -57,11 +52,12 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(params[:topic])
+    @course = Course.find(params[:course_id])
+    @topic = @course.topics.build(params[:topic])
 
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
+        format.html { redirect_to [@course, @topic], notice: 'Topic was successfully created.' }
         format.json { render json: @topic, status: :created, location: @topic }
       else
         format.html { render action: "new" }
@@ -73,11 +69,12 @@ class TopicsController < ApplicationController
   # PUT /topics/1
   # PUT /topics/1.json
   def update
+    @course = Course.find(params[:course_id])
     @topic = Topic.find(params[:id])
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        format.html { redirect_to [@topic.course, @topic], notice: 'Topic was successfully updated.' }
+        format.html { redirect_to [@course, @topic], notice: 'Topic was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

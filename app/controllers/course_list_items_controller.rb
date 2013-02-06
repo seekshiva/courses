@@ -58,12 +58,19 @@ class CourseListItemsController < ApplicationController
   # POST /course_list_items
   # POST /course_list_items.json
   def create
-    @course_list_item = CourseListItem.new(params[:course_list_item])
-    @department = @course_list_item.department
+    @course_list_item = params[:course_list_item][:course_id].map do |cli|
+      CourseListItem.new(:course_id => cli, :department_id => params[:course_list_item][:department_id])
+    end
+    @department = @course_list_item[0].department
 
     respond_to do |format|
-      if @course_list_item.save
-        format.html { redirect_to @department, notice: 'Course was successfully added to the department.' }
+      ret = false
+      if @course_list_item.reduce do |ret, cli|
+          var = cli.save
+          ret ||= var
+          # logger.debug "########################################## saving " + cli.errors.to_s
+        end
+        format.html { redirect_to @department, notice: "Course".pluralize(@course_list_item.length) + " successfully added to the department." }
         format.json { render json: @course_list_item, status: :created, location: @course_list_item }
       else
         format.html { render action: "new" }

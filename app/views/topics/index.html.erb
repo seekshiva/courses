@@ -1,31 +1,42 @@
-<table class="table">
+<table class="table table-hover">
   <caption>
     <h4>
-      Listing topics for course <%= link_to "#{@course.subject_code}-#{@course.name}", course_path(@course.id) %>
+      Listing topics for 
+      <span class="label"><%= @course.subject_code %></span>
+      <%= link_to @course.name, @course, class: "btn btn-link" %>
     </h4>
   </caption>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Topic</th>
+      <th>Course</th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody>
+    <% if @topics.length == 0 %>
+    <tr><td colspan="4">
+	No topic found for this course.
+    </td></tr>
+    <% else %>
+
     <% @topics.each do |topic| %>
     <tr>
-      <td><%= topic.title %></td>
-      <td><%= topic.description %></td>
-      <td><%= link_to 'Show', course_topic_path(topic.course, topic) %></td>
-      <td><%= link_to 'Edit', edit_course_topic_path(topic.course, topic) %></td>
-      <td><%= link_to 'Destroy', url_for([topic.course, topic]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td>
+	<strong><%= link_to topic.title, course_topic_path(@course,  topic), class: "btn btn-small btn-link" %></strong>
+	<p><%= topic.description.truncate(40) %></p>
+      </td>
+      <td>
+	<%= "#{topic.course.subject_code} - #{topic.course.name} " %>
+      </td>
+      <td><%= link_to 'Edit', edit_course_topic_path(@course, topic), class: "btn btn-mini" %></td>
+      <td><%= link_to 'Destroy', [@course, topic], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %></td>
     </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Topic', new_course_topic_path %>
+<%= link_to 'New Topic', new_course_topic_path, class: "btn btn-small btn-primary" %>
