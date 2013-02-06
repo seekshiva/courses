@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<div class="pull-right">
+  <%= link_to 'Edit', edit_book_path(@book), class: "btn btn-small" %>
+  <%= link_to 'Back', books_path, class: "btn btn-small" %>
+</div>
+<div class="s-push"></div>
+
+<table class="table table-hover">
+  <thead>
+    <caption>
+      <h3>Book Details</h3>
+    </caption>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Title:</th>
+      <td><%= @book.title %></td>
+    </tr>
+
+    <tr>
+      <th>Publisher:</th>
+      <td><%= @book.publisher %></td>
+    </tr>
+
+    <tr>
+      <th>Edition:</th>
+      <td><%= @book.edition %></td>
+    </tr>
+
+    <tr>
+      <th>Isbn:</th>
+      <td><%= @book.isbn %></td>
+    </tr>
+
+    <tr>
+      <th>Year:</th>
+      <td><%= @book.year %></td>
+    </tr>
+  </tbody>
+</table>
+
