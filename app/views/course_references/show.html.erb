@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Course:</b>
+  <a href="<%= course_path(@course_reference.course) %>">
+    <%= @course_reference.course.subject_code %> -
+    <%= @course_reference.course.name %>
+  </a>
+</p>
+
+<p>
+  <b>Book:</b>
+  <%= link_to @course_reference.book.title, @course_reference.book %> by 
+  <% @course_reference.book.authors.each do |author| %>
+  <%= link_to author.name, author %>; 
+  <% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_reference_path(@course_reference) %> |
+<%= link_to 'Back', course_references_path %>

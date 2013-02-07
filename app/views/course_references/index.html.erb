@@ -1,0 +1,37 @@
+<h1>Listing course_references</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Book</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @course_references.each do |course_reference| %>
+    <tr>
+      <td>
+	<a href="<%= course_path(course_reference.course) %>">
+	  <%= course_reference.course.subject_code %> -
+	  <%= course_reference.course.name %>
+	</a>
+      </td>
+      <td>
+	<%= link_to course_reference.book.title, course_reference.book %> by <br />
+	<% course_reference.book.authors.each do |author| %>
+	<%= link_to author.name, author %>; 
+	<% end %>
+      <td>
+	<%= link_to 'Show', course_reference, class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_course_reference_path(course_reference), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', course_reference, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to "New Course reference", new_course_reference_path, class: "btn btn-small btn-primary" %>

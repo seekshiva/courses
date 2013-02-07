@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206001821) do
+ActiveRecord::Schema.define(:version => 20130206104815) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(:version => 20130206001821) do
 
   add_index "course_list_items", ["course_id"], :name => "index_course_list_items_on_course_id"
   add_index "course_list_items", ["department_id"], :name => "index_course_list_items_on_department_id"
+
+  create_table "course_references", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "book_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "course_references", ["book_id"], :name => "index_course_references_on_book_id"
+  add_index "course_references", ["course_id"], :name => "index_course_references_on_course_id"
 
   create_table "courses", :force => true do |t|
     t.string   "subject_code"

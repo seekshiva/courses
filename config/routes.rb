@@ -1,5 +1,8 @@
 Courses::Application.routes.draw do
 
+  resources :course_references
+
+
   resources :book_authors
 
 
