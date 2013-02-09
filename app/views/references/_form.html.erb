@@ -15,11 +15,19 @@
     <legend><%= @legend %></legend>
     <div class="field">
       <%= f.label :course_reference_id %>
+      <% if @new %>
       <%= f.select :course_reference_id, options_for_select(@course_reference_array) %>
+      <% else %>
+      <%= f.select :course_reference_id, options_for_select(@course_reference_array, @reference.course_reference.id) %>
+      <% end %>
     </div>
     <div class="field">
       <%= f.label :topic_id %>
+      <% if @new %>
       <%= f.select :topic_id, options_for_select(@topics_array) %>
+      <% else %>
+      <%= f.select :topic_id, options_for_select(@topics_array, @reference.topic.id) %>
+      <% end %>
     </div>
     <div class="field">
       <%= f.label :sections %>
@@ -27,7 +35,9 @@
     </div>
     <div class="actions">
       <%= f.submit class: "btn btn-small btn-primary" %>
-      <%= link_to 'Back', references_path, class: "btn btn-small" %>
+      <% if @reference.topic %>
+      <%= link_to 'Back', [@reference.topic.course, @reference.topic], class: "btn btn-small" %>
+      <% end %>
     </div>
   </fieldset>
 <% end %>

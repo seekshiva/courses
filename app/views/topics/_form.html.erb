@@ -18,12 +18,16 @@
       <%= f.text_field :title %>
     </div>
     <div class="field">
+      <%= f.label :ct_status %>
+      <%= f.select :ct_status, options_for_select([["CT1", "CT1"], ["CT2", "CT2"], ["Post CT", "Post CT"]]) %>
+    </div>
+    <div class="field">
       <%= f.label :description %>
       <%= f.text_area :description, :rows => 4 %>
     </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
-      <%= link_to "Back", [@course, @topic], class: "btn btn-small" %>
+      <%= link_to "Back", @course, class: "btn btn-small" %>
     </div>
   </fieldset>
 <% end %>

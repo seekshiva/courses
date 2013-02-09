@@ -24,7 +24,8 @@ class ReferencesController < ApplicationController
   # GET /references/new
   # GET /references/new.json
   def new
-    @legend = "New reference"
+    @new = true
+    @legend = "New Reference"
     @reference = Reference.new
     
     @course_reference_array = CourseReference.all.map do |cr|

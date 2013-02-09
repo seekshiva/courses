@@ -1,4 +1,6 @@
+<% if @back %>
 <p id="notice"><%= notice %></p>
+<% end %>
 
 <div class="pull-right">
   <%= link_to "Back", @course, class: "btn btn-small" if @back %>
@@ -13,7 +15,10 @@
 <% end %>
 
 <dl>
-  <dt><%= link_to @topic.title, [@course, @topic] %></dt>
+  <dt>
+    <%= link_to @topic.title, [@course, @topic] %>
+    <span class="label label-success"><%= @topic.ct_status %></span>
+  </dt>
   <dd>
     <%= @topic.description %><br /><bri />
   

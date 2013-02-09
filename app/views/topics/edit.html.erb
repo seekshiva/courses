@@ -1,1 +1,30 @@
 <%= render 'form' %>
+
+<h3>Topic Reference</h3>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>Sections Covered</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @ref_books.each do |book| %>
+      <tr>
+	<th><%= book.title %></th>
+	<td>
+	  <% @_ref = nil %>
+	  <% @topic.references.each do |ref| %>
+	  <% @_ref = ref if ref.book == book %>
+	  <% end %>
+	  <%= @_ref.sections || "--" %>
+	</td>
+	<td>
+	  <%= link_to "Edit Reference",  @_ref, class: "btn btn-mini pull-right" if @_ref %>
+	</td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+

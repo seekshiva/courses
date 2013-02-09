@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<div id="notice" class="alert alert-info">
+  <%= notice %>
+</div>
+<% end %>
 
 <div class="pull-right">
   <%= link_to 'Edit', edit_course_path(@course), class: 'btn btn-small' %>

@@ -12,7 +12,7 @@
         Edit Course Details
       </a>
     </div>
-    <div id="collapseOne" class="accordion-body collapse in">
+    <div id="collapseOne" class="accordion-body collapse">
       <div class="accordion-inner">
 	<%= render 'form' %>
       </div>
@@ -73,6 +73,10 @@
 	  <div class="field">
 	    <%= f.label :title %>
 	    <%= f.text_field :title %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :ct_status %>
+	    <%= f.select :ct_status, options_for_select([["CT1", "CT1"], ["CT2", "CT2"], ["Post CT", "Post CT"]]) %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :description %>
