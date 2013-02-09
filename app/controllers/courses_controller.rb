@@ -14,13 +14,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id])
-    @new_term = Term.new
-    @new_topic = @course.topics.build
-    @courses_array = Course.all.map do |course|
-      ["#{course.subject_code} - #{course.name}", course.id]
-    end
-    @current_ac_year = Time.now.year.to_i
-    @current_ac_year -= Time.now.month<6 ? 1 : 0
+    @ref_books = @course.books
+    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -31,6 +26,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.json
   def new
+    @legend = "New Course"
     @course = Course.new
 
     respond_to do |format|
@@ -41,7 +37,21 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @legend = "Edit Course"
     @course = Course.find(params[:id])
+
+    @new_term = Term.new
+    @new_topic = @course.topics.build
+    @current_ac_year = Time.now.year.to_i
+    @current_ac_year -= Time.now.month<6 ? 1 : 0
+    @courses_array = Course.all.map do |course|
+      ["#{course.subject_code} - #{course.name}", course.id]
+    end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @course }
+    end
   end
 
   # POST /courses

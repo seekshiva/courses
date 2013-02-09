@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206104815) do
+ActiveRecord::Schema.define(:version => 20130208030219) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,17 @@ ActiveRecord::Schema.define(:version => 20130206104815) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "references", :force => true do |t|
+    t.integer  "course_reference_id"
+    t.integer  "topic_id"
+    t.string   "sections"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
+  add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
   create_table "terms", :force => true do |t|
     t.integer  "course_id"

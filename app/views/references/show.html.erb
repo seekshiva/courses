@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Course reference:</b>
+  <%= link_to "#{@reference.course_reference.course.subject_code}", @reference.course_reference.course %> -
+  <%= link_to "#{@reference.course_reference.book.title}", @reference.course_reference.book %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= link_to "#{@reference.topic.course.subject_code}", @reference.topic.course %> -
+  <%= link_to "#{@reference.topic.title}", [@reference.topic.course, @reference.topic] %>
+</p>
+
+<p>
+  <b>Sections:</b>
+  <%= @reference.sections %>
+</p>
+
+
+<%= link_to 'Edit', edit_reference_path(@reference) %> |
+<%= link_to 'Back', references_path %>

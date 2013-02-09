@@ -3,6 +3,10 @@ class Term < ActiveRecord::Base
   has_many :departments
   attr_accessible :course_id, :academic_year, :semester
   
+  def year
+    return "#{self.academic_year}-#{self.academic_year+1}"
+  end
+  
   def is_current?
     current_academic_year = Time.now.year.to_i
     current_academic_year -= Time.now.month<6 ? 1 : 0

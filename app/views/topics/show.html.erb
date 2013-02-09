@@ -1,14 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to "Edit", edit_course_topic_path(@course, @topic), class: "btn btn-small pull-right" %>
-<%= link_to "Back", course_topics_path, class: "btn btn-small pull-right" %>
+<div class="pull-right">
+  <%= link_to "Back", @course, class: "btn btn-small" if @back %>
+  <%= link_to "Edit", edit_course_topic_path(@course, @topic), class: "btn btn-small" %>
+</div>
 
-<dl>
-  <dt><%= @topic.title %></dt>
-  <dd><%= @topic.description %></dd>
-</dl>
-
-<p>
+<% if @back %>
+<div>
   <span class="label label-info"><%= @topic.course.subject_code %></span>
   <%= link_to @topic.course.name, @topic.course, class: "btn btn-small btn-link" %>
-</p>
+</div>
+<% end %>
+
+<dl>
+  <dt><%= link_to @topic.title, [@course, @topic] %></dt>
+  <dd>
+    <%= @topic.description %><br /><bri />
+  
+    <table class="table-hover table-bordered">
+      <thead><tr>
+	  <% @ref_books.each do |book| %>
+	  <th><small><%= book.title %></small></th>
+	  <% end %>
+      </tr></thead>
+      <tbody><tr>
+	  <% @ref_books.each do |book| %>
+	  <td>
+	    <% @_sections = nil %>
+	    <% @topic.references.each do |ref| %>
+	    <% @_sections = ref.sections if ref.book == book %>
+	    <% end %>
+	    <%= @_sections || "--" %>
+	  </td>
+	  <% end %>
+      </tr></tbody>
+    </table>
+
+
+  </dd>
+</dl>
+

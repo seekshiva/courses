@@ -17,6 +17,8 @@ class TopicsController < ApplicationController
   def show
     @course = Course.find(params[:course_id])
     @topic = @course.topics.find(params[:id])
+    @ref_books = @course.books
+    @back = true
 
     respond_to do |format|
       format.html # show.html.erb
