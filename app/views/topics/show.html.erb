@@ -20,12 +20,12 @@
     <span class="label label-success"><%= @topic.ct_status %></span>
   </dt>
   <dd>
-    <%= @topic.description %><br /><bri />
+    <%= @topic.description %><br /><br />
   
     <table class="table-hover table-bordered">
       <thead><tr>
 	  <% @ref_books.each do |book| %>
-	  <th><small><%= book.title %></small></th>
+	  <th><small><%= truncate(book.title, :length => 30) %></small></th>
 	  <% end %>
       </tr></thead>
       <tbody><tr>
