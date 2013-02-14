@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @author.name %>
+</p>
+<p>
+  <b>Books Referenced:</b>
+  <% if @author.books.length == 0 %>
+  No author found for this book.
+  <a href="<%= new_book_author_path %>" class="btn btn-small btn-primary">Add new author</a>
+  <% else %>
+  <ul>
+    <% @author.books.each do |book| %>
+    <li><%= link_to book.title, [:admin, book] %></li>
+    <% end %>
+  </ul>
+  <% end %>
+
+</p>
+
+<%= link_to 'Edit', edit_admin_author_path(@author) %> |
+<%= link_to 'Back', admin_authors_path %>

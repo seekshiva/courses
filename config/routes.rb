@@ -1,23 +1,27 @@
 Courses::Application.routes.draw do
 
-  resources :references
+  namespace :admin do
+    resources :departments
+
+    resources :references
+
+    resources :course_references
 
 
-  resources :course_references
+    resources :book_authors
 
 
-  resources :book_authors
+    resources :authors
 
 
-  resources :authors
+    resources :books
 
 
-  resources :books
+    resources :course_list_items, :terms
+    resources :courses do
+      resources :topics
+    end
 
-
-  resources :course_list_items, :departments, :terms
-  resources :courses do
-    resources :topics
   end
 
   # The priority is based upon order of creation:
@@ -70,7 +74,7 @@ Courses::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'departments#index'
+  root :to => 'admin/departments#index'
 
   # See how all your routes lay out with "rake routes"
 
