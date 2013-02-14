@@ -18,9 +18,9 @@
       <td><%= reference.topic.course.subject_code %> - <%= reference.topic.title %></td>
       <td><%= reference.sections %></td>
       <td>
-	<%= link_to 'Show', reference, class: "btn btn-mini" %>
-	<%= link_to 'Edit', edit_reference_path(reference), class: "btn btn-mini" %>
-	<%= link_to 'Destroy', reference, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+	<%= link_to 'Show', [:admin, reference], class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_admin_reference_path(reference), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', [:admin, reference], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>
     <% end %>
@@ -29,4 +29,4 @@
 
 <br />
 
-<%= link_to "New Reference", new_reference_path, class: "btn btn-small btn-primary" %>
+<%= link_to "New Reference", new_admin_reference_path, class: "btn btn-small btn-primary" %>

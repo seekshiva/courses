@@ -47,7 +47,7 @@ class Admin::CourseReferencesController < ApplicationController
 
   # GET /course_references/1/edit
   def edit
-    @legend = "New Course Reference"
+    @legend = "Edit Course Reference"
     @course_reference = CourseReference.find(params[:id])
     @courses_array = Course.all.map do |course|
       ["#{course.subject_code} - #{course.name}", course.id]

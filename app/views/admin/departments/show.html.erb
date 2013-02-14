@@ -63,7 +63,7 @@
     <div id="collapseOne" class="accordion-body collapse">
       <div class="accordion-inner">
 
-	<%= form_for(@course_list_item) do |f| %>
+	<%= form_for([:admin, @course_list_item]) do |f| %>
 	<div class="field">
 	  <%= f.hidden_field :department_id, :value => @department.id %>
 

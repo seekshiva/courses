@@ -18,14 +18,14 @@
 	</a>
       </td>
       <td>
-	<%= link_to course_reference.book.title, course_reference.book %> by <br />
+	<%= link_to course_reference.book.title, [:admin, course_reference.book] %> by <br />
 	<% course_reference.book.authors.each do |author| %>
-	<%= link_to author.name, author %>; 
+	<%= link_to author.name, [:admin, author] %>; 
 	<% end %>
       <td>
-	<%= link_to 'Show', course_reference, class: "btn btn-mini" %>
-	<%= link_to 'Edit', edit_course_reference_path(course_reference), class: "btn btn-mini" %>
-	<%= link_to 'Destroy', course_reference, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+	<%= link_to 'Show', [:admin, course_reference], class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_admin_course_reference_path(course_reference), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', [:admin, course_reference], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>
     <% end %>
@@ -34,4 +34,4 @@
 
 <br />
 
-<%= link_to "New Course reference", new_course_reference_path, class: "btn btn-small btn-primary" %>
+<%= link_to "New Course reference", new_admin_course_reference_path, class: "btn btn-small btn-primary" %>

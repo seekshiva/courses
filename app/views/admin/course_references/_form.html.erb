@@ -1,4 +1,4 @@
-<%= form_for(@course_reference) do |f| %>
+<%= form_for([:admin, @course_reference]) do |f| %>
   <% if @course_reference.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course_reference.errors.count, "error") %> prohibited this course_reference from being saved:</h2>
@@ -10,17 +10,20 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :course_id %><br />
-    <%= f.select :course_id, options_for_select(@courses_array) %>
-  </div>
-  <div class="field">
-    <%= f.label :book_id %><br />
-    <%= f.select :book_id, options_for_select(@books_array) %>
-  </div>
-  <div class="actions">
-    <%= f.submit class: "btn btn-small btn-primary"%>
-    <%= link_to "Back", course_references_path, class: "btn btn-small" %>
-  </div>
+  
+  <fieldset>
+    <legend><%= @legend %></legend>
+    <div class="field">
+      <%= f.label :course_id %><br />
+      <%= f.select :course_id, options_for_select(@courses_array) %>
+    </div>
+    <div class="field">
+      <%= f.label :book_id %><br />
+      <%= f.select :book_id, options_for_select(@books_array) %>
+    </div>
+    <div class="actions">
+      <%= f.submit class: "btn btn-small btn-primary"%>
+      <%= link_to "Back", admin_course_references_path, class: "btn btn-small" %>
+    </div>
+  </fieldset>
 <% end %>

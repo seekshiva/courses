@@ -2,14 +2,14 @@
 
 <p>
   <b>Course reference:</b>
-  <%= link_to "#{@reference.course_reference.course.subject_code}", @reference.course_reference.course %> -
-  <%= link_to "#{@reference.course_reference.book.title}", @reference.course_reference.book %>
+  <%= link_to "#{@reference.course_reference.course.subject_code}", [:admin, @reference.course_reference.course] %> -
+  <%= link_to "#{@reference.course_reference.book.title}", [:admin, @reference.course_reference.book] %>
 </p>
 
 <p>
   <b>Topic:</b>
-  <%= link_to "#{@reference.topic.course.subject_code}", @reference.topic.course %> -
-  <%= link_to "#{@reference.topic.title}", [@reference.topic.course, @reference.topic] %>
+  <%= link_to "#{@reference.topic.course.subject_code}", [:admin, @reference.topic.course] %> -
+  <%= link_to "#{@reference.topic.title}", [:admin, @reference.topic.course, @reference.topic] %>
 </p>
 
 <p>
@@ -18,5 +18,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_reference_path(@reference) %> |
-<%= link_to 'Back', references_path %>
+<%= link_to 'Edit', edit_admin_reference_path(@reference) %> |
+<%= link_to 'Back', admin_references_path %>

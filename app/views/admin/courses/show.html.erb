@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="pull-right">
-  <%= link_to 'Edit', edit_course_path(@course), class: 'btn btn-small' %>
+  <%= link_to 'Edit', edit_admin_course_path(@course), class: 'btn btn-small' %>
 </div>
 
 <h3>
@@ -17,7 +17,7 @@
   <% if @course.departments.length > 0 %>
   <strong>(
     <% @course.departments.each do |department| %>
-    <%= link_to department.short, department %>
+    <%= link_to department.short, [:admin, department] %>
     <% end %>
     ).
   </strong>
@@ -47,10 +47,10 @@
     <tr>
       <td>
 	<small>
-	  <b><%= link_to book.title, book %> (<%= book.year %>)</b>
+	  <b><%= link_to book.title, [:admin, book] %> (<%= book.year %>)</b>
 	  by
 	  <% book.authors.each do |author| %>
-	  <%= link_to author.name, author %>;
+	  <%= link_to author.name, [:admin, author] %>;
 	  <% end %><br />
 	  
 	  <%= "#{book.publisher}, #{book.edition}" %> <b><i><%= "#{book.isbn}" %></i></b>
@@ -78,7 +78,7 @@
     <% @course.topics.each do |topic| %>
     <% @topic = topic %>
     <tr><td>
-	<%= render :template => "topics/show" %>
+	<%= render :template => "admin/topics/show" %>
 	
     </td></tr>
     <% end %>

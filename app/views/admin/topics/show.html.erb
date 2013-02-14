@@ -3,20 +3,20 @@
 <% end %>
 
 <div class="pull-right">
-  <%= link_to "Back", @course, class: "btn btn-small" if @back %>
-  <%= link_to "Edit", edit_course_topic_path(@course, @topic), class: "btn btn-small" %>
+  <%= link_to "Back", [:admin, @course], class: "btn btn-small" if @back %>
+  <%= link_to "Edit", edit_admin_course_topic_path(@course, @topic), class: "btn btn-small" %>
 </div>
 
 <% if @back %>
 <div>
   <span class="label label-info"><%= @topic.course.subject_code %></span>
-  <%= link_to @topic.course.name, @topic.course, class: "btn btn-small btn-link" %>
+  <%= link_to @topic.course.name, [:admin, @topic.course], class: "btn btn-small btn-link" %>
 </div>
 <% end %>
 
 <dl>
   <dt>
-    <%= link_to @topic.title, [@course, @topic] %>
+    <%= link_to @topic.title, [:admin, @course, @topic] %>
     <span class="label label-success"><%= @topic.ct_status %></span>
   </dt>
   <dd>

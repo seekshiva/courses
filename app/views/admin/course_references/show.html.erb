@@ -10,12 +10,12 @@
 
 <p>
   <b>Book:</b>
-  <%= link_to @course_reference.book.title, @course_reference.book %> by 
+  <%= link_to @course_reference.book.title, [:admin, @course_reference.book] %> by 
   <% @course_reference.book.authors.each do |author| %>
-  <%= link_to author.name, author %>; 
+  <%= link_to author.name, [:admin, author] %>; 
   <% end %>
 </p>
 
 
-<%= link_to 'Edit', edit_course_reference_path(@course_reference) %> |
-<%= link_to 'Back', course_references_path %>
+<%= link_to 'Edit', edit_admin_course_reference_path(@course_reference) %> |
+<%= link_to 'Back', admin_course_references_path %>

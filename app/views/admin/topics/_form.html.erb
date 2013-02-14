@@ -1,4 +1,4 @@
-<%= form_for [@course, @topic] do |f| %>
+<%= form_for [:admin, @course, @topic] do |f| %>
   <% if @topic.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
@@ -27,7 +27,7 @@
     </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
-      <%= link_to "Back", @course, class: "btn btn-small" %>
+      <%= link_to "Back", [:admin, @course], class: "btn btn-small" %>
     </div>
   </fieldset>
 <% end %>

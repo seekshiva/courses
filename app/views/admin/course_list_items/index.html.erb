@@ -17,9 +17,9 @@
 	<strong><%= course_list_item.course.subject_code %></strong>
 	<%= course_list_item.course.name %>
       </td>
-      <td><%= link_to 'Show', admin_course_list_item %></td>
+      <td><%= link_to 'Show', [:admin, course_list_item] %></td>
       <td><%= link_to 'Edit', edit_admin_course_list_item_path(course_list_item) %></td>
-      <td><%= link_to 'Destroy', admin_course_list_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Destroy', [:admin, course_list_item], method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
   </tbody>

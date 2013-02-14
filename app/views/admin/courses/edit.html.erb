@@ -31,7 +31,7 @@
     <div id="collapseTwo" class="accordion-body collapse">
       <div class="accordion-inner">
 
-	<%= form_for(@new_term) do |f| %>
+	<%= form_for([:admin, @new_term]) do |f| %>
 	<div class="field">
 	  <span term_course_id, options_for_select(@courses_array)) %>
 	    <%= f.label :course_id %>
@@ -67,7 +67,7 @@
     <div id="collapseThree" class="accordion-body collapse">
       <div class="accordion-inner">
 
-	<%= form_for [@course, @new_topic] do |f| %>
+	<%= form_for [:admin, @course, @new_topic] do |f| %>
 	<fieldset>
 	  <legend><%= @legend %></legend>
 	  <div class="field">

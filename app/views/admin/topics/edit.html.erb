@@ -21,7 +21,7 @@
 	  <%= @_ref.sections || "--" %>
 	</td>
 	<td>
-	  <%= link_to "Edit Reference",  @_ref, class: "btn btn-mini pull-right" if @_ref %>
+	  <%= link_to "Edit Reference",  [:admin, @_ref], class: "btn btn-mini pull-right" if @_ref %>
 	</td>
       </tr>
       <% end %>
