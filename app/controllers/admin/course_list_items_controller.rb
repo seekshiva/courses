@@ -1,4 +1,4 @@
-class Admin::CourseListItemsController < ApplicationController
+class Admin::CourseListItemsController < Admin::BaseControllerController
   # GET /course_list_items
   # GET /course_list_items.json
   def index

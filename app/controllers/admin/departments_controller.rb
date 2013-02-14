@@ -1,4 +1,4 @@
-class Admin::DepartmentsController < ApplicationController
+class Admin::DepartmentsController < Admin::BaseControllerController
   # GET /departments
   # GET /departments.json
   def index

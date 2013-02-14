@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <title>Courses</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+	<a class="brand" href="/">Courses</a>
+	<ul class="nav">
+	  <li><%= link_to "Departments", admin_departments_path %></li>
+	  <li><%= link_to "Courses", admin_courses_path %></li>
+	  <li><%= link_to "Books", admin_books_path %></li>
+	  <li><%= link_to "Authors", admin_authors_path %></li>
+	</ul>
+      </div>
+    </div>
+  </div>
+  <div id="wrap">
+    <div class="container">
+      <div class="s-push"></div>
+      <%= yield %>
+    </div>
+    <div class="push"></div>
+  </div>
+  <div id="footer">
+    <div class="container">
+      <p class="muted credit">
+	&copy; 2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
+      </p>
+    </div>
+  </div>
+  <%= javascript_include_tag "vendor" %>
+  <%= javascript_include_tag "application" %>
+</body>
+</html>

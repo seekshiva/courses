@@ -1,4 +1,4 @@
-class Admin::TermsController < ApplicationController
+class Admin::TermsController < Admin::BaseControllerController
   # GET /terms
   # GET /terms.json
   def index

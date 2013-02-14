@@ -1,4 +1,4 @@
-class Admin::BooksController < ApplicationController
+class Admin::BooksController < Admin::BaseControllerController
   # GET /books
   # GET /books.json
   def index
