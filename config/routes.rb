@@ -1,28 +1,24 @@
 Courses::Application.routes.draw do
 
+  get "home/index"
+
   namespace :admin do
     resources :departments
-
-    resources :references
-
-    resources :course_references
-
-
-    resources :book_authors
-
-
-    resources :authors
-
-
-    resources :books
-
-
-    resources :course_list_items, :terms
     resources :courses do
       resources :topics
     end
+    resources :course_list_items, :terms, :course_references
+    resources :books, :authors, :book_authors, :references
 
   end
+
+  resources :departments, :courses
+
+  match "admin" => "admin/departments#index"
+  match ":slug.json" => "#{:slug}s#index"
+  match ":slug" => "#{:slug}s#index"
+  #match ":slug" => "home#index"
+  match ":slug/*route" => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -74,7 +70,7 @@ Courses::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'departments#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
