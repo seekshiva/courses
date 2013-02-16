@@ -1,44 +1,4 @@
 <!doctype html>
 <html>
-<head>
-  <title>Courses</title>
-  <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="navbar navbar-static-top">
-    <div class="navbar-inner">
-      <div class="container">
-	<a class="brand" href="/">Courses</a>
-	<ul class="nav pull-right">
-	  <li class="dropdown">
-	    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	      My Courses
-	      <b class="caret"></b>
-	    </a>
-	    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-	      <li><a tabindex="-1">You need to be logged in<br />to view your courses.</a></li>
-	    </ul>
-	  </li>
-	</ul>
-      </div>
-    </div>
-  </div>
-  <div id="wrap">
-    <div class="container">
-      <div class="s-push"></div>
-      <%= yield %>
-    </div>
-    <div class="push"></div>
-  </div>
-  <div id="footer">
-    <div class="container">
-      <p class="muted credit">
-	&copy; 2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
-      </p>
-    </div>
-  </div>
-  <%= javascript_include_tag "vendor" %>
-  <%= javascript_include_tag "application" %>
-</body>
+  <%= yield %>
 </html>
