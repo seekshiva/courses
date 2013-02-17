@@ -35,33 +35,34 @@ jQuery ->
       @app = window.app ? {}
       @model = @app.DepartmentModel
 
-      @app.departments = @app.controller.getCollection("departments_collection")
-      @app.departments.bind "reset", @render, @
+      $.getJSON("/departments/"+options.id, @render)
 
-    render: =>
-      dept = @app.departments._byId[@options.id]
-      dept = {
-        id: dept.get("id")
-        short: dept.get("short")
-        name: dept.get("name")
-        hod: dept.get("hod")
-      }
-
+    render: (dept) =>
       $(@el).html @template
         dept: dept
 
-      return this
+      @
 
+  class CourseView extends Backbone.View
+    template: Handlebars.compile($("#course-template").html())
 
-  class Courses.Views.ShowView extends Backbone.View
-    template: JST["backbone/templates/departments/show"]
+    el: "#content"
 
-    render: ->
-      @$el.html(@template(@model.toJSON() ))
-      return this
+    initialize: (options) ->
+      @app = window.app ? {}
+      @model = @app.CourseModel
+
+      $.getJSON("/courses/"+options.id, @render)
+
+    render: (course) =>
+      $(@el).html @template
+        course: course
+
+      @
 
 
   @app = window.app ? {}
   @app.DepartmentsView = DepartmentsView
-  @app.DepartmentView = DepartmentView
+  @app.DepartmentView  = DepartmentView
+  @app.CourseView      = CourseView
 

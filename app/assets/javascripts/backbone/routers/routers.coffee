@@ -5,6 +5,7 @@ jQuery ->
       "": "index"
       "departments": "index"
       "departments/:id": "department"
+      "courses/:id": "course"
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
@@ -13,6 +14,11 @@ jQuery ->
     department: (id) ->
       console.log "id: " + id
       @department_view = new @app.DepartmentView(id: id)
+      @
+
+    course: (id) ->
+      console.log "course id: " + id
+      @course_view = new @app.CourseView(id: id)
       @
 
     initialize: (options) ->

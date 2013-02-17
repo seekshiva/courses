@@ -72,8 +72,42 @@
     <div>
       Headed by <strong>{{dept.hod}}</strong>
     </div>
+
+    <table class="table table-hover">
+      <thead>
+	<caption>
+	  <h3>Courses Offered</h3>
+	</caption>
+      </thead>
+      <tbody>
+	{{#each dept.course_list}}
+	<tr><th colspan="3">{{this.semester}}</th></tr>
+
+	{{#each this.courses}}
+	<tr>
+	  <td>
+	    <a href="#courses/{{this.id}}">
+	      {{this.subject_code}} - {{this.name}}
+	    </a>
+	  </td>
+	  <td>{{this.credits}}</td>
+	  <td>-</td>
+	</tr>
+	{{/each}}
+
+	{{/each}}
+      </tbody>
+    </table>
   </script>
 
+
+  <script type="text/template" id="course-template">
+    <h3>
+      <span class="label label-info">{{course.subject_code}}</span>
+      {{course.name}}
+    </h3>
+  </script>
+  
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>
 </body>
