@@ -1,5 +1,5 @@
 <table class="table table-hover">
-  <caption><h3>Listing Terms</h3></caption>
+  <caption><h4><%= @course.subject_code %> : History</h4></caption>
   <thead>
     <tr>
       <th>Course</th>
@@ -12,11 +12,11 @@
   <tbody>
     <% @terms.each do |term| %>
     <tr>
-      <td><%= link_to "#{term.course.subject_code} - #{term.course.name}", [:admin, term], class: "btn btn-small btn-link" %></td>
+      <td><%= link_to "#{term.course.subject_code} - #{term.course.name}", [:admin, @course, term], class: "btn btn-small btn-link" %></td>
       <td><%= "#{term.academic_year}-#{term.academic_year+1}" %></td>
       <td><%= term.semester %></td>
-      <td><%= link_to 'Edit', edit_admin_term_path(term), class: "btn btn-mini" %></td>
-      <td><%= link_to 'Destroy', [:admin, term], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %></td>
+      <td><%= link_to 'Edit', edit_admin_course_term_path(@course, term), class: "btn btn-mini" %></td>
+      <td><%= link_to 'Destroy', [:admin, @course, term], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %></td>
     </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br />
 
-<%= link_to 'New Term', new_admin_term_path, class: "btn btn-small btn-primary" %>
+<%= link_to 'New Term', new_admin_course_term_path, class: "btn btn-small btn-primary" %>

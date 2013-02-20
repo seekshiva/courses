@@ -13,7 +13,7 @@
   <%= @course.name %>
 </h3>
 <p>
-  This course is offered by <%= pluralize @course.departments.length, 'department' %>
+  This course is being offered by <%= pluralize @course.departments.length, 'department' %>
   <% if @course.departments.length > 0 %>
   <strong>(
     <% @course.departments.each do |department| %>
@@ -29,6 +29,7 @@
 <div>
   <% unless @course.current_term.nil? %>
   Classes for this course are being held right now for <%= @course.current_term.semester.ordinalize %> semester students in the academic year <%= @course.current_term.year %>.
+  Classes take place at <strong><%= @course.current_term.venue %></strong>.
   <% end %>
 </div>
 

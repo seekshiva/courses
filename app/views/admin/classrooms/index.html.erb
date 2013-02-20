@@ -1,0 +1,33 @@
+<h4>
+</h4>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>
+
+   <%= link_to @course.subject_code, [:admin, @course] %>
+  - List of Classes for <%= @course.current_term.semester.ordinalize %> semester (<%= "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}" %>)
+</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <% @classrooms.each do |classroom| %>
+    <tr>
+      <td>
+	<small><%= classroom.time %></small> on <small><%= classroom.date.strftime("%b %d") %></small> at <i><%= classroom.room %></i>
+	<div class="pull-right">
+	  <%= link_to 'Show', [:admin, @course, classroom], class: "btn btn-mini" %>
+	  <%= link_to 'Edit', edit_admin_course_classroom_path(@course, classroom), class: "btn btn-mini" %>
+	  <%= link_to 'Destroy', [:admin, @course, classroom], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+	</div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to "Add New Class", new_admin_course_classroom_path, class: "btn btn-small btn-primary" %>

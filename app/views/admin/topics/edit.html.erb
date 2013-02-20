@@ -16,9 +16,12 @@
 	<td>
 	  <% @_ref = nil %>
 	  <% @topic.references.each do |ref| %>
+	  <% if ref.book == book %>
 	  <% @_ref = ref if ref.book == book %>
-	  <% end %>
+	  <% else %>
 	  <%= @_ref.sections || "--" %>
+	  <% end %>
+	  <% end %>
 	</td>
 	<td>
 	  <%= link_to "Edit Reference",  [:admin, @_ref], class: "btn btn-mini pull-right" if @_ref %>

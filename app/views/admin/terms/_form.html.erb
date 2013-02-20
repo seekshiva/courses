@@ -1,4 +1,4 @@
-<%= form_for([:admin, @term]) do |f| %>
+<%= form_for([:admin, @course, @term]) do |f| %>
   <% if @term.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@term.errors.count, "error") %> prohibited this term from being saved:</h2>
@@ -16,25 +16,21 @@
     <legend><%= @legend %></legend>
 
     <div class="field">
-      <%= f.label :course_id %><br />
-      
-      <% if @term.course_id.nil? %>
-      <%= select_tag(:term_course_id, options_for_select(@courses_array)) %>
-      <% else %>
-      <%= select_tag(:term_course_id, options_for_select(@courses_array, @term.course_id)) %>
-      <% end %>
+      <%= f.label :course_id %>
+      <span class="input-xxlarge uneditable-input"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
+      <%= f.hidden_field :course_id, value: @course.id %>
     </div>
     <div class="field">
-      <%= f.label :academic_year %><br />
-      <%= f.number_field :academic_year %>
+      <%= f.label :academic_year %>
+      <%= f.number_field :academic_year, value: 0.year.from_now.year %>
     </div>
     <div class="field">
-      <%= f.label :semester %><br />
-      <%= f.number_field :semester %>
+      <%= f.label :semester %>
+      <%= f.select :semester, options_for_select(@options) %>
     </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
-      <%= link_to 'Back', admin_terms_path, class: "btn btn-small" %>
+      <%= link_to 'Back', admin_course_terms_path(@course), class: "btn btn-small" %>
     </div>
   </fieldset>
 <% end %>

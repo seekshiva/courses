@@ -5,9 +5,9 @@ Courses::Application.routes.draw do
   namespace :admin do
     resources :departments
     resources :courses do
-      resources :topics
+      resources :topics, :classrooms, :terms
     end
-    resources :course_list_items, :terms, :course_references
+    resources :course_list_items, :course_references
     resources :books, :authors, :book_authors, :references
 
   end

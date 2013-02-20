@@ -57,6 +57,7 @@ jQuery ->
     render: (course) =>
       $(@el).html @template
         course: course
+        plural: "s" if course.departments.length != 1
 
       @
 

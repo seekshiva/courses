@@ -1,0 +1,44 @@
+<% if @course.current_term.nil? %>
+This subject is not being taught this semester. You can only add classes to subjects that are being taught this semester. <a href="<%= admin_course_path(@course) %>">Go back</a>.
+<% else %>
+
+<%= form_for([:admin, @course, @classroom]) do |f| %>
+  <% if @classroom.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@classroom.errors.count, "error") %> prohibited this classroom from being saved:</h2>
+
+      <ul>
+      <% @classroom.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend><%= @legend %></legend>
+    <div class="field">
+      <%= f.label :term_id %>
+      <span class="input-xxlarge uneditable-input"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
+      <%= f.hidden_field :term_id, value: @course.current_term.id %>
+    </div>
+    <div class="field">
+      <%= f.label :date %>
+      <%= f.date_select :date %>
+    </div>
+    <div class="field">
+      <%= f.label :time %>
+      <%= f.select :time, options_for_select(@options, @opt_default) %>
+    </div>
+    <div class="field">
+      <%= f.label :room %>
+      <%= f.text_field :room, value: @course.current_term.venue %>
+    </div>
+    <div class="actions">
+      <%= f.submit class: "btn btn-primary", value: "Create Class" %>
+      <%= link_to 'Back', admin_course_classrooms_path(@course), class: "btn btn-small" %>
+    </div>
+  </fieldset>
+<% end %>
+
+<% end %>

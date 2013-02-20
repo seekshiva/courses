@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<h4>
+  <%= link_to @course.subject_code, [:admin, @course] %>
+  - List of Classes for <%= @course.current_term.semester.ordinalize %> semester (<%= "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}" %>)
+</h4><br />
+
+<p>
+  <small><%= @classroom.time %></small> on <small><%= @classroom.date.strftime("%b %d") %></small> at <i><%= @classroom.room %></i>
+</p><br />
+
+
+<%= link_to 'Edit', edit_admin_course_classroom_path(@course, @classroom), class: "btn btn-small" %>
+<%= link_to 'Back', [:admin, @course, :classrooms], class: "btn btn-small" %>
