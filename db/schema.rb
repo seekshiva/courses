@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220011828) do
+ActiveRecord::Schema.define(:version => 20130220024036) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(:version => 20130220011828) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "class_topics", :force => true do |t|
+    t.integer  "class_id"
+    t.integer  "topic_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "class_topics", ["class_id"], :name => "index_class_topics_on_class_id"
+  add_index "class_topics", ["topic_id"], :name => "index_class_topics_on_topic_id"
 
   create_table "classrooms", :force => true do |t|
     t.integer  "term_id"

@@ -1,0 +1,26 @@
+<%= form_for [:admin, @course, @class_topic] do |f| %>
+  <% if @class_topic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@class_topic.errors.count, "error") %> prohibited this class_topic from being saved:</h2>
+
+      <ul>
+      <% @class_topic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :class %><br />
+    <%= f.text_field :class %>
+  </div>
+  <div class="field">
+    <%= f.label :topic %><br />
+    <%= f.text_field :topic %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+    <%= link_to 'Back', [:admin, @course, :class_topics] %>
+  </div>
+<% end %>

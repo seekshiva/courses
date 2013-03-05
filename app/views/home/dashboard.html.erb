@@ -123,6 +123,128 @@
       {{/if}}
     </p>
 
+    <div class="s-push"></div>
+    <div>
+      <strong onclick="	console.log({{course.reference_books}});">Reference Books</strong>
+      <table class="table table-hover">
+	<tbody>
+	  {{#unless course.reference_books }}
+	  No reference book found for this course.
+	  {{/unless}}
+
+	  {{#each course.reference_books}}
+	  <tr><td>
+	      <small>
+		<b><a href="#/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
+		by
+		{{#each this.authors}}
+		<a href="#/authors/{{this.id}}">{{this.name}}</a>;
+		{{/each}}
+		<br />
+		{{this.publisher}}, {{this.edition}} <b><i>{{this.isbn}}</i></b>
+	      </small>
+	  </td></tr>
+          {{/each}}
+	</tbody>
+      </table>
+    </div>
+    <small>View by</small>
+    <div class="btn-group" data-toggle="buttons-radio">
+      <button class="btn btn-small" id="view_by_topic">Topics</button>
+      <button class="btn btn-small" id="view_by_class">Classes</button>
+    </div> 
+    <div class="s-push"></div>
+    <div id="specialized_view"></div>
+ </script>
+
+  
+  <script type="text/template" id="course-topic-template">
+    <table class="table table-bordered">
+      <thead>
+	<caption><h4>
+	    Topics
+	</h4></caption>
+      </thead>
+      <tbody>
+	{{#each topics}}
+	<tr><td>
+	    <dl>
+	      <dt>
+		<a href="#/courses/{{course.id}}/topics/{{this.id}}">{{this.title}}</a>
+		<span class="label label-success">{{this.ct_status}}</span>
+	      </dt>
+	      <dd>
+		<p>
+		  <small>
+		    {{#if this.classes}}
+		    This topic was taught on
+		    {{#each this.classes}}
+		    {{this.date}}
+		    {{/each}}
+		    
+		    {{else}}
+		    This topic has not been taught so far this semester
+		    {{/if}}
+		  </small>
+		</p>
+
+		<p>{{this.description}}</p>
+		<table class="table-hover table-bordered">
+		  <thead><tr>
+		      {{#each this.reference}}
+		      <th><small>{{this.book}}</small></th>
+		      {{/each}}
+		  </tr></thead>
+		  <tbody><tr>
+		      {{#each this.reference}}
+		      <td><small>{{this.sections}}</small></td>
+		      {{/each}}
+		  </tr></tbody>
+		</table>
+	      </dd>
+	    </dl>
+	</td></tr>
+	{{/each}}
+      </tbody>
+    </table>
+  </script>
+  
+  <script type="text/template" id="course-class-template">
+    <table class="table table-bordered">
+      <thead>
+	<caption><h4>
+	    Classes
+	</h4></caption>
+      </thead>
+      <tbody>
+	{{#unless classes}}
+	<tr><td>
+	    No classes have been taught in this course this semester.
+	</td></tr>
+	{{/unless}}
+	{{#each classes}}
+	<tr><td>
+	    <dl>
+	      <dt>
+		{{this.date}} {{this.time}}
+	      </dt>
+	      <dd>
+		at {{this.room}}
+		<strong>
+		  Topics covered
+		</strong>
+		<ul>
+		  {{#each this.topics}}
+		  <li>
+		    {{this.title}}
+		  </li>
+		  {{/each}}
+		</ul>
+	      </dd>
+	    </dl>
+	</td></tr>
+	{{/each}}
+      </tbody>
   </script>
   
   <%= javascript_include_tag "vendor" %>

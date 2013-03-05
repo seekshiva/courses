@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Class:</b>
+  <%= @class_topic.class %>
+</p>
+
+<p>
+  <b>Topic:</b>
+  <%= @class_topic.topic %>
+</p>
+
+
+<%= link_to 'Edit', edit_class_topic_path(@class_topic) %> |
+<%= link_to 'Back', class_topics_path %>

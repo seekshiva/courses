@@ -5,10 +5,12 @@
   <thead>
     <tr>
       <th>
-
    <%= link_to @course.subject_code, [:admin, @course] %>
-  - List of Classes for <%= @course.current_term.semester.ordinalize %> semester (<%= "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}" %>)
-</th>
+  - List of Classes
+      </th>
+      <th>
+	Topics Covered
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -17,11 +19,24 @@
     <tr>
       <td>
 	<small><%= classroom.time %></small> on <small><%= classroom.date.strftime("%b %d") %></small> at <i><%= classroom.room %></i>
+      </td>
+      <td>
 	<div class="pull-right">
 	  <%= link_to 'Show', [:admin, @course, classroom], class: "btn btn-mini" %>
 	  <%= link_to 'Edit', edit_admin_course_classroom_path(@course, classroom), class: "btn btn-mini" %>
 	  <%= link_to 'Destroy', [:admin, @course, classroom], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
 	</div>
+
+
+	<% if classroom.topics.length == 0 %>
+	No topics were covered in this class.
+	<% else %>
+	<ul>
+	  <% classroom.topics.each do |topic| %>
+	  <li><%= topic.title %></li>
+	  <% end %>
+	</ul>
+	<% end %>
       </td>
     </tr>
     <% end %>

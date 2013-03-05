@@ -1,0 +1,2 @@
+module ClassTopicsHelper
+end

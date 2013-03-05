@@ -1,18 +1,22 @@
 Courses::Application.routes.draw do
-
   get "home/index"
 
   namespace :admin do
     resources :departments
     resources :courses do
       resources :topics, :classrooms, :terms
+      resources :class_topics
     end
     resources :course_list_items, :course_references
     resources :books, :authors, :book_authors, :references
 
   end
 
-  resources :departments, :courses
+  resources :departments
+  
+  resources :courses do
+    resources :topics, :classrooms
+  end
 
   match "admin" => "admin/departments#index"
   match ":slug.json" => "#{:slug}s#index"

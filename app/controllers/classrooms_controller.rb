@@ -1,13 +1,22 @@
-class Admin::ClassroomsController < Admin::BaseControllerController
+class ClassroomsController < Admin::BaseControllerController
   # GET /classrooms
   # GET /classrooms.json
   def index
     @course = Course.find(params[:course_id])
-    @classrooms = Classroom.find_all_by_term_id(@course.current_term.id)
+    @classes = Classroom.find_all_by_term_id(@course.current_term.id).collect do |cl|
+      ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, room: cl.room, term_id: cl.term_id }
+      ret["topics"] = cl.topics.collect do |topic|
+        { id: topic.id, ct_status: topic.ct_status, title: topic.title }
+      end
+      
+      ret
+    end
+    @classes.each do |cl|
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @classrooms }
+      format.json { render json: @classes }
     end
   end
 
@@ -15,7 +24,9 @@ class Admin::ClassroomsController < Admin::BaseControllerController
   # GET /classrooms/1.json
   def show
     @course = Course.find(params[:course_id])
-    @classroom = Classroom.find(params[:id])
+    @class = Classroom.find(params[:id])
+
+    logger.debug @class.topics
 
     respond_to do |format|
       format.html # show.html.erb

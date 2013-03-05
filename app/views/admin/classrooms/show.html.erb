@@ -2,13 +2,29 @@
 
 <h4>
   <%= link_to @course.subject_code, [:admin, @course] %>
-  - List of Classes for <%= @course.current_term.semester.ordinalize %> semester (<%= "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}" %>)
-</h4><br />
-
+</h4>
 <p>
-  <small><%= @classroom.time %></small> on <small><%= @classroom.date.strftime("%b %d") %></small> at <i><%= @classroom.room %></i>
-</p><br />
+  Class held
+  at <small><%= @class.time %></small>
+  on <small><%= @class.date.strftime("%b %d") %></small>
+  at <i><%= @class.room %></i>
+  for <%= @course.current_term.semester.ordinalize %> semester (<%= "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}" %>)
+</p>
 
+<div>
+  <strong>Topics Covered</strong>
+  <% if @class.topics.empty?  %>
+  <p>
+    No topics were covered during this class. Click <%= link_to "here", edit_admin_course_classroom_path(@course, @class) %> to add the topics that were taught during this class.
+  </p>
+  <% else %>
+  <ul>
+    <% @class.topics.each do |top| %>
+    <li><%= top.title %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</div><br />
 
-<%= link_to 'Edit', edit_admin_course_classroom_path(@course, @classroom), class: "btn btn-small" %>
+<%= link_to 'Edit', edit_admin_course_classroom_path(@course, @class), class: "btn btn-small" %>
 <%= link_to 'Back', [:admin, @course, :classrooms], class: "btn btn-small" %>
