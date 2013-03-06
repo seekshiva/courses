@@ -5,20 +5,20 @@ jQuery ->
       "": "index"
       "departments": "index"
       "departments/:id": "department"
-      "courses/:id": "course"
+      "courses/:course_id(/:slug)": "course"
+      "courses/:course_id/:slug(/:id)": "course"
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
       @
 
     department: (id) ->
-      console.log "id: " + id
       @department_view = new @app.DepartmentView(id: id)
       @
 
-    course: (id) ->
-      console.log "course id: " + id
-      @course_view = new @app.CourseView(id: id)
+    course: (course_id, type, id) ->
+      console.log "in course router method"
+      @course_view = new @app.CourseView(id: course_id, view: {type: type, id: id})
       @
 
     initialize: (options) ->

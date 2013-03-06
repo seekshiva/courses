@@ -150,8 +150,8 @@
     </div>
     <small>View by</small>
     <div class="btn-group" data-toggle="buttons-radio">
-      <button class="btn btn-small" id="view_by_topic">Topics</button>
-      <button class="btn btn-small" id="view_by_class">Classes</button>
+      <a href="#/courses/{{course.id}}/topics" class="btn btn-small{{topics_view_state}}" id="view_by_topic">Topics</a>
+      <a href="#/courses/{{course.id}}/classes" class="btn btn-small{{classes_view_state}}" id="view_by_class">Classes</a>
     </div> 
     <div class="s-push"></div>
     <div id="specialized_view"></div>
@@ -166,11 +166,11 @@
 	</h4></caption>
       </thead>
       <tbody>
-	{{#each topics}}
+	{{#each course.topics}}
 	<tr><td>
 	    <dl>
 	      <dt>
-		<a href="#/courses/{{course.id}}/topics/{{this.id}}">{{this.title}}</a>
+		<a href="#/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
 		<span class="label label-success">{{this.ct_status}}</span>
 	      </dt>
 	      <dd>
@@ -217,12 +217,12 @@
 	</h4></caption>
       </thead>
       <tbody>
-	{{#unless classes}}
+	{{#unless course.classes}}
 	<tr><td>
 	    No classes have been taught in this course this semester.
 	</td></tr>
 	{{/unless}}
-	{{#each classes}}
+	{{#each course.classes}}
 	<tr><td>
 	    <dl>
 	      <dt>
