@@ -3,6 +3,7 @@ jQuery ->
     app: window.app ? {}
     routes:
       "": "index"
+      "login": "login"
       "departments": "index"
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
@@ -10,6 +11,11 @@ jQuery ->
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
+      @
+
+    login: () ->
+      $("#signin_link").css({display: "none"})
+      @login_view = new @app.LoginView()
       @
 
     department: (id) ->

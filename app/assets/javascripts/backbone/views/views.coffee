@@ -25,6 +25,18 @@ jQuery ->
 
       @
 
+  class LoginView extends Backbone.View
+    template: Handlebars.compile($("#login-template").html())
+
+    el: "#content"
+
+    initialize: ->
+      @render()
+
+    render:  ->
+      $(@el).html @template
+      @
+
   class DepartmentView extends Backbone.View
     template: Handlebars.compile($("#department-template").html())
 
@@ -134,4 +146,5 @@ jQuery ->
   @app.DepartmentsView = DepartmentsView
   @app.DepartmentView  = DepartmentView
   @app.CourseView      = CourseView
+  @app.LoginView       = LoginView
 

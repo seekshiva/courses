@@ -18,6 +18,8 @@ Courses::Application.routes.draw do
     resources :topics, :classrooms
   end
 
+  match "authenticate" => "home#authenticate"
+  match "signout" => "home#signout"
   match "admin" => "admin/departments#index"
   match ":slug.json" => "#{:slug}s#index"
   match ":slug" => "#{:slug}s#index"
