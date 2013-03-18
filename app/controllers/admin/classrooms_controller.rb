@@ -1,4 +1,4 @@
-class Admin::ClassroomsController < Admin::BaseControllerController
+class Admin::ClassroomsController < Admin::BaseController
   # GET /classrooms
   # GET /classrooms.json
   def index

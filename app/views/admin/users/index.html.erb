@@ -1,0 +1,33 @@
+<table class="table table-hover">
+  <thead>
+    <caption><h2>Listing all Users</h2></caption>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td>
+	<img src="data://<%= user.profile_pic %>">
+	<%= user.name %>
+      </td>
+      <td><%= user.email %></td>
+      <td><%= user.designation %> at <%= user.department.name %> Department</td>
+      <td>
+	<%= link_to 'Show', user, class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_user_path(user), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini, btn-danger" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<% link_to "New User", new_user_path, class: "btn btn-primary btn-small" %>

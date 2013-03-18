@@ -2,12 +2,16 @@ jQuery ->
   class ApplicationRouter extends Backbone.Router
     app: window.app ? {}
     routes:
-      "": "index"
+      "": "goto_departments"
       "login": "login"
       "departments": "index"
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
       "courses/:course_id/:slug(/:id)": "course"
+
+    goto_departments: () ->
+      @app.router.navigate("/departments", {trigger: true})
+      @
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
@@ -15,7 +19,10 @@ jQuery ->
 
     login: () ->
       $("#signin_link").css({display: "none"})
-      @login_view = new @app.LoginView()
+      if @app.user
+        @goto_departments()
+      else
+        @login_view = new @app.LoginView()
       @
 
     department: (id) ->
@@ -42,7 +49,6 @@ jQuery ->
       ".*"       : "index"
 
     index: ->
-      console.log "dagaq"
       @view = new Courses.Views.Departments.IndexView(departments: @departments)
       $("#departments").html(@view.render().el)
 

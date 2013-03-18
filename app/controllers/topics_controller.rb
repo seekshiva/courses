@@ -1,4 +1,4 @@
-class TopicsController < Admin::BaseControllerController
+class TopicsController < Admin::BaseController
   # GET /topics
   # GET /topics.json
   def index

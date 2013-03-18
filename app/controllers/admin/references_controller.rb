@@ -1,4 +1,4 @@
-class Admin::ReferencesController < Admin::BaseControllerController
+class Admin::ReferencesController < Admin::BaseController
   # GET /references
   # GET /references.json
   def index

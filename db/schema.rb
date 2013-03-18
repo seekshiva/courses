@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220024036) do
+ActiveRecord::Schema.define(:version => 20130318001645) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(:version => 20130220024036) do
   end
 
   create_table "class_topics", :force => true do |t|
-    t.integer  "class_id"
+    t.integer  "classroom_id"
     t.integer  "topic_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
-  add_index "class_topics", ["class_id"], :name => "index_class_topics_on_class_id"
+  add_index "class_topics", ["classroom_id"], :name => "index_class_topics_on_class_id"
   add_index "class_topics", ["topic_id"], :name => "index_class_topics_on_topic_id"
 
   create_table "classrooms", :force => true do |t|
@@ -92,8 +92,9 @@ ActiveRecord::Schema.define(:version => 20130220024036) do
     t.string   "name"
     t.string   "hod"
     t.string   "short"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "rollno_prefix"
   end
 
   create_table "references", :force => true do |t|
@@ -126,5 +127,17 @@ ActiveRecord::Schema.define(:version => 20130220024036) do
     t.datetime "updated_at",                  :null => false
     t.string   "ct_status",   :default => ""
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "profile_pic"
+    t.integer  "department_id"
+    t.string   "designation"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "users", ["department_id"], :name => "index_users_on_department_id"
 
 end

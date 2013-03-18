@@ -75,8 +75,6 @@ jQuery ->
       unless @app.course 
         @app.course = {id: -1}
 
-      console.log options.id
-      console.log @app.course.id
       if @app.course.id.toString() != options.id #or not @app.course.subject_code
         @app.course = 
           id: options.id
@@ -84,11 +82,12 @@ jQuery ->
           classes: []
           render: @render
 
-        #console.log @app.course.subject_code
         $.getJSON("/courses/"+options.id, @setCourse)
         $.getJSON("/courses/"+@app.course.id+"/topics", @setTopics)
         $.getJSON("/courses/"+@app.course.id+"/classrooms", @setClasses)
 
+      else
+        @render @app.course
 
       @
 

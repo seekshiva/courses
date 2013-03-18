@@ -1,7 +1,9 @@
 Courses::Application.routes.draw do
-  get "home/index"
 
+  resources :users
+  
   namespace :admin do
+    resources :users
     resources :departments
     resources :courses do
       resources :topics, :classrooms, :terms
@@ -20,7 +22,11 @@ Courses::Application.routes.draw do
 
   match "authenticate" => "home#authenticate"
   match "signout" => "home#signout"
+  match "register" => "home#register"
+
   match "admin" => "admin/departments#index"
+
+
   match ":slug.json" => "#{:slug}s#index"
   match ":slug" => "#{:slug}s#index"
   #match ":slug" => "home#index"

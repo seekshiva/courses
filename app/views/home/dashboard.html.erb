@@ -18,17 +18,24 @@
 	</ul>
 	<% else %>
 	<ul class="nav pull-right">
-	  <li><a>Hi <strong><%= @user[:name] %></strong></a></li>
 	  <li class="dropdown">
 	    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	      My Courses
+	      <strong>
+		<i class="icon-user"></i>
+		  <%= @user[:name] %></strong>
 	      <b class="caret"></b>
 	    </a>
 	    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-	      <li><a tabindex="-1">You need to be logged in<br />to view your courses.</a></li>
+	      <li class="disabled"><a><small>My Courses</small></a></li>
+	      <li><a href="#courses/1">Advanced Database Management Systems</a></li>
+	      <li><a href="#courses/3">Real-Time Systems</a></li>
+	      <li><a href="#courses/10">Data Warehousing and Data Mining</a></li>
+	      <li><a href="#courses/2">Industrial Economics</a></li>
+	      <li class="divider"></li>
+	      <li><a href="/me">My Profile</a></li>
+	      <li><a href="/signout">Sign out</a></li>
 	    </ul>
 	  </li>
-	  <li><a href="/signout">Sign out</a></li>
 	</ul>
 	<% end %>
       </div>
@@ -104,18 +111,19 @@
   </script>
 
   <script type="text/template" id="department-template">
-    <h4>
+    <h3>
       <span class="label label-info">{{dept.short}}</span>
       {{dept.name}}
-    </h4>
+    </h3>
     <div>
       Headed by <strong>{{dept.hod}}</strong>
     </div>
+    <div class="push"></div>
 
     <table class="table table-hover">
       <thead>
 	<caption>
-	  <h3>Courses Offered</h3>
+	  <h4>Courses Offered</h4>
 	</caption>
       </thead>
       <tbody>
@@ -284,7 +292,14 @@
 	</td></tr>
 	{{/each}}
       </tbody>
-  </script>  
+  </script>
+
+  <% unless @user.nil? %>
+  <script type="text/javascript">
+    var app = window.app ? window.app : {};
+    app.user = <%= raw @user.to_json %>
+  </script>
+  <% end %>
 
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>

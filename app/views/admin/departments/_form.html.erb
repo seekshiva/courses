@@ -15,16 +15,20 @@
     <legend><%= @legend %></legend>
     
     <div class="field">
-      <%= f.label :short %><br />
-      <%= f.text_field :short %>
+      <%= f.label :short %>
+      <%= f.text_field :short, class: "input-mini", placeholder: "Short" %>
     </div>
     <div class="field">
-      <%= f.label :name %><br />
-      <%= f.text_field :name %>
+      <%= f.label :name %>
+      <%= f.text_field :name, placeholder: "Department Name" %>
     </div>
     <div class="field">
-      <%= f.label :hod %><br />
-      <%= f.text_field :hod %>
+      <%= f.label :hod %>
+      <%= f.text_field :hod, placeholder: "Head of the Department" %>
+    </div>
+    <div class="field">
+      <%= f.label :rollno_prefix %>
+      <%= f.text_field :rollno_prefix, class: "input-mini",placeholder: "Prefix" %>
     </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
