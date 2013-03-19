@@ -1,0 +1,187 @@
+<head>
+  <title>Profile Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <!-- Le styles -->
+  
+  <link href="/assets/twitter/bootstrap.css" rel="stylesheet">
+  <%= stylesheet_link_tag "bwizard", :media => "all" %>
+  <%= csrf_meta_tags %>
+  <style type="text/css">
+    body {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    }
+
+    /* Custom container */
+    .container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
+    }
+    .container-narrow > hr {
+    margin: 30px 0;
+    }
+
+    /* Main marketing message and sign up button */
+    .jumbotron {
+    margin: 60px 0;
+    text-align: center;
+    }
+    .jumbotron h1 {
+    font-size: 72px;
+    line-height: 1;
+    }
+    .jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+    }
+
+    /* Supporting marketing content */
+    .marketing {
+    margin: 60px 0;
+    }
+    .marketing p + h4 {
+    margin-top: 28px;
+    }
+    
+    .footer {position: fixed; bottom: 10px; }
+    
+  </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+
+</head>
+<body>
+
+  <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="muted">Courses</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <h1>Welcome!</h1>
+        <p class="lead">Looks like you're logging in here for the first time.</p>
+	<button data-target="#myModal" role="button" class="btn btn-large btn-success" data-toggle="modal">
+	  Sign up today
+	</button>
+      </div>
+
+
+
+      <div class="footer">
+	<hr>
+        <p>&copy; Company 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <%= form_for(@user) do |f| %>
+    <div id="myModal" class="modal hide fade" role="dialog">
+
+      <div class="modal-header">
+	<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>Get Started</h3>
+      </div>
+      <div class="modal-body">
+	<div id="wizard">
+	  <ol>
+	    <li>Name & Department</li>
+	    <li>Course List</li>
+	    <li>Verification</li>
+	  </ol>
+	  <div>
+	    <div class="field">
+	      <%= f.label :name, "Full Name" %>
+	      <%= f.text_field :name, placeholder: "Full Name", class: "input-xlarge" %>
+	      <%= f.hidden_field :email %>
+	    </div>
+	    <div class="field">
+	      <%= f.label :department_id, "Designation" %>
+	      <% if @user.is_student? %>
+	      <span class="uneditable-input input-xlarge">Student</span>
+	      <%= f.hidden_field :designation %>
+	      <% else %>
+	      <%= f.text_field :designation, placeholder: "Designation", class: "input-xlarge" %>
+	      <% end %>
+	    </div>
+	    <div class="field">
+	      <%= f.label :department_id, "Department" %>
+	      <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "input-xlarge") %>
+	    </div>	
+	  </div>
+
+	  <div>
+	    <% if @user.is_student?  %>
+	    <div class="alert alert-info">
+	      <strong>Note:</strong>
+	      <small>You can add or delete Courses you follow by visiting your Profile page.</small>
+	    </div>
+	    <% if @course_list.length != 0 %>
+	    <small>
+	      Based on your Roll Number, we were able to guess that you are attending the following classes.
+	    </small>
+	    <table class="table table-hover">
+	      <thead>
+		<tr>
+		  <th>Course</th>
+		  <th>Offered for</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		<% @course_list.each do |course| %>
+		<tr>
+		  <td><%= course.name %></td>
+		  <td><%= course.current_term.semester.ordinalize %> semester</td>
+		</tr>
+		<% end %>
+	      </tbody>
+	    </table>
+	    <% end %>
+	    <% else %>
+	    Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
+	    <% end %>
+	  </div>
+
+	  <div>
+	    <div class="field">
+	      <span class="uneditable-input input-large"><%= @user.email %>@nitt.edu</span>
+	    </div>
+	    <div class="field">
+	      <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "input-large") %>
+	    </div>
+	  </div>
+	</div>
+      <div class="modal-footer">
+	<%= f.submit class: "btn btn-primary", value: "Register" %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+  <%= javascript_include_tag "vendor" %>
+  <%= javascript_include_tag "me" %>
+  <script type="text/javascript">
+    renderSignupModal();
+  </script>
+    
+</body>

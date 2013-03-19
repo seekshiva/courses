@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
@@ -40,6 +40,8 @@ class Admin::UsersController < ApplicationController
 
     rescue Net::IMAP::NoResponseError
       @failed = true
+    rescue Net::IMAP::BadResponseError
+      @failed = true
     rescue
     end
     if not flash[:imap_id] == params[:user][:email]
@@ -51,10 +53,10 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @failed
-        format.html { redirect_to "/register", notice: "Webmail username/password invalid." }
+        format.html { redirect_to "/me", notice: "Webmail username/password invalid." }
       elsif @user.save
         session[:user] = @user
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Thank you for signing up!.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

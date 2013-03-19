@@ -22,7 +22,7 @@ Courses::Application.routes.draw do
 
   match "authenticate" => "home#authenticate"
   match "signout" => "home#signout"
-  match "register" => "home#register"
+  match "me" => "home#me"
 
   match "admin" => "admin/departments#index"
 

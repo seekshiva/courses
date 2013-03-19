@@ -1,6 +1,7 @@
 <head>
   <title>Courses</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "bwizard", :media => "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -32,7 +33,7 @@
 	      <li><a href="#courses/10">Data Warehousing and Data Mining</a></li>
 	      <li><a href="#courses/2">Industrial Economics</a></li>
 	      <li class="divider"></li>
-	      <li><a href="/me">My Profile</a></li>
+	      <li><a href="#me">My Profile</a></li>
 	      <li><a href="/signout">Sign out</a></li>
 	    </ul>
 	  </li>
@@ -61,15 +62,10 @@
   <script type="text/template" id="login-template">
     <form class="form-signin" action="/authenticate" method="post">
       <h2 class="form-signin-heading">Please sign in</H2>
-      <% if @notice %>
-      <div class="alert <%= @notice_type %>">
-	<%= @notice %>
+      <% unless flash[:notice].nil? %>
+      <div class="alert <%= flash[:notice_type] %>">
+	<%= flash[:notice] %>
       </div>
-      <% end %>
-      <% unless @notice.nil? %>
-      <p class="alert alert-danger">
-	<%= @notice %>
-      </p>
       <% end %>
       <p class="alert alert-info">
 	Enter your nitt webmail credentials
@@ -213,6 +209,12 @@
 	</h4></caption>
       </thead>
       <tbody>
+	{{#unless course.topics}}
+	<tr><td>
+	    <p>No topic has been added to this course yet.</p>
+	    <p>Contact your course instructor to add topics this course.</p>
+	</td></tr>
+	{{/unless}}
 	{{#each course.topics}}
 	<tr><td>
 	    <dl>
@@ -295,6 +297,31 @@
   </script>
 
   <% unless @user.nil? %>
+  <div id="profileModal" class="modal hide fade" tabindex="-1">
+    <div class="modal-header">
+      <button class="close pull-right" data-dismiss="modal">&times;</button>
+      <h3><%= @user.name %></h3>
+      <div>
+	<%= link_to "#{@user.email}@nitt.edu", "mailto:#{@user.email}@nitt.edu" %>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div>
+	<%= @user.designation %> at
+	<%= link_to "Department of #{@user.department.name}", "/#departments/#{@user.department.id}" %>
+      </div>
+      <strong>Courses attending:</strong>
+      <ul>
+	<li>Hi</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn">Edit</button>
+    </div>
+  </div>
+  <% end %>
+
+  <% unless @user.nil? %>
   <script type="text/javascript">
     var app = window.app ? window.app : {};
     app.user = <%= raw @user.to_json %>
@@ -303,4 +330,7 @@
 
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript">
+    renderSignupModal(app.user);
+  </script>
 </body>

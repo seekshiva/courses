@@ -25,3 +25,9 @@ jQuery ->
 
     Backbone.history.start({pushstate: true})
 
+    $("#profileModal").on "hide", () ->
+      if window.history.length == 1
+        @app = window.app ? {}
+        @app.router.navigate("/departments", {trigger: true})
+      else if window.location.hash == "#me"
+        window.history.back()

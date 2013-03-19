@@ -4,6 +4,7 @@ jQuery ->
     routes:
       "": "goto_departments"
       "login": "login"
+      "me": "me"
       "departments": "index"
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
@@ -15,6 +16,10 @@ jQuery ->
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
+      @
+
+    me: () ->
+      $("#profileModal").modal()
       @
 
     login: () ->

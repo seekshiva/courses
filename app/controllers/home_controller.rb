@@ -8,12 +8,14 @@ class HomeController < ApplicationController
     end
   end
   
-  def register
+  def me
     @user = User.new
+    
     if flash[:imap_id]
       flash[:imap_id] = flash[:imap_id]
       @user.email = flash[:imap_id]
-      if @user.email.to_i
+      
+      if @user.is_student?
         @user.designation = "Student"
         begin
           @user.department_id = Department.find_by_rollno_prefix(@user.email[0..3]).id
@@ -25,6 +27,16 @@ class HomeController < ApplicationController
           ["#{department.name}", department.id]
         end
         
+        @course_list = []
+        Course.all.each do |course|
+          if not course.current_term.nil? and (course.current_term.semester+1)/2 == @user.nth_year
+            course.departments.each do |dept|
+              if dept.id == @user.department_id 
+                @course_list << course
+              end
+            end
+          end
+        end
       end
     else
       redirect_to "/#login"
@@ -34,35 +46,40 @@ class HomeController < ApplicationController
   def authenticate
     require 'net/imap'
     begin
+      @failed = false
       @username = params[:username]
       @password = params[:password]
+      flash[:imap_id] = @username
 
       imap = Net::IMAP.new("mail.nitt.edu")
       imap.login(@username, @password)
-      flash[:imap_id] = @username
 
-      @user = User.find_by_email(@username)
     rescue Net::IMAP::NoResponseError
       @failed = true
+    rescue Exception => e
+    end
+
+    begin
+      @user = User.find_by_email(@username)
     rescue
       @user = nil
     end
 
     respond_to do |format|
-      if @failed
-        flash[:notice_type] = "alert-danger"
-        redirect_to "/#login", notice: "Failed to authenticate"
-      else
-        format.html { 
+      format.html { 
+        if @failed
+          flash[:notice_type] = "alert-danger"
+          redirect_to "/#login", notice: "Failed to authenticate"
+        else
           if @user.nil?
-            redirect_to "/register"
+            redirect_to "/me"
           else
             session[:user] = @user
             redirect_to root_url
           end
-        }
           
         end
+      }
     end
   end
   
