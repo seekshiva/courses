@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
-    if session[:user]
-      @user = session[:user]
+    if session[:user_id]
+      @user = User.find(session[:user_id])
     end
     respond_to do |format|
       format.html { render "home/dashboard" }
@@ -74,7 +74,7 @@ class HomeController < ApplicationController
           if @user.nil?
             redirect_to "/me"
           else
-            session[:user] = @user
+            session[:user_id] = @user.id
             redirect_to root_url
           end
           
@@ -84,7 +84,7 @@ class HomeController < ApplicationController
   end
   
   def signout
-    session[:user] = nil
+    session[:user_id] = nil
     redirect_to root_url
   end
 
