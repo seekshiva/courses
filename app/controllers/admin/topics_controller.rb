@@ -41,7 +41,6 @@ class Admin::TopicsController < Admin::BaseController
 
   # GET /topics/1/edit
   def edit
-    @legend = "Edit Topic"
     @course = Course.find(params[:course_id])
     @topic = @course.topics.find(params[:id])
     @ref_books = @course.books

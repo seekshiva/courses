@@ -37,7 +37,6 @@ class Admin::CoursesController < Admin::BaseController
 
   # GET /courses/1/edit
   def edit
-    @legend = "Edit Course"
     @course = Course.find(params[:id])
 
     @new_term = Term.new

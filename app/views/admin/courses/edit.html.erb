@@ -1,14 +1,13 @@
-<a href="<%= course_path(@course) %>" class="btn btn-small">Back</a>
-<h4>
+<h5>
   <small><%= @course.subject_code %></small>
   <%= @course.name %>
-</h4>
+</h5>
 
 
-<div class="accordion" id="accordion2">
+<div class="accordion" id="accordion1">
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
         Edit Course Details
       </a>
     </div>
@@ -31,7 +30,7 @@
     <div id="collapseTwo" class="accordion-body collapse">
       <div class="accordion-inner">
 
-	<%= form_for([:admin, @new_term]) do |f| %>
+	<%= form_for([:admin, @course, @new_term]) do |f| %>
 	<div class="field">
 	  <span term_course_id, options_for_select(@courses_array)) %>
 	    <%= f.label :course_id %>
@@ -57,19 +56,18 @@
   </div>
 </div>
 
-<div class="accordion" id="accordion2">
+<div class="accordion" id="accordion3">
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
         Add New Topic
       </a>
     </div>
     <div id="collapseThree" class="accordion-body collapse">
       <div class="accordion-inner">
-
+	
 	<%= form_for [:admin, @course, @new_topic] do |f| %>
 	<fieldset>
-	  <legend><%= @legend %></legend>
 	  <div class="field">
 	    <%= f.label :title %>
 	    <%= f.text_field :title %>
@@ -92,3 +90,8 @@
   </div>
 </div>
 
+
+<a href="<%= admin_course_path(@course) %>" class="btn btn-small">
+  <i class="icon-chevron-left"></i>
+  Back
+</a>

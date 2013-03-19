@@ -1,33 +1,68 @@
-<%= render 'form' %>
+<h5>
+  <small><%= @course.subject_code %></small><br />
+  <%= @topic.title %>
+</h5>
 
-<h3>Topic Reference</h3>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Book</th>
-      <th>Sections Covered</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-      <% @ref_books.each do |book| %>
-      <tr>
-	<th><%= book.title %></th>
-	<td>
-	  <% @_ref = nil %>
-	  <% @topic.references.each do |ref| %>
-	  <% if ref.book == book %>
-	  <% @_ref = ref if ref.book == book %>
-	  <% else %>
-	  <%= @_ref.sections || "--" %>
-	  <% end %>
-	  <% end %>
-	</td>
-	<td>
-	  <%= link_to "Edit Reference",  [:admin, @_ref], class: "btn btn-mini pull-right" if @_ref %>
-	</td>
-      </tr>
-      <% end %>
-  </tbody>
-</table>
+
+<div class="accordion" id="accordion1">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+        Edit Topic
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="accordion-inner">
+	<%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Topic Reference
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      <th>Book</th>
+	      <th>Sections Covered</th>
+	      <th></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @ref_books.each do |book| %>
+	    <tr>
+	      <th><%= book.title %></th>
+	      <td>
+		<% @_ref = nil %>
+		<% @topic.references.each do |ref| %>
+		<% @_ref = ref if ref.book == book %>
+		<% end %>
+		<%= @_ref.nil? ? "--" : @_ref.sections %>
+	      </td>
+	      <td>
+		<%= link_to "Edit Reference",  [:admin, @_ref], class: "btn btn-mini pull-right" if @_ref %>
+	      </td>
+	    </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<a href="<%= admin_course_path(@course) %>" class="btn btn-small">
+  <i class="icon-chevron-left"></i>
+  Back
+</a>
 

@@ -14,21 +14,20 @@
 
 
 <fieldset>
+  <% if @legend %>
   <legend><%= @legend %></legend>
+  <% end %>
   <div class="field">
-    <%= f.label :subject_code %><br />
-    <%= f.text_field :subject_code %>
+    <%= f.text_field :subject_code, class: "input-small", placeholder: "Course Code" %>
+    <%= f.text_field :name, class: "input-xxlarge", placeholder: "Course Name" %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.number_field :credits, class: "input-small", placeholder: "# Credits" %>
   </div>
   <div class="field">
-    <%= f.label :credits %><br />
-    <%= f.number_field :credits %>
   </div>
   <div class="actions">
-    <%= f.submit class: "btn btn-small btn-primary" %>
+    <%= f.submit class: "btn btn-large btn-primary" %>
     <%= link_to "Back", [:admin, @course], class: "btn btn-small" %>
   </div>
 </fieldset>

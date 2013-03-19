@@ -20,18 +20,18 @@
     </div>
     <div class="field">
       <%= f.label :name %>
-      <%= f.text_field :name, placeholder: "Department Name" %>
+      <%= f.text_field :name, class: "input-xxlarge", placeholder: "Department Name" %>
     </div>
     <div class="field">
       <%= f.label :hod %>
-      <%= f.text_field :hod, placeholder: "Head of the Department" %>
+      <%= f.text_field :hod, class: "input-xxlarge", placeholder: "Head of the Department" %>
     </div>
     <div class="field">
       <%= f.label :rollno_prefix %>
       <%= f.text_field :rollno_prefix, class: "input-mini",placeholder: "Prefix" %>
     </div>
     <div class="actions">
-      <%= f.submit class: 'btn btn-primary' %>
+      <%= f.submit class: "btn btn-primary btn-large" %>
       <%= link_to "Back", admin_departments_path, class: "btn btn-small" %>
     </div>
   </fieldset>
