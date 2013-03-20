@@ -1,6 +1,6 @@
 <table class="table table-hover">
+  <caption><h3>Listing all Users</h3></caption>
   <thead>
-    <caption><h2>Listing all Users</h2></caption>
     <tr>
       <th>Name</th>
       <th>Email</th>
@@ -13,15 +13,14 @@
     <% @users.each do |user| %>
     <tr>
       <td>
-	<img src="data://<%= user.profile_pic %>">
 	<%= user.name %>
       </td>
       <td><%= user.email %></td>
-      <td><%= user.designation %> at <%= user.department.name %> Department</td>
+      <td><%= user.department.name %></td>
       <td>
-	<%= link_to 'Show', user, class: "btn btn-mini" %>
-	<%= link_to 'Edit', edit_user_path(user), class: "btn btn-mini" %>
-	<%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini, btn-danger" %>
+	<%= link_to 'Show', [:admin, user], class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_admin_user_path(user), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>
     <% end %>
@@ -30,4 +29,4 @@
 
 <br />
 
-<% link_to "New User", new_user_path, class: "btn btn-primary btn-small" %>
+<%= link_to "New User", new_admin_user_path, class: "btn btn-primary btn-small" %>

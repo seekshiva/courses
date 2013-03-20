@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   attr_accessible :credits, :name, :subject_code
+
   has_many :terms, :dependent => :destroy
   has_many :topics, :dependent => :destroy
 
@@ -8,7 +9,10 @@ class Course < ActiveRecord::Base
 
   has_many :course_list_items, :dependent => :destroy
   has_many :departments, :through => :course_list_items
-  
+
+  has_many :course_faculties, :dependent => :destroy
+  has_many :faculties, through: :course_faculties
+
   default_scope order("subject_code ASC")
   
   validates :name, :uniqueness => true
@@ -34,4 +38,5 @@ class Course < ActiveRecord::Base
     end
     current
   end
+
 end

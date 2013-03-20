@@ -12,5 +12,7 @@ class CreateCourseListItems < ActiveRecord::Migration
 
   def self.down
     drop_table :course_list_items
+    remove_index :course_list_items, :department_id
+    remove_index :course_list_items, :course_id
   end
 end

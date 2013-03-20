@@ -25,6 +25,10 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/new.json
   def new
     @user = User.new
+    @legend = "New User"
+    @departments_array = Department.all.map do |department|
+      ["#{department.name}", department.id]
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +39,15 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    @legend = "Edit User"
+    @departments_array = Department.all.map do |department|
+      ["(#{department.short}) #{department.name}", department.id]
+    end
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @user }
+    end
   end
 
   # POST /users
@@ -44,7 +57,7 @@ class Admin::UsersController < Admin::BaseController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to [:admin, @user], notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -60,7 +73,7 @@ class Admin::UsersController < Admin::BaseController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -76,7 +89,7 @@ class Admin::UsersController < Admin::BaseController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to admin_users_url }
       format.json { head :no_content }
     end
   end

@@ -114,15 +114,7 @@
 	      <%= f.label :name, "Full Name" %>
 	      <%= f.text_field :name, placeholder: "Full Name", class: "input-xlarge" %>
 	      <%= f.hidden_field :email %>
-	    </div>
-	    <div class="field">
-	      <%= f.label :department_id, "Designation" %>
-	      <% if @user.is_student? %>
-	      <span class="uneditable-input input-xlarge">Student</span>
-	      <%= f.hidden_field :designation %>
-	      <% else %>
-	      <%= f.text_field :designation, placeholder: "Designation", class: "input-xlarge" %>
-	      <% end %>
+	      <%= f.hidden_field :activated, :value => :true %>
 	    </div>
 	    <div class="field">
 	      <%= f.label :department_id, "Department" %>
@@ -164,7 +156,7 @@
 
 	  <div>
 	    <div class="field">
-	      <span class="uneditable-input input-large"><%= @user.email %>@nitt.edu</span>
+	      <span class="uneditable-input input-large"><%= @user[:email] %>@nitt.edu</span>
 	    </div>
 	    <div class="field">
 	      <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "input-large") %>

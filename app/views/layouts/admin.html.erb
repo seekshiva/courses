@@ -9,10 +9,11 @@
   <div class="navbar navbar-static-top">
     <div class="navbar-inner">
       <div class="container">
-	<a class="brand" href="/">Courses</a>
+	<a class="brand" href="/admin/">Courses</a>
 	<ul class="nav">
-	  <li><%= link_to "Departments", admin_departments_path %></li>
 	  <li><%= link_to "Courses", admin_courses_path %></li>
+	  <li><%= link_to "Users", admin_users_path %></li>
+	  <li><%= link_to "Faculty", admin_faculties_path %></li>
 	  <li><%= link_to "Books", admin_books_path %></li>
 	  <li><%= link_to "Authors", admin_authors_path %></li>
 	</ul>
@@ -34,6 +35,5 @@
     </div>
   </div>
   <%= javascript_include_tag "vendor" %>
-  <%= javascript_include_tag "application" %>
 </body>
 </html>

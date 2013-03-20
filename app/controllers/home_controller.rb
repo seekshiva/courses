@@ -9,20 +9,22 @@ class HomeController < ApplicationController
   end
   
   def me
-    @user = User.new
-    
+    @user = User.find_by_email(flash[:imap_id])
+    if @user.nil?
+      @user = User.new
+    end
+
     if flash[:imap_id]
       flash[:imap_id] = flash[:imap_id]
-      @user.email = flash[:imap_id]
+      @user[:email] = flash[:imap_id]
       
       if @user.is_student?
-        @user.designation = "Student"
         begin
-          @user.department_id = Department.find_by_rollno_prefix(@user.email[0..3]).id
+          @user.department_id = Department.find_by_rollno_prefix(@user[:email][0..3]).id
         rescue
           @user.department_id = 0
         end
-        
+
         @departments_array = Department.all.map do |department|
           ["#{department.name}", department.id]
         end
@@ -71,7 +73,7 @@ class HomeController < ApplicationController
           flash[:notice_type] = "alert-danger"
           redirect_to "/#login", notice: "Failed to authenticate"
         else
-          if @user.nil?
+          if @user.nil? or not @user[:activated]
             redirect_to "/me"
           else
             session[:user_id] = @user.id

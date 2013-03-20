@@ -1,0 +1,26 @@
+
+<table class="table table-hover">
+  <caption><h3>Listing faculties</h3></caption>
+  <thead>
+    <tr>
+      <th>Faculty</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @faculties.each do |faculty| %>
+    <tr>
+      <td><%= faculty.prefix %> <%= faculty.user.name %></td>
+      <td><%= faculty.user.email %>@nitt.edu</td>
+      <td>
+	<%= link_to 'Show', [:admin, faculty], class: "btn btn-mini" %>
+	<%= link_to 'Edit', edit_admin_faculty_path(faculty), class: "btn btn-mini" %>
+	<%= link_to 'Destroy', [:admin, faculty], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New Faculty", new_admin_faculty_path, class: "btn btn-primary btn-large" %>

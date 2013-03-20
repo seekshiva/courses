@@ -12,6 +12,18 @@
   <span class="label label-info"><%= @course.subject_code %></span>
   <%= @course.name %>
 </h3>
+<% if @course.faculties.length > 0 %>
+<p>
+  <strong>Course Instructor(s):</strong>
+  <% @course.course_faculties.each do |c_faculty| %>
+  <span class="label label-success">
+    <%= c_faculty.faculty.user.name %>
+    <a href=<%= url_for([:admin, c_faculty]) %> data-method="delete" class="btn btn-danger btn-mini">&times;</a>
+  </span>
+  <% end %>
+</p>
+<div class="s-push"></div>
+<% end %>
 <p>
   This course is being offered by <%= pluralize @course.departments.length, 'department' %>
   <% if @course.departments.length > 0 %>

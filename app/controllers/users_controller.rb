@@ -30,6 +30,8 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    @user = User.new(params[:user])
+
     begin
       @username = params[:user][:email]
       @password = params[:password]
@@ -37,7 +39,7 @@ class UsersController < ApplicationController
       imap = Net::IMAP.new("mail.nitt.edu")
       imap.login(@username, @password)
       flash[:imap_id] = @username
-
+      
     rescue Net::IMAP::NoResponseError
       @failed = true
     rescue Net::IMAP::BadResponseError
@@ -48,15 +50,12 @@ class UsersController < ApplicationController
       @failed = true
     end
 
-    
-    @user = User.new(params[:user])
-
     respond_to do |format|
       if @failed
         format.html { redirect_to "/me", notice: "Webmail username/password invalid." }
       elsif @user.save
-        session[:user] = @user
-        format.html { redirect_to root_url, notice: 'Thank you for signing up!.' }
+        session[:user_id] = @user.id
+        format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -70,9 +69,30 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
+    begin
+      @username = params[:user][:email]
+      @password = params[:password]
+
+      imap = Net::IMAP.new("mail.nitt.edu")
+      imap.login(@username, @password)
+      flash[:imap_id] = @username
+      
+    rescue Net::IMAP::NoResponseError
+      @failed = true
+    rescue Net::IMAP::BadResponseError
+      @failed = true
+    rescue
+    end
+    if not flash[:imap_id] == params[:user][:email]
+      @failed = true
+    end
+
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+      if @failed
+        format.html { redirect_to "/me", notice: "Webmail username/password invalid." }
+      elsif @user.update_attributes(params[:user]) 
+        session[:user_id] = @user.id
+        format.html { redirect_to root_url, notice: 'Thank you for signing up!.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130318001645) do
+ActiveRecord::Schema.define(:version => 20130319223149) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(:version => 20130318001645) do
 
   add_index "classrooms", ["term_id"], :name => "index_classrooms_on_term_id"
 
+  create_table "course_faculties", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "faculty_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "course_faculties", ["course_id"], :name => "index_course_faculties_on_course_id"
+  add_index "course_faculties", ["faculty_id"], :name => "index_course_faculties_on_faculty_id"
+
   create_table "course_list_items", :force => true do |t|
     t.integer  "department_id"
     t.integer  "course_id"
@@ -97,6 +107,16 @@ ActiveRecord::Schema.define(:version => 20130318001645) do
     t.string   "rollno_prefix"
   end
 
+  create_table "faculties", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "prefix"
+    t.string   "designation"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "faculties", ["user_id"], :name => "index_faculties_on_user_id"
+
   create_table "references", :force => true do |t|
     t.integer  "course_reference_id"
     t.integer  "topic_id"
@@ -107,6 +127,14 @@ ActiveRecord::Schema.define(:version => 20130318001645) do
 
   add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
+
+  create_table "students", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "students", ["user_id"], :name => "index_students_on_user_id"
 
   create_table "terms", :force => true do |t|
     t.integer  "course_id"
@@ -131,9 +159,8 @@ ActiveRecord::Schema.define(:version => 20130318001645) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.text     "profile_pic"
     t.integer  "department_id"
-    t.string   "designation"
+    t.boolean  "activated"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

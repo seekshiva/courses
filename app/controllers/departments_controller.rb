@@ -1,7 +1,6 @@
 class DepartmentsController < ApplicationController
   def index
     @departments = Department.all
-    logger.debug "##################################### you are here"
 
     render json: @departments
     #respond_to do |format|
@@ -14,15 +13,21 @@ class DepartmentsController < ApplicationController
     @department = Department.find(params[:id])
     @department["course_list"] = []
 
-    temp = {}
+    temp = []
     @department.courses.each do |course|
-      sem = course.this_year.nil? ? "Not being offered this year" : "#{course.this_year.semester.ordinalize} semester"
+      sem = course.this_year.nil? ? 0 : course.this_year.semester
+      course["instructor"] = course.faculties.collect do |faculty|
+        "#{faculty.prefix}#{faculty.user.name}"
+      end
       temp[sem] ||= []
-      temp[sem].push(course)
+      temp[sem] << course
     end
     
-    for k,v in temp do 
-      @department["course_list"].push({"semester" => k, "courses" => v})
+    temp.each_with_index do |c_list, sem|
+      unless c_list.nil?
+        semester = sem==0 ? "Not being offered this year" : "#{sem.ordinalize} semester"
+        @department["course_list"] << {"semester" => semester, "courses" => c_list}
+      end
     end
     
     respond_to do |format|

@@ -41,10 +41,14 @@ class Admin::CoursesController < Admin::BaseController
 
     @new_term = Term.new
     @new_topic = @course.topics.build
+    @course_faculty = @course.course_faculties.build
     @current_ac_year = Time.now.year.to_i
     @current_ac_year -= Time.now.month<6 ? 1 : 0
     @courses_array = Course.all.map do |course|
       ["#{course.subject_code} - #{course.name}", course.id]
+    end
+    @faculty_array = Faculty.all.map do |faculty|
+      [faculty.user.name, faculty.id]
     end
 
     respond_to do |format|

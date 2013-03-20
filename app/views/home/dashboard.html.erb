@@ -114,18 +114,22 @@
     <div>
       Headed by <strong>{{dept.hod}}</strong>
     </div>
-    <div class="push"></div>
+    <div class="s-push"></div>
 
     <table class="table table-hover">
+      <caption>
+	<h4>Courses Offered</h4>
+      </caption>
       <thead>
-	<caption>
-	  <h4>Courses Offered</h4>
-	</caption>
+	<tr>
+	  <th>Course</th>
+	  <th>Course Instructor</th>
+	  <th>Credits</th>
+	</tr>
       </thead>
       <tbody>
 	{{#each dept.course_list}}
 	<tr><th colspan="3">{{this.semester}}</th></tr>
-
 	{{#each this.courses}}
 	<tr>
 	  <td>
@@ -133,8 +137,8 @@
 	      {{this.subject_code}} - {{this.name}}
 	    </a>
 	  </td>
+	  <td>{{this.instructor}}</td>
 	  <td>{{this.credits}}</td>
-	  <td>-</td>
 	</tr>
 	{{/each}}
 
@@ -149,6 +153,14 @@
       <span class="label label-info">{{course.subject_code}}</span>
       {{course.name}}
     </h3>
+    {{#if course.instructors}}
+    <p>
+      <strong>Course Instructor:</strong>
+      {{#each course.instructors}}
+      <span class="label label-info">{{this}}</span>
+      {{/each}}
+    </p>
+    {{/if}}
     <p>
       This course is being offered by {{course.departments.length}} department{{plural}}
       <strong>(
@@ -307,7 +319,6 @@
     </div>
     <div class="modal-body">
       <div>
-	<%= @user.designation %> at
 	<%= link_to "Department of #{@user.department.name}", "/#departments/#{@user.department.id}" %>
       </div>
       <strong>Courses attending:</strong>

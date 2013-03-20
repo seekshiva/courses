@@ -1,9 +1,9 @@
 Courses::Application.routes.draw do
 
-  resources :users
-  
   namespace :admin do
     resources :users
+    resources :faculties
+    resources :course_faculties
     resources :departments
     resources :courses do
       resources :topics, :classrooms, :terms
@@ -14,6 +14,7 @@ Courses::Application.routes.draw do
 
   end
 
+  resources :users
   resources :departments
   
   resources :courses do

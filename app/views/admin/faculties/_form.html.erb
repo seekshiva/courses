@@ -1,0 +1,26 @@
+<%= form_for([:admin, @faculty]) do |f| %>
+  <% if @faculty.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@faculty.errors.count, "error") %> prohibited this faculty from being saved:</h2>
+
+      <ul>
+      <% @faculty.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :prefix %>
+    <%= f.select :prefix, options_for_select(@prefix_array) %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %>
+    <%= f.select :user_id, options_for_select(@users_array) %>
+  </div>
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Back", admin_faculties_path, class: "btn btn-small" %>
+  </div>
+<% end %>

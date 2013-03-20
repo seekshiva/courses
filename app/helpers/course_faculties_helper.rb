@@ -1,0 +1,2 @@
+module CourseFacultiesHelper
+end

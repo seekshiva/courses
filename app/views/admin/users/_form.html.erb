@@ -1,37 +1,37 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for([:admin, @user]) do |f| %>
+<% if @user.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<fieldset>
+  <legend><%= @legend %></legend>
+  <div class="field">
+    <%= f.label :name, "Full Name" %>
+    <%= f.text_field :name, placeholder: "Full Name" %>
+    <%= f.hidden_field :activated, value: false %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <div class="input-append">
+      <%= f.text_field :email, placeholder: "Webmail id", class: "input-medium", style: "text-align: right; " %>
+      <span class="add-on">@nitt.edu</span>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :profile_pic %><br />
-    <%= f.text_area :profile_pic %>
-  </div>
-  <div class="field">
-    <%= f.label :department %><br />
-    <%= f.text_field :department %>
-  </div>
-  <div class="field">
-    <%= f.label :designation %><br />
-    <%= f.text_field :designation %>
+    <%= f.label :department_id %>
+    <%= f.select :department_id, options_for_select(@departments_array) %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Back", admin_users_path, class: "btn btn-small" %>
   </div>
+</fieldset>
 <% end %>

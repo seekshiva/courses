@@ -3,9 +3,8 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :email
-      t.text :profile_pic
       t.references :department
-      t.string :designation
+      t.boolean :activated
 
       t.timestamps
     end

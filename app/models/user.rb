@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :department
-  attr_accessible :designation, :email, :mobile, :name, :profile_pic, :department_id
+  attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email
+
   
   def is_student?
     return self[:email].to_i != 0
@@ -13,4 +14,5 @@ class User < ActiveRecord::Base
       nil
     end
   end
+
 end
