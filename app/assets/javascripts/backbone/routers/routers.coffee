@@ -2,7 +2,7 @@ jQuery ->
   class ApplicationRouter extends Backbone.Router
     app: window.app ? {}
     routes:
-      "": "goto_departments"
+      "": "home"
       "login": "login"
       "me": "me"
       "departments": "index"
@@ -10,7 +10,7 @@ jQuery ->
       "courses/:course_id(/:slug)": "course"
       "courses/:course_id/:slug(/:id)": "course"
 
-    goto_departments: () ->
+    home: () ->
       @app.router.navigate("/departments", {trigger: true})
       @
 

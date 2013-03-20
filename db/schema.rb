@@ -128,14 +128,6 @@ ActiveRecord::Schema.define(:version => 20130319223149) do
   add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
-  create_table "students", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "students", ["user_id"], :name => "index_students_on_user_id"
-
   create_table "terms", :force => true do |t|
     t.integer  "course_id"
     t.integer  "academic_year"
