@@ -2,15 +2,20 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses
   # GET /courses.json
   def index
-    if(params[:code])
-      @courses = Course.find_all_by_subject_code(params[:code])
-    else
-      @courses = Course.all
-    end
-
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @courses }
+      if params[:code]
+        @courses = Course.find_all_by_subject_code(params[:code])
+      else
+        @courses = Course.all
+      end
+      
+      if params[:code] and params[:code].empty?
+        format.html { redirect_to admin_courses_path }
+        format.json { redirect_to admin_courses_path }
+      else
+        format.html # index.html.erb
+        format.json { render json: @courses }
+      end
     end
   end
 

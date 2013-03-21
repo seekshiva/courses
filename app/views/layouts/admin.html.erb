@@ -11,12 +11,15 @@
       <div class="container">
 	<a class="brand" href="/admin/">Courses</a>
 	<ul class="nav">
-	  <li><%= link_to "Courses", admin_courses_path %></li>
+	  <li><%= link_to "Departments", admin_departments_path %></li>
 	  <li><%= link_to "Users", admin_users_path %></li>
 	  <li><%= link_to "Faculty", admin_faculties_path %></li>
 	  <li><%= link_to "Books", admin_books_path %></li>
 	  <li><%= link_to "Authors", admin_authors_path %></li>
 	</ul>
+	<form action="<%= admin_courses_path %>" method="get" class="navbar-form pull-right">
+	  <input type="text" name="code" class="search-query input-small" placeholder="Course Code">
+	</form>
       </div>
     </div>
   </div>
