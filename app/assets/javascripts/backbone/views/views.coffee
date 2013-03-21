@@ -22,6 +22,7 @@ jQuery ->
       $(@el).html @template
         depts: depts
 
+      $(@el).find("a").click @app.show_local_page
 
       @
 
@@ -52,6 +53,7 @@ jQuery ->
     render: (dept) =>
       $(@el).html @template
         dept: dept
+      $(@el).find("a").click @app.show_local_page
 
       @
 
@@ -123,6 +125,8 @@ jQuery ->
         topics_view_state:  " active" if @view.type == "topics"
         classes_view_state: " active" if @view.type == "classes"
         plural: "s" if course.departments && course.departments.length != 1
+
+      $(@el).find("a").click @app.show_local_page
       @setView(@view.type)()
       @
 
@@ -137,8 +141,22 @@ jQuery ->
         if(type=="classes")
           $("#specialized_view").html classes_template
             course: @app.course
+        $(@el).find("a").click @app.show_local_page
         @
 
+  class NotFoundView extends Backbone.View
+    template: Handlebars.compile($("#404-template").html())
+
+    el: "#content"
+
+    initialize: (path)->
+      @path = path
+      @render()
+
+    render:  ->
+      $(@el).html @template
+        url: @path
+      @
 
 
   @app = window.app ? {}
@@ -146,4 +164,5 @@ jQuery ->
   @app.DepartmentView  = DepartmentView
   @app.CourseView      = CourseView
   @app.LoginView       = LoginView
+  @app.NotFoundView    = NotFoundView
 

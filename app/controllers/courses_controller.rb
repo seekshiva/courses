@@ -1,17 +1,11 @@
 class CoursesController < ApplicationController
   def show
-    begin
+    if session[:user_id]
       @user = User.find(session[:user_id])
-    rescue
-      @user = nil
     end
-
     
     @course = Course.find(params[:id])
     @course["departments"] = @course.departments
-    @course["instructors"] = @course.faculties.collect do |faculty|
-      "#{faculty.prefix}#{faculty.user.name}"
-    end
 
     @course["topic_list"] = @course.topics.collect do |topic|
       

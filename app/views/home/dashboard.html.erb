@@ -26,14 +26,14 @@
 		  <%= @user[:name] %></strong>
 	      <b class="caret"></b>
 	    </a>
-	    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+	    <ul class="dropdown-menu local" role="menu" aria-labelledby="dropdownMenu">
 	      <li class="disabled"><a><small>My Courses</small></a></li>
-	      <li><a href="#courses/1">Advanced Database Management Systems</a></li>
-	      <li><a href="#courses/3">Real-Time Systems</a></li>
-	      <li><a href="#courses/10">Data Warehousing and Data Mining</a></li>
-	      <li><a href="#courses/2">Industrial Economics</a></li>
+	      <li><a href="/courses/1">Advanced Database Management Systems</a></li>
+	      <li><a href="/courses/3">Real-Time Systems</a></li>
+	      <li><a href="/courses/10">Data Warehousing and Data Mining</a></li>
+	      <li><a href="/courses/2">Industrial Economics</a></li>
 	      <li class="divider"></li>
-	      <li><a href="#me">My Profile</a></li>
+	      <li><a href="/me">My Profile</a></li>
 	      <li><a href="/signout">Sign out</a></li>
 	    </ul>
 	  </li>
@@ -97,7 +97,7 @@
 	{{#each depts}}
 	<tr>
 	  <td>
-	    <a href="#departments/{{this.id}}">{{this.name}}
+	    <a href="/departments/{{this.id}}">{{this.name}}</a>
 	  </td>
 	  <td>{{this.hod}}</td>
 	</tr>
@@ -107,6 +107,9 @@
   </script>
 
   <script type="text/template" id="department-template">
+    <a href="/departments" class="btn btn-small">
+      <i class="icon-chevron-left"></i> Back
+    </a>
     <h3>
       <span class="label label-info">{{dept.short}}</span>
       {{dept.name}}
@@ -133,7 +136,7 @@
 	{{#each this.courses}}
 	<tr>
 	  <td>
-	    <a href="#courses/{{this.id}}">
+	    <a href="/courses/{{this.id}}">
 	      {{this.subject_code}} - {{this.name}}
 	    </a>
 	  </td>
@@ -165,7 +168,7 @@
       This course is being offered by {{course.departments.length}} department{{plural}}
       <strong>(
 	{{#each course.departments}}
-	<a href="#departments/{{this.id}}">
+	<a href="/departments/{{this.id}}">
 	  {{this.short}}
 	</a>
 	{{/each}}
@@ -190,10 +193,10 @@
 	  {{#each course.reference_books}}
 	  <tr><td>
 	      <small>
-		<b><a href="#/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
+		<b><a href="/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
 		by
 		{{#each this.authors}}
-		<a href="#/authors/{{this.id}}">{{this.name}}</a>;
+		<a href="/authors/{{this.id}}">{{this.name}}</a>;
 		{{/each}}
 		<br />
 		{{this.publisher}}, {{this.edition}} <b><i>{{this.isbn}}</i></b>
@@ -205,8 +208,8 @@
     </div>
     <small>View by</small>
     <div class="btn-group" data-toggle="buttons-radio">
-      <a href="#/courses/{{course.id}}/topics" class="btn btn-small{{topics_view_state}}" id="view_by_topic">Topics</a>
-      <a href="#/courses/{{course.id}}/classes" class="btn btn-small{{classes_view_state}}" id="view_by_class">Classes</a>
+      <a href="/courses/{{course.id}}/topics" class="btn btn-small{{topics_view_state}}" id="view_by_topic">Topics</a>
+      <a href="/courses/{{course.id}}/classes" class="btn btn-small{{classes_view_state}}" id="view_by_class">Classes</a>
     </div> 
     <div class="s-push"></div>
     <div id="specialized_view"></div>
@@ -231,7 +234,7 @@
 	<tr><td>
 	    <dl>
 	      <dt>
-		<a href="#/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
+		<a href="/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
 		<span class="label label-success">{{this.ct_status}}</span>
 	      </dt>
 	      <dd>
@@ -308,6 +311,19 @@
       </tbody>
   </script>
 
+  <script type="text/template" id="404-template">
+    <h3 style="font-size: 60px; margin: 30px; ">Its a 404!</h3>
+    <p class="lead">This means, the page you're trying to access does not exist!</p>
+    <div>
+      <a class="btn">
+	<i class="icon-chevron-left"></i> Back
+      </a>
+      <a class="btn">
+	<i class="icon-home"></i> Home
+      </a>
+    </div>
+  </script>
+
   <% unless @user.nil? %>
   <div id="profileModal" class="modal hide fade" tabindex="-1">
     <div class="modal-header">
@@ -319,7 +335,7 @@
     </div>
     <div class="modal-body">
       <div>
-	<%= link_to "Department of #{@user.department.name}", "/#departments/#{@user.department.id}" %>
+	<%= link_to "Department of #{@user.department.name}", "/departments/#{@user.department.id}" %>
       </div>
       <strong>Courses attending:</strong>
       <ul>

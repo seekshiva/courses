@@ -38,7 +38,7 @@
       <td><%= link_to term.course.name, [:admin, term.course] %></td>
       <td>
 	<% term.faculties.each do |faculty| %>
-	<span class="label label-info"><%= faculty.user.name %></span>
+	<span class="label label-info"><%= faculty.user.email %></span>
 	<% end %>
       </td>
       <td><%= "#{term.course.credits}" %></td>

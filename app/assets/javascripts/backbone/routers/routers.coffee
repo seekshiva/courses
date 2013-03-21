@@ -9,6 +9,7 @@ jQuery ->
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
       "courses/:course_id/:slug(/:id)": "course"
+      "*path": "four_oh_four"
 
     home: () ->
       @app.router.navigate("/departments", {trigger: true})
@@ -25,7 +26,7 @@ jQuery ->
     login: () ->
       $("#signin_link").css({display: "none"})
       if @app.user
-        @goto_departments()
+        @home()
       else
         @login_view = new @app.LoginView()
       @
@@ -37,6 +38,10 @@ jQuery ->
     course: (course_id, type, id) ->
       console.log "in course router method"
       @course_view = new @app.CourseView(id: course_id, view: {type: type, id: id})
+      @
+
+    four_oh_four: (path) ->
+      @not_found_view = new @app.NotFoundView(path: path)
       @
 
     initialize: (options) ->

@@ -9,39 +9,44 @@ class HomeController < ApplicationController
   end
   
   def me
-    @user = User.find_by_email(flash[:imap_id])
-    if @user.nil?
-      @user = User.new
-    end
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+      render "home/dashboard"
+    else
+      @user = User.find_by_email(flash[:imap_id])
+      if @user.nil?
+        @user = User.new
+      end
 
-    if flash[:imap_id]
-      flash[:imap_id] = flash[:imap_id]
-      @user[:email] = flash[:imap_id]
-      
-      if @user.is_student?
-        begin
-          @user.department_id = Department.find_by_rollno_prefix(@user[:email][0..3]).id
-        rescue
-          @user.department_id = 0
-        end
-
-        @departments_array = Department.all.map do |department|
-          ["#{department.name}", department.id]
-        end
+      if flash[:imap_id]
+        flash[:imap_id] = flash[:imap_id]
+        @user[:email] = flash[:imap_id]
         
-        @course_list = []
-        Course.all.each do |course|
-          if not course.current_term.nil? and (course.current_term.semester+1)/2 == @user.nth_year
-            course.departments.each do |dept|
-              if dept.id == @user.department_id 
-                @course_list << course
+        if @user.is_student?
+          begin
+            @user.department_id = Department.find_by_rollno_prefix(@user[:email][0..3]).id
+          rescue
+            @user.department_id = 0
+          end
+
+          @departments_array = Department.all.map do |department|
+            ["#{department.name}", department.id]
+          end
+          
+          @course_list = []
+          Course.all.each do |course|
+            if not course.current_term.nil? and (course.current_term.semester+1)/2 == @user.nth_year
+              course.departments.each do |dept|
+                if dept.id == @user.department_id 
+                  @course_list << course
+                end
               end
             end
           end
         end
+      else
+        redirect_to "/#login"
       end
-    else
-      redirect_to "/#login"
     end
   end
 
