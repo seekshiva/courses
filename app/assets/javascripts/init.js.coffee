@@ -23,7 +23,7 @@ jQuery ->
       e.preventDefault()
       @app.router.navigate($(e.target).attr("href"), {trigger: true})
 
-    Backbone.history.start({pushstate: true})
+    Backbone.history.start({pushState: true})
 
     $("#profileModal").on "hide", () ->
       if window.history.length == 1

@@ -2,11 +2,10 @@ class DepartmentsController < ApplicationController
   def index
     @departments = Department.all
 
-    render json: @departments
-    #respond_to do |format|
-    #  format.json { render json: @departments  }
-    #  format.html { render "home/dashboard" }
-    #end
+    respond_to do |format|
+      format.json { render json: @departments  }
+      format.html { render "home/dashboard" }
+    end
   end
 
   def show
