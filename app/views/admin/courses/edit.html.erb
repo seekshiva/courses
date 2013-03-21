@@ -91,37 +91,6 @@
 </div>
 
 
-<div class="accordion" id="accordion4">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
-        Add New Faculty
-      </a>
-    </div>
-    <div id="collapseFour" class="accordion-body collapse">
-      <div class="accordion-inner">
-	
-	<%= form_for([:admin, @course_faculty]) do |f| %>
-	<fieldset>
-
-	  <div class="field">
-	    <%= f.label :faculty_id, "Select a Faculty" %>
-	    <%= f.hidden_field :course_id %>
-	    <%= f.select :faculty_id, options_for_select(@faculty_array) %>
-	  </div>
-
-
-	  <div class="actions">
-	    <%= f.submit class: 'btn btn-primary' %>
-	  </div>
-	</fieldset>
-	<% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <a href="<%= admin_course_path(@course) %>" class="btn btn-small">
   <i class="icon-chevron-left"></i>
   Back

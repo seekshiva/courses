@@ -2,7 +2,11 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    if(params[:code])
+      @courses = Course.find_all_by_subject_code(params[:code])
+    else
+      @courses = Course.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +45,6 @@ class Admin::CoursesController < Admin::BaseController
 
     @new_term = Term.new
     @new_topic = @course.topics.build
-    @course_faculty = @course.course_faculties.build
     @current_ac_year = Time.now.year.to_i
     @current_ac_year -= Time.now.month<6 ? 1 : 0
     @courses_array = Course.all.map do |course|

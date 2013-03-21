@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+
+<p>
+  <b>#<%= @term.id %></b>
+</p>
 <p>
   <b>Course:</b>
   <%= link_to @term.course.subject_code + " - " + @term.course.name, [:admin, @term.course] %>
@@ -15,6 +19,43 @@
   <%= @term.semester %>
 </p>
 
+<p>
+  <b>Departments:</b>
+  <ul>
+    <% @term.departments.each do |dept| %>
+    <li><%= dept.name %></li>
+    <% end %>
+    <li>
+      <%= form_for([:admin, @course, @new_department]) do |f| %>
+      Add new Department?
+      <div>
+	<%= f.hidden_field :term_id, value: @term.id %>
+	<%= f.select :department_id, options_for_select(@departments_array) %><br />
+	<%= f.submit class: "btn btn-small", value: "Go!" %>
+      </div>
+      <% end %>
+    </li>
+  </ul>
+</p>
 
-<%= link_to 'Edit', edit_admin_course_term_path(@course, @term) %> |
+<p>
+  <b>Faculty:</b>
+  <ul>
+    <% @term.faculties.each do |faculty| %>
+    <li><%= faculty.user.name %></li>
+    <% end %>
+    <li>
+      <%= form_for([:admin, @course, @new_faculty]) do |f| %>
+      Add new Faculty?
+	<%= f.hidden_field :term_id, value: @term.id %>	
+      <div class="input-append">
+	<%= f.text_field :faculty, class: "input-medium", placeholder: "faculty webmail id" %>
+	<%= f.submit class: "btn", value: "Go!" %>
+      </div>
+      <% end %>
+    </li>
+  </ul>
+</p>
+
+<%= link_to 'Edit', [:edit, :admin, @course, @term] %> |
 <%= link_to 'Back', admin_course_terms_path(@course) %>

@@ -3,7 +3,7 @@ class Admin::DepartmentsController < Admin::BaseController
   # GET /departments.json
   def index
     @departments = Department.all
-
+      
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @departments }
@@ -14,12 +14,8 @@ class Admin::DepartmentsController < Admin::BaseController
   # GET /departments/1.json
   def show
     @department = Department.find(params[:id])
-    @courses_array = Course.all.map do |course|
-      ["#{course.subject_code} - #{course.name}", course.id]
-    end
-    @course_list_item = CourseListItem.new
-    @currently_showing = nil
-
+    @current_sem = nil
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @department }
@@ -42,6 +38,9 @@ class Admin::DepartmentsController < Admin::BaseController
   def edit
     @legend = "Edit Department"
     @department = Department.find(params[:id])
+    @courses_array = Course.all.map do |course|
+      ["#{course.subject_code} - #{course.name}", course.id]
+    end
 
     respond_to do |format|
       format.html # edit.html.erb

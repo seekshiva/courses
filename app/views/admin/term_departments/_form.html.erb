@@ -1,0 +1,28 @@
+<%= form_for([:admin, @course, @term_department]) do |f| %>
+  <% if @term_department.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@term_department.errors.count, "error") %> prohibited this term_department from being saved:</h2>
+
+      <ul>
+      <% @term_department.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend><%= @legend %></legend>
+  <div class="field">
+    <%= f.label :term_id %>
+    <%= f.select :term_id, options_for_select(@terms_array) %>
+  </div>
+  <div class="field">
+    <%= f.label :department_id %>
+    <%= f.select :department_id, options_for_select(@departments_array) %>
+  </div>
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to 'Back', [:admin, @course, :terms], class: "btn btn-small" %>
+  </div>
+<% end %>

@@ -7,8 +7,7 @@ class Course < ActiveRecord::Base
   has_many :course_references, :dependent => :destroy
   has_many :books, :through => :course_references
 
-  has_many :course_list_items, :dependent => :destroy
-  has_many :departments, :through => :course_list_items
+  has_many :departments, :through => :terms
 
   has_many :course_faculties, :dependent => :destroy
   has_many :faculties, through: :course_faculties

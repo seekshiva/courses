@@ -35,5 +35,10 @@
     </div>
   </div>
   <%= javascript_include_tag "vendor" %>
+  <script>
+    $("body").popover({
+      selector: "[rel='popover']"
+    })
+  </script>
 </body>
 </html>

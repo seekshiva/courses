@@ -1,11 +1,10 @@
 Courses::Application.routes.draw do
-
   namespace :admin do
     resources :users
     resources :faculties
-    resources :course_faculties
     resources :departments
     resources :courses do
+      resources :term_departments, :term_faculties
       resources :topics, :classrooms, :terms
       resources :class_topics
     end

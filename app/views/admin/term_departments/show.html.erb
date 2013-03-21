@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Term:</b>
+  <%= "##{@term.id} #{@term.course.subject_code} #{@term.year} - #{@term.semester.ordinalize} semester" %>
+</p>
+
+<p>
+  <b>Department:</b>
+  <%= @term_department.department.name %>
+</p>
+
+
+<%= link_to 'Edit', [:edit, :admin, @course, @term_department] %> |
+<%= link_to 'Back', [:admin, @course, :term_departments] %>

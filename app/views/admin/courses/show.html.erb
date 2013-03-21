@@ -12,20 +12,9 @@
   <span class="label label-info"><%= @course.subject_code %></span>
   <%= @course.name %>
 </h3>
-<% if @course.faculties.length > 0 %>
-<p>
-  <strong>Course Instructor(s):</strong>
-  <% @course.course_faculties.each do |c_faculty| %>
-  <span class="label label-success">
-    <%= c_faculty.faculty.user.name %>
-    <a href=<%= url_for([:admin, c_faculty]) %> data-method="delete" class="btn btn-danger btn-mini">&times;</a>
-  </span>
-  <% end %>
-</p>
-<div class="s-push"></div>
-<% end %>
 <p>
   This course is being offered by <%= pluralize @course.departments.length, 'department' %>
+
   <% if @course.departments.length > 0 %>
   <strong>(
     <% @course.departments.each do |department| %>
@@ -36,18 +25,67 @@
   <% end %>
 
   It is a <strong><%= @course.credits %></strong> credit course.
-
-
-<div>
-  <% unless @course.current_term.nil? %>
-  Classes for this course are being held right now for <%= @course.current_term.semester.ordinalize %> semester students in the academic year <%= @course.current_term.year %>.
-  Classes take place at <strong><%= @course.current_term.venue %></strong>.
-  <% end %>
-</div>
-
-
+ 
+  <div>
+    <% unless @course.current_term.nil? %>
+    Classes for this course are being held right now for <%= @course.current_term.semester.ordinalize %> semester students in the academic year <%= @course.current_term.year %>.
+    Classes take place at <strong><%= @course.current_term.venue %></strong>.
+    <% end %>
+  </div>
 </p>
 
+
+<div class="s-push"></div>
+<div>
+  <% if @course.terms.length == 0 %> 
+  <strong>Terms:</strong>
+  <p>No term found for this course.
+    <%= link_to "Add one?", add_admin_course_term(@course) %>
+  </p>
+  <% else %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+	<th>Term</th>
+	<th>Departments</th>
+	<th>Faculty</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @course.terms.each do |term| %>
+      <tr>
+	<td>
+	  <%= link_to "##{term.id}", [:admin, @course, term] %>
+	  in <%= term.year %> for <%= term.semester.ordinalize %> semester students
+	</td>
+	<td>
+	  <% term.term_departments.each do |t_dept| %>
+	  <span class="label label-info">
+	    <%= t_dept.department.short %>
+	    <%= link_to raw("&times"), [:admin, @course, t_dept], method: :delete, class: "btn btn-danger btn-mini" %>
+	  </span>
+	  <% end %>
+	</td>
+	<td>
+	  <% term.term_faculties.each do |t_fac| %>
+	  <span class="label label-info">
+	    <%= t_fac.faculty.user.email %>
+	    <%= link_to raw("&times"), [:admin, @course, t_fac], method: :delete, class: "btn btn-danger btn-mini" %>
+	  </span>
+	  <% end %>
+	</td>
+	<td>
+	  <a class="btn btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
+	    Add <b class="caret"></b>
+	  </a>
+	</td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>
 
 <div class="s-push"></div>
 <div>

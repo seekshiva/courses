@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319223149) do
+ActiveRecord::Schema.define(:version => 20130320104850) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -60,26 +60,6 @@ ActiveRecord::Schema.define(:version => 20130319223149) do
 
   add_index "classrooms", ["term_id"], :name => "index_classrooms_on_term_id"
 
-  create_table "course_faculties", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "faculty_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "course_faculties", ["course_id"], :name => "index_course_faculties_on_course_id"
-  add_index "course_faculties", ["faculty_id"], :name => "index_course_faculties_on_faculty_id"
-
-  create_table "course_list_items", :force => true do |t|
-    t.integer  "department_id"
-    t.integer  "course_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "course_list_items", ["course_id"], :name => "index_course_list_items_on_course_id"
-  add_index "course_list_items", ["department_id"], :name => "index_course_list_items_on_department_id"
-
   create_table "course_references", :force => true do |t|
     t.integer  "course_id"
     t.integer  "book_id"
@@ -127,6 +107,26 @@ ActiveRecord::Schema.define(:version => 20130319223149) do
 
   add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
+
+  create_table "term_departments", :force => true do |t|
+    t.integer  "term_id"
+    t.integer  "department_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "term_departments", ["department_id"], :name => "index_term_departments_on_department_id"
+  add_index "term_departments", ["term_id"], :name => "index_term_departments_on_term_id"
+
+  create_table "term_faculties", :force => true do |t|
+    t.integer  "term_id"
+    t.integer  "faculty_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "term_faculties", ["faculty_id"], :name => "index_term_faculties_on_faculty_id"
+  add_index "term_faculties", ["term_id"], :name => "index_term_faculties_on_term_id"
 
   create_table "terms", :force => true do |t|
     t.integer  "course_id"

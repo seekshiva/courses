@@ -16,6 +16,11 @@ class Admin::TermsController < Admin::BaseController
   def show
     @course = Course.find(params[:course_id])
     @term = Term.find(params[:id])
+    @new_faculty = TermFaculty.new
+    @new_department = TermDepartment.new
+    @departments_array = Department.all.collect do |dept|
+      [dept.name, dept.id]
+    end
 
     respond_to do |format|
       format.html # show.html.erb

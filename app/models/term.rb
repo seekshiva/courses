@@ -1,7 +1,15 @@
 class Term < ActiveRecord::Base
   belongs_to :course
-  has_many :departments
+
+  has_many :term_departments, :dependent => :destroy
+  has_many :departments, :through => :term_departments
+
+  has_many :term_faculties, :dependent => :destroy
+  has_many :faculties, :through => :term_faculties
+
   attr_accessible :course_id, :academic_year, :semester
+
+  default_scope :order => "semester ASC"
   
   def year
     return "#{self.academic_year}-#{self.academic_year+1}"
@@ -16,12 +24,12 @@ class Term < ActiveRecord::Base
   end
 
   def this_year?
+    ret = []
     current_academic_year = Time.now.year.to_i
     current_academic_year -= Time.now.month<6 ? 1 : 0
     if self.academic_year == current_academic_year
-      true
-    else
-      false
+      ret << self
     end
+    ret
   end
 end

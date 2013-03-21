@@ -1,0 +1,32 @@
+<h3>Listing term_departments</h3>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  
+  <tbody> 
+    <% @term_departments.each do |term_department| %>
+    <% term =  term_department.term %>
+    <tr>
+      <td>
+	<%= "##{term.id} #{term.course.subject_code} #{term.year} - #{term.semester.ordinalize} semester" %>
+      </td>
+      <td><%= term_department.department.name %></td>
+      <td>
+	<%= link_to 'Show', term_department %>
+	<%= link_to 'Edit', edit_term_department_path(term_department) %>
+	<%= link_to 'Destroy', term_department, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to "New Term department", [:new, :admin, @course, :term_department], class: "btn btn-primary" %>
