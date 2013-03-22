@@ -23,13 +23,16 @@ class DepartmentsController < ApplicationController
     @department.terms.each do |term|
       if term.this_year?
         if current_sem != term.semester 
-          @department["course_list"] << {semester: current_sem, courses: arr} if not current_sem.nil?
+          @department["course_list"] << {semester: "#{current_sem.ordinalize} semester", courses: arr} if not current_sem.nil?
           arr, current_sem = [], term.semester
+        end
+        term.course["instructors"] = term.faculties.collect do |faculty|
+          "#{faculty.prefix} #{faculty.user.name}"
         end
         arr.push(term.course)
       end
     end
-    @department["course_list"] << {semester: current_sem, courses: arr} if not current_sem.nil?
+    @department["course_list"] << {semester: "#{current_sem.ordinalize} semester", courses: arr} if not current_sem.nil?
     
     respond_to do |format|
       format.json { render json: @department  }

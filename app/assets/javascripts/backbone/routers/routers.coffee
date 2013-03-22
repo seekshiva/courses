@@ -3,12 +3,13 @@ jQuery ->
     app: window.app ? {}
     routes:
       "": "home"
-      "login": "login"
-      "me": "me"
       "departments": "index"
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
       "courses/:course_id/:slug(/:id)": "course"
+      "login": "login"
+      "signout": "signout"
+      "me": "me"
       "*path": "four_oh_four"
 
     home: () ->
@@ -17,6 +18,15 @@ jQuery ->
 
     index: () ->
       @departments_view = new @app.DepartmentsView()
+      @
+
+    department: (id) ->
+      @department_view = new @app.DepartmentView(id: id)
+      @
+
+    course: (course_id, type, id) ->
+      console.log "in course router method"
+      @course_view = new @app.CourseView(id: course_id, view: {type: type, id: id})
       @
 
     me: () ->
@@ -31,13 +41,8 @@ jQuery ->
         @login_view = new @app.LoginView()
       @
 
-    department: (id) ->
-      @department_view = new @app.DepartmentView(id: id)
-      @
-
-    course: (course_id, type, id) ->
-      console.log "in course router method"
-      @course_view = new @app.CourseView(id: course_id, view: {type: type, id: id})
+    signout: () ->
+      window.location.href = window.location.href
       @
 
     four_oh_four: (path) ->

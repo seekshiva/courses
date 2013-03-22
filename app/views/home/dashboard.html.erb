@@ -140,7 +140,11 @@
 	      {{this.subject_code}} - {{this.name}}
 	    </a>
 	  </td>
-	  <td>{{this.instructor}}</td>
+	  <td>
+	    {{#each this.instructors}}
+	    {{this}}
+	    {{/each}}
+	  </td>
 	  <td>{{this.credits}}</td>
 	</tr>
 	{{/each}}
@@ -315,10 +319,10 @@
     <h3 style="font-size: 60px; margin: 30px; ">Its a 404!</h3>
     <p class="lead">This means, the page you're trying to access does not exist!</p>
     <div>
-      <a class="btn">
+      <a href="javascript:history.back()" class="btn">
 	<i class="icon-chevron-left"></i> Back
       </a>
-      <a class="btn">
+      <a href="/" class="btn">
 	<i class="icon-home"></i> Home
       </a>
     </div>

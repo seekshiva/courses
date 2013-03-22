@@ -24,14 +24,16 @@ class Admin::FacultiesController < Admin::BaseController
   # GET /faculties/new
   # GET /faculties/new.json
   def new
+    @legend = "New Faculty"
     @faculty = Faculty.new
+    @user_id = nil 
     @users_array = [["",-1]]
     User.all.each do |user|
       if not user.is_student?
         @users_array << [user.email, user.id]
       end
     end
-    @prefix_array = [["",""],["Dr.","Dr."],["Ms.","Ms."],["Mr.","Mr."],["Mrs.","Mrs."]]
+    @prefix_array = [["",""],["Dr.","Dr."],["Prof.","Prof."],["Ms.","Ms."],["Mr.","Mr."],["Mrs.","Mrs."]]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +43,21 @@ class Admin::FacultiesController < Admin::BaseController
 
   # GET /faculties/1/edit
   def edit
+    @legend = "Edit Faculty"
     @faculty = Faculty.find(params[:id])
+    @user_id = @faculty.user.id
+    @users_array = [["",-1]]
+    User.all.each do |user|
+      if not user.is_student?
+        @users_array << [user.email, user.id]
+      end
+    end
+    @prefix_array = [["",""],["Dr.","Dr."],["Prof.","Prof."],["Ms.","Ms."],["Mr.","Mr."],["Mrs.","Mrs."]]
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @faculty }
+    end
   end
 
   # POST /faculties
