@@ -12,8 +12,7 @@ jQuery ->
       "*path": "four_oh_four"
 
     home: () ->
-      @app.router.navigate "/departments"
-        trigger: true
+      @departments_view = new @app.DepartmentsView()
       @
 
     index: () ->
@@ -29,7 +28,7 @@ jQuery ->
       @course_view = new @app.CourseView
         id: course_id
         view:
-          type: type or "topics"
+          type: type or "info"
           id: id
       @
 

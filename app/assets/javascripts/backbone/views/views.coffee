@@ -61,23 +61,16 @@ jQuery ->
     template: Handlebars.compile($("#course-template").html())
 
     el: "#content"
-
-    events:
-      "click #view_by_topic": "viewTopics"
-      "click #view_by_class": "viewClasses"
     
     initialize: (options) ->
       @app = window.app ? {}
       @model = @app.CourseModel
       @view = options.view
 
-      @viewTopics = @setView("topics")
-      @viewClasses = @setView("classes")
-
-      unless @app.course 
+      if not @app.course 
         @app.course = {id: -1}
 
-      if @app.course.id.toString() != options.id #or not @app.course.subject_code
+      if @app.course.id.toString() != options.id
         @app.course = 
           id: options.id
           topics: []
@@ -104,55 +97,40 @@ jQuery ->
       @app.course.classes = @classes
       @app.course.render = @render
 
-      @render @app.course
+      @render()
       @
 
     setTopics:(topics) ->
       @app = window.app ? {}
       @app.course.topics = topics
-      @app.course.render @app.course
+      @app.course.render()
       @
 
     setClasses:(classes) ->
       @app = window.app ? {}
       @app.course.classes = classes
-      @app.course.render @app.course
+      @app.course.render()
       @
 
-    render: (course) =>
+    render: =>
+      find_template = 
+        info        : Handlebars.compile $("#course-info-template").html()
+        topics      : Handlebars.compile $("#course-topics-template").html()
+        classes     : Handlebars.compile $("#course-classes-template").html()
+        reference   : Handlebars.compile $("#course-reference-template").html()
+
       $(@el).html @template
-        course: course
-        plural: "s" if course.departments && course.departments.length != 1
-  
-      @setView(@view.type)()
+        course: @app.course
 
-      if @view.type == "topics"
-        $(@el).find("li").removeClass("active")
-        $(@el).find("#view_by_topic").addClass("active")
-      else if @view.type == "classes"
-        $(@el).find("li").removeClass("active")
-        $(@el).find("#view_by_class").addClass("active")
-      else if @view.type == "books"
-        $(@el).find("li").removeClass("active")
-        $(@el).find("#view_reference_books").addClass("active")
+      $("#specialized_view").html find_template[@view.type]
+        course: @app.course
 
-      $(@el).find("a").click @app.show_local_page
+      $(@el).find("#specialized_view_selector li").removeClass("active")
+      $(@el).find("#view_course_" + @view.type).addClass("active")
+
+      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
       @
-
-    setView:(type) ->
       
-      ->
-        find_template = 
-          topics  : Handlebars.compile $("#course-topic-template").html()
-          classes : Handlebars.compile $("#course-class-template").html()
-          books   : Handlebars.compile $("#course-reference-book-template").html()
-
-        $("#specialized_view").html find_template[type]
-          course: @app.course
-
-        $(@el).find("a").click @app.show_local_page
-        @
-
   class NotFoundView extends Backbone.View
     template: Handlebars.compile($("#404-template").html())
 
