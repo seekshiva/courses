@@ -49,7 +49,13 @@
   <div id="footer">
     <div class="container">
       <p class="muted credit">
-	&copy; 2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
+	<!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
+	<span title="copyleft" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
+	  &copy;
+	</span>
+	<!--[if lte IE 8]></span><![endif]-->
+	
+	2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
       </p>
     </div>
   </div>
@@ -214,56 +220,121 @@
       </div>
     </div>
   </script>
+  
   <script type="text/template" id="course-topics-template">
-    <table class="table bottom_line">
-      <tbody>
-	{{#unless course.topics}}
-	<tr><td>
-	    <p>No topic has been added to this course yet.</p>
-	    <p>Contact your course instructor to add topics this course.</p>
-	</td></tr>
-	{{/unless}}
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-list local-nav">
+	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
 	{{#each course.topics}}
-	<tr><td>
-	    <dl>
-	      <dt>
-		<a href="/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
-		<span class="label label-success">{{this.ct_status}}</span>
-	      </dt>
-	      <dd>
-		<p>
-		  <small>
-		    {{#if this.classes}}
-		    This topic was taught on
-		    {{#each this.classes}}
-		    {{this.date}}
-		    {{/each}}
-		    
-		    {{else}}
-		    This topic has not been taught so far this semester
-		    {{/if}}
-		  </small>
-		</p>
-
-		<p>{{this.description}}</p>
-		<table class="table-hover table-bordered">
-		  <thead><tr>
-		      {{#each this.reference}}
-		      <th><small>{{this.book}}</small></th>
-		      {{/each}}
-		  </tr></thead>
-		  <tbody><tr>
-		      {{#each this.reference}}
-		      <td><small>{{this.sections}}</small></td>
-		      {{/each}}
-		  </tr></tbody>
-		</table>
-	      </dd>
-	    </dl>
-	</td></tr>
+	<li><a href="#_topic_{{this.id}}" data-toggle="tab">{{this.title}}</a></li>
 	{{/each}}
-      </tbody>
-    </table>
+      </ul>
+      <div class="tab-content">
+	<div class="tab-pane active _topic_list" id="_topic_all">
+	  <table class="table bottom_line">
+	    <tbody>
+	      {{#unless course.topics}}
+	      <tr><td>
+		  <p>No topic has been added to this course yet.</p>
+		  <p>Contact your course instructor to add topics this course.</p>
+	      </td></tr>
+	      {{/unless}}
+	      {{#each course.topics}}
+	      <tr><td>
+		  <dl>
+		    <dt>
+		      <a href="/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
+		      <span class="label label-success">{{this.ct_status}}</span>
+		    </dt>
+		    <dd>
+		      <p>
+			<small>
+			  {{#if this.classes}}
+			  This topic was taught on
+			  {{#each this.classes}}
+			  {{this.date}}
+			  {{/each}}
+			  
+			  {{else}}
+			  This topic has not been taught so far this semester
+			  {{/if}}
+			</small>
+		      </p>
+
+		      <p>{{this.description}}</p>
+		      <table class="table-hover table-bordered">
+			<thead><tr>
+			    {{#each this.reference}}
+			    <th><small>{{this.book}}</small></th>
+			    {{/each}}
+			</tr></thead>
+			<tbody><tr>
+			    {{#each this.reference}}
+			    <td><small>{{this.sections}}</small></td>
+			    {{/each}}
+			</tr></tbody>
+		      </table>
+		    </dd>
+		  </dl>
+	      </td></tr>
+	      {{/each}}
+	    </tbody>
+	  </table>
+	</div>
+
+
+	{{#each course.topics}}
+	<div class="tab-pane active _topic_list" id="_topic_{{this.id}}">
+	  <table class="table bottom_line">
+	    <tbody>
+	      <tr><td>
+		  <dl>
+		    <dt>
+		      <a href="/courses/{{../course.id}}/topics/{{this.id}}">{{this.title}}</a>
+		      <span class="label label-success">{{this.ct_status}}</span>
+		    </dt>
+		    <dd>
+		      <p>
+			<small>
+			  {{#if this.classes}}
+			  This topic was taught on
+			  {{#each this.classes}}
+			  {{this.date}}
+			  {{/each}}
+			  
+			  {{else}}
+			  This topic has not been taught so far this semester
+			  {{/if}}
+			</small>
+		      </p>
+
+		      <p>{{this.description}}</p>
+		      <table class="table-hover table-bordered">
+			<thead><tr>
+			    {{#each this.reference}}
+			    <th><small>{{this.book}}</small></th>
+			    {{/each}}
+			</tr></thead>
+			<tbody><tr>
+			    {{#each this.reference}}
+			    <td><small>{{this.sections}}</small></td>
+			    {{/each}}
+			</tr></tbody>
+		      </table>
+		    </dd>
+		  </dl>
+	      </td></tr>
+	    </tbody>
+	  </table>
+	</div>
+	{{/each}}
+
+
+
+
+
+      </div>
+    </div>
   </script>
   
   <script type="text/template" id="course-classes-template">

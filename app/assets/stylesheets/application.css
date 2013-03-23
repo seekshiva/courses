@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .local-nav {
-    width: 130px; 
+    width: 260px; 
 }
 
 
@@ -121,4 +121,12 @@ h1, h2, h3, h4, h5, h6 {
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+}
+
+._topic_list > table {
+    margin-left: -20px;
+}
+
+._topic_list > table > tbody > tr > td {
+    padding-left: 99px;
 }
