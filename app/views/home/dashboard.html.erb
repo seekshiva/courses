@@ -200,12 +200,28 @@
       </ul>
       <div class="tab-content">
 	<div class="tab-pane active" id="info1">
-	  <strong>Course Instructor:</strong>
-	  {{#each course.current.instructors}}
-	  {{this}}
-	  {{/each}}
-	  <h3>Overview</h3>
-	  <p>Hi</p>
+	  <h4>Overview</h4>
+	  <table class="table">
+	    <tr>
+	      <th>
+		<strong>Course Instructor</strong>
+	      </th>
+	      <td>
+		{{#each course.current.instructors}}
+		{{this}}
+		{{/each}}
+	      </td>
+	    </tr>
+	    <tr>
+	      <th>
+		<strong>Departments Offered</strong>
+	      </th>
+	      <td>
+		{{#each course.departments}}
+		{{this.name}}
+		{{/each}}
+	    </td></tr>
+	  </table>
 	</div>
 	<div class="tab-pane" id="info2">
 	  {{#each course.current.instructors}}
@@ -262,7 +278,7 @@
 		      </p>
 
 		      <p>{{this.description}}</p>
-		      <table class="table-hover table-bordered">
+		      <table class="table table-bordered">
 			<thead><tr>
 			    {{#each this.reference}}
 			    <th><small>{{this.book}}</small></th>
@@ -284,7 +300,7 @@
 
 
 	{{#each course.topics}}
-	<div class="tab-pane active _topic_list" id="_topic_{{this.id}}">
+	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
 	      <tr><td>
@@ -309,7 +325,7 @@
 		      </p>
 
 		      <p>{{this.description}}</p>
-		      <table class="table-hover table-bordered">
+		      <table class="table table-bordered">
 			<thead><tr>
 			    {{#each this.reference}}
 			    <th><small>{{this.book}}</small></th>
@@ -328,11 +344,6 @@
 	  </table>
 	</div>
 	{{/each}}
-
-
-
-
-
       </div>
     </div>
   </script>

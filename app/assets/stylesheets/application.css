@@ -72,6 +72,7 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid #dddddd;
     border-top: 0;
 }
+
 .table.bottom_line tr:last-child td {
     border-bottom: 0;
     border-top: 0;
@@ -124,9 +125,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ._topic_list > table {
-    margin-left: -20px;
+    margin-left: -10px;
 }
 
 ._topic_list > table > tbody > tr > td {
-    padding-left: 99px;
+    padding-left: 5px;
 }
