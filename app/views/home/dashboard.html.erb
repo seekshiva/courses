@@ -29,10 +29,10 @@
 	    </a>
 	    <ul class="dropdown-menu local" role="menu" aria-labelledby="dropdownMenu">
 	      <li class="disabled"><a href=""><small>My Courses</small></a></li>
-	      <li><a href="/courses/1/topics">Advanced Database Management Systems</a></li>
-	      <li><a href="/courses/3/topics">Real-Time Systems</a></li>
-	      <li><a href="/courses/10/topics">Data Warehousing and Data Mining</a></li>
-	      <li><a href="/courses/2/topics">Industrial Economics</a></li>
+	      <li><a href="/courses/1">Advanced Database Management Systems</a></li>
+	      <li><a href="/courses/3">Real-Time Systems</a></li>
+	      <li><a href="/courses/10">Data Warehousing and Data Mining</a></li>
+	      <li><a href="/courses/2">Industrial Economics</a></li>
 	      <li class="divider"></li>
 	      <li><a href="/me">My Profile</a></li>
 	      <li><a href="/signout">Sign out</a></li>
@@ -132,7 +132,7 @@
 	{{#each this.courses}}
 	<tr>
 	  <td>
-	    <a href="/courses/{{this.id}}/topics">
+	    <a href="/courses/{{this.id}}">
 	      {{this.subject_code}} - {{this.name}}
 	    </a>
 	  </td>
@@ -166,51 +166,22 @@
       {{/each}}
     </p>
     {{/if}}
-    <p>
-      This course is being offered by {{course.departments.length}} department{{plural}}
-      <strong>(
-	{{#each course.departments}}
-	<a href="/departments/{{this.id}}">
-	  {{this.short}}
-	</a>
-	{{/each}}
-	)</strong>
-      . It is a <strong>{{course.credits}}</strong> credit course.
-      {{#if course.current}}
-      <div>
-	Classes for this course are being held right now for {{course.current.semester}} semester students in the academic year {{course.current.year}}.
-      </div>
-      {{/if}}
-    </p>
 
-    <div class="s-push"></div>
-    <div>
-      <strong onclick="	console.log({{course.reference_books}});">Reference Books</strong>
-      <table class="table table-hover">
-	<tbody>
-	  {{#unless course.reference_books }}
-	  No reference book found for this course.
-	  {{/unless}}
-
-	  {{#each course.reference_books}}
-	  <tr><td>
-	      <small>
-		<b><a href="/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
-		by
-		{{#each this.authors}}
-		<a href="/authors/{{this.id}}">{{this.name}}</a>;
-		{{/each}}
-		<br />
-		{{this.publisher}}, {{this.edition}} <b><i>{{this.isbn}}</i></b>
-	      </small>
-	  </td></tr>
-          {{/each}}
-	</tbody>
-      </table>
-    </div>
     <ul class="nav nav-tabs" id="specialized_view_selector">
+      <li><span class="nav_container">
+	  <strong class="label label-info">{{course.credits}} credits</strong>
+	  {{#each course.departments}}
+	  <a class="btn btn-mini" href="/departments/{{this.id}}">
+	    {{this.short}}
+	  </a>
+	  {{/each}}
+      </span></li>
       <li id="view_by_topic"><a href="/courses/{{course.id}}/topics">Topics</a></li>
       <li id="view_by_class"><a href="/courses/{{course.id}}/classes">Classes</a></li>
+      <li id="view_reference_books"><a href="/courses/{{course.id}}/books">
+	  Reference Books
+	  <small class="badge">{{course.reference_books.length}}</small>
+      </a></li>
     </ul>
     <div id="specialized_view"></div>
  </script>
@@ -299,6 +270,29 @@
 	</td></tr>
 	{{/each}}
       </tbody>
+  </script>
+
+  <script type="text/template" id="course-reference-book-template">
+    <table class="table bottom_line">
+      <tbody>
+	{{#unless course.reference_books }}
+	No reference book found for this course.
+	{{/unless}}
+
+	{{#each course.reference_books}}
+	<tr><td style="padding: 20px;">
+	    <b><a href="/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
+	    by
+	    {{#each this.authors}}
+	    <a href="/authors/{{this.id}}">{{this.name}}</a>;
+	    {{/each}}
+	    <br />
+	    {{this.publisher}}, {{this.edition}} <b><i>{{this.isbn}}</i></b>
+	</td></tr>
+	{{/each}}
+      </tbody>
+    </table>
+
   </script>
 
   <script type="text/template" id="404-template">

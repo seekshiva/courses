@@ -127,11 +127,14 @@ jQuery ->
       @setView(@view.type)()
 
       if @view.type == "topics"
+        $(@el).find("li").removeClass("active")
         $(@el).find("#view_by_topic").addClass("active")
-        $(@el).find("#view_by_class").removeClass("active")
       else if @view.type == "classes"
-        $(@el).find("#view_by_topic").removeClass("active")
+        $(@el).find("li").removeClass("active")
         $(@el).find("#view_by_class").addClass("active")
+      else if @view.type == "books"
+        $(@el).find("li").removeClass("active")
+        $(@el).find("#view_reference_books").addClass("active")
 
       $(@el).find("a").click @app.show_local_page
       @
@@ -139,14 +142,14 @@ jQuery ->
     setView:(type) ->
       
       ->
-        topics_template = Handlebars.compile($("#course-topic-template").html())
-        classes_template = Handlebars.compile($("#course-class-template").html())
-        if(type=="topics")
-          $("#specialized_view").html topics_template
-            course: @app.course
-        if(type=="classes")
-          $("#specialized_view").html classes_template
-            course: @app.course
+        find_template = 
+          topics  : Handlebars.compile $("#course-topic-template").html()
+          classes : Handlebars.compile $("#course-class-template").html()
+          books   : Handlebars.compile $("#course-reference-book-template").html()
+
+        $("#specialized_view").html find_template[type]
+          course: @app.course
+
         $(@el).find("a").click @app.show_local_page
         @
 

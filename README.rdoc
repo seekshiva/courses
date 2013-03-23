@@ -13,7 +13,7 @@ Courses app is free, and distributed under the GNU General Public License (GPL) 
 
 The only real limitation is that whenever you distribute Courses app in some way, you must always include the full source code, or a pointer to where the source code can be found. If you make any changes to the source code, these changes must also be made available under the GPL.
 
-For full details, read the GPL found at http://www.gnu.org/licenses/gpl.html
+For full details, read the GPL, found at http://www.gnu.org/licenses/gpl.html
 
 
 Copyleft ({?}[http://www.gnu.org/copyleft/]) - {V. Shiva Nandan}[https://github.com/seekshiva]
