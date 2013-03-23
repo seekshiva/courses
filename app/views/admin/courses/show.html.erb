@@ -40,7 +40,7 @@
   <% if @course.terms.length == 0 %> 
   <strong>Terms:</strong>
   <p>No term found for this course.
-    <%= link_to "Add one?", add_admin_course_term(@course) %>
+    <%= link_to "Add one?", new_admin_course_term_path(@course) %>
   </p>
   <% else %>
   <table class="table table-hover">

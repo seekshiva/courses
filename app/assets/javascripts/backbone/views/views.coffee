@@ -122,12 +122,18 @@ jQuery ->
     render: (course) =>
       $(@el).html @template
         course: course
-        topics_view_state:  " active" if @view.type == "topics"
-        classes_view_state: " active" if @view.type == "classes"
         plural: "s" if course.departments && course.departments.length != 1
+  
+      @setView(@view.type)()
+
+      if @view.type == "topics"
+        $(@el).find("#view_by_topic").addClass("active")
+        $(@el).find("#view_by_class").removeClass("active")
+      else if @view.type == "classes"
+        $(@el).find("#view_by_topic").removeClass("active")
+        $(@el).find("#view_by_class").addClass("active")
 
       $(@el).find("a").click @app.show_local_page
-      @setView(@view.type)()
       @
 
     setView:(type) ->

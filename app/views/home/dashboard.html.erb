@@ -10,6 +10,7 @@
       <div class="container">
 	<a class="brand" href="/">Courses</a>
 	<ul class="nav local">
+	  <li class="divider-vertical"></li>
 	  <li><%= link_to "Departments", "/departments" %></li>
 	</ul>
 	<% if @user.nil? %>
@@ -27,11 +28,11 @@
 	      <b class="caret"></b>
 	    </a>
 	    <ul class="dropdown-menu local" role="menu" aria-labelledby="dropdownMenu">
-	      <li class="disabled"><a><small>My Courses</small></a></li>
-	      <li><a href="/courses/1">Advanced Database Management Systems</a></li>
-	      <li><a href="/courses/3">Real-Time Systems</a></li>
-	      <li><a href="/courses/10">Data Warehousing and Data Mining</a></li>
-	      <li><a href="/courses/2">Industrial Economics</a></li>
+	      <li class="disabled"><a href=""><small>My Courses</small></a></li>
+	      <li><a href="/courses/1/topics">Advanced Database Management Systems</a></li>
+	      <li><a href="/courses/3/topics">Real-Time Systems</a></li>
+	      <li><a href="/courses/10/topics">Data Warehousing and Data Mining</a></li>
+	      <li><a href="/courses/2/topics">Industrial Economics</a></li>
 	      <li class="divider"></li>
 	      <li><a href="/me">My Profile</a></li>
 	      <li><a href="/signout">Sign out</a></li>
@@ -43,13 +44,7 @@
     </div>
   </div>
   <div id="wrap">
-    <div class="container">
-      <div class="s-push"></div>
-
-      <div id="content"></div>
-
-    </div>
-    <div class="push"></div>
+    <div class="container" id="content"></div>
   </div>
   <div id="footer">
     <div class="container">
@@ -89,7 +84,7 @@
     <table class="table table-hover">
       <thead>
 	<tr>
-	  <th>Name</th>
+	  <th>Department</th>
 	  <th>HOD</th>
 	</tr>
       </thead>
@@ -107,11 +102,11 @@
   </script>
 
   <script type="text/template" id="department-template">
-    <a href="/departments" class="btn btn-small">
-      <i class="icon-chevron-left"></i> Back
-    </a>
-    <h3>
-      <span class="label label-info">{{dept.short}}</span>
+    <h3 style="font-weight: 400; ">
+      <a href="/departments" class="btn btn-small" title="Department List">
+	<i class="icon-chevron-left"></i>
+      </a>
+      <small>{{dept.short}}</small>
       {{dept.name}}
     </h3>
     <div>
@@ -122,12 +117,13 @@
     <table class="table table-hover">
       <caption>
 	<h4>Courses Offered</h4>
+	<div class="s-push"></div>
       </caption>
       <thead>
 	<tr>
 	  <th>Course</th>
 	  <th>Course Instructor</th>
-	  <th>Credits</th>
+	  <th># credits</th>
 	</tr>
       </thead>
       <tbody>
@@ -136,14 +132,16 @@
 	{{#each this.courses}}
 	<tr>
 	  <td>
-	    <a href="/courses/{{this.id}}">
+	    <a href="/courses/{{this.id}}/topics">
 	      {{this.subject_code}} - {{this.name}}
 	    </a>
 	  </td>
 	  <td>
-	    {{#each this.instructors}}
-	    {{this}}
-	    {{/each}}
+	    <small>
+	      {{#each this.instructors}}
+	      {{this}}
+	      {{/each}}
+	    </small>
 	  </td>
 	  <td>{{this.credits}}</td>
 	</tr>
@@ -157,7 +155,7 @@
 
   <script type="text/template" id="course-template">
     <h3>
-      <span class="label label-info">{{course.subject_code}}</span>
+      <small>{{course.subject_code}}</small>
       {{course.name}}
     </h3>
     {{#if course.instructors}}
@@ -210,23 +208,16 @@
 	</tbody>
       </table>
     </div>
-    <small>View by</small>
-    <div class="btn-group" data-toggle="buttons-radio">
-      <a href="/courses/{{course.id}}/topics" class="btn btn-small{{topics_view_state}}" id="view_by_topic">Topics</a>
-      <a href="/courses/{{course.id}}/classes" class="btn btn-small{{classes_view_state}}" id="view_by_class">Classes</a>
-    </div> 
-    <div class="s-push"></div>
+    <ul class="nav nav-tabs" id="specialized_view_selector">
+      <li id="view_by_topic"><a href="/courses/{{course.id}}/topics">Topics</a></li>
+      <li id="view_by_class"><a href="/courses/{{course.id}}/classes">Classes</a></li>
+    </ul>
     <div id="specialized_view"></div>
  </script>
 
   
   <script type="text/template" id="course-topic-template">
-    <table class="table table-bordered">
-      <thead>
-	<caption><h4>
-	    Topics
-	</h4></caption>
-      </thead>
+    <table class="table bottom_line">
       <tbody>
 	{{#unless course.topics}}
 	<tr><td>
@@ -278,12 +269,7 @@
   </script>
   
   <script type="text/template" id="course-class-template">
-    <table class="table table-bordered">
-      <thead>
-	<caption><h4>
-	    Classes
-	</h4></caption>
-      </thead>
+    <table class="table bottom_line">
       <tbody>
 	{{#unless course.classes}}
 	<tr><td>
@@ -294,10 +280,10 @@
 	<tr><td>
 	    <dl>
 	      <dt>
-		{{this.date}} {{this.time}}
+		{{this.date}}, {{this.time}}
+		<small>at {{this.room}}</small>
 	      </dt>
 	      <dd>
-		at {{this.room}}<br />
 		<strong>
 		  Topics covered
 		</strong>
