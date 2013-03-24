@@ -1,8 +1,6 @@
 class CoursesController < ApplicationController
   def show
-    if session[:user_id]
-      @user = User.find(session[:user_id])
-    end
+    current_user
     
     @course = Course.find(params[:id])
     @course["departments"] = @course.departments

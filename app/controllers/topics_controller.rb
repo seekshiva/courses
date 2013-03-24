@@ -4,9 +4,7 @@ class TopicsController < ApplicationController
   def index
     respond_to do |format|
       format.html {
-        if session[:user_id]
-          @user = User.find(session[:user_id])
-        end
+        current_user
         render "home/dashboard"
       }
 

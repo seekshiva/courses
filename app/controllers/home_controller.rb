@@ -1,16 +1,15 @@
 class HomeController < ApplicationController
   def index
-    if session[:user_id]
-      @user = User.find(session[:user_id])
-    end
+    current_user
+
     respond_to do |format|
       format.html { render "home/dashboard" }
     end
   end
   
   def me
-    if session[:user_id]
-      @user = User.find(session[:user_id])
+    current_user
+    if not @user.nil?
       render "home/dashboard"
     else
       @user = User.find_by_email(flash[:imap_id])
