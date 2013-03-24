@@ -68,12 +68,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
 }
 
-.table.bottom_line td {
+.table.bottom_line > tbody > tr > th,
+.table.bottom_line > tbody > tr > td {
     border-bottom: 1px solid #dddddd;
     border-top: 0;
 }
 
-.table.bottom_line tr:last-child td {
+.table.bottom_line > tbody > tr:last-child > th,
+.table.bottom_line > tbody > tr:last-child > td {
     border-bottom: 0;
     border-top: 0;
 }
@@ -124,7 +126,8 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid #ddd;
 }
 
-._topic_list > table {
+._topic_list > table,
+._reference_list > table {
     margin-left: -10px;
 }
 

@@ -168,7 +168,7 @@
     <p>
       <strong>Course Instructor:</strong>
       {{#each course.instructors}}
-      <span class="label label-info">{{this}}</span>
+      <span>{{this.instructor}}</span>
       {{/each}}
     </p>
     {{/if}}
@@ -183,7 +183,7 @@
       <li id="view_course_topics"><a href="/courses/{{course.id}}/topics">Topics</a></li>
       <li id="view_course_classes"><a href="/courses/{{course.id}}/classes">Classes</a></li>
       <li id="view_course_reference"><a href="/courses/{{course.id}}/reference">
-	  Reference Books
+	  Reference Material
 	  <small class="badge">{{course.reference_books.length}}</small>
       </a></li>
     </ul>
@@ -238,6 +238,7 @@
   </script>
   
   <script type="text/template" id="course-topics-template">
+    {{#if course.topics}}
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
 	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
@@ -346,6 +347,17 @@
 	{{/each}}
       </div>
     </div>
+    {{else}}
+
+    <table class="table bottom_line">
+      <tbody>
+	<tr><td style="padding: 20px;">
+	    No topic found for this course.
+	</td></tr>
+      </tbody>
+    </table>
+
+    {{/if}}
   </script>
   
   <script type="text/template" id="course-classes-template">
@@ -382,26 +394,70 @@
   </script>
 
   <script type="text/template" id="course-reference-template">
+    {{#if course.reference_books}}
+    
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-list local-nav">
+	<li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
+      </ul>
+      <div class="tab-content">
+	<div class="tab-pane active _reference_list" id="_reference_books">
+	  <table class="table bottom_line">
+	    <tbody>
+	      {{#each course.reference_books}}
+	      <tr><td style="padding-right: 20px; ">
+		  <h4>{{this.title}}</h4>
+		  <table class="table table-striped table-condensed">
+		    <tbody>
+		      <tr><th>
+			  Year
+			</th><td>
+			  {{this.year}}
+		      </td></tr>
+		      <tr><th>
+			  Authors
+			</th><td>
+			  <ul>
+			    {{#each this.authors}}
+			    <li>{{this.name}}</li>
+			    {{/each}}
+			  </ul>
+		      </td></tr>
+		      <tr><th>
+			  Publisher
+			</th><td>
+			  {{this.publisher}}
+		      </td></tr>
+		      <tr><th>
+			  Edition
+			</th><td>
+			  {{this.edition}}
+		      </td></tr>
+		      <tr><th>
+			  ISBN
+			</th><td>
+			  {{this.isbn}}
+		      </td></tr>
+		    </tbody>
+		  </table>
+	      </td></tr>
+	      {{/each}}
+	  </table>
+	</div>
+      </div>
+    </div>
+
+    {{else}}
+
     <table class="table bottom_line">
       <tbody>
-	{{#unless course.reference_books }}
-	No reference book found for this course.
-	{{/unless}}
-
-	{{#each course.reference_books}}
 	<tr><td style="padding: 20px;">
-	    <b><a href="/books/{{this.id}}">{{this.title}}</a> ({{this.year}})</b>
-	    by
-	    {{#each this.authors}}
-	    <a href="/authors/{{this.id}}">{{this.name}}</a>;
-	    {{/each}}
-	    <br />
-	    {{this.publisher}}, {{this.edition}} <b><i>{{this.isbn}}</i></b>
+	    No Reference material found for this book.
 	</td></tr>
-	{{/each}}
       </tbody>
     </table>
 
+    {{/if}}
   </script>
 
   <script type="text/template" id="404-template">
