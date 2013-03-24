@@ -22,8 +22,31 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:id]||params[:course_id])
+    @tab = params[:tab]
     @ref_books = @course.books
+
+    @classes = Classroom.where("term_id IN (" + @course.this_year.collect do |term|
+                                 term.id
+                               end.join(",") + ")").collect do |cl|
+      ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, venue: cl.room, term_id: cl.term_id }
+      ret["topics"] = cl.topics.collect do |topic|
+        { id: topic.id, ct_status: topic.ct_status, title: topic.title }
+      end
+      
+      ret
+    end
+
+    @course["instructors"] = []
+    @course.this_year.each do |term|
+      term.faculties.each do |faculty|
+        @course["instructors"] << {
+          instructor: "#{faculty.prefix} #{faculty.user.name}",
+          semester:   term.semester.ordinalize,
+          year:       "#{term.academic_year}-#{term.academic_year+1}"
+        }
+      end
+    end
     
 
     respond_to do |format|

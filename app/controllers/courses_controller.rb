@@ -20,17 +20,16 @@ class CoursesController < ApplicationController
       book
     end
 
-    instructors = []
+    @course["instructors"] = []
     @course.this_year.each do |term|
       term.faculties.each do |faculty|
-        instructors << {
+        @course["instructors"] << {
           instructor: "#{faculty.prefix} #{faculty.user.name}",
           semester:   term.semester.ordinalize,
           year:       "#{term.academic_year}-#{term.academic_year+1}"
         }
       end
     end
-    @course["instructors"] = instructors
 
     respond_to do |format|
       format.json { render json: @course  }

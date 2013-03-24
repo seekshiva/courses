@@ -13,8 +13,6 @@ class ClassroomsController < Admin::BaseController
       
       ret
     end
-    @classes.each do |cl|
-    end
 
     respond_to do |format|
       format.html # index.html.erb

@@ -16,16 +16,16 @@
 
 <dl>
   <dt>
-    <%= link_to @topic.title, [:admin, @course, @topic] %>
+    <%= @topic.title %>
     <span class="label label-success"><%= @topic.ct_status %></span>
   </dt>
   <dd>
-    <%= @topic.description %><br /><br />
+    <%= @topic.description %><br />
   
-    <table class="table-hover table-bordered">
+    <table class="table table-bordered">
       <thead><tr>
 	  <% @ref_books.each do |book| %>
-	  <th><small><%= truncate(book.title, :length => 30) %></small></th>
+	  <th><small><%= book.title %></small></th>
 	  <% end %>
       </tr></thead>
       <tbody><tr>

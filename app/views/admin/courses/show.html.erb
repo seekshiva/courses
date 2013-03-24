@@ -9,134 +9,243 @@
 </div>
 
 <h3>
-  <span class="label label-info"><%= @course.subject_code %></span>
+  <small><%= @course.subject_code %></small>
   <%= @course.name %>
 </h3>
 <p>
-  This course is being offered by <%= pluralize @course.departments.length, 'department' %>
-
-  <% if @course.departments.length > 0 %>
-  <strong>(
-    <% @course.departments.each do |department| %>
-    <%= link_to department.short, [:admin, department] %>
-    <% end %>
-    ).
-  </strong>
+  <strong>Course Instructor:</strong>
+  <% @course.instructors.each do |instructor| %>
+  <%= instructor[:instructor] %>
   <% end %>
-
-  It is a <strong><%= @course.credits %></strong> credit course.
- 
-  <div>
-    <% unless @course.current_term.nil? %>
-    Classes for this course are being held right now for <%= @course.current_term.semester.ordinalize %> semester students in the academic year <%= @course.current_term.year %>.
-    Classes take place at <strong><%= @course.current_term.venue %></strong>.
-    <% end %>
-  </div>
+  <span></span>
 </p>
+<ul class="nav nav-tabs" id="specialized_view_selector">
+  <li class="span2">
+    <span class="nav_container">
+      <strong class="label label-info"><%= pluralize(@course.credits, "credits") %></strong>
+    </span>
+  </li>
+  <li id="view_course_info" class="<%= 'active' if @tab=='info' %>">
+    <a href="./info">Info</a>
+  </li>
+  <li id="view_course_info" class="<%= 'active' if @tab=='topics' %>">
+    <a href="./topics">Topics</a>
+  </li>
+  <li id="view_course_info" class="<%= 'active' if @tab=='classes' %>">
+    <a href="./classes">Classes</a>
+  </li>
+  <li id="view_course_info" class="<%= 'active' if @tab=='references' %>">
+    <a href="./references">
+      Reference Material
+      <small class="badge"><%= @ref_books.length %></small>
+    </a>
+  </li>
+</ul>
+
+<div id="specialized_view">
+  <% if @tab=="info"%>
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-list local-nav">
+      <li class="active"><a href="#_info_1" data-toggle="tab">Overview</a></li>
+      <li><a href="#_info_2" data-toggle="tab">Instructor</a></li>
+      <li><a href="#_info_3" data-toggle="tab">Outline</a></li>
+      <li><a href="#_info_4" data-toggle="tab">Terms</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="_info_1">
+	<h4>Overview</h4>
+	<table class="table">
+	  <tbody>
+	    <tr><th>
+		Course Instructor
+	      </th><td>
+		<% @course.instructors.each do |instructor| %>
+		<%= instructor[:instructor] %>
+		<% end %>
+	    </td></tr>
+	    <tr><th>
+		Departments Offered
+	      </th><td>
+		<% @course.departments.each do |department| %>
+		<%= department.name %>
+		<% end %>
+	    </td></tr>
+	  </tbody>
+	</table>
+      </div>
+      <div class="tab-pane" id="_info_2">
+	<h4>
+	  <% @course.instructors.each do |instructor| %>
+	  <%= instructor[:instructor] %>
+	  <% end %>
+	</h4>
+	<p>David Malan is a Senior Lecturer on Computer Science at Harvard. He recieved his B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
+	
+	<p>David Malan's research in graduate school focused primarily on cyber security and computer forensics.</p>
+      </div>
+      <div class="tab-pane" id="_info_3">
+	<h4>Outline</h4>
+      </div>
+
+      <div class="tab-pane" id="_info_4">
+	<% if @course.terms.length == 0 %> 
+	<strong>Terms:</strong>
+	<p>No term found for this course.
+	  <%= link_to "Add one?", new_admin_course_term_path(@course) %>
+	</p>
+	<% else %>
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      <th>Term</th>
+	      <th>Departments</th>
+	      <th>Faculty</th>
+	      <th>Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @course.terms.each do |term| %>
+	    <tr>
+	      <td>
+		<%= link_to "##{term.id}", [:admin, @course, term] %>
+		in <%= term.year %> for <%= term.semester.ordinalize %> semester students
+	      </td>
+	      <td>
+		<% term.term_departments.each do |t_dept| %>
+		<span class="label label-info">
+		  <%= t_dept.department.short %>
+		  <%= link_to raw("&times"), [:admin, @course, t_dept], method: :delete, class: "btn btn-danger btn-mini" %>
+		</span>
+		<% end %>
+	      </td>
+	      <td>
+		<% term.term_faculties.each do |t_fac| %>
+		<span class="label label-info">
+		  <%= t_fac.faculty.user.email %>
+		  <%= link_to raw("&times"), [:admin, @course, t_fac], method: :delete, class: "btn btn-danger btn-mini" %>
+		</span>
+		<% end %>
+	      </td>
+	      <td>
+		<a class="btn btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
+		  Add <b class="caret"></b>
+		</a>
+	      </td>
+	    </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+	<% end %>
+      </div>
 
 
-<div class="s-push"></div>
-<div>
-  <% if @course.terms.length == 0 %> 
-  <strong>Terms:</strong>
-  <p>No term found for this course.
-    <%= link_to "Add one?", new_admin_course_term_path(@course) %>
-  </p>
-  <% else %>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-	<th>Term</th>
-	<th>Departments</th>
-	<th>Faculty</th>
-	<th>Actions</th>
-      </tr>
-    </thead>
+
+    </div>
+  </div>
+
+
+
+  <% elsif @tab == "topics" %>
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-list local-nav">
+      <li class="active"><a href="#_all_topics" data-toggle="tab">All</a></li>
+      <% @course.topics.each do |topic| %>
+      <li><a href="#_topic_<%= topic.id %>" data-toggle="tab"><%= topic.title %></a></li>
+      <% end %>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane _topic_list active" id="_all_topics">
+	<table class="table bottom_line">
+	  <tbody>
+	    <% if @course.topics.length == 0 %>
+	    <tr><td>
+		No topic found for this course.
+	    </td></tr>
+	    <% else %>
+	    <% @course.topics.each do |topic| %>
+	    <% @topic = topic %>
+	    <tr><td>
+		<%= render :template => "admin/topics/show" %>
+		
+	    </td></tr>
+	    <% end %>
+	    <% end %>
+	  </tbody>
+	</table>
+      </div>
+
+      <% @course.topics.each do |topic| %>
+      <div class="tab-pane _topic_list" id="_topic_<%= topic.id %>">
+	<table class="table bottom_line">
+	  <tbody>
+	    <% @topic = topic %>
+	    <tr><td>
+		<%= render :template => "admin/topics/show" %>
+	    </td></tr>
+	  </tbody>
+	</table>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% elsif @tab == "classes" %>
+  <table class="table bottom_line">
     <tbody>
-      <% @course.terms.each do |term| %>
-      <tr>
-	<td>
-	  <%= link_to "##{term.id}", [:admin, @course, term] %>
-	  in <%= term.year %> for <%= term.semester.ordinalize %> semester students
-	</td>
-	<td>
-	  <% term.term_departments.each do |t_dept| %>
-	  <span class="label label-info">
-	    <%= t_dept.department.short %>
-	    <%= link_to raw("&times"), [:admin, @course, t_dept], method: :delete, class: "btn btn-danger btn-mini" %>
-	  </span>
-	  <% end %>
-	</td>
-	<td>
-	  <% term.term_faculties.each do |t_fac| %>
-	  <span class="label label-info">
-	    <%= t_fac.faculty.user.email %>
-	    <%= link_to raw("&times"), [:admin, @course, t_fac], method: :delete, class: "btn btn-danger btn-mini" %>
-	  </span>
-	  <% end %>
-	</td>
-	<td>
-	  <a class="btn btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
-	    Add <b class="caret"></b>
-	  </a>
-	</td>
-      </tr>
+      <% @classes.each do |cl| %>
+      <tr><td>
+	  <dl>
+	    <dt>
+	      <%= "#{cl[:date]}, #{cl[:time]}" %>
+	      <small>at <%= cl[:venue] %></small>
+	    </dt>
+	    <% if cl["topics"].length > 0  %>
+	    <dd>
+	      <strong>Topics covered</strong>
+	      <ul>
+		<% cl["topics"].each do |topic| %>
+		<li><%= topic[:title] %></li>
+		<% end %>
+	      </ul>
+	    </dd>
+	    <% end %>
+	  </dl>
+      </td></tr>
       <% end %>
     </tbody>
   </table>
+  <% elsif @tab == "references" %>
+
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-list local-nav">
+      <li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="_reference_books">
+	<% if @course.books.length == 0 %>
+	<p>No reference book found for this subject.</p>
+	<% else %>
+	<table class="table table-hover bottom_line" >
+	  <% @course.books.each do |book| %>
+	  <tr>
+	    <td>
+	      <small>
+		<b><%= link_to book.title, [:admin, book] %> (<%= book.year %>)</b>
+		by
+		<% book.authors.each do |author| %>
+		<%= link_to author.name, [:admin, author] %>;
+		<% end %><br />
+		
+		<%= "#{book.publisher}, #{book.edition}" %> <b><i><%= "#{book.isbn}" %></i></b>
+	      </small>
+	    </td>
+	  </tr>
+	  <% end %>
+	</table>
+	<% end %>
+      </div>
+    </div>
+  </div>
+
   <% end %>
 </div>
-
-<div class="s-push"></div>
-<div>
-  <strong>Reference Books:</strong>
-  <% if @course.books.length == 0 %>
-  <p>No reference book found for this subject.</p>
-  <% else %>
-  <table class="table table-hover" >
-    <% @course.books.each do |book| %>
-    <tr>
-      <td>
-	<small>
-	  <b><%= link_to book.title, [:admin, book] %> (<%= book.year %>)</b>
-	  by
-	  <% book.authors.each do |author| %>
-	  <%= link_to author.name, [:admin, author] %>;
-	  <% end %><br />
-	  
-	  <%= "#{book.publisher}, #{book.edition}" %> <b><i><%= "#{book.isbn}" %></i></b>
-	</small>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-  <% end %>
-</div>
-
-<div class="s-push"></div>
-<table class="table table-bordered">
-  <thead>
-    <caption><h4>
-	Topics
-    </h4></caption>
-  </thead>
-  <tbody>
-    <% if @course.topics.length == 0 %>
-    <tr><td>
-      No topic found for this course.
-    </td></tr>
-    <% else %>
-    <% @course.topics.each do |topic| %>
-    <% @topic = topic %>
-    <tr><td>
-	<%= render :template => "admin/topics/show" %>
-	
-    </td></tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-
-
-
