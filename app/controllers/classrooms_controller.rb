@@ -3,7 +3,9 @@ class ClassroomsController < Admin::BaseController
   # GET /classrooms.json
   def index
     @course = Course.find(params[:course_id])
-    @classes = Classroom.find_all_by_term_id(@course.current_term.id).collect do |cl|
+    @classes = Classroom.where("term_id IN (" + @course.this_year.collect do |term|
+                                 term.id
+                               end.join(",") + ")").collect do |cl|
       ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, room: cl.room, term_id: cl.term_id }
       ret["topics"] = cl.topics.collect do |topic|
         { id: topic.id, ct_status: topic.ct_status, title: topic.title }

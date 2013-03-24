@@ -21,15 +21,18 @@ class CoursesController < ApplicationController
       book["authors"] = book.authors
       book
     end
-    if @course.current_term
-      @course["current"] = {
-        instructors: @course.current_term.faculties.collect do |faculty|
-          "#{faculty.prefix} #{faculty.user.name}"
-        end,
-        semester:   @course.current_term.semester.ordinalize,
-        year:       "#{@course.current_term.academic_year}-#{@course.current_term.academic_year+1}"
-      } 
+
+    instructors = []
+    @course.this_year.each do |term|
+      term.faculties.each do |faculty|
+        instructors << {
+          instructor: "#{faculty.prefix} #{faculty.user.name}",
+          semester:   term.semester.ordinalize,
+          year:       "#{term.academic_year}-#{term.academic_year+1}"
+        }
+      end
     end
+    @course["instructors"] = instructors
 
     respond_to do |format|
       format.json { render json: @course  }

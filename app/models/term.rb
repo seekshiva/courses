@@ -24,11 +24,10 @@ class Term < ActiveRecord::Base
   end
 
   def this_year?
-    ret = []
-    current_academic_year = Time.now.year.to_i
-    current_academic_year -= Time.now.month<6 ? 1 : 0
+    ret = false
+    current_academic_year = Time.now.year.to_i - (Time.now.month<6 ? 1 : 0)
     if self.academic_year == current_academic_year
-      ret << self
+      ret = true
     end
     ret
   end

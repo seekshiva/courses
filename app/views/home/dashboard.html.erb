@@ -207,8 +207,8 @@
 		<strong>Course Instructor</strong>
 	      </th>
 	      <td>
-		{{#each course.current.instructors}}
-		{{this}}
+		{{#each course.instructors}}
+		{{this.instructor}}
 		{{/each}}
 	      </td>
 	    </tr>
@@ -224,14 +224,14 @@
 	  </table>
 	</div>
 	<div class="tab-pane" id="info2">
-	  {{#each course.current.instructors}}
-	  <h4>{{this}}</h4>
-	  <p>{{this}} is a Senior Lecturer on Computer Science at NIT Trichy. He/She recieved his/her B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
-	  <p>{{this}}'s research in graduate school focused primarily on cyber security and computer forensics.</p>
+	  {{#each course.instructors}}
+	  <h4>{{this.instructor}}</h4>
+	  <p>David Malan is a Senior Lecturer on Computer Science at Harvard. He recieved his B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
+	  <p>David Malan's research in graduate school focused primarily on cyber security and computer forensics.</p>
 	  {{/each}}
 	</div>
 	<div class="tab-pane" id="info3">
-	  <h3>Outline</h3>
+	  <h4>Outline</h4>
 	</div>
       </div>
     </div>

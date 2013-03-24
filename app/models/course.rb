@@ -27,12 +27,10 @@ class Course < ActiveRecord::Base
   end
 
   def this_year
-    current=nil
+    current=[]
     self.terms.each do |term|
       if term.this_year?
-        if current.nil? or not current.is_current?
-          current = term
-        end
+        current << term
       end
     end
     current
