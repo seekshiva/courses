@@ -4,15 +4,16 @@ jQuery ->
     template: Handlebars.compile($("#departments-template").html())
 
     initialize: ->
-      @app = window.app ? {}
-      @app.departments = @app.controller.getCollection("departments_collection")
-      @app.departments.bind "reset", @render, @
+      @app = window.app ? {} 
+      @departments = new @app.DepartmentsCollection()  
+      @departments.bind "reset", @render, @
+      @departments.fetch()
       @
 
     render: ->
       depts = {}
 
-      @app.departments.models.map (dept) ->
+      @departments.models.map (dept) ->
         depts[dept.id] = {
           id: dept.get("id")
           name: dept.get("name")
@@ -26,6 +27,25 @@ jQuery ->
 
       @
 
+  class DepartmentView extends Backbone.View
+    template: Handlebars.compile($("#department-template").html())
+
+    el: "#content"
+
+    initialize: (options) ->
+      @app = window.app ? {}
+
+      @department = new @app.DepartmentModel({id: options.id})  
+      @department.bind "change", @render, @
+      @department.bind "destroy", @render, @
+      @department.fetch()
+
+    render: =>
+      $(@el).html @template
+        dept: @department.attributes
+      $(@el).find("a").click @app.show_local_page
+      @
+
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())
 
@@ -36,25 +56,6 @@ jQuery ->
 
     render:  ->
       $(@el).html @template
-      @
-
-  class DepartmentView extends Backbone.View
-    template: Handlebars.compile($("#department-template").html())
-
-    el: "#content"
-
-    initialize: (options) ->
-      @options = options
-      @app = window.app ? {}
-      @model = @app.DepartmentModel
-
-      $.getJSON("/departments/"+options.id, @render)
-
-    render: (dept) =>
-      $(@el).html @template
-        dept: dept
-      $(@el).find("a").click @app.show_local_page
-
       @
 
   class CourseView extends Backbone.View

@@ -5,7 +5,6 @@ $.ajaxSetup cache: false
 jQuery ->
   $(document).ready ->
     @app = window.app ? {}
-    @app.controller = new @app.AppController()
     @app.router = new @app.ApplicationRouter()
 
     $.ajaxSetup
