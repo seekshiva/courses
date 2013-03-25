@@ -1,11 +1,22 @@
 class DepartmentsController < ApplicationController
   def index
-    current_user
-    @departments = Department.all
-
     respond_to do |format|
-      format.json { render json: @departments  }
-      format.html { render "home/dashboard" }
+      format.json { 
+
+        render json: Department.all.collect do |dept|
+          { id:            dept[:id],
+            name:          dept[:name],
+            hod:           dept[:hod],
+            rollno_prefix: dept[:rollno_prefix],
+            short:         dept[:short]
+          }
+        end
+
+      }
+      format.html {
+        current_user
+        render "home/dashboard"
+      }
     end
   end
 
@@ -16,25 +27,41 @@ class DepartmentsController < ApplicationController
         render "home/dashboard"
       }
       format.json {
-        @department = Department.find(params[:id])
-        @department["course_list"] = []
+        dept = Department.find(params[:id])
+
+        ret = {
+          id:            dept[:id],
+          name:          dept[:name],
+          hod:           dept[:hod],
+          rollno_prefix: dept[:rollno_prefix],
+          short:         dept[:short],
+          terms:         []
+        }
+
 
         arr, current_sem = [], nil
-        @department.terms.each do |term|
+        dept.terms.each do |term|
           if term.this_year?
-            if current_sem != term.semester 
-              @department["course_list"] << {semester: "#{current_sem.ordinalize} semester", courses: arr} if not current_sem.nil?
-              arr, current_sem = [], term.semester
+            if current_sem != term.semester
+              ret[:terms] << { semester: current_sem, course_list: arr } if not current_sem.nil?
+              arr = []
             end
-            term.course["instructors"] = term.faculties.collect do |faculty|
-              "#{faculty.prefix} #{faculty.user.name}"
+            current_sem = term.semester
+            course = {
+              id:      term.course[:id],
+              code:    term.course[:subject_code],
+              name:    term.course[:name],
+              credits: term.course[:credits]
+            } 
+            course[:instructors] = term.faculties.collect do |faculty|
+              { id:   faculty.id, name: "#{faculty.prefix} #{faculty.user.name}" }
             end
-            arr.push(term.course)
+            arr << course
           end
         end
-        @department["course_list"] << {semester: "#{current_sem.ordinalize} semester", courses: arr} if not current_sem.nil?
-        
-        render json: @department
+        ret[:terms] << { semester: current_sem, course_list: arr } if not current_sem.nil?
+
+        render json: ret
       }
     end
   end

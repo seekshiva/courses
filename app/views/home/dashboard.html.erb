@@ -133,19 +133,19 @@
 	</tr>
       </thead>
       <tbody>
-	{{#each dept.course_list}}
+	{{#each dept.terms}}
 	<tr><th colspan="3">{{this.semester}}</th></tr>
-	{{#each this.courses}}
+	{{#each this.course_list}}
 	<tr>
 	  <td>
 	    <a href="/courses/{{this.id}}">
-	      {{this.subject_code}} - {{this.name}}
+	      {{this.code}} - {{this.name}}
 	    </a>
 	  </td>
 	  <td>
 	    <small>
 	      {{#each this.instructors}}
-	      <div>{{this}}</div>
+	      <div>{{this.name}}</div>
 	      {{/each}}
 	    </small>
 	  </td>
@@ -406,13 +406,12 @@
 	    <tbody>
 	      {{#each course.reference_books}}
 	      <tr><td style="padding-right: 20px; ">
-		  <h4>{{this.title}}</h4>
+		  <h4>
+		    {{this.title}}
+		    <small>({{this.year}})</small>
+		  </h4>
 		  <table class="table table-striped table-condensed">
 		    <tbody>
-		      <tr><th>
-			  Year
-			</th><td>
-			  {{this.year}}
 		      </td></tr>
 		      <tr><th>
 			  Authors
