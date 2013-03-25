@@ -23,7 +23,7 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses/1.json
   def show
     @course = Course.find(params[:id]||params[:course_id])
-    @tab = params[:tab]
+    @tab = params[:tab] || "info"
     @ref_books = @course.books
 
     @classes = Classroom.where("term_id IN (" + @course.this_year.collect do |term|

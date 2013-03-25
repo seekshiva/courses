@@ -26,16 +26,16 @@
     </span>
   </li>
   <li id="view_course_info" class="<%= 'active' if @tab=='info' %>">
-    <a href="./info">Info</a>
+    <a href="/admin/courses/<%= @course.id %>/info">Info</a>
   </li>
   <li id="view_course_info" class="<%= 'active' if @tab=='topics' %>">
-    <a href="./topics">Topics</a>
+    <a href="/admin/courses/<%= @course.id %>/topics">Topics</a>
   </li>
   <li id="view_course_info" class="<%= 'active' if @tab=='classes' %>">
-    <a href="./classes">Classes</a>
+    <a href="/admin/courses/<%= @course.id %>/classes">Classes</a>
   </li>
   <li id="view_course_info" class="<%= 'active' if @tab=='references' %>">
-    <a href="./references">
+    <a href="/admin/courses/<%= @course.id %>/references">
       Reference Material
       <small class="badge"><%= @ref_books.length %></small>
     </a>

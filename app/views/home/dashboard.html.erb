@@ -161,7 +161,7 @@
 
   <script type="text/template" id="course-template">
     <h3>
-      <small>{{course.subject_code}}</small>
+      <small>{{course.code}}</small>
       {{course.name}}
     </h3>
     {{#if course.instructors}}
@@ -238,11 +238,11 @@
   </script>
   
   <script type="text/template" id="course-topics-template">
-    {{#if course.topics}}
+    {{#if course.topic_list}}
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
 	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
-	{{#each course.topics}}
+	{{#each course.topic_list}}
 	<li><a href="#_topic_{{this.id}}" data-toggle="tab">{{this.title}}</a></li>
 	{{/each}}
       </ul>
@@ -250,13 +250,13 @@
 	<div class="tab-pane active _topic_list" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#unless course.topics}}
+	      {{#unless course.topic_list}}
 	      <tr><td>
 		  <p>No topic has been added to this course yet.</p>
 		  <p>Contact your course instructor to add topics this course.</p>
 	      </td></tr>
 	      {{/unless}}
-	      {{#each course.topics}}
+	      {{#each course.topic_list}}
 	      <tr><td>
 		  <dl>
 		    <dt>
@@ -300,7 +300,7 @@
 	</div>
 
 
-	{{#each course.topics}}
+	{{#each course.topic_list}}
 	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>

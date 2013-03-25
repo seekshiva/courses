@@ -38,7 +38,6 @@ class DepartmentsController < ApplicationController
           terms:         []
         }
 
-
         arr, current_sem = [], nil
         dept.terms.each do |term|
           if term.this_year?

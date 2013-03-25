@@ -46,6 +46,37 @@ jQuery ->
       $(@el).find("a").click @app.show_local_page
       @
 
+  class CourseView extends Backbone.View
+    template: Handlebars.compile($("#course-template").html())
+
+    el: "#content"
+    
+    initialize: (options) ->
+      @app = window.app ? {}
+      @view = options.view
+      @course = new @app.CourseModel({id: options.id})
+      @course.bind "change", @render, @
+      @course.bind "destroy", @render, @
+      @course.fetch()
+
+      @
+
+    render: =>
+      find_template = (type)->
+        Handlebars.compile $("#course-" + type + "-template").html()
+
+      $(@el).html @template
+        course: @course.attributes
+
+      $("#specialized_view").html find_template(@view.type)
+        course: @course.attributes
+
+      $(@el).find("#specialized_view_selector li").removeClass("active")
+      $(@el).find("#view_course_" + @view.type).addClass("active")
+
+      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
+      @
+
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())
 
@@ -56,80 +87,6 @@ jQuery ->
 
     render:  ->
       $(@el).html @template
-      @
-
-  class CourseView extends Backbone.View
-    template: Handlebars.compile($("#course-template").html())
-
-    el: "#content"
-    
-    initialize: (options) ->
-      @app = window.app ? {}
-      @model = @app.CourseModel
-      @view = options.view
-
-      if not @app.course 
-        @app.course = {id: -1}
-
-      if @app.course.id.toString() != options.id
-        @app.course = 
-          id: options.id
-          topics: []
-          classes: []
-          render: @render
-
-        $.getJSON("/courses/"+options.id, @setCourse)
-        $.getJSON("/courses/"+@app.course.id+"/topics", @setTopics)
-        $.getJSON("/courses/"+@app.course.id+"/classrooms", @setClasses)
-
-      else
-        @render @app.course
-
-      @
-
-    setCourse:(course) ->
-      @app = window.app ? {}
-      @topics = @app.course.topics
-      @classes = @app.course.classes
-      @render = @app.course.render
-
-      @app.course = course
-      @app.course.topics = @topics
-      @app.course.classes = @classes
-      @app.course.render = @render
-
-      @render()
-      @
-
-    setTopics:(topics) ->
-      @app = window.app ? {}
-      @app.course.topics = topics
-      @app.course.render()
-      @
-
-    setClasses:(classes) ->
-      @app = window.app ? {}
-      @app.course.classes = classes
-      @app.course.render()
-      @
-
-    render: =>
-      find_template = 
-        info        : Handlebars.compile $("#course-info-template").html()
-        topics      : Handlebars.compile $("#course-topics-template").html()
-        classes     : Handlebars.compile $("#course-classes-template").html()
-        reference   : Handlebars.compile $("#course-reference-template").html()
-
-      $(@el).html @template
-        course: @app.course
-
-      $("#specialized_view").html find_template[@view.type]
-        course: @app.course
-
-      $(@el).find("#specialized_view_selector li").removeClass("active")
-      $(@el).find("#view_course_" + @view.type).addClass("active")
-
-      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
       @
       
   class NotFoundView extends Backbone.View
