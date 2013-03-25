@@ -69,7 +69,7 @@ class Admin::CoursesController < Admin::BaseController
 
   # GET /courses/1/edit
   def edit
-    @course = Course.find(params[:id])
+    @course = Course.find(params[:id] || params[:course_id])
 
     @new_term = Term.new
     @new_topic = @course.topics.build

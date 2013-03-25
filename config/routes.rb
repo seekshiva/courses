@@ -10,6 +10,8 @@ Courses::Application.routes.draw do
         match "follow" => "terms#follow"
       end
       resources :class_topics
+      get "new" => "courses#new"
+      get "edit" => "courses#edit"
       get ":tab" => "courses#show"
     end
     resources :course_list_items, :course_references
