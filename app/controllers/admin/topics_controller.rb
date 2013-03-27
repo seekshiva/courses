@@ -6,7 +6,9 @@ class Admin::TopicsController < Admin::BaseController
     @topics = Topic.find_all_by_course_id(@course.id)
     
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { 
+        render [@course, "show"]
+      }
       format.json { render json: @topics }
     end
 

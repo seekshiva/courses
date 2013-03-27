@@ -60,6 +60,7 @@ class CoursesController < ApplicationController
           id:              course.id,
           code:            course.subject_code,
           name:            course.name,
+          about:           course.about,
           credits:         course.credits,
           departments:     course.departments,
           classes:         classes,

@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  attr_accessible :credits, :name, :subject_code
+  attr_accessible :about, :credits, :name, :subject_code
 
   has_many :terms, :dependent => :destroy
   has_many :topics, :dependent => :destroy

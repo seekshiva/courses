@@ -70,6 +70,9 @@
 		<%= department.name %>
 		<% end %>
 	    </td></tr>
+	    <tr><td colspan="2">
+		<%= @course.about %>
+	    </td></tr>
 	  </tbody>
 	</table>
       </div>
@@ -164,7 +167,7 @@
 	    <% else %>
 	    <% @course.topics.each do |topic| %>
 	    <% @topic = topic %>
-	    <tr><td>
+	    <tr><td>	
 		<%= render :template => "admin/topics/show" %>
 		
 	    </td></tr>
