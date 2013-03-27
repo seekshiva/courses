@@ -71,7 +71,7 @@
 		<% end %>
 	    </td></tr>
 	    <tr><td colspan="2">
-		<%= @course.about %>
+		<%= BlueCloth.new(@course.about).to_html.html_safe %>
 	    </td></tr>
 	  </tbody>
 	</table>

@@ -13,6 +13,8 @@ gem 'sqlite3'
 gem 'mysql2'
 
 
+# Bluecloth is used here for converting markdown to html
+gem 'bluecloth'
 
 # Gems used only for assets and not required
 # in production environments by default.
