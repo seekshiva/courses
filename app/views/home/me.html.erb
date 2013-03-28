@@ -67,113 +67,123 @@
 
   <div class="container-narrow">
 
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="muted">Courses</h3>
-      </div>
+    <div class="masthead">
+      <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <h3 class="muted">Courses</h3>
+    </div>
 
-      <hr>
+    <hr>
 
-      <div class="jumbotron">
-        <h1>Welcome!</h1>
-        <p class="lead">Looks like you're logging in here for the first time.</p>
-	<button data-target="#myModal" role="button" class="btn btn-large btn-success" data-toggle="modal">
-	  Start Today
-	</button>
-      </div>
+    <div class="jumbotron">
+      <h1>Welcome!</h1>
+      <p class="lead">Looks like you're logging in here for the first time.</p>
+      <button data-target="#myModal" role="button" class="btn btn-large btn-success" data-toggle="modal">
+	Start Today
+      </button>
+    </div>
 
 
 
-      <div class="footer">
-	<hr>
-        <p>&copy; Company 2013</p>
-      </div>
-
-    </div> <!-- /container -->
-
-    <%= form_for(@user) do |f| %>
-    <div id="myModal" class="modal hide fade" role="dialog">
-
-      <div class="modal-header">
-	<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
-	<h3>Get Started</h3>
-      </div>
-      <div class="modal-body">
-	<div id="wizard">
-	  <ol>
-	    <li>Name & Department</li>
-	    <li>Course List</li>
-	    <li>Verification</li>
-	  </ol>
-	  <div>
-	    <div class="field">
-	      <%= f.label :name, "Full Name" %>
-	      <%= f.text_field :name, placeholder: "Full Name", class: "input-xlarge" %>
-	      <%= f.hidden_field :email %>
-	      <%= f.hidden_field :activated, :value => :true %>
-	    </div>
-	    <div class="field">
-	      <%= f.label :department_id, "Department" %>
-	      <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "input-xlarge") %>
-	    </div>	
+    <div class="footer">
+      <div class="container">
+	<p class="muted credit">
+	  Copyleft
+	  <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
+	  <span title="copyleft" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
+	    &copy;
+	  </span>
+	  <!--[if lte IE 8]></span><![endif]-->
+	  
+	  2013 - Developed by <%= link_to "Shiva Nandan", "https://github.com/seekshiva", target: '_blank' %>.
+	</p>
+      </div> <!-- /container -->
+    </div>
+  </div>
+  
+  <%= form_for(@user) do |f| %>
+  <div id="myModal" class="modal hide fade" role="dialog">
+    
+    <div class="modal-header">
+      <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Get Started</h3>
+    </div>
+    <div class="modal-body">
+      <div id="wizard">
+	<ol>
+	  <li>Name & Department</li>
+	  <li>Course List</li>
+	  <li>Verification</li>
+	</ol>
+	<div>
+	  <div class="field">
+	    <%= f.label :name, "Full Name" %>
+	    <%= f.text_field :name, placeholder: "Full Name", class: "input-xlarge" %>
+	    <%= f.hidden_field :activated, value: true %>
+	    <%= f.hidden_field :email %>
+	    
 	  </div>
-
-	  <div>
-	    <% if @user.is_student?  %>
-	    <div class="alert alert-info">
-	      <strong>Note:</strong>
-	      <small>You can add or delete Courses you follow by visiting your Profile page.</small>
-	    </div>
-	    <% if @course_list.length != 0 %>
-	    <small>
-	      Based on your Roll Number, we were able to guess that you are attending the following classes.
-	    </small>
-	    <table class="table table-hover">
-	      <thead>
-		<tr>
-		  <th>Course</th>
-		  <th>Offered for</th>
-		</tr>
-	      </thead>
-	      <tbody>
-		<% @course_list.each do |course| %>
-		<tr>
-		  <td><%= course.name %></td>
-		  <td><%= course.current_term.semester.ordinalize %> semester</td>
-		</tr>
-		<% end %>
-	      </tbody>
-	    </table>
-	    <% end %>
-	    <% else %>
-	    Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
-	    <% end %>
+	  <div class="field">
+	    <%= f.label :department_id, "Department" %>
+	    <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "input-xlarge") %>
+	  </div>	
+	</div>
+	
+	<div>
+	  <% if @user.is_student?  %>
+	  <div class="alert alert-info">
+	    <strong>Note:</strong>
+	    <small>You can add or delete Courses you follow by visiting your Profile page.</small>
 	  </div>
-
-	  <div>
-	    <div class="field">
-	      <span class="uneditable-input input-large"><%= @user[:email] %>@nitt.edu</span>
-	    </div>
-	    <div class="field">
-	      <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "input-large") %>
-	    </div>
+	  <% if @course_list.length != 0 %>
+	  <small>
+	    Based on your Roll Number, we were able to guess that you are attending the following classes.
+	  </small>
+	  <table class="table table-hover">
+	    <thead>
+	      <tr>
+		<th>Course</th>
+		<th>Offered for</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% @course_list.each do |course| %>
+	      <tr>
+		<td><%= course.name %></td>
+		<td><%= course.current_term.semester.ordinalize %> semester</td>
+	      </tr>
+	      <% end %>
+	    </tbody>
+	  </table>
+	  <% end %>
+	  <% else %>
+	  Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
+	  <% end %>
+	</div>
+	
+	<div>
+	  <div class="field">
+	    <span class="uneditable-input input-large"><%= @user[:email] %>@nitt.edu</span>
+	  </div>
+	  <div class="field">
+	    <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "input-large") %>
 	  </div>
 	</div>
+      </div>
       <div class="modal-footer">
 	<%= f.submit class: "btn btn-primary", value: "Register" %>
       </div>
     </div>
     <% end %>
   </div>
-
+  
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "me" %>
   <script type="text/javascript">
     renderSignupModal();
   </script>
-    
+  
 </body>

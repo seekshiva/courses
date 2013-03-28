@@ -49,6 +49,7 @@
   <div id="footer">
     <div class="container">
       <p class="muted credit">
+	Copyleft
 	<!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
 	<span title="copyleft" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
 	  &copy;
@@ -201,7 +202,12 @@
       <div class="tab-content">
 	<div class="tab-pane active" id="info1">
 	  <h4>Overview</h4>
-	  <table class="table">
+	  <table class="table bottom_line">
+	    <tr>
+	      <td colspan="2">
+		{{{course.about}}}
+	      </td>
+	    </tr>
 	    <tr>
 	      <th>
 		<strong>Course Instructor</strong>
@@ -220,11 +226,8 @@
 		{{#each course.departments}}
 		{{this.name}}
 		{{/each}}
-	    </td></tr>
-	    <tr>
-	      <td colspan="2">
-		{{{course.about}}}
-	    </td></tr>
+	      </td>
+	    </tr>
 	  </table>
 	</div>
 	<div class="tab-pane" id="info2">
