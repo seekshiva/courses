@@ -23,8 +23,8 @@
       <%= f.text_field :name, class: "input-xxlarge", placeholder: "Department Name" %>
     </div>
     <div class="field">
-      <%= f.label :hod %>
-      <%= f.text_field :hod, class: "input-xxlarge", placeholder: "Head of the Department" %>
+      <%= f.label :hod_id, "HOD" %>
+      <%= f.select :hod_id, options_for_select(@faculties_array, @hod) %>
     </div>
     <div class="field">
       <%= f.label :rollno_prefix %>

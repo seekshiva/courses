@@ -19,7 +19,7 @@
     <% @departments.each do |department| %>
     <tr>
       <td><%= link_to department.name, admin_department_path(department), class: 'btn btn-small btn-link' %></td>
-      <td><%= department.hod %></td>
+      <td><%= department.hod.nil? ? "-" : department.hod.full_name %></td>
       <td><%= department.courses.length %></td>
       <td><%= link_to 'Edit', edit_admin_department_path(department), class: 'btn btn-mini' %></td>
       <td><%= link_to 'Destroy', admin_department_path(department), class: 'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>

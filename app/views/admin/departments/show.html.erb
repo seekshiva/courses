@@ -1,13 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h4>
-  <span class="label label-info"><%= @department.short %></span>
+<h3>
+  <a href="<%= url_for admin_departments_path %>" class="btn btn-small">
+    <i class="icon-chevron-left"></i>
+  </a>
+  <small><%= @department.short %></small>
   <%= @department.name %>
   <%= link_to 'Edit', edit_admin_department_path(@department), class: 'btn btn-small pull-right' %>
-</h4>
+</h3>
 
 <div>
-  Headed by <strong><%= @department.hod %></strong>.
+  Headed by <strong><%= @department.hod.nil? ? "-" : @department.hod.full_name %></strong>.
 </div>
 
 <table class="table table-hover">

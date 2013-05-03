@@ -2,15 +2,23 @@ class DepartmentsController < ApplicationController
   def index
     respond_to do |format|
       format.json { 
-
-        render json: Department.all.collect do |dept|
-          { id:            dept[:id],
+        ret = []
+        Department.all.collect do |dept|
+          ret << { 
+            id:            dept[:id],
             name:          dept[:name],
-            hod:           dept[:hod],
             rollno_prefix: dept[:rollno_prefix],
             short:         dept[:short]
           }
+
+
+          if dept.hod.nil?
+            ret.last[:hod] = "-"
+          else
+            ret.last[:hod] = dept.hod.full_name
+          end
         end
+        render json: ret
 
       }
       format.html {
@@ -32,11 +40,17 @@ class DepartmentsController < ApplicationController
         ret = {
           id:            dept[:id],
           name:          dept[:name],
-          hod:           dept[:hod],
           rollno_prefix: dept[:rollno_prefix],
           short:         dept[:short],
           terms:         []
         }
+
+        if dept.hod.nil?
+          ret[:hod] = "-"
+        else
+          ret[:hod] = dept.hod.full_name
+        end
+        
 
         arr, current_sem = [], nil
         dept.terms.each do |term|

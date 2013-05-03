@@ -27,6 +27,13 @@ class Admin::DepartmentsController < Admin::BaseController
   def new
     @legend = "New Department"
     @department = Department.new
+    @faculties_array = []
+    Faculty.all.each do |fac|
+      if fac.department == @department
+        @faculties_array << [fac.full_name, fac.id]
+      end
+    end
+    @hod = nil
  
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +48,13 @@ class Admin::DepartmentsController < Admin::BaseController
     @courses_array = Course.all.map do |course|
       ["#{course.subject_code} - #{course.name}", course.id]
     end
+    @faculties_array = []
+    Faculty.all.each do |fac|
+      if fac.department == @department
+        @faculties_array << [fac.full_name, fac.id]
+      end
+    end
+    @hod = @department.hod.nil? ? nil : @department.hod.id
 
     respond_to do |format|
       format.html # edit.html.erb
