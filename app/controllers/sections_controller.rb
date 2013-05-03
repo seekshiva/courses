@@ -1,15 +1,27 @@
-class Admin::TopicsController < Admin::BaseController
+class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
-    @course = Course.find(params[:course_id])
-    @topics = Topic.find_all_by_course_id(@course.id)
-    
     respond_to do |format|
-      format.html { 
-        render [@course, "show"]
+      format.html {
+        current_user
+        render "home/dashboard"
       }
-      format.json { render json: @topics }
+
+      format.json {
+        @course = Course.find(params[:course_id])
+        @topics = Topic.find_all_by_course_id(@course.id)
+        @topics.each do |topic|
+          topic["reference"] = topic.references.collect do |ref|
+            {:book => ref.course_reference.book.title, :sections => ref.sections }
+          end
+          topic["classes"] = topic.classrooms.collect do |cl|
+            {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room }
+          end
+        end
+    
+        render json: @topics
+      }
     end
 
   end
@@ -43,6 +55,7 @@ class Admin::TopicsController < Admin::BaseController
 
   # GET /topics/1/edit
   def edit
+    @legend = "Edit Topic"
     @course = Course.find(params[:course_id])
     @topic = @course.topics.find(params[:id])
     @ref_books = @course.books

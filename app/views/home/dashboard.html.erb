@@ -245,11 +245,11 @@
   </script>
   
   <script type="text/template" id="course-topics-template">
-    {{#if course.topic_list}}
+    {{#if course.topics}}
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
 	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
-	{{#each course.topic_list}}
+	{{#each course.topics}}
 	<li><a href="#_topic_{{this.id}}" data-toggle="tab">{{this.title}}</a></li>
 	{{/each}}
       </ul>
@@ -257,13 +257,8 @@
 	<div class="tab-pane active _topic_list" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#unless course.topic_list}}
-	      <tr><td>
-		  <p>No topic has been added to this course yet.</p>
-		  <p>Contact your course instructor to add topics this course.</p>
-	      </td></tr>
-	      {{/unless}}
-	      {{#each course.topic_list}}
+	      {{#each course.topics}}
+	      {{#each this.sections}}
 	      <tr><td>
 		  <dl>
 		    <dt>
@@ -294,7 +289,7 @@
 			</tr></thead>
 			<tbody><tr>
 			    {{#each this.reference}}
-			    <td><small>{{this.sections}}</small></td>
+			    <td><small>{{this.indices}}</small></td>
 			    {{/each}}
 			</tr></tbody>
 		      </table>
@@ -302,15 +297,22 @@
 		  </dl>
 	      </td></tr>
 	      {{/each}}
+	      {{/each}}
 	    </tbody>
 	  </table>
 	</div>
 
 
-	{{#each course.topic_list}}
+	{{#each course.topics}}
 	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
+	      {{#unless this.sections}}
+	      <tr><td>
+		  No Sections found under this topic
+	      </td></tr>
+	      {{/unless}}
+	      {{#each this.sections}}
 	      <tr><td>
 		  <dl>
 		    <dt>
@@ -341,13 +343,14 @@
 			</tr></thead>
 			<tbody><tr>
 			    {{#each this.reference}}
-			    <td><small>{{this.sections}}</small></td>
+			    <td><small>{{this.indices}}</small></td>
 			    {{/each}}
 			</tr></tbody>
 		      </table>
 		    </dd>
 		  </dl>
 	      </td></tr>
+	      {{/each}}
 	    </tbody>
 	  </table>
 	</div>

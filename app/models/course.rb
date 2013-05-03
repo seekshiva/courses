@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
 
   has_many :terms, :dependent => :destroy
   has_many :topics, :dependent => :destroy
+  has_many :sections, :dependent => :destroy
 
   has_many :course_references, :dependent => :destroy
   has_many :books, :through => :course_references

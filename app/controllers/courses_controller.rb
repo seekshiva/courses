@@ -9,22 +9,27 @@ class CoursesController < ApplicationController
       format.json { 
         course = Course.find(params[:id])
 
-        topic_list = course.topics.collect do |topic|
-          ret = {
-            id:               topic.id,
-            title:            topic.title,
-            description:      topic.description,
-            ct_status:        topic.ct_status,
-          }
+        topics = course.topics.collect do |topic|
+          ret = {id: topic.id, title: topic.title}
+          ret["sections"] = topic.sections.collect do |section|
+            sec = {
+              id:               section.id,
+              title:            section.title,
+              description:      section.description,
+              ct_status:        section.ct_status,
+            }
 
-          ret["reference"] = topic.references.collect do |ref|
-            {:book => ref.course_reference.book.title, :sections => ref.sections }
-          end
-          ret["classes"] = topic.classrooms.collect do |cl|
-            {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
+            sec["reference"] = section.references.collect do |ref|
+              {:book => ref.course_reference.book.title, :indices => ref.indices }
+            end
+            sec["classes"] = section.classrooms.collect do |cl|
+              {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
+            end
+            sec
           end
           ret
         end
+        
 
         reference_books = course.books.collect do |book|
           book["authors"] = book.authors
@@ -48,9 +53,6 @@ class CoursesController < ApplicationController
         
         classes = Classroom.where("term_id IN (" + latest_terms + ")").collect do |cl|
           ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, room: cl.room, term_id: cl.term_id }
-          ret["topics"] = cl.topics.collect do |topic|
-            { id: topic.id, ct_status: topic.ct_status, title: topic.title }
-          end
           
           ret
         end
@@ -64,7 +66,7 @@ class CoursesController < ApplicationController
           credits:         course.credits,
           departments:     course.departments,
           classes:         classes,
-          topic_list:      topic_list,
+          topics:          topics,
           instructors:     instructors,
           reference_books: reference_books
         }

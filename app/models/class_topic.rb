@@ -1,7 +1,7 @@
 class ClassTopic < ActiveRecord::Base
   belongs_to :classroom
-  belongs_to :topic
-  attr_accessible :classroom_id, :topic_id
+  belongs_to :section
+  attr_accessible :classroom_id, :section_id
 
-  validates :classroom_id, :uniqueness => { :scope => :topic_id }
+  validates :classroom_id, :uniqueness => { :scope => :section_id }
 end
