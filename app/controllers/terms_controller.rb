@@ -10,7 +10,11 @@ class TermsController < ApplicationController
         term = Term.find(params[:id])
 
         topics = term.course.topics.collect do |topic|
-          ret = {id: topic.id, title: topic.title}
+          ret = {
+            id: topic.id,
+            title: topic.title,
+            short_title: topic.title.length > 35 ? "#{topic.title[0,33]}..." : topic.title
+          }
           ret["sections"] = topic.sections.collect do |section|
             sec = {
               id:               section.id,
