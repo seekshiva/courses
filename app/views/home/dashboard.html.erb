@@ -29,10 +29,10 @@
 	    </a>
 	    <ul class="dropdown-menu local" role="menu" aria-labelledby="dropdownMenu">
 	      <li class="nav-header">My Courses</li>
-	      <li><a href="/courses/1">Advanced Database Management Systems</a></li>
-	      <li><a href="/courses/3">Real-Time Systems</a></li>
-	      <li><a href="/courses/10">Data Warehousing and Data Mining</a></li>
-	      <li><a href="/courses/2">Industrial Economics</a></li>
+	      <li><a href="/terms/2">Advanced Database Management Systems</a></li>
+	      <li><a href="/terms/1">Real-Time Systems</a></li>
+	      <li><a href="/terms/15">Data Warehousing and Data Mining</a></li>
+	      <li><a href="/terms/5">Industrial Economics</a></li>
 	      <li class="divider"></li>
 	      <li><a href="/me">My Profile</a></li>
 	      <li><a href="/signout">Sign out</a></li>
@@ -133,12 +133,12 @@
 	</tr>
       </thead>
       <tbody>
-	{{#each dept.terms}}
+	{{#each dept.course_listing}}
 	<tr><th colspan="3">{{this.semester}}</th></tr>
 	{{#each this.course_list}}
 	<tr>
 	  <td>
-	    <a href="/courses/{{this.id}}">
+	    <a href="/terms/{{this.term_id}}">
 	      {{this.code}} - {{this.name}}
 	    </a>
 	  </td>
@@ -467,6 +467,323 @@
 
     {{/if}}
   </script>
+
+
+  <script type="text/template" id="term-template">
+    <h3>
+      <small>{{term.course.code}}</small>
+      {{term.course.name}}
+    </h3>
+    {{#if term.instructors}}
+    <p>
+      <strong>Course Instructor:</strong>
+      {{#each term.instructors}}
+      <span>{{this.instructor}}</span>
+      {{/each}}
+    </p>
+    {{/if}}
+
+    <ul class="nav nav-tabs" id="specialized_view_selector">
+      <li class="span2">
+	<span class="nav_container">
+	  <strong class="label label-info">{{term.course.credits}} credits</strong>
+	</span>
+      </li>
+      <li id="view_term_info"><a href="/terms/{{term.id}}/info">Info</a></li>
+      <li id="view_term_topics"><a href="/terms/{{term.id}}/topics">Topics</a></li>
+      <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li>
+      <li id="view_term_reference"><a href="/terms/{{term.id}}/reference">
+	  Reference Material
+	  <small class="badge">{{term.course.reference_books.length}}</small>
+      </a></li>
+    </ul>
+    <div id="specialized_view"></div>
+  </script>
+
+  
+  <script type="text/template" id="term-info-template">
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-list local-nav">
+	<li class="active"><a href="#info1" data-toggle="tab">Overview</a></li>
+	<li><a href="#info2" data-toggle="tab">Instructor</a></li>
+	<li><a href="#info3" data-toggle="tab">Outline</a></li>
+      </ul>
+      <div class="tab-content">
+	<div class="tab-pane active" id="info1">
+	  <h4>Overview</h4>
+	  <table class="table bottom_line">
+	    <tr>
+	      <td colspan="2">
+		{{{term.course.about}}}
+	      </td>
+	    </tr>
+	    <tr>
+	      <th>
+		<strong>Course Instructor</strong>
+	      </th>
+	      <td>
+		{{#each term.instructors}}
+		{{this.instructor}}
+		{{/each}}
+	      </td>
+	    </tr>
+	    <tr>
+	      <th>
+		<strong>Departments Offered</strong>
+	      </th>
+	      <td>
+		{{#each term.departments}}
+		{{this.name}}
+		{{/each}}
+	      </td>
+	    </tr>
+	  </table>
+	</div>
+	<div class="tab-pane" id="info2">
+	  {{#each term.instructors}}
+	  <h4>{{this.instructor}}</h4>
+	  <p>David Malan is a Senior Lecturer on Computer Science at Harvard. He recieved his B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
+	  <p>David Malan's research in graduate school focused primarily on cyber security and computer forensics.</p>
+	  {{/each}}
+	</div>
+	<div class="tab-pane" id="info3">
+	  <h4>Outline</h4>
+	</div>
+      </div>
+    </div>
+  </script>
+  
+  <script type="text/template" id="term-topics-template">
+    {{#if term.topics}}
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-list local-nav">
+	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
+	{{#each term.topics}}
+	<li>
+	  <a href="#_topic_{{this.id}}" data-toggle="tab">
+	    <div class="badge pull-right">{{this.sections.length}}</div>
+	    {{this.title}}
+	  </a>
+	</li>
+	{{/each}}
+      </ul>
+      <div class="tab-content">
+	<div class="tab-pane active _topic_list" id="_topic_all">
+	  <table class="table bottom_line">
+	    <tbody>
+	      {{#each term.topics}}
+	      {{#each this.sections}}
+	      <tr><td>
+		  <dl>
+		    <dt>
+		      {{this.title}}
+		      <span class="label label-success">{{this.ct_status}}</span>
+		    </dt>
+		    <dd>
+		      <p>
+			<small>
+			  {{#if this.classes}}
+			  This topic was taught on
+			  {{#each this.classes}}
+			  {{this.date}}
+			  {{/each}}
+			  
+			  {{else}}
+			  This topic has not been taught so far this semester
+			  {{/if}}
+			</small>
+		      </p>
+
+		      <p>{{this.description}}</p>
+		      <table class="table table-bordered">
+			<thead><tr>
+			    {{#each this.reference}}
+			    <th><small>{{this.book}}</small></th>
+			    {{/each}}
+			</tr></thead>
+			<tbody><tr>
+			    {{#each this.reference}}
+			    <td><small>{{this.indices}}</small></td>
+			    {{/each}}
+			</tr></tbody>
+		      </table>
+		    </dd>
+		  </dl>
+	      </td></tr>
+	      {{/each}}
+	      {{/each}}
+	    </tbody>
+	  </table>
+	</div>
+
+
+	{{#each term.topics}}
+	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
+	  <table class="table bottom_line">
+	    <tbody>
+	      {{#unless this.sections}}
+	      <tr><td>
+		  No Sections found under this topic
+	      </td></tr>
+	      {{/unless}}
+	      {{#each this.sections}}
+	      <tr><td>
+		  <dl>
+		    <dt>
+		      {{this.title}}
+		      <span class="label label-success">{{this.ct_status}}</span>
+		    </dt>
+		    <dd>
+		      <p>
+			<small>
+			  {{#if this.classes}}
+			  This topic was taught on
+			  {{#each this.classes}}
+			  {{this.date}}
+			  {{/each}}
+			  
+			  {{else}}
+			  This topic has not been taught so far this semester
+			  {{/if}}
+			</small>
+		      </p>
+
+		      <p>{{this.description}}</p>
+		      <table class="table table-bordered">
+			<thead><tr>
+			    {{#each this.reference}}
+			    <th><small>{{this.book}}</small></th>
+			    {{/each}}
+			</tr></thead>
+			<tbody><tr>
+			    {{#each this.reference}}
+			    <td><small>{{this.indices}}</small></td>
+			    {{/each}}
+			</tr></tbody>
+		      </table>
+		    </dd>
+		  </dl>
+	      </td></tr>
+	      {{/each}}
+	    </tbody>
+	  </table>
+	</div>
+	{{/each}}
+      </div>
+    </div>
+    {{else}}
+
+    <table class="table bottom_line">
+      <tbody>
+	<tr><td style="padding: 20px;">
+	    No topic found for this course.
+	</td></tr>
+      </tbody>
+    </table>
+
+    {{/if}}
+  </script>
+  
+  <script type="text/template" id="term-classes-template">
+    <table class="table bottom_line">
+      <tbody>
+	{{#unless term.classes}}
+	<tr><td>
+	    No classes have been taught in this course this semester.
+	</td></tr>
+	{{/unless}}
+	{{#each term.classes}}
+	<tr><td>
+	    <dl>
+	      <dt>
+		{{this.date}}, {{this.time}}
+		<small>at {{this.room}}</small>
+	      </dt>
+	      <dd>
+		<strong>
+		  Topics covered
+		</strong>
+		<ul>
+		  {{#each this.topics}}
+		  <li>
+		    {{this.title}}
+		  </li>
+		  {{/each}}
+		</ul>
+	      </dd>
+	    </dl>
+	</td></tr>
+	{{/each}}
+      </tbody>
+  </script>
+
+  <script type="text/template" id="term-reference-template">
+    {{#unless term.course.reference_books}}
+
+    <table class="table bottom_line">
+      <tbody>
+	<tr><td style="padding: 20px;">
+	    No Reference material found for this book.
+	</td></tr>
+      </tbody>
+    </table>
+
+    {{else}}
+    
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-list local-nav">
+	<li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
+      </ul>
+      <div class="tab-content">
+	<div class="tab-pane active _reference_list" id="_reference_books">
+	  <table class="table bottom_line">
+	    <tbody>
+	      {{#each term.course.reference_books}}
+	      <tr><td style="padding-right: 20px; ">
+		  <h4>
+		    {{this.title}}
+		    <small>({{this.year}})</small>
+		  </h4>
+		  <table class="table table-striped table-condensed">
+		    <tbody>
+		      </td></tr>
+		      <tr><th>
+			  Authors
+			</th><td>
+			  <ul>
+			    {{#each this.authors}}
+			    <li>{{this.name}}</li>
+			    {{/each}}
+			  </ul>
+		      </td></tr>
+		      <tr><th>
+			  Publisher
+			</th><td>
+			  {{this.publisher}}
+		      </td></tr>
+		      <tr><th>
+			  Edition
+			</th><td>
+			  {{this.edition}}
+		      </td></tr>
+		      <tr><th>
+			  ISBN
+			</th><td>
+			  {{this.isbn}}
+		      </td></tr>
+		    </tbody>
+		  </table>
+	      </td></tr>
+	      {{/each}}
+	  </table>
+	</div>
+      </div>
+    </div>
+
+    {{/unless}}
+  </script>
+
+
 
   <script type="text/template" id="404-template">
     <h3 style="font-size: 60px; margin: 30px; ">Its a 404!</h3>

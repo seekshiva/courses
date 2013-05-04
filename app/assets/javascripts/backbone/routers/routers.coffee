@@ -6,6 +6,8 @@ jQuery ->
       "departments/:id": "department"
       "courses/:course_id(/:slug)": "course"
       "courses/:course_id/:slug(/:id)": "course"
+      "terms/:term_id(/:slug)": "term"
+      "terms/:term_id/:slug(/:id)": "term"
       "login": "login"
       "signout": "signout"
       "me": "me"
@@ -27,6 +29,14 @@ jQuery ->
     course: (course_id, type, id) ->
       @course_view = new @app.CourseView
         id: course_id
+        view:
+          type: type or "info"
+          id: id
+      @
+
+    term: (term_id, type, id) ->
+      @term_view = new @app.TermView
+        id: term_id
         view:
           type: type or "info"
           id: id

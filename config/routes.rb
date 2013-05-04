@@ -22,6 +22,7 @@ Courses::Application.routes.draw do
   resources :users
   resources :departments
   
+  resources :terms
   resources :courses do
     resources :topics, :sections, :classrooms
   end

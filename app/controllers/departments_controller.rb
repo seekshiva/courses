@@ -42,7 +42,7 @@ class DepartmentsController < ApplicationController
           name:          dept[:name],
           rollno_prefix: dept[:rollno_prefix],
           short:         dept[:short],
-          terms:         []
+          course_listing:         []
         }
 
         if dept.hod.nil?
@@ -56,24 +56,31 @@ class DepartmentsController < ApplicationController
         dept.terms.each do |term|
           if term.this_year?
             if current_sem != term.semester
-              ret[:terms] << { semester: current_sem, course_list: arr } if not current_sem.nil?
+              ret[:course_listing] << { semester: current_sem, course_list: arr } if not current_sem.nil?
               arr = []
             end
             current_sem = term.semester
             course = {
-              id:      term.course[:id],
-              code:    term.course[:subject_code],
-              name:    term.course[:name],
-              credits: term.course[:credits]
+              course_id: term.course[:id],
+              term_id:   term.id,
+              code:      term.course[:subject_code],
+              name:      term.course[:name],
+              credits:   term.course[:credits]
             } 
             course[:instructors] = term.faculties.collect do |faculty|
-              { id:   faculty.id, name: "#{faculty.prefix} #{faculty.user.name}" }
+              {
+                id:   faculty.id,
+                name: "#{faculty.prefix} #{faculty.user.name}"
+              }
             end
             arr << course
           end
         end
-        ret[:terms] << { semester: current_sem, course_list: arr } if not current_sem.nil?
-
+        
+        if not current_sem.nil?
+          ret[:course_listing] << { semester: current_sem, course_list: arr } 
+        end
+        
         render json: ret
       }
     end

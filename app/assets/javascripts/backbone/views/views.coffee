@@ -77,6 +77,36 @@ jQuery ->
       $(@el).find("a:not(.local-nav a)").click @app.show_local_page
       @
 
+  class TermView extends Backbone.View
+    template: Handlebars.compile($("#term-template").html())
+
+    el: "#content"
+    
+    initialize: (options) ->
+      @app = window.app ? {}
+      @view = options.view
+      @term = new @app.TermModel({id: options.id})
+      @term.bind "change", @render, @
+      @term.fetch()
+
+      @
+
+    render: =>
+      find_template = (type)->
+        Handlebars.compile $("#term-" + type + "-template").html()
+
+      $(@el).html @template
+        term: @term.attributes
+
+      $("#specialized_view").html find_template(@view.type)
+        term: @term.attributes
+
+      $(@el).find("#specialized_view_selector li").removeClass("active")
+      $(@el).find("#view_term_" + @view.type).addClass("active")
+
+      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
+      @
+
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())
 
@@ -108,6 +138,7 @@ jQuery ->
   @app.DepartmentsView = DepartmentsView
   @app.DepartmentView  = DepartmentView
   @app.CourseView      = CourseView
+  @app.TermView        = TermView
   @app.LoginView       = LoginView
   @app.NotFoundView    = NotFoundView
 
