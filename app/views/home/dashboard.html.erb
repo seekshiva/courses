@@ -496,6 +496,11 @@
 	  Reference Material
 	  <small class="badge">{{term.course.reference_books.length}}</small>
       </a></li>
+      <li id="ct_status_selector" class="hide pull-right btn-group" title="You can choose multiple options at once">
+	<button class="{{selectors.ct_status.ct1}} btn btn-small">CT 1</button>
+	<button class="{{selectors.ct_status.ct2}} btn btn-small">CT 2</button>
+	<button class="{{selectors.ct_status.postct}} btn btn-small">Post CT</button>
+      </li>
     </ul>
     <div id="specialized_view"></div>
   </script>
@@ -554,11 +559,11 @@
   </script>
   
   <script type="text/template" id="term-topics-template">
-    {{#if term.topics}}
+    {{#if term_topics}}
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
 	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
-	{{#each term.topics}}
+	{{#each term_topics}}
 	<li>
 	  <a href="#_topic_{{this.id}}" data-toggle="tab">
 	    <div class="badge pull-right">{{this.sections.length}}</div>
@@ -571,7 +576,7 @@
 	<div class="tab-pane active _topic_list" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#each term.topics}}
+	      {{#each term_topics}}
 	      {{#each this.sections}}
 	      <tr><td>
 		  <dl>
@@ -617,7 +622,7 @@
 	</div>
 
 
-	{{#each term.topics}}
+	{{#each term_topics}}
 	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
