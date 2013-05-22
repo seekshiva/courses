@@ -557,7 +557,6 @@
   </script>
   
   <script type="text/template" id="term-topics-template">
-    {{#if term_topics}}
     <div id="topic_filter">
       <div class="pull-right">
 	<input type="search" class="search-query" placeholder="Search a Topic">
@@ -572,7 +571,7 @@
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
 	{{#unless edit_mode}}
-	<li><a href="#_topic_all" data-toggle="tab">All</a></li>
+	<li class="{{#unless term_topics}}active{{/unless}}"><a href="#_topic_all" data-toggle="tab">All</a></li>
 	{{/unless}}
 	{{#each term_topics}}
 	<li class="{{#if this.active}}active{{/if}}">
@@ -585,6 +584,17 @@
       </ul>
       <div class="tab-content">
 	{{#unless edit_mode}}
+	{{#unless term_topics}}
+	<div class="tab-pane active _topic_list hide" id="_topic_all">
+	  <table class="table bottom_line">
+	    <tbody>
+	      <tr><td>
+		  No topics were found that matched the given criteria.
+	      </td></tr>
+	    </tbody>
+	  </table>
+	</div>
+	{{/unless}}
 	<div class="tab-pane _topic_list hide" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
@@ -640,6 +650,16 @@
 	  <table class="table bottom_line">
 	    <tbody>
 	      <tr><td>
+		  {{#if ../edit_mode}}
+		  <div class="btn-group pull-right">
+		    <div class="btn btn-small">
+		      <i class="icon-pencil"></i>
+		    </div>
+		    <div class="btn btn-small btn-danger" data-toggle="popover" data-placement="left" data-html="true" data-content='Are you sure you want to delete this Topic? <small class="text-danger">This is irreversible</small><div><button class="btn btn-danger">Delete</button></div>'>
+		      <i class="icon-trash icon-white"></i>
+		    </div>
+		  </div>
+		  {{/if}}
 		  <h4>{{this.title}}</h4>
 	      </td></tr>
 	      {{#unless this.sections}}
@@ -705,17 +725,6 @@
 	{{/each}}
       </div>
     </div>
-    {{else}}
-
-    <table class="table bottom_line">
-      <tbody>
-	<tr><td style="padding: 20px;">
-	    No topic found for this course.
-	</td></tr>
-      </tbody>
-    </table>
-
-    {{/if}}
   </script>
   
   <script type="text/template" id="term-classes-template">

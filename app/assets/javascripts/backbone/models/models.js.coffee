@@ -39,6 +39,14 @@ jQuery ->
 
     urlRoot: "/terms/"
 
+  class TopicModel extends Backbone.Model
+    paramRoot: 'topic'
+
+    defaults:
+      title:       null
+
+    urlRoot: "/topics/"
+
    
   @app                       = window.app ? {}
   @app.DepartmentModel       = DepartmentModel

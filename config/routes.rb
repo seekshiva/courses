@@ -23,9 +23,8 @@ Courses::Application.routes.draw do
   resources :departments
   
   resources :terms
-  resources :courses do
-    resources :topics, :sections, :classrooms
-  end
+  resources :courses
+  resources :topics, :sections, :classrooms
 
   match "authenticate" => "home#authenticate"
   match "signout" => "home#signout"

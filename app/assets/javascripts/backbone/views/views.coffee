@@ -81,25 +81,61 @@ jQuery ->
     template: Handlebars.compile($("#term-template").html())
 
     el: "#content"
-    events:
-      "click #ct_status_selector > .btn": "updateSelector"
     
     initialize: (options) ->
       @app = window.app ? {}
       @view = options.view
-      @selectors =
-        ct_status:
-          "ct1": "active"
-          "ct2": "active"
-          "postct": "active"
       @term = new @app.TermModel({id: options.id})
       @term.bind "change", @render, @
       @term.fetch()
-
       @
 
+    render: =>
+      find_template = (type)->
+        Handlebars.compile $("#term-" + type + "-template").html()
+
+      $(@el).html @template
+        term: @term.attributes
+        edit_mode: if @view.id == "edit" then "edit_mode" else ""
+
+      $(@el).find("#specialized_view_selector li").removeClass("active")
+      $(@el).find("#view_term_" + @view.type).addClass("active")
+
+      if @view.type == "topics"
+        if @term_topics_view
+          @term_topics_view.render()
+        else
+          @term_topics_view = new TermTopicsView(@)
+      else
+        $("#specialized_view").html find_template(@view.type)
+          term:          @term.attributes
+          edit_mode:     if @view.id == "edit" then "edit_mode" else ""
+          term_topics:   @term_topics
+
+      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
+      @
+
+
+
+  class TermTopicsView extends Backbone.View
+    template: Handlebars.compile($("#term-topics-template").html())
+    selectors:
+      ct_status:
+        "ct1": "active"
+        "ct2": "active"
+        "postct": "active"
+    events:
+      "click #ct_status_selector > .btn": "updateSelector"
+      "click .tabbable > .nav > li": "switch_active_topic"
+
+    initialize: (term_view)=>
+      @el = "#specialized_view"
+      @term_view = term_view
+      @updateSelector()
+
     updateSelector: (e)->
-      if e
+      if e and e.target
+        e.preventDefault()
         timeframe = $(e.target).html().toLowerCase().replace(" ", "")
         @selectors.ct_status[timeframe] =  if @selectors.ct_status[timeframe] == "active" then "" else "active"
         flag =  false
@@ -108,23 +144,27 @@ jQuery ->
         
         @selectors.ct_status[timeframe] = "active" if not flag
 
+      @render()
+      @
+
+
+    render: =>
       current_topic = 0
       if @term_topics
         for topic in @term_topics
           if topic.active
             current_topic =  topic.id
 
-
       @term_topics = []
       flag = true
-      for topic in @term.attributes.topics
+      for topic in @term_view.term.attributes.topics
         topic_clone = Object.create(topic)
         topic_clone["sections"] = []
         for section in topic.sections
           if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "active"
             topic_clone.sections.push section
 
-        if topic_clone.sections.length or @view.id == "edit"
+        if topic_clone.sections.length or @term_view.view.id == "edit"
           @term_topics.push(topic_clone) 
           if topic_clone.id == current_topic 
             topic_clone.active = true
@@ -132,42 +172,20 @@ jQuery ->
           else
             topic_clone.active = false
 
-      @term_topics[0].active = true if flag
-  
-      @render()
-      @
 
-    render: =>
-      @updateSelector() if not @term_topics
-      find_template = (type)->
-        Handlebars.compile $("#term-" + type + "-template").html()
-
+      @term_topics[0].active = true if flag and @term_topics[0]
       $(@el).html @template
-        term: @term.attributes
-        edit_mode: if @view.id == "edit" then "edit_mode" else ""
-
-      $("#specialized_view").html find_template(@view.type)
-        term:          @term.attributes
-        edit_mode:     if @view.id == "edit" then "edit_mode" else ""
+        term:          @term_view.term.attributes
+        edit_mode:     if @term_view.view.id == "edit" then "edit_mode" else ""
         term_topics:   @term_topics
         selectors:     @selectors
 
-      if @view.type == "topics"
-        $(@el).find("#ct_status_selector").show()
-        $(@el).find(".tabbable > .nav > li").click (e)->
-          @app = window.app ? {}
-          current_topic = if e.target.hash then e.target.hash.substr(8) else e.target.parentNode.hash.substr(8)
-          for topic in @app.router.term_view.term_topics
-            topic.active = if topic.id.toString() == current_topic then true else false
+    switch_active_topic: (e) =>
+        @app = window.app ? {}
+        current_topic = if e.target.hash then e.target.hash.substr(8) else e.target.parentNode.hash.substr(8)
+        for topic in @term_topics
+          topic.active = if topic.id.toString() == current_topic then true else false
 
-      else
-        $(@el).find("#ct_status_selector").hide()
-
-      $(@el).find("#specialized_view_selector li").removeClass("active")
-      $(@el).find("#view_term_" + @view.type).addClass("active")
-
-      $(@el).find("a:not(.local-nav a)").click @app.show_local_page
-      @
 
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())
