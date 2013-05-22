@@ -35,11 +35,17 @@ jQuery ->
       @
 
     term: (term_id, type, id) ->
-      @term_view = new @app.TermView
-        id: term_id
-        view:
+      if @term_view and @term_view.id == term_id
+        @term_view.view =
           type: type or "info"
           id: id
+        @term_view.render()
+      else
+        @term_view = new @app.TermView
+          id: term_id
+          view:
+            type: type or "info"
+            id: id
       @
 
     me: () ->
