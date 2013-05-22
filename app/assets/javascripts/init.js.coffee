@@ -15,7 +15,8 @@ jQuery ->
     @app.show_local_page = (e)->
       e.preventDefault()
       @app = window.app ? {}
-      @app.router.navigate($(e.target).attr("href"), {trigger: true})
+      @app.router.navigate $(e.target).attr("href") or $(e.target.parentNode).attr("href"),
+        trigger: true
 
     $(".local").find("a").click (e) ->
       unless e.target.parentNode.id == "signin_link"
