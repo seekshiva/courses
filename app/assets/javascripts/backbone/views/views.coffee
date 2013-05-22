@@ -123,8 +123,8 @@ jQuery ->
         for section in topic.sections
           if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "active"
             topic_clone.sections.push section
-  
-        if topic_clone.sections.length
+
+        if topic_clone.sections.length or @view.id == "edit"
           @term_topics.push(topic_clone) 
           if topic_clone.id == current_topic 
             topic_clone.active = true

@@ -39,7 +39,7 @@ jQuery ->
         @term_view.view =
           type: type or "info"
           id: id
-        @term_view.render()
+        @term_view.updateSelector()
       else
         @term_view = new @app.TermView
           id: term_id
