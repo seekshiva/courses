@@ -471,6 +471,9 @@
 
   <script type="text/template" id="term-template">
     <h3>
+      <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn btn-small {{#if edit_mode}}active btn-success{{/if}}">
+	<i class="icon-pencil"></i>
+      </a>
       <small>{{term.course.code}}</small>
       {{term.course.name}}
     </h3>
@@ -496,13 +499,8 @@
 	  Reference Material
 	  <small class="badge">{{term.course.reference_books.length}}</small>
       </a></li>
-      <li id="ct_status_selector" class="hide pull-right btn-group" title="You can choose multiple options at once">
-	<button class="{{selectors.ct_status.ct1}} btn btn-small">CT 1</button>
-	<button class="{{selectors.ct_status.ct2}} btn btn-small">CT 2</button>
-	<button class="{{selectors.ct_status.postct}} btn btn-small">Post CT</button>
-      </li>
     </ul>
-    <div id="specialized_view"></div>
+    <div id="specialized_view" class="{{edit_mode}}"></div>
   </script>
 
   
@@ -560,11 +558,24 @@
   
   <script type="text/template" id="term-topics-template">
     {{#if term_topics}}
+    <div id="topic_filter">
+      <div class="pull-right">
+	<input type="search" class="search-query" placeholder="Search a Topic">
+      </div>
+      <small class="muted">Filters:</small>
+      <div id="ct_status_selector" class="btn-group" title="You can choose multiple options at once">
+	<button class="{{selectors.ct_status.ct1}} btn btn-small">CT 1</button>
+	<button class="{{selectors.ct_status.ct2}} btn btn-small">CT 2</button>
+	<button class="{{selectors.ct_status.postct}} btn btn-small">Post CT</button>
+      </div>
+    </div>
     <div class="tabbable tabs-left">
       <ul class="nav nav-list local-nav">
-	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
+	{{#unless edit_mode}}
+	<li><a href="#_topic_all" data-toggle="tab">All</a></li>
+	{{/unless}}
 	{{#each term_topics}}
-	<li>
+	<li class="{{#if this.active}}active{{/if}}">
 	  <a href="#_topic_{{this.id}}" data-toggle="tab">
 	    <div class="badge pull-right">{{this.sections.length}}</div>
 	    {{this.short_title}}
@@ -573,7 +584,8 @@
 	{{/each}}
       </ul>
       <div class="tab-content">
-	<div class="tab-pane active _topic_list" id="_topic_all">
+	{{#unless edit_mode}}
+	<div class="tab-pane _topic_list hide" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
 	      {{#each term_topics}}
@@ -620,10 +632,11 @@
 	    </tbody>
 	  </table>
 	</div>
+	{{/unless}}
 
 
 	{{#each term_topics}}
-	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
+	<div class="tab-pane _topic_list {{#if this.active}}active{{/if}}" id="_topic_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
 	      <tr><td>
@@ -638,6 +651,19 @@
 	      <tr><td>
 		  <dl>
 		    <dt>
+		      {{#if ../../edit_mode}}
+		      <div class="btn-group pull-right">
+			<div class="btn btn-mini">
+			  <i class="icon-pencil"></i>
+			</div>
+			<div class="btn btn-mini">
+			  <i class="icon-move"></i>
+			</div>
+			<div class="btn btn-mini btn-danger">
+			  <i class="icon-trash icon-white"></i>
+			</div>
+		      </div>
+		      {{/if}}
 		      {{this.title}}
 		      <span class="label label-success">{{this.ct_status}}</span>
 		    </dt>

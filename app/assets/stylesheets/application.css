@@ -134,3 +134,14 @@ h1, h2, h3, h4, h5, h6 {
 ._topic_list > table > tbody > tr > td {
     padding-left: 5px;
 }
+
+#topic_filter {
+    border: 1px solid #ddd;
+    border-top: 0;
+    padding: 10px;
+    padding-bottom: 15px; 
+}
+
+.edit_mode .hide-on-edit {
+    display: none;
+}

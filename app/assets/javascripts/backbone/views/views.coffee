@@ -108,14 +108,32 @@ jQuery ->
         
         @selectors.ct_status[timeframe] = "active" if not flag
 
+      current_topic = 0
+      if @term_topics
+        for topic in @term_topics
+          if topic.active
+            current_topic =  topic.id
+
+
       @term_topics = []
+      flag = true
       for topic in @term.attributes.topics
         topic_clone = Object.create(topic)
         topic_clone["sections"] = []
         for section in topic.sections
           if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "active"
             topic_clone.sections.push section
-        @term_topics.push(topic_clone) if topic_clone.sections.length
+  
+        if topic_clone.sections.length
+          @term_topics.push(topic_clone) 
+          if topic_clone.id == current_topic 
+            topic_clone.active = true
+            flag = false
+          else
+            topic_clone.active = false
+
+      @term_topics[0].active = true if flag
+  
       @render()
       @
 
@@ -126,14 +144,22 @@ jQuery ->
 
       $(@el).html @template
         term: @term.attributes
-        selectors:   @selectors
+        edit_mode: if @view.id == "edit" then "edit_mode" else ""
 
       $("#specialized_view").html find_template(@view.type)
-        term:        @term.attributes
-        term_topics: @term_topics
+        term:          @term.attributes
+        edit_mode:     if @view.id == "edit" then "edit_mode" else ""
+        term_topics:   @term_topics
+        selectors:     @selectors
 
       if @view.type == "topics"
         $(@el).find("#ct_status_selector").show()
+        $(@el).find(".tabbable > .nav > li").click (e)->
+          @app = window.app ? {}
+          current_topic = if e.target.hash then e.target.hash.substr(8) else e.target.parentNode.hash.substr(8)
+          for topic in @app.router.term_view.term_topics
+            topic.active = if topic.id.toString() == current_topic then true else false
+
       else
         $(@el).find("#ct_status_selector").hide()
 
