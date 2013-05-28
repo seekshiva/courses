@@ -21,3 +21,5 @@
 #Copy database.yml.sample to database.yml and configure accordingly
 /config/database.yml
 
+#Ignore the gemlock file
+Gemfile.lock
