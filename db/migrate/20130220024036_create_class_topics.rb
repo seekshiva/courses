@@ -6,7 +6,7 @@ class CreateClassTopics < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :class_topics, :class_id
+    add_index :class_topics, :classroom_id
     add_index :class_topics, :topic_id
   end
 end
