@@ -23,3 +23,6 @@
 
 #Ignore the gemlock file
 Gemfile.lock
+
+#Ignore the schema file
+schema.rb
