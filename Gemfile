@@ -5,6 +5,9 @@ gem 'rails', '3.2.9'
 gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
 gem 'rails-backbone'
 gem 'thin'
+gem 'execjs'
+gem 'therubyracer'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
