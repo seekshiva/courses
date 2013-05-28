@@ -6,7 +6,7 @@
 development:
   adapter: mysql2
   username: root
-  password: mysql
+  password: password
   port: 5432
   database: courses-dev
   encoding: utf8
@@ -26,7 +26,7 @@ test:
 production:
   adapter: mysql2
   username: root
-  password: mysql
+  password: password
   port: 5432
   database: courses
   encoding: utf8
@@ -37,7 +37,7 @@ production:
 development_mail:
   adapter: mysql2
   username: root
-  password: mysql
+  password: password
   port: 5432
   database: mail
   encoding: utf8

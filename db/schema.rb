@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "class_topics", ["classroom_id"], :name => "index_class_topics_on_class_id"
+  add_index "class_topics", ["classroom_id"], :name => "index_class_topics_on_classroom_id"
   add_index "class_topics", ["section_id"], :name => "index_class_topics_on_topic_id"
 
   create_table "classrooms", :force => true do |t|
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
   end
 
   add_index "classrooms", ["term_id"], :name => "index_classrooms_on_term_id"
+
+  create_table "course_list_items", :force => true do |t|
+    t.integer  "department_id"
+    t.integer  "course_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "course_list_items", ["course_id"], :name => "index_course_list_items_on_course_id"
+  add_index "course_list_items", ["department_id"], :name => "index_course_list_items_on_department_id"
 
   create_table "course_references", :force => true do |t|
     t.integer  "course_id"
