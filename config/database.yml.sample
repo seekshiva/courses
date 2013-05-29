@@ -1,3 +1,9 @@
+#
+# This is a sample file for configuring database
+# Run 'cp database.yml.sample database.yml'
+# Configure database.yml with the necessary credentials
+#
+#
 # SQLite version 3.x
 #   gem install sqlite3
 #
@@ -5,7 +11,7 @@
 #   gem 'sqlite3'
 development:
   adapter: mysql2
-  username: root
+  username: username
   password: password
   port: 5432
   database: courses-dev
@@ -25,7 +31,7 @@ test:
 
 production:
   adapter: mysql2
-  username: root
+  username: username
   password: password
   port: 5432
   database: courses
@@ -36,7 +42,7 @@ production:
 
 development_mail:
   adapter: mysql2
-  username: root
+  username: username
   password: password
   port: 5432
   database: mail

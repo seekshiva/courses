@@ -13,3 +13,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+#Ignore all doc files. To create doc run 'rake doc:app'
+/doc/app
+
+#Ignore database config
+#Copy database.yml.sample to database.yml and configure accordingly
+/config/database.yml
