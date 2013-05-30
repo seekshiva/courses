@@ -60,16 +60,6 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
 
   add_index "classrooms", ["term_id"], :name => "index_classrooms_on_term_id"
 
-  create_table "course_list_items", :force => true do |t|
-    t.integer  "department_id"
-    t.integer  "course_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "course_list_items", ["course_id"], :name => "index_course_list_items_on_course_id"
-  add_index "course_list_items", ["department_id"], :name => "index_course_list_items_on_department_id"
-
   create_table "course_references", :force => true do |t|
     t.integer  "course_id"
     t.integer  "book_id"
