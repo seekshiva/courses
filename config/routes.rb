@@ -5,7 +5,7 @@ Courses::Application.routes.draw do
     resources :departments
     resources :courses do
       resources :term_departments, :term_faculties
-      resources :topics, :sections, :classrooms
+      resources :sections, :classrooms
       resources :terms do 
         match "follow" => "terms#follow"
       end

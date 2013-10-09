@@ -39,9 +39,6 @@ class Admin::CoursesController < Admin::BaseController
       end
     end
 
-    @course.topics = Array.new()
-      
-
     @course["instructors"] = []
     @course.this_year.each do |term|
       term.faculties.each do |faculty|
