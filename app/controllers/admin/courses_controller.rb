@@ -37,7 +37,10 @@ class Admin::CoursesController < Admin::BaseController
           end
         ret
       end
+    elsif @tab = 'topics'
+        
     end
+      
 
     @course["instructors"] = []
     @course.this_year.each do |term|
