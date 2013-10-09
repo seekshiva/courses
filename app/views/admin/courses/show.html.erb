@@ -193,6 +193,9 @@
   </div>
 
   <% elsif @tab == "classes" %>
+  <% if @classes.empty? %>
+  No classes found
+  <% end %>
   <table class="table bottom_line">
     <tbody>
       <% @classes.each do |cl| %>

@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
   has_many :departments, :through => :terms
 
   has_many :course_faculties, :dependent => :destroy
-  has_many :faculties, through: :course_faculties
+  has_many :faculties, through: :terms
 
   default_scope order("subject_code ASC")
   

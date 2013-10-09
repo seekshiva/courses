@@ -3,5 +3,6 @@ class Classroom < ActiveRecord::Base
   attr_accessible :date, :room, :time, :term_id
   
   has_many :class_topics, :dependent => :destroy
-  has_many :topics, :through => :class_topics
+  has_many :sections, :through => :class_topics
+  has_many :topics, :through => :sections
 end
