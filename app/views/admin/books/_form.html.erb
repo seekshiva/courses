@@ -14,28 +14,26 @@
   <fieldset>
     <legend><%= @legend %></legend>
     <div class="field">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: "long-input" %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
     </div>
     <div class="field">
-      <%= f.label :publisher %>
-      <%= f.text_field :publisher, class: "long-input" %>
+      <%= f.text_field :publisher, class: "form-control", placeholder: "Publisher" %>
     </div>
     <div class="field">
-      <%= f.label :edition %>
-      <%= f.text_field :edition, class: "long-input" %>
+      <%= f.text_field :edition, class: "form-control", placeholder: "Edition" %>
     </div>
     <div class="field">
-      <%= f.label :isbn %>
-      <%= f.text_field :isbn, class: "long-input" %>
+      <%= f.text_field :isbn, class: "form-control", placeholder: "ISBN Number" %>
     </div>
     <div class="field">
-      <%= f.label :year %>
-      <%= f.text_field :year, class: "long-input" %>
+      <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
     </div>
     <div class="actions">
-      <%= f.submit class: "btn btn-primary" %>
-      <%= link_to "Back", admin_books_path, class: "btn" %>
+      <a href="<%= url_for admin_books_path %>" class="btn btn-default">
+	<span class="glyphicon glyphicon-chevron-left"></span>
+	Back
+      </a>
+      <%= f.submit class: "btn btn-success pull-right" %>
     </div>
   </fieldset>
 <% end %>

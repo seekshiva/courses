@@ -105,20 +105,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 14px;
 }
 
-.local-nav {
-    width: 260px; 
-}
-
-
-.tabs-left > .nav-list {
-    float: left;
-}
-
-.tabs-left > .nav-list > li > a {
-    padding: 7px;
-}
-
-.tabs-left .tab-content {
+.tab-content {
     padding-top: 12px;
     padding-left: 19px;
     border-right: 1px solid #ddd;
@@ -138,10 +125,19 @@ h1, h2, h3, h4, h5, h6 {
 #topic_filter {
     border: 1px solid #ddd;
     border-top: 0;
-    padding: 10px;
+    padding-top: 10px;
     padding-bottom: 15px; 
+    margin-right: 18px;
 }
 
 .edit_mode .hide-on-edit {
     display: none;
+}
+
+.row {
+    margin-right: 17px;
+}
+
+.col-md-3 {
+    padding-right: 0;
 }

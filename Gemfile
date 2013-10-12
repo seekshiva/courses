@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
 
-gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
+gem 'anjlab-bootstrap-rails', '>= 3.0', :require => 'bootstrap-rails'
 gem 'rails-backbone'
 gem 'thin'
 gem 'execjs'

@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table">
   <caption><h3>
       Listing Books
   </h3></caption>
@@ -35,8 +35,12 @@
     <td><%= book.publisher %></td>
     <td><%= book.edition %></td>
     <td>
-      <%= link_to "Edit", edit_admin_book_path(book), class: "btn btn-mini" %>
-      <%= link_to "Destroy", [:admin, book], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      <a href="<%= url_for edit_admin_book_path(book) %>" class="btn btn-default">
+	<span class="glyphicon glyphicon-pencil" style="color: #322dd2;"></span>
+      </a>
+      <a href="<%= url_for [:admin, book] %>" class="btn btn-default" data-method="delete" data-confirm="Are you sure?" rel="nofollow">
+	<span class="glyphicon glyphicon-trash" style="color: #d2322d;"></span>
+      </a>
     </td>
   </tr>
 <% end %>
@@ -44,4 +48,7 @@
 
 <br />
 
-<%= link_to "New Book", new_admin_book_path, class: "btn btn-small btn-primary" %>
+<a href="<%= url_for new_admin_book_path %>" class="btn btn-default">
+  <span class="glyphicon glyphicon-plus" style="color: green;"></span>
+  New Book
+</a>

@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="pull-right">
-  <%= link_to 'Edit', edit_admin_course_path(@course), class: 'btn btn-small' %>
+  <%= link_to 'Edit', edit_admin_course_path(@course), class: 'btn btn-default btn-small' %>
 </div>
 
 <h3>
@@ -130,7 +130,7 @@
 		<% end %>
 	      </td>
 	      <td>
-		<a class="btn btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
+		<a class="btn btn-default btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
 		  Add <b class="caret"></b>
 		</a>
 	      </td>
@@ -166,10 +166,9 @@
 	    </td></tr>
 	    <% else %>
 	    <% @course.topics.each do |topic| %>
-	    <% @topic = topic %>
-	    <tr><td>	
-		<%= render :template => "admin/topics/show" %>
-		
+	    <tr><td>
+		<strong><%= topic.title %></strong><br />
+		Topic detail goes here...
 	    </td></tr>
 	    <% end %>
 	    <% end %>
@@ -181,9 +180,9 @@
       <div class="tab-pane _topic_list" id="_topic_<%= topic.id %>">
 	<table class="table bottom_line">
 	  <tbody>
-	    <% @topic = topic %>
 	    <tr><td>
-		<%= render :template => "admin/topics/show" %>
+		<strong><%= topic.title %></strong><br />
+		Topic detail goes here...
 	    </td></tr>
 	  </tbody>
 	</table>

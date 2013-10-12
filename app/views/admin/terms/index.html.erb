@@ -15,7 +15,7 @@
       <td><%= link_to "#{term.course.subject_code} - #{term.course.name}", [:admin, @course, term], class: "btn btn-small btn-link" %></td>
       <td><%= "#{term.academic_year}-#{term.academic_year+1}" %></td>
       <td><%= term.semester %></td>
-      <td><%= link_to 'Edit', edit_admin_course_term_path(@course, term), class: "btn btn-mini" %></td>
+      <td><%= link_to 'Edit', edit_admin_course_term_path(@course, term), class: "btn btn-default btn-mini" %></td>
       <td><%= link_to 'Destroy', [:admin, @course, term], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %></td>
     </tr>
     <% end %>

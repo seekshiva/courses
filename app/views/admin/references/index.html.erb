@@ -18,8 +18,8 @@
       <td><%= reference.topic.course.subject_code %> - <%= reference.topic.title %></td>
       <td><%= reference.sections %></td>
       <td>
-	<%= link_to 'Show', [:admin, reference], class: "btn btn-mini" %>
-	<%= link_to 'Edit', edit_admin_reference_path(reference), class: "btn btn-mini" %>
+	<%= link_to 'Show', [:admin, reference], class: "btn btn-default btn-mini" %>
+	<%= link_to 'Edit', edit_admin_reference_path(reference), class: "btn btn-default btn-mini" %>
 	<%= link_to 'Destroy', [:admin, reference], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>

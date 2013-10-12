@@ -23,8 +23,8 @@
 	<%= link_to author.name, [:admin, author] %>; 
 	<% end %>
       <td>
-	<%= link_to 'Show', [:admin, course_reference], class: "btn btn-mini" %>
-	<%= link_to 'Edit', edit_admin_course_reference_path(course_reference), class: "btn btn-mini" %>
+	<%= link_to 'Show', [:admin, course_reference], class: "btn btn-default btn-mini" %>
+	<%= link_to 'Edit', edit_admin_course_reference_path(course_reference), class: "btn btn-default btn-mini" %>
 	<%= link_to 'Destroy', [:admin, course_reference], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>

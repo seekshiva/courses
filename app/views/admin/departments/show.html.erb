@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <h3>
-  <a href="<%= url_for admin_departments_path %>" class="btn btn-small">
-    <i class="icon-chevron-left"></i>
+  <a href="<%= url_for admin_departments_path %>" class="btn btn-default btn-small">
+    <i class="glyphicon glyphicon-chevron-left"></i>
   </a>
   <small><%= @department.short %></small>
   <%= @department.name %>
-  <%= link_to 'Edit', edit_admin_department_path(@department), class: 'btn btn-small pull-right' %>
+  <%= link_to 'Edit', edit_admin_department_path(@department), class: 'btn btn-default btn-small pull-right' %>
 </h3>
 
 <div>

@@ -1,13 +1,5 @@
 <table class="table">
   <caption><h3>Departments</h3></caption>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>HOD</th>
-      <th>Courses</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
   <tbody>
     <% if @departments.length == 0 %>
     <tr>
@@ -19,10 +11,6 @@
     <% @departments.each do |department| %>
     <tr>
       <td><%= link_to department.name, admin_department_path(department), class: 'btn btn-small btn-link' %></td>
-      <td><%= department.hod.nil? ? "-" : department.hod.full_name %></td>
-      <td><%= department.courses.length %></td>
-      <td><%= link_to 'Edit', edit_admin_department_path(department), class: 'btn btn-mini' %></td>
-      <td><%= link_to 'Destroy', admin_department_path(department), class: 'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
     <% end %>
@@ -31,4 +19,4 @@
 
 <br />
 
-<%= link_to 'New Department', new_admin_department_path, class: 'btn btn-small btn-primary' %>
+<a href="<%= url_for new_admin_department_path %>" class="btn btn-default btn-small"><span class="glyphicon glyphicon-plus" style="color: green; "></span> Add Department</a>

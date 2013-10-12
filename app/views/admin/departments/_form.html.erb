@@ -15,24 +15,21 @@
     <legend><%= @legend %></legend>
     
     <div class="field">
-      <%= f.label :short %>
-      <%= f.text_field :short, class: "input-mini", placeholder: "Short" %>
+      <%= f.text_field :short, class: "form-control", placeholder: "Short Form. eg: CSE" %>
     </div>
     <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name, class: "input-xxlarge", placeholder: "Department Name" %>
+      <%= f.text_field :name, class: "form-control", placeholder: "Department Name" %>
     </div>
     <div class="field">
       <%= f.label :hod_id, "HOD" %>
-      <%= f.select :hod_id, options_for_select(@faculties_array, @hod) %>
+      <%= f.select :hod_id, options_for_select(@faculties_array, @hod), class: "high" %>
     </div>
     <div class="field">
-      <%= f.label :rollno_prefix %>
-      <%= f.text_field :rollno_prefix, class: "input-mini",placeholder: "Prefix" %>
+      <%= f.text_field :rollno_prefix, class: "form-control", placeholder: "Roll Number Prefix" %>
     </div>
     <div class="actions">
       <%= f.submit class: "btn btn-primary btn-large" %>
-      <%= link_to "Back", admin_departments_path, class: "btn btn-small" %>
+      <%= link_to "Back", admin_departments_path, class: "btn btn-default btn-small" %>
     </div>
   </fieldset>
 <% end %>

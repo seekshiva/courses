@@ -121,9 +121,9 @@ jQuery ->
     template: Handlebars.compile($("#term-topics-template").html())
     selectors:
       ct_status:
-        "ct1": "active"
-        "ct2": "active"
-        "postct": "active"
+        "ct1": ""
+        "ct2": "btn-info"
+        "postct": ""
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .tabbable > .nav > li": "switch_active_topic"
@@ -137,12 +137,12 @@ jQuery ->
       if e and e.target
         e.preventDefault()
         timeframe = $(e.target).html().toLowerCase().replace(" ", "")
-        @selectors.ct_status[timeframe] =  if @selectors.ct_status[timeframe] == "active" then "" else "active"
+        @selectors.ct_status[timeframe] =  if @selectors.ct_status[timeframe] == "btn-info" then "" else "btn-info"
         flag =  false
         for k,v of @selectors.ct_status
-          flag ||= (v == "active")
+          flag ||= (v == "btn-info")
         
-        @selectors.ct_status[timeframe] = "active" if not flag
+        @selectors.ct_status[timeframe] = "btn-info" if not flag
 
       @render()
       @
@@ -161,7 +161,7 @@ jQuery ->
         topic_clone = Object.create(topic)
         topic_clone["sections"] = []
         for section in topic.sections
-          if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "active"
+          if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
             topic_clone.sections.push section
 
         if topic_clone.sections.length or @term_view.view.id == "edit"

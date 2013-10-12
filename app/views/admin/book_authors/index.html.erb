@@ -15,8 +15,8 @@
       <td><%= link_to book_author.book.title, [:admin, book_author.book] %></td>
       <td><%= link_to book_author.author.name, [:admin, book_author.author] %></td>
       <td>
-	<%= link_to "Show", [:admin, book_author], class: "btn btn-mini" %>
-	<%= link_to "Edit", edit_admin_book_author_path(book_author), class: "btn btn-mini" %>
+	<%= link_to "Show", [:admin, book_author], class: "btn btn-default btn-mini" %>
+	<%= link_to "Edit", edit_admin_book_author_path(book_author), class: "btn btn-default btn-mini" %>
 	<%= link_to "Destroy", [:admin, book_author], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>

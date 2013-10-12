@@ -31,7 +31,7 @@
       <div>
 	<%= f.hidden_field :term_id, value: @term.id %>
 	<%= f.select :department_id, options_for_select(@departments_array) %><br />
-	<%= f.submit class: "btn btn-small", value: "Go!" %>
+	<%= f.submit class: "btn btn-default btn-small", value: "Go!" %>
       </div>
       <% end %>
     </li>
@@ -50,7 +50,7 @@
 	<%= f.hidden_field :term_id, value: @term.id %>	
       <div class="input-append">
 	<%= f.text_field :faculty, class: "input-medium", placeholder: "faculty webmail id" %>
-	<%= f.submit class: "btn", value: "Go!" %>
+	<%= f.submit class: "btn btn-default", value: "Go!" %>
       </div>
       <% end %>
     </li>
