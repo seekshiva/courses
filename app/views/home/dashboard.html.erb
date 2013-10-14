@@ -172,19 +172,11 @@
       <small>{{course.code}}</small>
       {{course.name}}
     </h3>
-    {{#if course.instructors}}
-    <p>
-      <strong>Course Instructor:</strong>
-      {{#each course.instructors}}
-      <span>{{this.instructor}}</span>
-      {{/each}}
-    </p>
-    {{/if}}
 
     <ul class="nav nav-tabs" id="specialized_view_selector">
       <li class="span2">
 	<span class="nav_container">
-	  <strong class="label label-info">{{course.credits}} credits</strong>
+	  <strong class="label label-default">{{course.credits}} credits</strong>
 	</span>
       </li>
       <li id="view_course_info"><a href="/courses/{{course.id}}/info">Info</a></li>
@@ -201,9 +193,8 @@
   
   <script type="text/template" id="course-info-template">
     <div class="row">
-      <ul class="nav nav-list col-md-3 local-nav">
+      <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
 	<li class="active"><a href="#info1" data-toggle="tab">Overview</a></li>
-	<li><a href="#info2" data-toggle="tab">Instructor</a></li>
 	<li><a href="#info3" data-toggle="tab">Outline</a></li>
       </ul>
       <div class="tab-content col-md-9">
@@ -236,13 +227,6 @@
 	      </td>
 	    </tr>
 	  </table>
-	</div>
-	<div class="tab-pane" id="info2">
-	  {{#each course.instructors}}
-	  <h4>{{this.instructor}}</h4>
-	  <p>David Malan is a Senior Lecturer on Computer Science at Harvard. He recieved his B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
-	  <p>David Malan&#39;s research in graduate school focused primarily on cyber security and computer forensics.</p>
-	  {{/each}}
 	</div>
 	<div class="tab-pane" id="info3">
 	  <h4>Outline</h4>
@@ -377,39 +361,6 @@
     {{/if}}
   </script>
   
-  <script type="text/template" id="course-classes-template">
-    <table class="table bottom_line">
-      <tbody>
-	{{#unless course.classes}}
-	<tr><td>
-	    No classes have been taught in this course this semester.
-	</td></tr>
-	{{/unless}}
-	{{#each course.classes}}
-	<tr><td>
-	    <dl>
-	      <dt>
-		{{this.date}}, {{this.time}}
-		<small>at {{this.room}}</small>
-	      </dt>
-	      <dd>
-		<strong>
-		  Topics covered
-		</strong>
-		<ul>
-		  {{#each this.topics}}
-		  <li>
-		    {{this.title}}
-		  </li>
-		  {{/each}}
-		</ul>
-	      </dd>
-	    </dl>
-	</td></tr>
-	{{/each}}
-      </tbody>
-  </script>
-
   <script type="text/template" id="course-reference-template">
     {{#if course.reference_books}}
     
@@ -508,7 +459,7 @@
 	  <small class="badge">{{term.course.reference_books.length}}</small>
       </a></li>
     </ul>
-    <div id="specialized_view" class="{{edit_mode}}" style="margin-left: 15px; margin-right: -18px;"></div>
+    <div id="specialized_view" class="{{edit_mode}}"></div>
   </script>
 
   

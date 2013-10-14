@@ -12,13 +12,6 @@
   <small><%= @course.subject_code %></small>
   <%= @course.name %>
 </h3>
-<p>
-  <strong>Course Instructor:</strong>
-  <% @course.instructors.each do |instructor| %>
-  <%= instructor[:instructor] %>
-  <% end %>
-  <span></span>
-</p>
 <ul class="nav nav-tabs" id="specialized_view_selector">
   <li class="span2">
     <span class="nav_container">
@@ -44,14 +37,13 @@
 
 <div id="specialized_view">
   <% if @tab=="info"%>
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-list local-nav">
+  <div class="row">
+    <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
       <li class="active"><a href="#_info_1" data-toggle="tab">Overview</a></li>
-      <li><a href="#_info_2" data-toggle="tab">Instructor</a></li>
       <li><a href="#_info_3" data-toggle="tab">Outline</a></li>
       <li><a href="#_info_4" data-toggle="tab">Terms</a></li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content col-md-9">
       <div class="tab-pane active" id="_info_1">
 	<h4>Overview</h4>
 	<table class="table">
@@ -75,16 +67,6 @@
 	    </td></tr>
 	  </tbody>
 	</table>
-      </div>
-      <div class="tab-pane" id="_info_2">
-	<h4>
-	  <% @course.instructors.each do |instructor| %>
-	  <%= instructor[:instructor] %>
-	  <% end %>
-	</h4>
-	<p>David Malan is a Senior Lecturer on Computer Science at Harvard. He recieved his B.E, M.E, Ph.D. in Computer Science from the same in 1999, 2004, and 2007, respectively.</p>
-	
-	<p>David Malan's research in graduate school focused primarily on cyber security and computer forensics.</p>
       </div>
       <div class="tab-pane" id="_info_3">
 	<h4>Outline</h4>
@@ -191,46 +173,18 @@
     </div>
   </div>
 
-  <% elsif @tab == "classes" %>
-  <% if @classes.empty? %>
-  No classes found
-  <% end %>
-  <table class="table bottom_line">
-    <tbody>
-      <% @classes.each do |cl| %>
-      <tr><td>
-	  <dl>
-	    <dt>
-	      <%= "#{cl[:date]}, #{cl[:time]}" %>
-	      <small>at <%= cl[:venue] %></small>
-	    </dt>
-	    <% if cl["topics"].length > 0  %>
-	    <dd>
-	      <strong>Topics covered</strong>
-	      <ul>
-		<% cl["topics"].each do |topic| %>
-		<li><%= topic[:title] %></li>
-		<% end %>
-	      </ul>
-	    </dd>
-	    <% end %>
-	  </dl>
-      </td></tr>
-      <% end %>
-    </tbody>
-  </table>
   <% elsif @tab == "references" %>
 
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-list local-nav">
+  <div class="row">
+    <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
       <li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content col-md-9">
       <div class="tab-pane active" id="_reference_books">
 	<% if @course.books.length == 0 %>
 	<p>No reference book found for this subject.</p>
 	<% else %>
-	<table class="table table-hover bottom_line" >
+	<table class="table bottom_line" >
 	  <% @course.books.each do |book| %>
 	  <tr>
 	    <td>
