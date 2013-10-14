@@ -110,7 +110,7 @@ jQuery ->
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
           edit_mode:     if @view.id == "edit" then "edit_mode" else ""
-          term_topics:   @term_topics
+          term_sections: @term_sections
 
       $(@el).find("a:not(.local-nav a)").click @app.show_local_page
       @
@@ -150,40 +150,40 @@ jQuery ->
 
     render: =>
       current_topic = 0
-      if @term_topics
-        for topic in @term_topics
+      if @term_sections
+        for topic in @term_sections
           if topic.active
             current_topic =  topic.id
 
-      @term_topics = []
+      @term_sections = []
       flag = true
-      for topic in @term_view.term.attributes.topics
-        topic_clone = Object.create(topic)
-        topic_clone["sections"] = []
-        for section in topic.sections
-          if @selectors.ct_status[section.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
-            topic_clone.sections.push section
+      for section in @term_view.term.attributes.sections
+        section_clone = Object.create(section)
+        section_clone["topics"] = []
+        for topic in section.topics
+          if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
+            section_clone.topics.push topic
 
-        if topic_clone.sections.length or @term_view.view.id == "edit"
-          @term_topics.push(topic_clone) 
-          if topic_clone.id == current_topic 
-            topic_clone.active = true
+        if section_clone.topics.length or @term_view.view.id == "edit"
+          @term_sections.push(section_clone)
+          if section_clone.id == current_topic 
+            section_clone.active = true
             flag = false
           else
-            topic_clone.active = false
+            section_clone.active = false
 
 
-      @term_topics[0].active = true if flag and @term_topics[0]
+      @term_sections[0].active = true if flag and @term_sections[0]
       $(@el).html @template
         term:          @term_view.term.attributes
         edit_mode:     if @term_view.view.id == "edit" then "edit_mode" else ""
-        term_topics:   @term_topics
+        term_sections: @term_sections
         selectors:     @selectors
 
     switch_active_topic: (e) =>
         @app = window.app ? {}
         current_topic = if e.target.hash then e.target.hash.substr(8) else e.target.parentNode.hash.substr(8)
-        for topic in @term_topics
+        for topic in @term_sections
           topic.active = if topic.id.toString() == current_topic then true else false
 
 

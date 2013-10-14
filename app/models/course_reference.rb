@@ -4,7 +4,7 @@ class CourseReference < ActiveRecord::Base
   attr_accessible :book_id, :course_id
   
   has_many :references
-  has_many :sections, :through => :references
+  has_many :topics, :through => :references
   
   validates_uniqueness_of :book_id, :scope => :course_id
 end

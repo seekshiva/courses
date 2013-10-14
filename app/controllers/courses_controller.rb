@@ -9,23 +9,27 @@ class CoursesController < ApplicationController
       format.json { 
         course = Course.find(params[:id])
 
-        topics = course.topics.collect do |topic|
-          ret = {id: topic.id, title: topic.title}
-          ret["sections"] = topic.sections.collect do |section|
-            sec = {
-              id:               section.id,
-              title:            section.title,
-              description:      section.description,
-              ct_status:        section.ct_status,
+        sections = course.sections.collect do |section|
+          ret = {
+            id:          section.id,
+            title:       section.title,
+            short_title: section.title.length > 35 ? "#{section.title[0,33]}..." : section.title
+          }
+          ret["topics"] = section.topics.collect do |topic|
+            top_ = {
+              id:               topic.id,
+              title:            topic.title,
+              description:      topic.description,
+              ct_status:        topic.ct_status,
             }
 
-            sec["reference"] = section.references.collect do |ref|
+            top_["reference"] = topic.references.collect do |ref|
               {:book => ref.course_reference.book.title, :indices => ref.indices }
             end
-            sec["classes"] = section.classrooms.collect do |cl|
+            top_["classes"] = topic.classrooms.collect do |cl|
               {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
             end
-            sec
+            top_
           end
           ret
         end
@@ -66,7 +70,7 @@ class CoursesController < ApplicationController
           credits:         course.credits,
           departments:     course.departments,
           classes:         classes,
-          topics:          topics,
+          sections:        sections,
           instructors:     instructors,
           reference_books: reference_books
         }

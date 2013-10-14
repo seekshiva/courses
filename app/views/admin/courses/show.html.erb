@@ -128,39 +128,38 @@
 
 
   <% elsif @tab == "topics" %>
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-list local-nav">
-      <li class="active"><a href="#_all_topics" data-toggle="tab">All</a></li>
-      <% @course.topics.each do |topic| %>
-      <li><a href="#_topic_<%= topic.id %>" data-toggle="tab"><%= topic.title %></a></li>
+  <div class="row">
+    <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
+      <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
+      <% @course.sections.each do |section| %>
+      <li><a href="#_section_<%= section.id %>" data-toggle="tab"><%= section.title %></a></li>
       <% end %>
     </ul>
-    <div class="tab-content">
-      <div class="tab-pane _topic_list active" id="_all_topics">
+    <div class="tab-content col-md-9">
+      <div class="tab-pane _topic_list active" id="_all_sections">
 	<table class="table bottom_line">
 	  <tbody>
-	    <% if @course.topics.length == 0 %>
+	    <% if @course.sections.length == 0 %>
 	    <tr><td>
-		No topic found for this course.
-	    </td></tr>
-	    <% else %>
-	    <% @course.topics.each do |topic| %>
-	    <tr><td>
-		<strong><%= topic.title %></strong><br />
-		Topic detail goes here...
+		No sections have been added to this course.
 	    </td></tr>
 	    <% end %>
+	    <% @course.sections.each do |section| %>
+	    <tr><td>
+		<strong><%= section.title %></strong><br />
+		Section detail goes here...
+	    </td></tr>
 	    <% end %>
 	  </tbody>
 	</table>
       </div>
 
-      <% @course.topics.each do |topic| %>
-      <div class="tab-pane _topic_list" id="_topic_<%= topic.id %>">
+      <% @course.sections.each do |section| %>
+      <div class="tab-pane _topic_list" id="_section_<%= section.id %>">
 	<table class="table bottom_line">
 	  <tbody>
 	    <tr><td>
-		<strong><%= topic.title %></strong><br />
+		<strong><%= section.title %></strong><br />
 		Topic detail goes here...
 	    </td></tr>
 	  </tbody>

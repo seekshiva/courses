@@ -235,41 +235,31 @@
   </script>
   
   <script type="text/template" id="course-topics-template">
-    {{#if course.topics}}
+    {{#if course.sections}}
     <div class="row">
-      <ul class="nav nav-pills local-nav">
-	<li class="active"><a href="#_topic_all" data-toggle="tab">All</a></li>
-	{{#each course.topics}}
-	<li><a href="#_topic_{{this.id}}" data-toggle="tab">{{this.title}}</a></li>
+      <ul class="nav nav-pills nav-stacked local-nav col-md-3">
+	<li class="{{#unless course_sections}}active{{/unless}}"><a href="#_all_sections" data-toggle="tab">All</a></li>
+	{{#each course.sections}}
+	<li class="{{#if this.active}}active{{/if}}">
+	  <a href="#_section_{{this.id}}" data-toggle="tab">
+	    <div class="badge pull-right">{{this.topics.length}}</div>
+	    {{this.short_title}}
+	  </a>
+	</li>
 	{{/each}}
       </ul>
-      <div class="tab-content">
-	<div class="tab-pane active _topic_list" id="_topic_all">
+      <div class="tab-content col-md-9">
+	<div class="tab-pane active _topic_list" id="_all_sections">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#each course.topics}}
-	      {{#each this.sections}}
+	      {{#each course.sections}}
+	      {{#each this.topics}}
 	      <tr><td>
 		  <dl>
 		    <dt>
 		      {{this.title}}
-		      <span class="label label-success">{{this.ct_status}}</span>
 		    </dt>
 		    <dd>
-		      <p>
-			<small>
-			  {{#if this.classes}}
-			  This topic was taught on
-			  {{#each this.classes}}
-			  {{this.date}}
-			  {{/each}}
-			  
-			  {{else}}
-			  This topic has not been taught so far this semester
-			  {{/if}}
-			</small>
-		      </p>
-
 		      <p>{{this.description}}</p>
 		      <table class="table table-bordered">
 			<thead><tr>
@@ -293,21 +283,23 @@
 	</div>
 
 
-	{{#each course.topics}}
-	<div class="tab-pane _topic_list" id="_topic_{{this.id}}">
+	{{#each course.sections}}
+	<div class="tab-pane _topic_list" id="_section_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#unless this.sections}}
 	      <tr><td>
-		  No Sections found under this topic
+		  <h4>{{this.title}}</h4>
+	      </td></tr>
+	      {{#unless this.topics}}
+	      <tr><td>
+		  No topics found under this section
 	      </td></tr>
 	      {{/unless}}
-	      {{#each this.sections}}
+	      {{#each this.topics}}
 	      <tr><td>
 		  <dl>
 		    <dt>
 		      {{this.title}}
-		      <span class="label label-success">{{this.ct_status}}</span>
 		    </dt>
 		    <dd>
 		      <p>
@@ -532,12 +524,12 @@
     <div class="row">
       <ul class="nav nav-pills nav-stacked local-nav col-md-3">
 	{{#unless edit_mode}}
-	<li class="{{#unless term_topics}}active{{/unless}}"><a href="#_topic_all" data-toggle="tab">All</a></li>
+	<li class="{{#unless term_sections}}active{{/unless}}"><a href="#_all_sections" data-toggle="tab">All</a></li>
 	{{/unless}}
-	{{#each term_topics}}
+	{{#each term_sections}}
 	<li class="{{#if this.active}}active{{/if}}">
-	  <a href="#_topic_{{this.id}}" data-toggle="tab">
-	    <div class="badge pull-right">{{this.sections.length}}</div>
+	  <a href="#_section_{{this.id}}" data-toggle="tab">
+	    <div class="badge pull-right">{{this.topics.length}}</div>
 	    {{this.short_title}}
 	  </a>
 	</li>
@@ -545,7 +537,7 @@
       </ul>
       <div class="tab-content col-md-9">
 	{{#unless edit_mode}}
-	{{#unless term_topics}}
+	{{#unless term_sections}}
 	<div class="tab-pane active _topic_list" id="_topic_all">
 	  <table class="table bottom_line">
 	    <tbody>
@@ -556,11 +548,11 @@
 	  </table>
 	</div>
 	{{/unless}}
-	<div class="tab-pane _topic_list" id="_topic_all">
+	<div class="tab-pane _topic_list" id="_all_sections">
 	  <table class="table bottom_line">
 	    <tbody>
-	      {{#each term_topics}}
-	      {{#each this.sections}}
+	      {{#each term_sections}}
+	      {{#each this.topics}}
 	      <tr><td>
 		  <dl>
 		    <dt>
@@ -606,8 +598,8 @@
 	{{/unless}}
 
 
-	{{#each term_topics}}
-	<div class="tab-pane _topic_list {{#if this.active}}active{{/if}}" id="_topic_{{this.id}}">
+	{{#each term_sections}}
+	<div class="tab-pane _topic_list {{#if this.active}}active{{/if}}" id="_section_{{this.id}}">
 	  <table class="table bottom_line">
 	    <tbody>
 	      <tr><td>
@@ -623,12 +615,12 @@
 		  {{/if}}
 		  <h4>{{this.title}}</h4>
 	      </td></tr>
-	      {{#unless this.sections}}
+	      {{#unless this.topics}}
 	      <tr><td>
-		  No Sections found under this topic
+		  No topics found under this section
 	      </td></tr>
 	      {{/unless}}
-	      {{#each this.sections}}
+	      {{#each this.topics}}
 	      <tr><td>
 		  <dl>
 		    <dt>

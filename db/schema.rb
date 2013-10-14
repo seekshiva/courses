@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503190208) do
+ActiveRecord::Schema.define(:version => 20131014095454) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
 
   create_table "class_topics", :force => true do |t|
     t.integer  "classroom_id"
-    t.integer  "section_id"
+    t.integer  "topic_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "class_topics", ["classroom_id"], :name => "index_class_topics_on_classroom_id"
-  add_index "class_topics", ["section_id"], :name => "index_class_topics_on_topic_id"
+  add_index "class_topics", ["classroom_id"], :name => "index_class_topics_on_class_id"
+  add_index "class_topics", ["topic_id"], :name => "index_class_topics_on_topic_id"
 
   create_table "classrooms", :force => true do |t|
     t.integer  "term_id"
@@ -100,23 +100,20 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
 
   create_table "references", :force => true do |t|
     t.integer  "course_reference_id"
-    t.integer  "section_id"
+    t.integer  "topic_id"
     t.string   "indices"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
 
   add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
-  add_index "references", ["section_id"], :name => "index_references_on_topic_id"
+  add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
   create_table "sections", :force => true do |t|
     t.integer  "course_id"
     t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.string   "ct_status",   :default => ""
-    t.integer  "topic_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "term_departments", :force => true do |t|
@@ -153,8 +150,11 @@ ActiveRecord::Schema.define(:version => 20130503190208) do
   create_table "topics", :force => true do |t|
     t.integer  "course_id"
     t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.text     "description"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "ct_status",   :default => ""
+    t.integer  "section_id"
   end
 
   create_table "users", :force => true do |t|
