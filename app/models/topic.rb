@@ -1,8 +1,8 @@
 class Topic < ActiveRecord::Base
-  belongs_to :course
+  belongs_to :term
   belongs_to :section
 
-  attr_accessible :course, :description, :title, :ct_status, :section_id
+  attr_accessible :title, :description, :ct_status, :section_id
 
   has_many :references, :dependent => :destroy
   has_many :course_references, :through => :references

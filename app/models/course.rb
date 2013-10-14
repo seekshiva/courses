@@ -2,8 +2,6 @@ class Course < ActiveRecord::Base
   attr_accessible :about, :credits, :name, :subject_code
 
   has_many :terms, :dependent => :destroy
-  has_many :sections, :dependent => :destroy
-  has_many :topics, :dependent => :destroy
 
   has_many :course_references, :dependent => :destroy
   has_many :books, :through => :course_references
@@ -37,4 +35,16 @@ class Course < ActiveRecord::Base
     current
   end
 
+  def latest_term
+    latest = nil
+    self.terms.each do |term|
+      if latest.nil?
+        latest = term
+      elsif (term.academic_year > latest.academic_year) or (term.academic_year == latest.academic_year and term.semester%2 < term.semester%2)
+        latest = term
+      end
+    end
+    latest
+  end
+  
 end

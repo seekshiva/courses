@@ -119,19 +119,14 @@
 	</table>
 	<% end %>
       </div>
-
-
-
     </div>
   </div>
-
-
 
   <% elsif @tab == "topics" %>
   <div class="row">
     <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
       <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
-      <% @course.sections.each do |section| %>
+      <% @course.latest_term.sections.each do |section| %>
       <li><a href="#_section_<%= section.id %>" data-toggle="tab"><%= section.title %></a></li>
       <% end %>
     </ul>
@@ -139,12 +134,12 @@
       <div class="tab-pane _topic_list active" id="_all_sections">
 	<table class="table bottom_line">
 	  <tbody>
-	    <% if @course.sections.length == 0 %>
+	    <% if @course.latest_term.sections.length == 0 %>
 	    <tr><td>
 		No sections have been added to this course.
 	    </td></tr>
 	    <% end %>
-	    <% @course.sections.each do |section| %>
+	    <% @course.latest_term.sections.each do |section| %>
 	    <tr><td>
 		<strong><%= section.title %></strong><br />
 		Section detail goes here...
@@ -154,7 +149,7 @@
 	</table>
       </div>
 
-      <% @course.sections.each do |section| %>
+      <% @course.latest_term.sections.each do |section| %>
       <div class="tab-pane _topic_list" id="_section_<%= section.id %>">
 	<table class="table bottom_line">
 	  <tbody>

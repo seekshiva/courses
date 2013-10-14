@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
       format.json { 
         course = Course.find(params[:id])
 
-        sections = course.sections.collect do |section|
+        sections = course.latest_term.sections.collect do |section|
           ret = {
             id:          section.id,
             title:       section.title,

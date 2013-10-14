@@ -1,6 +1,9 @@
 class Term < ActiveRecord::Base
   belongs_to :course
 
+  has_many :sections, :dependent => :destroy
+  has_many :topics, :dependent => :destroy
+
   has_many :term_departments, :dependent => :destroy
   has_many :departments, :through => :term_departments
 

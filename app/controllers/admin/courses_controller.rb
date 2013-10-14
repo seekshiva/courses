@@ -26,19 +26,6 @@ class Admin::CoursesController < Admin::BaseController
     @tab = params[:tab] || "info"
     @ref_books = @course.books
 
-    if @tab == 'classes'
-      terms = @course.this_year
-      @classes = terms.empty? ? {} : Classroom.where("term_id IN (" + terms.collect do |term|
-                                                                        term.id
-                                                                      end.join(",") + ")").collect do |cl|
-          ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, venue: cl.room, term_id: cl.term_id }
-          ret["topics"] = cl.topics.collect do |topic|
-            { id: topic.id, ct_status: topic.ct_status, title: topic.title }
-          end
-        ret
-      end
-    end
-
     @course["instructors"] = []
     @course.this_year.each do |term|
       term.faculties.each do |faculty|

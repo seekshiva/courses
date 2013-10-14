@@ -17,6 +17,10 @@ html, body {
     height: 100%;
 }
 
+.greener:hover {
+    color: #47a447;
+}
+
 #wrap {
     height: auto !important;
     /* Negative indent footer by it's height */

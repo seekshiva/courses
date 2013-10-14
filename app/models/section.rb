@@ -1,6 +1,6 @@
 class Section < ActiveRecord::Base
-  belongs_to :course
-  attr_accessible :course_id, :title
+  belongs_to :term
+  attr_accessible :term_id, :title
 
   has_many :topics
 end

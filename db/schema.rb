@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131014095454) do
+ActiveRecord::Schema.define(:version => 20131014141003) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20131014095454) do
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
   create_table "sections", :force => true do |t|
-    t.integer  "course_id"
+    t.integer  "term_id"
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(:version => 20131014095454) do
   add_index "terms", ["course_id"], :name => "index_terms_on_course_id"
 
   create_table "topics", :force => true do |t|
-    t.integer  "course_id"
     t.string   "title"
     t.text     "description"
     t.datetime "created_at",                  :null => false

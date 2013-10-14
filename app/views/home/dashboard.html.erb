@@ -37,10 +37,10 @@
 	  </a>
 	  <ul class="dropdown-menu local">
 	    <li role="presentation" class="dropdown-header">My Courses</li>
-	    <li role="presentation"><a href="/terms/2">Advanced Database Management Systems</a></li>
-	    <li role="presentation"><a href="/terms/1">Real-Time Systems</a></li>
+	    <li role="presentation"><a href="/terms/1">Advanced Database Management Systems</a></li>
+	    <li role="presentation"><a href="/terms/5">Real-Time Systems</a></li>
 	    <li role="presentation"><a href="/terms/15">Data Warehousing and Data Mining</a></li>
-	    <li role="presentation"><a href="/terms/5">Industrial Economics</a></li>
+	    <li role="presentation"><a href="/terms/2">Industrial Economics</a></li>
 	    <li role="presentation" class="divider"></li>
 	    <li role="presentation"><a href="/me">My Profile</a></li>
 	    <li role="presentation"><a href="/signout">Sign out</a></li>
@@ -355,11 +355,11 @@
   <script type="text/template" id="course-reference-template">
     {{#if course.reference_books}}
     
-    <div class="tabbable">
-      <ul class="nav nav-list local-nav">
+    <div class="row">
+      <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
 	<li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
       </ul>
-      <div class="tab-content">
+      <div class="tab-content col-md-9">
 	<div class="tab-pane active _reference_list" id="_reference_books">
 	  <table class="table bottom_line">
 	    <tbody>
@@ -421,7 +421,7 @@
 
   <script type="text/template" id="term-template">
     <h3>
-      <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn btn-default btn-small {{#if edit_mode}}active btn-success{{/if}}">
+      <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn {{#if edit_mode}}btn-success{{else}}btn-default greener{{/if}} btn-small">
 	<i class="glyphicon glyphicon-pencil"></i>
       </a>
       <small>{{term.course.code}}</small>
