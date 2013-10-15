@@ -191,46 +191,25 @@
 
   
   <script type="text/template" id="course-info-template">
-    <div class="row">
-      <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
-	<li class="active"><a href="#info1" data-toggle="tab">Overview</a></li>
-	<li><a href="#info3" data-toggle="tab">Outline</a></li>
-      </ul>
-      <div class="tab-content col-md-9">
-	<div class="tab-pane active" id="info1">
-	  <h4>Overview</h4>
-	  <table class="table bottom_line">
-	    <tr>
-	      <td colspan="2">
-		{{{course.about}}}
-	      </td>
-	    </tr>
-	    <tr>
-	      <th>
-		<strong>Course Instructor</strong>
-	      </th>
-	      <td>
-		{{#each course.instructors}}
-		{{this.instructor}}
-		{{/each}}
-	      </td>
-	    </tr>
-	    <tr>
-	      <th>
-		<strong>Departments Offered</strong>
-	      </th>
-	      <td>
-		{{#each course.departments}}
-		{{this.name}}
-		{{/each}}
-	      </td>
-	    </tr>
-	  </table>
-	</div>
-	<div class="tab-pane" id="info3">
-	  <h4>Outline</h4>
-	</div>
-      </div>
+    <div>
+      <h4>Overview</h4>
+      <table class="table bottom_line">
+	<tr>
+	  <td colspan="2">
+	    {{{course.about}}}
+	  </td>
+	</tr>
+	<tr>
+	  <th>
+	    <strong>Departments Offered</strong>
+	  </th>
+	  <td>
+	    {{#each course.departments}}
+	    {{this.name}}
+	    {{/each}}
+	  </td>
+	</tr>
+      </table>
     </div>
   </script>
   
@@ -298,12 +277,9 @@
 	      {{#each this.topics}}
 	      <tr><td>
 		  <dl>
-		    <dt>
-		      {{this.title}}
-		    </dt>
+		    <dt>{{this.title}}</dt>
 		    <dd>
-		      <p>
-			<small>
+		      <p><small>
 			  {{#if this.classes}}
 			  This topic was taught on
 			  {{#each this.classes}}
@@ -313,8 +289,7 @@
 			  {{else}}
 			  This topic has not been taught so far this semester
 			  {{/if}}
-			</small>
-		      </p>
+		      </small></p>
 
 		      <p>{{this.description}}</p>
 		      <table class="table table-bordered">
@@ -353,8 +328,16 @@
   </script>
   
   <script type="text/template" id="course-reference-template">
-    {{#if course.reference_books}}
+    {{#unless course.reference_books}}
     
+    <table class="table bottom_line">
+      <tbody><tr><td style="padding: 20px;">
+	    No Reference material found for this subject.
+      </td></tr></tbody>
+    </table>
+
+    {{else}}
+
     <div class="row">
       <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
 	<li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
@@ -364,38 +347,20 @@
 	  <table class="table bottom_line">
 	    <tbody>
 	      {{#each course.reference_books}}
-	      <tr><td style="padding-right: 20px; ">
-		  <h4>
-		    {{this.title}}
-		    <small>({{this.year}})</small>
-		  </h4>
+	      <tr><td style="padding-right: 20px; " >
+		  <h4>{{this.title}} <small>({{this.year}})</small></h4>
 		  <table class="table table-striped table-condensed">
 		    <tbody>
-		      </td></tr>
-		      <tr><th>
-			  Authors
-			</th><td>
-			  <ul>
+		      <tr><th width="30%">Authors</th><td>
+			  <ul style="padding-left: 15px;">
 			    {{#each this.authors}}
 			    <li>{{this.name}}</li>
 			    {{/each}}
 			  </ul>
 		      </td></tr>
-		      <tr><th>
-			  Publisher
-			</th><td>
-			  {{this.publisher}}
-		      </td></tr>
-		      <tr><th>
-			  Edition
-			</th><td>
-			  {{this.edition}}
-		      </td></tr>
-		      <tr><th>
-			  ISBN
-			</th><td>
-			  {{this.isbn}}
-		      </td></tr>
+		      <tr><th>Publisher</th><td>{{this.publisher}}/</td></tr>
+		      <tr><th>Edition</th><td>{{this.edition}}</td></tr>
+		      <tr><th>ISBN</th><td>{{this.isbn}}</td></tr>
 		    </tbody>
 		  </table>
 	      </td></tr>
@@ -405,17 +370,7 @@
       </div>
     </div>
 
-    {{else}}
-
-    <table class="table bottom_line">
-      <tbody>
-	<tr><td style="padding: 20px;">
-	    No Reference material found for this book.
-	</td></tr>
-      </tbody>
-    </table>
-
-    {{/if}}
+    {{/unless}}
   </script>
 
 
@@ -719,7 +674,7 @@
     <table class="table bottom_line">
       <tbody>
 	<tr><td style="padding: 20px;">
-	    No Reference material found for this book.
+	    No Reference material found for this subject.
 	</td></tr>
       </tbody>
     </table>
@@ -736,37 +691,19 @@
 	    <tbody>
 	      {{#each term.course.reference_books}}
 	      <tr><td style="padding-right: 20px; ">
-		  <h4>
-		    {{this.title}}
-		    <small>({{this.year}})</small>
-		  </h4>
+		  <h4>{{this.title}} <small>({{this.year}})</small></h4>
 		  <table class="table table-striped table-condensed">
 		    <tbody>
-		      </td></tr>
-		      <tr><th>
-			  Authors
-			</th><td>
-			  <ul>
+		      <tr><th width="30%">Authors</th><td>
+			  <ul style="padding-left: 15px;">
 			    {{#each this.authors}}
 			    <li>{{this.name}}</li>
 			    {{/each}}
 			  </ul>
 		      </td></tr>
-		      <tr><th>
-			  Publisher
-			</th><td>
-			  {{this.publisher}}
-		      </td></tr>
-		      <tr><th>
-			  Edition
-			</th><td>
-			  {{this.edition}}
-		      </td></tr>
-		      <tr><th>
-			  ISBN
-			</th><td>
-			  {{this.isbn}}
-		      </td></tr>
+		      <tr><th>Publisher</th><td>{{this.publisher}}</td></tr>
+		      <tr><th>Edition</th><td>{{this.edition}}</td></tr>
+		      <tr><th>ISBN</th><td>{{this.isbn}}</td></tr>
 		    </tbody>
 		  </table>
 	      </td></tr>

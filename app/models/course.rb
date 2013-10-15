@@ -38,11 +38,10 @@ class Course < ActiveRecord::Base
   def latest_term
     latest = nil
     self.terms.each do |term|
-      if latest.nil?
-        latest = term
-      elsif (term.academic_year > latest.academic_year) or (term.academic_year == latest.academic_year and term.semester%2 < term.semester%2)
-        latest = term
-      end
+      latest = term if
+        latest.nil? or
+        term.academic_year > latest.academic_year or
+        (term.academic_year == latest.academic_year and term.semester%2 < latest.semester%2)
     end
     latest
   end
