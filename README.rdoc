@@ -1,13 +1,12 @@
-== Courses
+=== Courses
 
-Courses is a web application based on {Rails}[http://rubyonrails.org/] and {Backbone.js}[http://backbonejs.org/] used to facilitate easy access of course information to students (such as, refering to course topics or checking assignments, project deadlines, etc.)
+Access detailed information about college course; like course syllabus, project deadlines, assignments and test schedule. Changes made to class schedule, assignment deadline, etc. are updated in realtime. It also acts as a medium for direct student-professor interaction.
 
-== App Link
+=== App Link
 
-The application will be put up at http://courses.nitt.edu
+We're not live yet! This space will be updated with a link to the app.
 
-
-== Terms of use
+=== Terms of use
 
 Courses app is free, and distributed under the GNU General Public License (GPL) v3.0 or later. Essentially, this means that you are free to do almost exactly what you want with the program, including distributing it among your friends, making it available for download from your web site, selling it (either by itself or as part of some bigger software package), or using it as the starting point for a software project of your own.
 
@@ -16,4 +15,4 @@ The only real limitation is that whenever you distribute Courses app in some way
 For full details, read the GPL, found at http://www.gnu.org/licenses/gpl.html
 
 
-Copyleft ({?}[http://www.gnu.org/copyleft/]) - {V. Shiva Nandan}[https://github.com/seekshiva]
+Copyleft ({?}[http://www.gnu.org/copyleft/]) - {V Shiva Nandan}[https://github.com/seekshiva]
