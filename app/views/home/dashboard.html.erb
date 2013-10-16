@@ -72,7 +72,7 @@
 
   <script type="text/template" id="login-template">
     <div class="container">
-      <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin">
+      <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin" style="text-align: center; ">
 	<h2 class="form-signin-heading">Sign In</H2>
 	<% unless flash[:notice].nil? %>
 	<div class="alert <%= flash[:notice_type] %>">
@@ -80,8 +80,11 @@
 	</div>
 	<% end %>
 	<div class="form-group">
-	  <input type="text" name="username" class="form-control" placeholder="webmail address" autofocus>
-	  <input type="password" name="password" class="form-control" placeholder="password">
+	  <div class="input-group">
+	    <input type="text" name="username" style="text-align: right;" class="form-control" placeholder="webmail id" autofocus autocomplete="off">
+	    <span class="input-group-addon">@nitt.edu</span>
+	  </div>
+	  <input type="password" name="password" class="form-control" placeholder="password" style="text-align: center; ">
 	</div>
 	<button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
       </form>
