@@ -93,4 +93,8 @@ class Admin::UsersController < Admin::BaseController
       format.json { head :no_content }
     end
   end
+
+  def switch_to
+    @user = User.find_by_email(params[:email])
+  end
 end

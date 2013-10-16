@@ -26,7 +26,28 @@
 	<li><%= link_to "Books", admin_books_path %></li>
 	<li><%= link_to "Authors", admin_authors_path %></li>
       </ul>
-      <form action="<%= admin_courses_path %>" method="get" class="navbar-form navbar-right input-group">
+      <ul class="nav navbar-nav navbar-right">
+	<li class="dropdown">
+	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	    <strong>
+	      <i class="glyphicon glyphicon-user"></i>
+	      <%= @user[:name] %>
+	    </strong>
+	    <b class="caret"></b>
+	  </a>
+	  <ul class="dropdown-menu">
+	    <li role="presentation">
+	      <form action="<%= admin_switch_to_path  %>" method="post" class="navbar-form form-inline col-lg-4">
+		<input type="text" id="email" name="email" class="form-control input-sm" placeholder="God Mode" title="Enter the email of the user you want to switch to..">
+	      </form>
+	    </li>
+	    <li role="presentation"><a href="/">
+		<span class="glyphicon glyphicon-chevron-left"></span> Leave admin mode
+	    </a></li>
+	  </ul>
+	</li>
+      </ul>
+      <form action="<%= admin_courses_path %>" method="get" class="navbar-form input-group">
 	<span class="input-group-addon glyphicon glyphicon-search" style="top: 0; "></span>
 	<input type="text" name="code" class="form-control" placeholder="Course Code">
       </form>

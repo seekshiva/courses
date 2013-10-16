@@ -9,7 +9,6 @@ jQuery ->
       "terms/:term_id(/:slug)": "term"
       "terms/:term_id/:slug(/:id)": "term"
       "login": "login"
-      "signout": "signout"
       "me": "me"
       "*path": "four_oh_four"
 
@@ -59,10 +58,6 @@ jQuery ->
         @home()
       else
         @login_view = new @app.LoginView()
-      @
-
-    signout: () ->
-      window.location.href = window.location.href
       @
 
     four_oh_four: (path) ->

@@ -16,7 +16,7 @@ Courses::Application.routes.draw do
     end
     resources :course_list_items, :course_references
     resources :books, :authors, :book_authors, :references
-
+    match "switch_to" => "users#switch_to"
   end
 
   resources :users
@@ -32,6 +32,7 @@ Courses::Application.routes.draw do
 
   match "admin" => "admin/departments#index"
 
+  match "login" => "home#index"
 
   match ":slug.json" => "#{:slug}s#index"
   match ":slug" => "#{:slug}s#index"

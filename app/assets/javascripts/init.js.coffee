@@ -18,7 +18,7 @@ jQuery ->
       @app.router.navigate $(e.target).attr("href") or $(e.target.parentNode).attr("href"),
         trigger: true
 
-    $(".local").find("a").click (e) ->
+    $(".local").find("a:not(.external)").click (e) ->
       unless e.target.parentNode.id == "signin_link"
         $("#signin_link").css({display: "block"})
 

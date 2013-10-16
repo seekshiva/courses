@@ -5,7 +5,4 @@ class Admin::BaseController < ApplicationController
     redirect_to root_path unless current_user && current_user.admin?
   end
 
-  def admin?
-    self.admin == true
-  end
 end

@@ -48,8 +48,8 @@
       <%= form_for([:admin, @course, @new_faculty]) do |f| %>
       Add new Faculty?
 	<%= f.hidden_field :term_id, value: @term.id %>	
-      <div class="input-append">
-	<%= f.text_field :faculty, class: "input-medium", placeholder: "faculty webmail id" %>
+      <div class="input-group">
+	<%= f.text_field :faculty, class: "form-control", placeholder: "faculty webmail id" %>
 	<%= f.submit class: "btn btn-default", value: "Go!" %>
       </div>
       <% end %>

@@ -18,14 +18,14 @@
   <legend><%= @legend %></legend>
   <% end %>
   <div class="field">
-    <%= f.text_field :subject_code, class: "input-small", placeholder: "Course Code" %>
-    <%= f.text_field :name, class: "input-xxlarge", placeholder: "Course Name" %>
+    <%= f.text_field :subject_code, class: "form-control input-sm", placeholder: "Course Code" %>
+    <%= f.text_field :name, class: "form-control input-lg", placeholder: "Course Name" %>
   </div>
   <div class="field">
-    <%= f.number_field :credits, class: "input-small", placeholder: "# Credits" %>
+    <%= f.number_field :credits, class: "form-control input-sm", placeholder: "# Credits" %>
   </div>
   <div class="field">
-    <%= f.text_area :about, class: "input-xxlarge", placeholder: "About Course", rows: 10 %>
+    <%= f.text_area :about, class: "form-control input-lg", placeholder: "About Course", rows: 10 %>
   </div>
   <div class="actions">
     <%= f.submit class: "btn btn-large btn-primary" %>

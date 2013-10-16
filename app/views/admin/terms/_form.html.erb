@@ -17,7 +17,7 @@
 
     <div class="field">
       <%= f.label :course_id %>
-      <span class="input-xxlarge uneditable-input"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
+      <span class="form-control-static input-lg"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
       <%= f.hidden_field :course_id, value: @course.id %>
     </div>
     <div class="field">

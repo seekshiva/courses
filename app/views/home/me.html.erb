@@ -121,14 +121,14 @@
 	<div>
 	  <div class="field">
 	    <%= f.label :name, "Full Name" %>
-	    <%= f.text_field :name, placeholder: "Full Name", class: "input-xlarge" %>
+	    <%= f.text_field :name, placeholder: "Full Name", class: "form-control input-lg" %>
 	    <%= f.hidden_field :activated, value: true %>
 	    <%= f.hidden_field :email %>
 	    
 	  </div>
 	  <div class="field">
 	    <%= f.label :department_id, "Department" %>
-	    <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "input-xlarge") %>
+	    <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "form-control input-lg") %>
 	  </div>	
 	</div>
 	
@@ -166,10 +166,10 @@
 	
 	<div>
 	  <div class="field">
-	    <span class="uneditable-input input-large"><%= @user[:email] %>@nitt.edu</span>
+	    <span class="form-control-static input-lg"><%= @user[:email] %>@nitt.edu</span>
 	  </div>
 	  <div class="field">
-	    <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "input-large") %>
+	    <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "form-control input-lg") %>
 	  </div>
 	</div>
       </div>

@@ -19,24 +19,24 @@ This subject is not being taught this semester. You can only add classes to subj
     <legend><%= @legend %></legend>
     <div class="field">
       <%= f.label :term_id %>
-      <span class="input-xxlarge uneditable-input"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
+      <span class="input-lg form-control-static"><%=  "#{@course.subject_code} - #{@course.name}" %></span>
       <%= f.hidden_field :term_id, value: @course.current_term.id %>
     </div>
     <div class="field">
       <%= f.label :date %>
-      <%= f.date_select :date %>
+      <%= f.date_select :date, class: "form-control" %>
     </div>
     <div class="field">
       <%= f.label :time %>
-      <%= f.select :time, options_for_select(@options, @opt_default) %>
+      <%= f.select :time, options_for_select(@options, @opt_default), class: "form-control" %>
     </div>
     <div class="field">
       <%= f.label :room %>
-      <%= f.text_field :room, value: @course.current_term.venue %>
+      <%= f.text_field :room, value: @course.current_term.venue, class: "form-control" %>
     </div>
     <div class="field">
       <%= f.label :topics %>
-      <%= select_tag :class_topics, options_for_select(@course.topics.map {|t| [t.title, t.id]}, @classroom.topics.collect {|x| x.id}), multiple: true, size: 10, class: "input-xxlarge" %>
+      <%= select_tag :class_topics, options_for_select(@course.topics.map {|t| [t.title, t.id]}, @classroom.topics.collect {|x| x.id}), multiple: true, size: 10, class: "form-control input-lg" %>
     </div>
     <div class="actions">
       <%= f.submit class: "btn btn-primary", value: "Save" %>

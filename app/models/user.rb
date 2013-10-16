@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email
 
   validates :email, :uniqueness => true
+
+  def admin?
+    self.admin != 0
+  end
   
   def is_student?
     return self[:email].to_i != 0

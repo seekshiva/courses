@@ -5,51 +5,54 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Courses</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav local navbar-nav">
-	<li><%= link_to "Departments", "/departments" %></li>
-      </ul>
-      <% if @user.nil? %>
-      <ul class="nav navbar-nav local navbar-right">
-	<li id="signin_link">
-	  <a href="/login">Sign In</a></li>
-      </ul>
-      <% else %>
-      <ul class="nav navbar-nav navbar-right">
-	<li class="dropdown">
-	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	    <strong>
-	      <i class="glyphicon glyphicon-user"></i>
-	      <%= @user[:name] %>
-	    </strong>
-	    <b class="caret"></b>
-	  </a>
-	  <ul class="dropdown-menu local">
-	    <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
-	    <li role="presentation"><a href="/terms/1">Advanced Database Management Systems</a></li>
-	    <li role="presentation"><a href="/terms/5">Real-Time Systems</a></li>
-	    <li role="presentation"><a href="/terms/15">Data Warehousing and Data Mining</a></li>
-	    <li role="presentation"><a href="/terms/2">Industrial Economics</a></li>
-	    <li role="presentation" class="divider"></li>
-	    <li role="presentation"><a href="/me">My Profile</a></li>
-	    <li role="presentation"><a href="/signout">Sign out</a></li>
-	  </ul>
-	</li>
-      </ul>
-      <% end %>
-    </div>
-  </nav>
   <div id="wrap">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="navbar-header">
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	  <span class="sr-only">Toggle navigation</span>
+	  <span class="icon-bar"></span>
+	  <span class="icon-bar"></span>
+	  <span class="icon-bar"></span>
+	</button>
+	<a class="navbar-brand" href="/">Courses</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+	<ul class="nav local navbar-nav">
+	  <li><%= link_to "Departments", "/departments" %></li>
+	</ul>
+	<% if @user.nil? %>
+	<ul class="nav navbar-nav local navbar-right">
+	  <li id="signin_link">
+	    <a href="/login">Sign In</a></li>
+	</ul>
+	<% else %>
+	<ul class="nav navbar-nav navbar-right">
+	  <li class="dropdown">
+	    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	      <strong>
+		<i class="glyphicon glyphicon-user"></i>
+		<%= @user[:name] %>
+	      </strong>
+	      <b class="caret"></b>
+	    </a>
+	    <ul class="dropdown-menu local">
+	      <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
+	      <li role="presentation"><a href="/terms/1">Advanced Database Management Systems</a></li>
+	      <li role="presentation"><a href="/terms/5">Real-Time Systems</a></li>
+	      <li role="presentation"><a href="/terms/15">Data Warehousing and Data Mining</a></li>
+	      <li role="presentation"><a href="/terms/2">Industrial Economics</a></li>
+	      <li role="presentation" class="divider"></li>
+	      <% if @user.admin? %>
+	      <li class="presentation"><a class="external" href="/admin">Admin panel</a></li>
+	      <% end %>
+	      <li role="presentation"><a href="/me">My Profile</a></li>
+	      <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
+	    </ul>
+	  </li>
+	</ul>
+	<% end %>
+      </div>
+    </nav>
     <div class="container" id="content"></div>
   </div>
   <div id="footer">
@@ -68,29 +71,21 @@
   </div>
 
   <script type="text/template" id="login-template">
-    <form class="form-signin" action="/authenticate" method="post">
-      <h2 class="form-signin-heading">Please sign in</H2>
-      <% unless flash[:notice].nil? %>
-      <div class="alert <%= flash[:notice_type] %>">
-	<%= flash[:notice] %>
-      </div>
-      <% end %>
-      <p class="alert alert-info">
-	Enter your nitt webmail credentials
-      </p>
-      <div class="field">
-	<div class="input-append">
-	  <input type="text" name="username" style="text-align: right" class="input-small" placeholder="username">
-	  <span class="add-on">@nitt.edu</span>
+    <div class="container">
+      <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin">
+	<h2 class="form-signin-heading">Sign In</H2>
+	<% unless flash[:notice].nil? %>
+	<div class="alert <%= flash[:notice_type] %>">
+	  <%= flash[:notice] %>
 	</div>
-      </div>
-      <div class="field">
-	<input type="password" name="password" style="text-align: right; " class="input-medium" placeholder="password">
-      </div>
-      <div class="field">
-	<input type="submit" class="btn btn-large btn-primary" value="Sign In">
-      </div>
-    </form>
+	<% end %>
+	<div class="form-group">
+	  <input type="text" name="username" class="form-control" placeholder="webmail address" autofocus>
+	  <input type="password" name="password" class="form-control" placeholder="password">
+	</div>
+	<button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
+      </form>
+    </div>
   </script>
   
   <script type="text/template" id="departments-template">
