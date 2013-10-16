@@ -11,9 +11,10 @@ class TermsController < ApplicationController
 
         sections = term.sections.collect do |section|
           ret = {
-            id:          section.id,
-            title:       section.title,
-            short_title: section.title.length > 35 ? "#{section.title[0,33]}..." : section.title
+            id:               section.id,
+            title:            section.title,
+            short_title:      section.title.length > 30 ? "#{section.title[0,28]}..." : section.title,
+            show_short_title: section.title.length > 30
           }
           ret["topics"] = section.topics.collect do |topic|
             top_ = {

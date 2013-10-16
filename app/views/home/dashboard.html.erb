@@ -17,7 +17,6 @@
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav local navbar-nav">
-	<li class="divider-vertical"></li>
 	<li><%= link_to "Departments", "/departments" %></li>
       </ul>
       <% if @user.nil? %>
@@ -36,7 +35,7 @@
 	    <b class="caret"></b>
 	  </a>
 	  <ul class="dropdown-menu local">
-	    <li role="presentation" class="dropdown-header">My Courses</li>
+	    <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
 	    <li role="presentation"><a href="/terms/1">Advanced Database Management Systems</a></li>
 	    <li role="presentation"><a href="/terms/5">Real-Time Systems</a></li>
 	    <li role="presentation"><a href="/terms/15">Data Warehousing and Data Mining</a></li>
@@ -96,24 +95,26 @@
   
   <script type="text/template" id="departments-template">
     <div class="s-push"></div>
-    <table class="table table-striped">
-      <thead>
-	<tr>
-	  <th>Department</th>
-	  <th>HOD</th>
-	</tr>
-      </thead>
-      <tbody>
-	{{#each depts}}
-	<tr>
-	  <td>
-	    <a href="/departments/{{this.id}}">{{this.name}}</a>
-	  </td>
-	  <td>{{this.hod}}</td>
-	</tr>
-	{{/each}}
-      </tbody>
-    </table>
+    <div class="panel panel-default">
+      <table class="table table-striped">
+	<thead>
+	  <tr>
+	    <th>Department</th>
+	    <th>HOD</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {{#each depts}}
+	  <tr>
+	    <td>
+	      <a href="/departments/{{this.id}}">{{this.name}}</a>
+	    </td>
+	    <td>{{this.hod}}</td>
+	  </tr>
+	  {{/each}}
+	</tbody>
+      </table>
+    </div>
   </script>
 
   <script type="text/template" id="department-template">
@@ -462,35 +463,33 @@
   </script>
   
   <script type="text/template" id="term-topics-template">
-    <div id="topic_filter" class="row">
-      <div class="col-md-3 pull-right">
-	<label class="muted">Filters:</label>
-	<div id="ct_status_selector" class="btn-group" title="You can choose multiple options at once">
-	  <button class="{{selectors.ct_status.ct1}} btn btn-default btn-small">CT 1</button>
-	  <button class="{{selectors.ct_status.ct2}} btn btn-default btn-small">CT 2</button>
-	  <button class="{{selectors.ct_status.postct}} btn btn-default btn-small">Post CT</button>
-	</div>
-      </div>
-      <div class="input-group col-md-5">
-	<span class="input-group-addon glyphicon glyphicon-search" style="top: 0;"></span>
-	<input type="search" class="form-control" placeholder="Search a Topic">
-      </div>
-    </div>
     <div class="row">
-      <ul class="nav nav-pills nav-stacked local-nav col-md-3">
+      <div class="list-group local-nav col-md-3">
 	{{#unless edit_mode}}
-	<li class="{{#unless term_sections}}active{{/unless}}"><a href="#_all_sections" data-toggle="tab">All</a></li>
+	<a class="list-group-item {{#if show_all}}active{{/if}}" href="#_all_sections" data-toggle="tab">All</a>
 	{{/unless}}
 	{{#each term_sections}}
-	<li class="{{#if this.active}}active{{/if}}">
-	  <a href="#_section_{{this.id}}" data-toggle="tab">
-	    <div class="badge pull-right">{{this.topics.length}}</div>
-	    {{this.short_title}}
-	  </a>
-	</li>
+	<a class="list-group-item {{#if this.active}}active{{/if}}" href="#_section_{{this.id}}" data-toggle="tab"{{#if this.show_short_title}} title="{{this.title}}"{{/if}}>
+	  <span class="badge">{{this.topics.length}}</span>
+	  {{this.short_title}}
+	</a>
 	{{/each}}
-      </ul>
+      </div>
       <div class="tab-content col-md-9">
+	<div id="topic_filter">
+	  <div class="pull-right">
+	    <label class="muted">Filters:</label>
+	    <div id="ct_status_selector" class="btn-group" title="You can choose multiple options at once">
+	      <button class="{{selectors.ct_status.ct1}} btn btn-default btn-small">CT 1</button>
+	      <button class="{{selectors.ct_status.ct2}} btn btn-default btn-small">CT 2</button>
+	      <button class="{{selectors.ct_status.postct}} btn btn-default btn-small">Post CT</button>
+	    </div>
+	  </div>
+	  <div class="input-group">
+	    <span class="input-group-addon glyphicon glyphicon-search" style="top: 0;"></span>
+	    <input type="search" class="form-control" placeholder="Search a Topic">
+	  </div>
+	</div>
 	{{#unless edit_mode}}
 	{{#unless term_sections}}
 	<div class="tab-pane active _topic_list" id="_topic_all">
@@ -503,7 +502,7 @@
 	  </table>
 	</div>
 	{{/unless}}
-	<div class="tab-pane _topic_list" id="_all_sections">
+	<div class="tab-pane _topic_list {{#if show_all}}active{{/if}}" id="_all_sections">
 	  <table class="table bottom_line">
 	    <tbody>
 	      {{#each term_sections}}

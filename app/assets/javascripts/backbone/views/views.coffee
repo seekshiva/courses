@@ -126,7 +126,7 @@ jQuery ->
         "postct": ""
     events:
       "click #ct_status_selector > .btn": "updateSelector"
-      "click .tabbable > .nav > li": "switch_active_topic"
+      "click .row > .list-group > .list-group-item": "switch_active_topic"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
@@ -150,10 +150,6 @@ jQuery ->
 
     render: =>
       current_topic = 0
-      if @term_sections
-        for topic in @term_sections
-          if topic.active
-            current_topic =  topic.id
 
       @term_sections = []
       flag = true
@@ -166,25 +162,30 @@ jQuery ->
 
         if section_clone.topics.length or @term_view.view.id == "edit"
           @term_sections.push(section_clone)
-          if section_clone.id == current_topic 
+          if section_clone.id == @current_section_id
             section_clone.active = true
             flag = false
           else
             section_clone.active = false
 
-
-      @term_sections[0].active = true if flag and @term_sections[0]
       $(@el).html @template
         term:          @term_view.term.attributes
         edit_mode:     if @term_view.view.id == "edit" then "edit_mode" else ""
         term_sections: @term_sections
         selectors:     @selectors
+        show_all:      flag
+      @
 
     switch_active_topic: (e) =>
         @app = window.app ? {}
-        current_topic = if e.target.hash then e.target.hash.substr(8) else e.target.parentNode.hash.substr(8)
-        for topic in @term_sections
-          topic.active = if topic.id.toString() == current_topic then true else false
+        target = if e.target.nodeName == "A" then e.target else e.target.parentNode
+        $(target).siblings().filter(".active").removeClass("active")
+        $(target).addClass("active")
+
+        if target.hash == "#_all_sections"
+          @current_section_id = -1
+        else
+          @current_section_id = +target.hash.substr(10)
 
 
   class LoginView extends Backbone.View
