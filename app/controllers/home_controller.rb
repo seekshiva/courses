@@ -62,7 +62,11 @@ class HomeController < ApplicationController
 
     rescue Net::IMAP::NoResponseError
       @failed = true
+    rescue Net::IMAP::BadResponseError
+      @failed = true
     rescue Exception => e
+      # uncomment the following line to login as anyone when not connected to the internet
+      @failed = true
     end
 
     begin
