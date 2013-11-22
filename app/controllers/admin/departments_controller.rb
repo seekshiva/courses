@@ -49,6 +49,7 @@ class Admin::DepartmentsController < Admin::BaseController
       ["#{course.subject_code} - #{course.name}", course.id]
     end
     @faculties_array = []
+    # This should be done using sql join - commented by vignesh
     Faculty.all.each do |fac|
       if fac.department == @department
         @faculties_array << [fac.full_name, fac.id]

@@ -43,6 +43,7 @@ class Admin::UsersController < Admin::BaseController
     @departments_array = Department.all.map do |department|
       ["(#{department.short}) #{department.name}", department.id]
     end
+    @dept = @user.department.id
 
     respond_to do |format|
       format.html # edit.html.erb

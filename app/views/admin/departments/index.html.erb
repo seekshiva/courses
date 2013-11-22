@@ -1,5 +1,11 @@
 <table class="table">
   <caption><h3>Departments</h3></caption>
+  <thead>
+    <tr>
+      <th>Department Name</th>
+      <th colspan="2">Action</th>
+    </tr>
+  </thead>
   <tbody>
     <% if @departments.length == 0 %>
     <tr>
@@ -11,6 +17,8 @@
     <% @departments.each do |department| %>
     <tr>
       <td><%= link_to department.name, admin_department_path(department), class: 'btn btn-small btn-link' %></td>
+      <td><%= link_to 'Edit', edit_admin_department_path(department), class: 'btn btn-default btn-small' %></td>
+      <td><%= link_to 'Destroy', [:admin, department], method: :destroy, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
     </tr>
     <% end %>
     <% end %>

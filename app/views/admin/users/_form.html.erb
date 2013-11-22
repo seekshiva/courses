@@ -26,7 +26,7 @@
   </div>
   <div class="field">
     <%= f.label :department_id %>
-    <%= f.select :department_id, options_for_select(@departments_array), class: "form-control" %>
+    <%= f.select :department_id, options_for_select(@departments_array, @dept), class: "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit class: "btn btn-primary" %>
