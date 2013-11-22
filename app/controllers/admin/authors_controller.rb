@@ -27,6 +27,12 @@ class Admin::AuthorsController < Admin::BaseController
     @author = Author.new
     @legend = "New Author"
 
+    @bookslist = []
+    @bookslist << ["--None Selected--", 0]
+    Book.all.each do |book|
+      @bookslist << ["#{book.title} - #{book.publisher} - #{book.edition}", book.id]
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @author }
@@ -37,6 +43,12 @@ class Admin::AuthorsController < Admin::BaseController
   def edit
     @author = Author.find(params[:id])
     @legend = "Edit Author"
+    
+    @bookslist = []
+    @bookslist << ["--None Selected--", 0]
+    Book.all.each do |book|
+      @bookslist << ["#{book.title} - #{book.publisher} - #{book.edition}", book.id]
+    end
 
     respond_to do |format|
       format.html # edit.html.erb
@@ -48,6 +60,21 @@ class Admin::AuthorsController < Admin::BaseController
   # POST /authors.json
   def create
     @author = Author.new(params[:author])
+    @author.save
+
+    booklist = params[:books]
+    books = Set.new
+    booklist.each do |book|
+      if book.to_s!="0"
+        books.add({ :book_id => book, :author_id => @author.id })
+      end
+    end
+    booklist = Array.new
+    books.each do |book|
+      booklist << book
+    end
+
+    BookAuthor.create(booklist)
 
     respond_to do |format|
       if @author.save
@@ -65,6 +92,21 @@ class Admin::AuthorsController < Admin::BaseController
   def update
     @author = Author.find(params[:id])
 
+    booklist = params[:books]
+    books = Set.new
+    booklist.each do |book|
+      if book.to_s!="0"
+        books.add({ :book_id => book, :author_id => params[:id] })
+      end
+    end
+    booklist = Array.new
+    books.each do |book|
+      booklist << book
+    end
+
+    BookAuthor.destroy_all(:author_id => params[:id])
+    BookAuthor.create(booklist)
+    
     respond_to do |format|
       if @author.update_attributes(params[:author])
         format.html { redirect_to [:admin, @author], notice: 'Author was successfully updated.' }

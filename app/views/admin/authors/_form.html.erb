@@ -14,8 +14,25 @@
   <fieldset>
     <legend><%= @legend %></legend>
     <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <table>
+        <tr>
+          <td><%= f.label :name %></td>
+          <td><%= f.text_field :name %></td>
+        </tr>
+        <tr>
+          <td><%= label_tag(:books, "Books Referenced") %></td>
+          <td>
+            <table>
+              <% @author.books.each do |book|%>
+                <tr><td><%= select_tag("books[]", options_for_select(@bookslist, book.id)) %></td></tr>
+              <% end %>
+              <tr><td><%= select_tag("books[]", options_for_select(@bookslist)) %></tr></td>
+            </table>
+            <a class="btn btn-primary btn-xs" id="addMoreBooks">Add More Books</a>
+          </td>
+        </tr>
+      </table>
+      
     </div>
     <div class="actions">
       <%= f.submit class: "btn btn-small btn-primary" %>

@@ -15,4 +15,6 @@
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/courses
-//= require_tree .
+//= require_tree ./backbone
+//= require init.js
+//= require me.js
