@@ -3,20 +3,23 @@
     <tr>
       <th>Authors</th>
       <th>References</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @authors.each do |author| %>
     <tr>
       <td>
-	<%= link_to author.name, [:admin, author] %>
+        <%= link_to author.name, [:admin, author] %>
       </td>
       <td>
-	<%= author.books.length %>
-	<div class="pull-right">
-	  <%= link_to "Edit", edit_admin_author_path(author), class: "btn btn-default btn-mini" %>
-	  <%= link_to "Destroy", [:admin, author], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
-	</div>
+      	<%= author.books.length %>
+      </td>
+      <td>
+        <div>
+          <%= link_to "Edit", edit_admin_author_path(author), class: "btn btn-default btn-mini" %>
+          <%= link_to "Destroy", [:admin, author], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+      	</div>
       </td>
     </tr>
     <% end %>

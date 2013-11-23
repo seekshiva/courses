@@ -45,13 +45,6 @@ class Admin::FacultiesController < Admin::BaseController
   def edit
     @legend = "Edit Faculty"
     @faculty = Faculty.find(params[:id])
-    @user_id = @faculty.user.id
-    @users_array = [["",-1]]
-    User.all.each do |user|
-      if not user.is_student?
-        @users_array << [user.email, user.id]
-      end
-    end
     @prefix_array = [["",""],["Dr.","Dr."],["Prof.","Prof."],["Ms.","Ms."],["Mr.","Mr."],["Mrs.","Mrs."]]
 
     respond_to do |format|

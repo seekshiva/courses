@@ -1,6 +1,6 @@
 class Faculty < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :prefix, :user_id
+  attr_accessible :prefix, :user_id, :designation
   
   validates :user_id, :uniqueness => true
 

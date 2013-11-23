@@ -1,12 +1,28 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Faculty Info</b>
+	<b>Faculty Info</b>
 </p>
 
 <p>
-  <%= @faculty.prefix %>
-  <%= @faculty.user.name %>
+	<table>
+		<tr>
+			<td>Name:</td>
+			<td><%= @faculty.prefix %><%= @faculty.user.name %></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><%= @faculty.user.email %>@nitt.edu</td>
+		</tr>
+		<tr>
+			<td>Designation:</td>
+			<td><%= @faculty.designation %></td>
+		</tr>
+		<tr>
+			<td>About:</td>
+			<td></td>
+		</tr>
+	</table>
 </p>
 
 

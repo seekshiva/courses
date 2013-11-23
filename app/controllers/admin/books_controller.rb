@@ -60,24 +60,20 @@ class Admin::BooksController < Admin::BaseController
   # POST /books.json
   def create
     @book = Book.new(params[:book])
-    @book.save
-
-    authorlist = params[:authors]
-    authors = Set.new
-    authorlist.each do |author|
-      if author.to_s!="0"
-        authors.add({ :book_id => @book.id, :author_id => author })
-      end
-    end
-    authorlist = Array.new
-    authors.each do |author|
-      authorlist << author
-    end
-
-    BookAuthor.create(authorlist)
 
     respond_to do |format|
       if @book.save
+        authorlist = params[:authors]
+        authors = Set.new
+        authorlist.each do |author|
+          if author.to_s!="0"
+            authors.add({ :book_id => @book.id, :author_id => author })
+          end
+        end
+        authorlist = authors.to_a
+
+        BookAuthor.create(authorlist)
+
         format.html { redirect_to [:admin, @book], notice: 'Book was successfully created.' }
         format.json { render json: @book, status: :created, location: @book }
       else
@@ -99,16 +95,13 @@ class Admin::BooksController < Admin::BaseController
         authors.add({ :book_id => params[:id], :author_id => author })
       end
     end
-    authorlist = Array.new
-    authors.each do |author|
-      authorlist << author
-    end
+    authorlist = authors.to_a
 
-    BookAuthor.destroy_all(:book_id => params[:id])
-    BookAuthor.create(authorlist)
+    destroy_status = BookAuthor.destroy_all(:book_id => params[:id])
+    create_status = BookAuthor.create(authorlist)
 
     respond_to do |format|
-      if @book.update_attributes(params[:book])
+      if @book.update_attributes(params[:book]) and destroy_status and create_status
         format.html { redirect_to [:admin, @book], notice: 'Book was successfully updated.' }
         format.json { head :no_content }
       else
