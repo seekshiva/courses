@@ -27,6 +27,12 @@ class Admin::BooksController < Admin::BaseController
     @book = Book.new
     @legend = "New Books"
 
+    @authorslist = []
+    @authorslist << ["--None Selected--", 0]
+    Author.all.each do |author|
+      @authorslist << ["#{author.name}", author.id]
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @book }
@@ -38,6 +44,12 @@ class Admin::BooksController < Admin::BaseController
     @book = Book.find(params[:id])
     @legend = "Edit Books"
 
+    @authorslist = []
+    @authorslist << ["--None Selected--", 0]
+    Author.all.each do |author|
+      @authorslist << ["#{author.name}", author.id]
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @book }
@@ -48,6 +60,21 @@ class Admin::BooksController < Admin::BaseController
   # POST /books.json
   def create
     @book = Book.new(params[:book])
+    @book.save
+
+    authorlist = params[:authors]
+    authors = Set.new
+    authorlist.each do |author|
+      if author.to_s!="0"
+        authors.add({ :book_id => @book.id, :author_id => author })
+      end
+    end
+    authorlist = Array.new
+    authors.each do |author|
+      authorlist << author
+    end
+
+    BookAuthor.create(authorlist)
 
     respond_to do |format|
       if @book.save
@@ -64,6 +91,21 @@ class Admin::BooksController < Admin::BaseController
   # PUT /books/1.json
   def update
     @book = Book.find(params[:id])
+
+    authorlist = params[:authors]
+    authors = Set.new
+    authorlist.each do |author|
+      if author.to_s!="0"
+        authors.add({ :book_id => params[:id], :author_id => author })
+      end
+    end
+    authorlist = Array.new
+    authors.each do |author|
+      authorlist << author
+    end
+
+    BookAuthor.destroy_all(:book_id => params[:id])
+    BookAuthor.create(authorlist)
 
     respond_to do |format|
       if @book.update_attributes(params[:book])

@@ -28,10 +28,25 @@
     <div class="field">
       <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
     </div>
+    <div class="field">
+      <%= label_tag(:authors, "Author(s):") %>
+      <table>
+        <% @book.authors.each do |author| %>
+          <tr>
+            <td><%= select_tag("authors[]", options_for_select(@authorslist, author.id)) %></td>
+          </tr>
+        <% end %>
+        <td><%= select_tag("authors[]", options_for_select(@authorslist)) %></td>
+      </table>
+    </div>
+    <div class="field">
+      <a class="btn btn-primary btn-xs" id="addMoreAuthors" >Add More Authors</a>
+    </div>
+
     <div class="actions">
       <a href="<%= url_for admin_books_path %>" class="btn btn-default">
-	<span class="glyphicon glyphicon-chevron-left"></span>
-	Back
+        <span class="glyphicon glyphicon-chevron-left"></span>
+          Back
       </a>
       <%= f.submit class: "btn btn-success pull-right" %>
     </div>
