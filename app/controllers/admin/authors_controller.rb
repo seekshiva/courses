@@ -72,10 +72,15 @@ class Admin::AuthorsController < Admin::BaseController
         end
         booklist = books.to_a
 
-        BookAuthor.create(booklist)
+        @bookauthor = BookAuthor.create(booklist)
 
-        format.html { redirect_to [:admin, @author], notice: 'Author was successfully created.' }
-        format.json { render json: @author, status: :created, location: @author }
+        if bookauthor
+          format.html { redirect_to [:admin, @author], notice: 'Author was successfully created.' }
+          format.json { render json: @author, status: :created, location: @author }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @bookauthor.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @author.errors, status: :unprocessable_entity }
