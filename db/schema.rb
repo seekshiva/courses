@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131014141003) do
+ActiveRecord::Schema.define(:version => 20131125130513) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -59,16 +59,6 @@ ActiveRecord::Schema.define(:version => 20131014141003) do
   end
 
   add_index "classrooms", ["term_id"], :name => "index_classrooms_on_term_id"
-
-  create_table "course_references", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "book_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "course_references", ["book_id"], :name => "index_course_references_on_book_id"
-  add_index "course_references", ["course_id"], :name => "index_course_references_on_course_id"
 
   create_table "courses", :force => true do |t|
     t.string   "subject_code"
@@ -135,6 +125,16 @@ ActiveRecord::Schema.define(:version => 20131014141003) do
 
   add_index "term_faculties", ["faculty_id"], :name => "index_term_faculties_on_faculty_id"
   add_index "term_faculties", ["term_id"], :name => "index_term_faculties_on_term_id"
+
+  create_table "term_references", :force => true do |t|
+    t.integer  "term_id"
+    t.integer  "book_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "term_references", ["book_id"], :name => "index_course_references_on_book_id"
+  add_index "term_references", ["term_id"], :name => "index_course_references_on_course_id"
 
   create_table "terms", :force => true do |t|
     t.integer  "course_id"
