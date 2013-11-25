@@ -14,26 +14,26 @@
 <fieldset>
   <legend><%= @legend %></legend>
   <div class="field">
-    <%= f.label :prefix %>
-    <%= f.select :prefix, options_for_select(@prefix_array, @faculty.prefix) %>
+    <%= f.select :prefix, options_for_select(@prefix_array, @faculty.prefix), {:include_blank => true}, { :class => "form-control"} %>
   </div>
   <% if @legend == "Edit Faculty" %>
     <div class="field">
-      Name : <%= @faculty.user.name %>
+      <%= text_field_tag :name, @faculty.user.name, :readonly => true, :placeholder => "name", :class => "form-control" %>
     </div>
     <div class="field">
-      Email : <%= @faculty.user.email %>.nitt.edu
+      <%= text_field_tag :email, @faculty.user.email+"@nitt.edu", :readonly => true, :placeholder => "email id without @nitt.edu", :class => "form-control" %>
     </div>
   <% else %>
     <div class="field">
-      <%= f.label :user_id %>
-      <%= f.select :user_id, options_for_select(@users_array, @user_id) %>
+      <%= f.select :user_id, options_for_select(@users_array, @user_id), {:class => "form-control"} %>
     </div>
   <% end %>
   <div class="field">
-    <%= f.label :designation %>
-    <%= f.text_field :designation %>
+    <%= f.text_field :designation, :class => "form-control", :placeholder => "designation" %>
   </div>
+  <div class="field">
+      <%= f.text_area :about, :rows => 10, :cols => 40, :class => "form-control", :placeholder => "About the faculty" %>
+    </div>
   <div class="actions">
     <%= f.submit class: "btn btn-primary btn-success pull-right" %>
     <%= link_to "Back", admin_faculties_path, class: "btn btn-default btn-small" %>

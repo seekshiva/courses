@@ -14,16 +14,19 @@
   <fieldset>
     <legend><%= @legend %></legend>
     <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :size => 30, :placeholder => "Name", :class => "form-control input-lg" %>
     </div>
+    <div class="field">
+      <%= f.text_area :about, :rows => 10, :cols => 40, :class => "form-control", :placeholder => "About the author" %>
+    </div>
+
     <div class="field">
       <%= label_tag(:books, "Books Referenced") %>
       <table>
         <% @author.books.each do |book|%>
-          <tr><td><%= select_tag("books[]", options_for_select(@bookslist, book.id)) %></td></tr>
+          <tr><td><%= select_tag("books[]", options_for_select(@bookslist, book.id), :class => "form-control") %></td></tr>
         <% end %>
-        <tr><td><%= select_tag("books[]", options_for_select(@bookslist)) %></tr></td>
+        <tr><td><%= select_tag("books[]", options_for_select(@bookslist), :class => "form-control") %></tr></td>
       </table>
     </div>    
     <div class="field">

@@ -29,14 +29,23 @@
       <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
     </div>
     <div class="field">
+      <%= f.text_field :cover_url, class: "form-control", placeholder: "Cover pic URL" %>
+    </div>
+    <div class="field">
+      <%= f.text_field :download_url, class: "form-control", placeholder: "Download URL" %>
+    </div>
+    <div class="field">
+      <%= f.text_field :online_retail_url, class: "form-control", placeholder: "Online Retail URL" %>
+    </div>
+    <div class="field">
       <%= label_tag(:authors, "Author(s):") %>
       <table>
         <% @book.authors.each do |author| %>
           <tr>
-            <td><%= select_tag("authors[]", options_for_select(@authorslist, author.id)) %></td>
+            <td><%= select_tag("authors[]", options_for_select(@authorslist, author.id), class: "form-control") %></td>
           </tr>
         <% end %>
-        <td><%= select_tag("authors[]", options_for_select(@authorslist)) %></td>
+        <td><%= select_tag("authors[]", options_for_select(@authorslist), class: "form-control") %></td>
       </table>
     </div>
     <div class="field">
