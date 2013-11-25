@@ -21,15 +21,15 @@
       <%= text_field_tag :name, @faculty.user.name, :readonly => true, :placeholder => "name", :class => "form-control" %>
     </div>
     <div class="field">
-      <%= text_field_tag :email, @faculty.user.email+"@nitt.edu", :readonly => true, :placeholder => "email id without @nitt.edu", :class => "form-control" %>
+      <%= text_field_tag :email, @faculty.user.email+"@nitt.edu", :readonly => true, :placeholder => "Email id without @nitt.edu", :class => "form-control" %>
     </div>
   <% else %>
     <div class="field">
-      <%= f.select :user_id, options_for_select(@users_array, @user_id), {:class => "form-control"} %>
+      <%= f.select :user_id, options_for_select(@users_array, @user_id), {}, {:class => "form-control"} %>
     </div>
   <% end %>
   <div class="field">
-    <%= f.text_field :designation, :class => "form-control", :placeholder => "designation" %>
+    <%= f.text_field :designation, :class => "form-control", :placeholder => "Designation" %>
   </div>
   <div class="field">
       <%= f.text_area :about, :rows => 10, :cols => 40, :class => "form-control", :placeholder => "About the faculty" %>
