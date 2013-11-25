@@ -10,6 +10,9 @@ class Term < ActiveRecord::Base
   has_many :term_faculties, :dependent => :destroy
   has_many :faculties, :through => :term_faculties
 
+  has_many :term_references, :dependent => :destroy
+  has_many :books, :through => :term_references
+
   attr_accessible :course_id, :academic_year, :semester
 
   default_scope :order => "semester ASC"

@@ -1,18 +1,23 @@
 class Course < ActiveRecord::Base
-  attr_accessible :about, :credits, :name, :subject_code
 
   has_many :terms, :dependent => :destroy
 
-  has_many :course_references, :dependent => :destroy
-  has_many :books, :through => :course_references
+  has_many :term_departments, :through => :terms
+  has_many :departments, :through => :term_departments
 
-  has_many :departments, :through => :terms
+  has_many :term_faculties, :through => :terms
+  has_many :faculties, :through => :term_faculties
 
-  has_many :course_faculties, :dependent => :destroy
-  has_many :faculties, through: :terms
+  has_many :term_references, :through => :terms
+  has_many :books, :through => :term_references
+
+  has_many :sections, :through => :terms
+  has_many :topic, :through => :sections
 
   default_scope order("subject_code ASC")
   
+  attr_accessible :about, :credits, :name, :subject_code
+
   validates :name, :uniqueness => true
 
   def current_term
