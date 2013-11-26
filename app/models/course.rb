@@ -12,7 +12,7 @@ class Course < ActiveRecord::Base
   has_many :books, :through => :term_references
 
   has_many :sections, :through => :terms
-  has_many :topic, :through => :sections
+  has_many :topics, :through => :sections
 
   default_scope order("subject_code ASC")
   

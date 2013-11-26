@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131125160037) do
+ActiveRecord::Schema.define(:version => 20131126063946) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -94,14 +94,14 @@ ActiveRecord::Schema.define(:version => 20131125160037) do
   add_index "faculties", ["user_id"], :name => "index_faculties_on_user_id"
 
   create_table "references", :force => true do |t|
-    t.integer  "course_reference_id"
+    t.integer  "term_reference_id"
     t.integer  "topic_id"
     t.string   "indices"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
-  add_index "references", ["course_reference_id"], :name => "index_references_on_course_reference_id"
+  add_index "references", ["term_reference_id"], :name => "index_references_on_course_reference_id"
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
   create_table "sections", :force => true do |t|

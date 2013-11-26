@@ -12,7 +12,7 @@
     </div>
     <div id="collapseOne" class="accordion-body collapse">
       <div class="accordion-inner">
-	<%= render 'form' %>
+        <%= render 'form' %>
       </div>
     </div>
   </div>
@@ -28,28 +28,27 @@
     </div>
     <div id="collapseTwo" class="accordion-body collapse">
       <div class="accordion-inner">
-
-	<%= form_for([:admin, @course, @new_term]) do |f| %>
-	<div class="field">
-	  <span term_course_id, options_for_select(@courses_array)) %>
-	    <%= f.label :course_id %>
-	    <%= select_tag(:term_course_id, options_for_select(@courses_array, @course.id)) %>
-	  </span>
-	  <span term_course_id, options_for_select(@courses_array)) %>
-	    <%= f.label :academic_year %>
-	    <%= f.number_field :academic_year, value: @current_ac_year %>
-	  <span class="help-block">
-	    Enter the begining of the academic year. If the academic year is 2012-2013, you have to enter 2012.
-	  </span>
-	</div>
-	<div class="field">
-	  <%= f.label :semester %>
-	  <%= f.number_field :semester %>
-	</div>
-	<div class="actions">
-	  <%= f.submit class: 'btn btn-primary' %>
-	</div>
-	<% end %>
+        <%= form_for([:admin, @course, @new_term]) do |f| %>
+          <div class="field">
+            <span term_course_id, options_for_select(@courses_array)) %>
+              <%= f.label :course_id %>
+              <%= select_tag(:term_course_id, options_for_select(@courses_array, @course.id)) %>
+            </span>
+            <span term_course_id, options_for_select(@courses_array)) %>
+              <%= f.label :academic_year %>
+              <%= f.number_field :academic_year, value: @current_ac_year %>
+            <span class="help-block">
+              Enter the begining of the academic year. If the academic year is 2012-2013, you have to enter 2012.
+            </span>
+          </div>
+          <div class="field">
+            <%= f.label :semester %>
+            <%= f.number_field :semester %>
+          </div>
+          <div class="actions">
+            <%= f.submit class: 'btn btn-primary' %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -64,26 +63,26 @@
     </div>
     <div id="collapseThree" class="accordion-body collapse">
       <div class="accordion-inner">
-	
-	<%= form_for [:admin, @course, @new_topic] do |f| %>
-	<fieldset>
-	  <div class="field">
-	    <%= f.label :title %>
-	    <%= f.text_field :title %>
-	  </div>
-	  <div class="field">
-	    <%= f.label :ct_status %>
-	    <%= f.select :ct_status, options_for_select([["CT1", "CT1"], ["CT2", "CT2"], ["Post CT", "Post CT"]]) %>
-	  </div>
-	  <div class="field">
-	    <%= f.label :description %>
-	    <%= f.text_area :description, :rows => 4 %>
-	  </div>
-	  <div class="actions">
-	    <%= f.submit class: 'btn btn-primary' %>
-	  </div>
-	</fieldset>
-	<% end %>
+  
+        <%= form_for [:admin, @course, @new_topic] do |f| %>
+        <fieldset>
+          <div class="field">
+            <%= f.label :title %>
+            <%= f.text_field :title %>
+          </div>
+          <div class="field">
+            <%= f.label :ct_status %>
+            <%= f.select :ct_status, options_for_select([["CT1", "CT1"], ["CT2", "CT2"], ["Post CT", "Post CT"]]) %>
+          </div>
+          <div class="field">
+            <%= f.label :description %>
+            <%= f.text_area :description, :rows => 4 %>
+          </div>
+          <div class="actions">
+            <%= f.submit class: 'btn btn-primary' %>
+          </div>
+        </fieldset>
+        <% end %>
       </div>
     </div>
   </div>
