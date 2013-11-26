@@ -50,15 +50,11 @@
     </tr>
     <tr>
       <th>Cover Pic URL:</th>
-      <td><%= @book.over_url %></td>
+      <td><a href="<%= @book.cover_url %>"><%= @book.cover_url %></a></td>
     </tr>
     <tr>
       <th>Online Retail URL:</th>
-      <td><%= @book.online_retail_url %></td>
-    </tr>
-    <tr>
-      <th>Download URL:</th>
-      <td><%= @book.download_url %></td>
+      <td><a href="<%= @book.online_retail_url %>"><%= @book.online_retail_url %></a></td>
     </tr>
   </tbody>
 </table>
