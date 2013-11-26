@@ -27,7 +27,7 @@
   <li id="view_course_info" class="<%= 'active' if @tab=='references' %>">
     <a href="/admin/courses/<%= @course.id %>/references">
       Reference Material
-      <small class="badge"><%= @ref_books.length %></small>
+      <small class="badge"><%= @course["references"].length %></small>
     </a>
   </li>
 </ul>
@@ -41,127 +41,170 @@
       <li><a href="#_info_4" data-toggle="tab">Terms</a></li>
     </ul>
     <div class="tab-content col-md-9">
-      <div class="tab-pane active" id="_info_1">
-	<h4>Overview</h4>
-	<table class="table">
-	  <tbody>
-	    <tr><th>
-		Course Instructor
-	      </th><td>
-		<% @course.instructors.each do |instructor| %>
-		<%= instructor[:instructor] %>
-		<% end %>
-	    </td></tr>
-	    <tr><th>
-		Departments Offered
-	      </th><td>
-		<% @course.departments.each do |department| %>
-		<%= department.name %>
-		<% end %>
-	    </td></tr>
-	    <tr><td colspan="2">
-		<%= BlueCloth.new(@course.about).to_html.html_safe %>
-	    </td></tr>
-	  </tbody>
-	</table>
-      </div>
-      <div class="tab-pane" id="_info_3">
-	<h4>Outline</h4>
-      </div>
+        <div class="tab-pane active" id="_info_1">
+      <h4>Overview</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <% if @course["instructors"].length %>
+              <th>
+              Course Instructor <small class="badge"><%= @course["instructors"].length %></small>
+                </th>
+                <td>
+              <% @course["instructors"].each do |instructor| %>
+                <%= instructor[:instructor] %> ,
+              <% end %>
+              </td>
+            <% else %>
+              <td>
+                No faculty has taught this course.
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <% if @course["departments"].length %>
+              <th>
+              Departments Offered <small class="badge"><%= @course["departments"].length %></small>
+            </th>
+            <td>
+              <% @course["departments"].each do |department| %>
+                <%= department[:name] %> ,
+              <% end %>
+              </td>
+            <% else %>
+              <td>
+                No department has offered this course.
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <td colspan="2">
+            <%= BlueCloth.new(@course.about).to_html.html_safe %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="tab-pane" id="_info_3">
+      <h4>Outline</h4>
+        </div>
 
-      <div class="tab-pane" id="_info_4">
-	<% if @course.terms.length == 0 %> 
-	<strong>Terms:</strong>
-	<p>No term found for this course.
-	  <%= link_to "Add one?", new_admin_course_term_path(@course) %>
-	</p>
-	<% else %>
-	<table class="table table-hover">
-	  <thead>
-	    <tr>
-	      <th>Term</th>
-	      <th>Departments</th>
-	      <th>Faculty</th>
-	      <th>Actions</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <% @course.terms.each do |term| %>
-	    <tr>
-	      <td>
-		<%= link_to "##{term.id}", [:admin, @course, term] %>
-		in <%= term.year %> for <%= term.semester.ordinalize %> semester students
-	      </td>
-	      <td>
-		<% term.term_departments.each do |t_dept| %>
-		<span class="label label-info">
-		  <%= t_dept.department.short %>
-		  <%= link_to raw("&times"), [:admin, @course, t_dept], method: :delete, class: "btn btn-danger btn-mini" %>
-		</span>
-		<% end %>
-	      </td>
-	      <td>
-		<% term.term_faculties.each do |t_fac| %>
-		<span class="label label-info">
-		  <%= t_fac.faculty.user.email %>
-		  <%= link_to raw("&times"), [:admin, @course, t_fac], method: :delete, class: "btn btn-danger btn-mini" %>
-		</span>
-		<% end %>
-	      </td>
-	      <td>
-		<a class="btn btn-default btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
-		  Add <b class="caret"></b>
-		</a>
-	      </td>
-	    </tr>
-	    <% end %>
-	  </tbody>
-	</table>
-	<% end %>
-      </div>
+    <div class="tab-pane" id="_info_4">
+      <% if @course.terms.length == 0 %> 
+        <strong>Terms:</strong>
+        <p>No term found for this course.
+            <%= link_to "Add one?", new_admin_course_term_path(@course) %>
+        </p>
+      <% else %>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Departments</th>
+              <th>Faculty</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+              <% @course.terms.each do |term| %>
+                <tr>
+                <td>
+                  <%= link_to "##{term.id}", [:admin, @course, term] %>
+                  in <%= term.year %> for <%= term.semester.ordinalize %> semester students
+                </td>
+                    <td>
+                  <% term.term_departments.each do |t_dept| %>
+                    <span class="label label-info">
+                        <%= t_dept.department.short %>
+                        <%= link_to raw("&times"), [:admin, @course, t_dept], method: :delete, class: "btn btn-danger btn-mini" %>
+                    </span>
+                  <% end %>
+                    </td>
+                    <td>
+                  <% term.term_faculties.each do |t_fac| %>
+                    <span class="label label-info">
+                        <%= t_fac.faculty.user.email %>
+                      <%= link_to raw("&times"), [:admin, @course, t_fac], method: :delete, class: "btn btn-danger btn-mini" %>
+                    </span>
+                  <% end %>
+                  </td>
+                <td>
+                  <a class="btn btn-default btn-small" rel="popover" data-content="Feature to add dept/faculty will come here.<br> Until then, please click the term link #id to add faculty/dept" data-html="true" data-placement="bottom">
+                      Add <b class="caret"></b>
+                  </a>
+                    </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+      <% end %>
+        </div>
     </div>
   </div>
 
   <% elsif @tab == "topics" %>
   <div class="row">
-    <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
-      <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
-      <% @course.latest_term.sections.each do |section| %>
-      <li><a href="#_section_<%= section.id %>" data-toggle="tab"><%= section.title %></a></li>
-      <% end %>
-    </ul>
-    <div class="tab-content col-md-9">
-      <div class="tab-pane _topic_list active" id="_all_sections">
-	<table class="table bottom_line">
-	  <tbody>
-	    <% if @course.latest_term.sections.length == 0 %>
-	    <tr><td>
-		No sections have been added to this course.
-	    </td></tr>
-	    <% end %>
-	    <% @course.latest_term.sections.each do |section| %>
-	    <tr><td>
-		<strong><%= section.title %></strong><br />
-		Section detail goes here...
-	    </td></tr>
-	    <% end %>
-	  </tbody>
-	</table>
+    <% if @course.latest_term.nil? %>
+      <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
+        <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
+        <li>No sections found</li>
+      </ul>
+      <div class="tab-content col-md-9">
+        <div class="tab-pane _topic_list active" id="_all_sections">
+        <table class="table bottom_line">
+          <tbody>
+            <tr><td>
+            No sections have been added to this course.<br/>
+            This course wasn't offered so it doesn't have sections.
+            </td></tr>
+          </tbody>
+        </table>
+        </div>
       </div>
+    <% else %>
+      <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
+        <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
+        <% if not @course.latest_term.nil? %>
+          <% @course.latest_term.sections.each do |section| %>
+            <li><a href="#_section_<%= section.id %>" data-toggle="tab"><%= section.title %></a></li>
+          <% end %>
+        <% end %>
+      </ul>
+      <div class="tab-content col-md-9">
+        <div class="tab-pane _topic_list active" id="_all_sections">
+        <table class="table bottom_line">
+          <tbody>
+            <% if @course.latest_term.sections.length == 0 %>
+              <tr><td>
+              No sections have been added to this course.
+              </td></tr>
+          <% else %>
+              <% @course.latest_term.sections.each do |section| %>
+                <tr><td>
+                <strong><%= section.title %></strong><br />
+                Section detail goes here...
+                </td></tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        </div>
 
-      <% @course.latest_term.sections.each do |section| %>
-      <div class="tab-pane _topic_list" id="_section_<%= section.id %>">
-	<table class="table bottom_line">
-	  <tbody>
-	    <tr><td>
-		<strong><%= section.title %></strong><br />
-		Topic detail goes here...
-	    </td></tr>
-	  </tbody>
-	</table>
+        <% @course.latest_term.sections.each do |section| %>
+          <div class="tab-pane _topic_list" id="_section_<%= section.id %>">
+          <table class="table bottom_line">
+              <tbody>
+                <tr><td>
+                <strong><%= section.title %></strong><br />
+                Topic detail goes here...
+                </td></tr>
+              </tbody>
+          </table>
+          </div>
+          <% end %>
       </div>
-      <% end %>
-    </div>
+    <% end %>
   </div>
 
   <% elsif @tab == "references" %>
@@ -172,27 +215,27 @@
     </ul>
     <div class="tab-content col-md-9">
       <div class="tab-pane active" id="_reference_books">
-	<% if @course.books.length == 0 %>
-	<p>No reference book found for this subject.</p>
-	<% else %>
-	<table class="table bottom_line" >
-	  <% @course.books.each do |book| %>
-	  <tr>
-	    <td>
-	      <small>
-		<b><%= link_to book.title, [:admin, book] %> (<%= book.year %>)</b>
-		by
-		<% book.authors.each do |author| %>
-		<%= link_to author.name, [:admin, author] %>;
-		<% end %><br />
-		
-		<%= "#{book.publisher}, #{book.edition}" %> <b><i><%= "#{book.isbn}" %></i></b>
-	      </small>
-	    </td>
-	  </tr>
-	  <% end %>
-	</table>
-	<% end %>
+  <% if @course["references"].length == 0 %>
+  <p>No reference book found for this subject.</p>
+  <% else %>
+  <table class="table bottom_line" >
+    <% @course["references"].each do |book| %>
+    <tr>
+      <td>
+        <small>
+    <b><%= link_to book.title, [:admin, book] %> (<%= book.year %>)</b>
+    by
+    <% book.authors.each do |author| %>
+    <%= link_to author.name, [:admin, author] %>;
+    <% end %><br />
+    
+    <%= "#{book.publisher}, #{book.edition}" %> <b><i><%= "#{book.isbn}" %></i></b>
+        </small>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
       </div>
     </div>
   </div>

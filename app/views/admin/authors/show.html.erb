@@ -5,16 +5,20 @@
   <%= @author.name %>
 </p>
 <p>
+  <b>About:</b>
+  <%= BlueCloth.new(@author.about).to_html.html_safe %>
+</p>
+<p>
   <b>Books Referenced:</b>
   <% if @author.books.length == 0 %>
-  <p>No book for this author was found</p>
-  <a href="<%#= new_book_author_path %>" class="btn btn-small btn-primary">Add books for this author</a>
+    <p>No book for this author was found</p>
+    <a href="<%#= new_book_author_path %>" class="btn btn-small btn-primary">Add books for this author</a>
   <% else %>
-  <ul>
-    <% @author.books.each do |book| %>
-    <li><%= link_to book.title, [:admin, book] %></li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @author.books.each do |book| %>
+      <li><%= link_to book.title, [:admin, book] %></li>
+      <% end %>
+    </ul>
   <% end %>
 
 </p>

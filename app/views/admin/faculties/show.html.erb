@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td>About:</td>
-			<td></td>
+			<td><%= BlueCloth.new(@faculty.about).to_html.html_safe %></td>
 		</tr>
 	</table>
 </p>

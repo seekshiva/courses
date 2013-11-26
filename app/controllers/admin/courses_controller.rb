@@ -22,11 +22,14 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @course = Course.find(params[:id]||params[:course_id])
+    course_id = params[:id]||params[:course_id]
+    @course = Course.find(course_id)
     @tab = params[:tab] || "info"
-    @ref_books = @course.books
+    
+    @course["references"] = @course.books.uniq
 
     @course["instructors"] = []
+    @course["departments"] = []
     @course.this_year.each do |term|
       term.faculties.each do |faculty|
         @course["instructors"] << {
@@ -35,8 +38,15 @@ class Admin::CoursesController < Admin::BaseController
           year:       "#{term.academic_year}-#{term.academic_year+1}"
         }
       end
+      term.departments.each do |department|
+        @course["departments"] << {
+          name: department.name.capitalize,
+          short: department.short
+        }
+      end
     end
-    
+    @course["departments"] = @course["departments"].uniq
+    @course["instructors"] = @course["instructors"].uniq
 
     respond_to do |format|
       format.html # show.html.erb

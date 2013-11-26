@@ -1,43 +1,4 @@
 Courses::Application.routes.draw do
-  namespace :admin do
-    resources :users
-    resources :faculties
-    resources :departments
-    resources :courses do
-      resources :term_departments, :term_faculties
-      resources :sections, :classrooms
-      resources :terms do 
-        match "follow" => "terms#follow"
-      end
-      resources :class_topics
-      get "new" => "courses#new"
-      get "edit" => "courses#edit"
-      get ":tab" => "courses#show"
-    end
-    resources :course_list_items, :course_references
-    resources :books, :authors, :book_authors, :references
-    match "switch_to" => "users#switch_to"
-  end
-
-  resources :users
-  resources :departments
-  
-  resources :terms
-  resources :courses
-  resources :topics, :sections, :classrooms
-
-  match "authenticate" => "home#authenticate"
-  match "signout" => "home#signout"
-  match "me" => "home#me"
-
-  match "admin" => "admin/departments#index"
-
-  match "login" => "home#index"
-
-  match ":slug.json" => "#{:slug}s#index"
-  match ":slug" => "#{:slug}s#index"
-  #match ":slug" => "home#index"
-  match ":slug/*route" => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -89,8 +50,52 @@ Courses::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  root :to => 'home#index'
 
+  namespace :admin do
+    resources :users
+    resources :faculties
+    resources :departments
+    resources :courses do
+      resources :term_departments, :term_faculties
+      resources :sections, :classrooms
+      resources :terms do 
+        match "follow" => "terms#follow"
+      end
+      resources :class_topics
+      get "new" => "courses#new"
+      get "edit" => "courses#edit"
+      get ":tab" => "courses#show"
+    end
+    resources :course_list_items, :course_references
+    resources :books, :authors, :book_authors, :references
+    match "switch_to" => "users#switch_to"
+  end
+
+  resources :users
+  resources :departments
+  
+  resources :terms
+  resources :courses
+  resources :topics, :sections, :classrooms
+
+  match "authenticate" => "home#authenticate"
+  match "signout" => "home#signout"
+  match "me" => "home#me"
+
+  match "admin" => "admin/departments#index"
+
+  match "login" => "home#index"
+
+  match ":slug.json" => "#{:slug}s#index"
+  match ":slug" => "#{:slug}s#index"
+  #match ":slug" => "home#index"
+  match ":slug/*route" => "home#index"
+
+
+
+
+  root :to => 'home#index'
+  
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

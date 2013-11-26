@@ -21,17 +21,17 @@ class Course < ActiveRecord::Base
   validates :name, :uniqueness => true
 
   def current_term
-    current = nil
+    current = []
     self.terms.each do |term|
       if term.is_current?
-        current = term
+        current << term
       end
     end
     current
   end
 
   def this_year
-    current=[]
+    current = []
     self.terms.each do |term|
       if term.this_year?
         current << term
