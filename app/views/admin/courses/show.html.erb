@@ -21,8 +21,8 @@
   <li id="view_course_info" class="<%= 'active' if @tab=='info' %>">
     <a href="/admin/courses/<%= @course.id %>/info">Info</a>
   </li>
-  <li id="view_course_info" class="<%= 'active' if @tab=='topics' %>">
-    <a href="/admin/courses/<%= @course.id %>/topics">Topics</a>
+  <li id="view_course_info" class="<%= 'active' if @tab=='sections' %>">
+    <a href="/admin/courses/<%= @course.id %>/sections">Sections</a>
   </li>
   <li id="view_course_info" class="<%= 'active' if @tab=='references' %>">
     <a href="/admin/courses/<%= @course.id %>/references">
@@ -38,7 +38,7 @@
     <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
       <li class="active"><a href="#_info_1" data-toggle="tab">Overview</a></li>
       <li><a href="#_info_3" data-toggle="tab">Outline</a></li>
-      <li><a href="#_info_4" data-toggle="tab">Terms</a></li>
+      <li><a href="#_info_4" data-toggle="tab">Terms<small class="badge"><%= @course.terms.length %></small></a></li>
     </ul>
     <div class="tab-content col-md-9">
         <div class="tab-pane active" id="_info_1">
@@ -88,7 +88,7 @@
     
     <div class="tab-pane" id="_info_3">
       <h4>Outline</h4>
-        </div>
+    </div>
 
     <div class="tab-pane" id="_info_4">
       <% if @course.terms.length == 0 %> 
@@ -139,24 +139,27 @@
             </tbody>
         </table>
       <% end %>
-        </div>
+    
+      <div class="field">
+        <%= link_to "Add a Term", new_admin_course_term_path(@course), class: "btn btn-default btn-success" %>
+      </div>
     </div>
   </div>
 
-  <% elsif @tab == "topics" %>
+  <% elsif @tab == "sections" %>
   <div class="row">
     <% if @course.latest_term.nil? %>
       <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
         <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
-        <li>No sections found</li>
+        <li>No section found</li>
       </ul>
       <div class="tab-content col-md-9">
-        <div class="tab-pane _topic_list active" id="_all_sections">
+        <div class="tab-pane _section_list active" id="_all_sections">
         <table class="table bottom_line">
           <tbody>
             <tr><td>
-            No sections have been added to this course.<br/>
-            This course wasn't offered so it doesn't have sections.
+            No section has been added to this course.<br/>
+            This course wasn't offered, so it doesn't have sections.
             </td></tr>
           </tbody>
         </table>
@@ -172,7 +175,7 @@
         <% end %>
       </ul>
       <div class="tab-content col-md-9">
-        <div class="tab-pane _topic_list active" id="_all_sections">
+        <div class="tab-pane _section_list active" id="_all_sections">
         <table class="table bottom_line">
           <tbody>
             <% if @course.latest_term.sections.length == 0 %>
@@ -192,12 +195,12 @@
         </div>
 
         <% @course.latest_term.sections.each do |section| %>
-          <div class="tab-pane _topic_list" id="_section_<%= section.id %>">
+          <div class="tab-pane _section_list" id="_section_<%= section.id %>">
           <table class="table bottom_line">
               <tbody>
                 <tr><td>
                 <strong><%= section.title %></strong><br />
-                Topic detail goes here...
+                  Topic detail goes here...
                 </td></tr>
               </tbody>
           </table>

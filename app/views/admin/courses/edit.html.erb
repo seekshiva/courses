@@ -3,91 +3,65 @@
   <%= @course.name %>
 </h5>
 
-<div class="accordion" id="accordion1">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-        Edit Course Details
-      </a>
-    </div>
-    <div id="collapseOne" class="accordion-body collapse">
-      <div class="accordion-inner">
+<hr>
+<div class="row">
+    <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
+      <li class="active"><a href="#_info_1" data-toggle="tab">Edit Course Details</a></li>
+      <li><a href="#_info_3" data-toggle="tab">Add New Term</a></li>
+      <li><a href="#_info_4" data-toggle="tab">Add New Section</a></li>
+    </ul>
+    <div class="tab-content col-md-9">
+      <div class="tab-pane active" id="_info_1">
+        <h4>Edit Course Details</h4>
         <%= render 'form' %>
       </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="accordion" id="accordion2">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-        Add New Term
-      </a>
-    </div>
-    <div id="collapseTwo" class="accordion-body collapse">
-      <div class="accordion-inner">
+    
+      <div class="tab-pane" id="_info_3">
+        <h4>Add New Term</h4>
         <%= form_for([:admin, @course, @new_term]) do |f| %>
           <div class="field">
-            <span term_course_id, options_for_select(@courses_array)) %>
-              <%= f.label :course_id %>
-              <%= select_tag(:term_course_id, options_for_select(@courses_array, @course.id)) %>
-            </span>
-            <span term_course_id, options_for_select(@courses_array)) %>
-              <%= f.label :academic_year %>
-              <%= f.number_field :academic_year, value: @current_ac_year %>
+            <%= f.label :course_id %>
+            <%= @course.name %>
+            <%= f.hidden_field :course_id, value: @course.id %>
+          </div>
+          <div class="field">
+            <%= f.label :academic_year %>
+            <%= f.number_field :academic_year, value: @current_ac_year, class: "form-control" %>
             <span class="help-block">
               Enter the begining of the academic year. If the academic year is 2012-2013, you have to enter 2012.
             </span>
           </div>
           <div class="field">
             <%= f.label :semester %>
-            <%= f.number_field :semester %>
+            <%= f.number_field :semester, class: "form-control" %>
           </div>
           <div class="actions">
             <%= f.submit class: 'btn btn-primary' %>
           </div>
         <% end %>
       </div>
-    </div>
-  </div>
-</div>
 
-<div class="accordion" id="accordion3">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-        Add New Topic
-      </a>
-    </div>
-    <div id="collapseThree" class="accordion-body collapse">
-      <div class="accordion-inner">
-  
-        <%= form_for [:admin, @course, @new_topic] do |f| %>
+    <div class="tab-pane" id="_info_4">
+      <%= form_for [:admin, @course, @new_section] do |f| %>
         <fieldset>
           <div class="field">
+            <%= @course.name %>
+          </div>
+          <div class="field">
             <%= f.label :title %>
-            <%= f.text_field :title %>
+            <%= f.text_field :title ,class: "form-control" %>
           </div>
           <div class="field">
-            <%= f.label :ct_status %>
-            <%= f.select :ct_status, options_for_select([["CT1", "CT1"], ["CT2", "CT2"], ["Post CT", "Post CT"]]) %>
-          </div>
-          <div class="field">
-            <%= f.label :description %>
-            <%= f.text_area :description, :rows => 4 %>
+            <%= f.hidden_field :term_id, :value => @course.id%>
           </div>
           <div class="actions">
             <%= f.submit class: 'btn btn-primary' %>
           </div>
         </fieldset>
         <% end %>
-      </div>
     </div>
   </div>
 </div>
-
 
 <a href="<%= admin_course_path(@course) %>" class="btn btn-default btn-small">
   <i class="glyphicon glyphicon-chevron-left"></i>

@@ -71,9 +71,7 @@ class Admin::CoursesController < Admin::BaseController
     @course = Course.find(params[:id] || params[:course_id])
 
     @new_term = Term.new
-    # @courses.topics.build produces an 
-    # Cannot modify association 'Course#topics' because it goes through more than one other association.
-    # @new_topic = @course.topics.build
+    @new_section = @course.sections.build
     @current_ac_year = Time.now.year.to_i
     @current_ac_year -= Time.now.month<6 ? 1 : 0
     @courses_array = Course.all.map do |course|
