@@ -63,8 +63,55 @@ class Admin::TermsController < Admin::BaseController
 
     respond_to do |format|
       if @term.save
-        format.html { redirect_to [:admin, @course, :terms], notice: 'Term was successfully created.' }
-        format.json { render json: @term, status: :created, location: @term }
+        old_term = @course.latest_term
+
+        # Copy the latest term's books, sections, topics and references
+        # Copying term's books
+        books = TermReference.where(:term_id => old_term.id)
+        term_books = Array.new()
+        books.each do |book|
+          term_books << {:term_id => @term.id, :book_id => book.id}
+        end
+        term_books = TermReference.create(term_books)
+
+        # Copying sections, topics and references
+        # Copying sections
+        sections = Section.where(:term_id => old_term.id)
+        term_sections = Array.new()
+        sections.each do |section|
+          term_sections << {:term_id => @term.id, :title => section.title}
+        end
+        term_sections = Section.create(term_sections)
+
+        # Copying topics
+        term_topics = Array.new()
+        old_topics = Array.new()
+        sections.each_index do |i|
+          topics = Topic.where(:section_id => sections[i].id )
+          topics.each do |topic|
+            old_topics << topic
+            term_topics << {:title => topic.title, :description => topic.description, :ct_status => topic.ct_status, :section_id => term_sections[i].id}
+          end
+        end
+        term_topics = Topic.create(term_topics)
+
+        # Copying references
+        term_refs = Array.new()
+        old_topics.each_index do |i|
+          refs = Reference.where(:topic_id => old_topics[i].id)
+          refs.each do |ref|
+            term_refs << {:term_reference_id => ref.term_reference_id, :indices => ref.indices, :topic_id => term_topics[i].id}
+          end
+        end
+        term_refs = Reference.create(term_refs)
+
+        if term_books and term_sections and term_topics and term_refs
+          format.html { redirect_to [:admin, @course, :terms], notice: 'Term was successfully created.' }
+          format.json { render json: @term, status: :created, location: @term }
+        else
+          format.html { render action: "new" }
+          format.json { render json: (term_books.errors << term_sections.errors << term_topics.errors << term_refs.errors ).flatten , status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @term.errors, status: :unprocessable_entity }
