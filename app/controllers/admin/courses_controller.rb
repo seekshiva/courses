@@ -70,6 +70,8 @@ class Admin::CoursesController < Admin::BaseController
   def edit
     @course = Course.find(params[:id] || params[:course_id])
 
+    @sem_options = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8]]
+
     @new_term = Term.new
     @new_section = @course.sections.build
     @current_ac_year = Time.now.year.to_i

@@ -169,7 +169,7 @@
       <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
         <li class="active"><a href="#_all_sections" data-toggle="tab">All</a></li>
         <% if not @course.latest_term.nil? %>
-          <% @course.latest_term.sections.each do |section| %>
+          <% @course.latest_term.sections.uniq.each do |section| %>
             <li><a href="#_section_<%= section.id %>" data-toggle="tab"><%= section.title %></a></li>
           <% end %>
         <% end %>
