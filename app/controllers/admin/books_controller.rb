@@ -2,7 +2,8 @@ class Admin::BooksController < Admin::BaseController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @page_no = params[:page] || 1
+    @books = Book.paginate(:page => @page_no, :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb

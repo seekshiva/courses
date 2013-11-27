@@ -1,5 +1,10 @@
 <table class="table">
   <caption><h3>Listing all Users</h3></caption>
+  
+  <div class="pull-right">
+    <%= page_navigation_links @users%>
+  </div>
+  
   <thead>
     <tr>
       <th>Name</th>
@@ -13,20 +18,24 @@
     <% @users.each do |user| %>
     <tr>
       <td>
-	<%= user.name %>
+        <%= user.name %>
       </td>
       <td><%= user.email %></td>
       <td><%= user.department.name %></td>
       <td>
-	<%= link_to 'Show', [:admin, user], class: "btn btn-default btn-mini" %>
-	<%= link_to 'Edit', edit_admin_user_path(user), class: "btn btn-default btn-mini" %>
-	<%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+        <%= link_to 'Show', [:admin, user], class: "btn btn-default btn-mini" %>
+        <%= link_to 'Edit', edit_admin_user_path(user), class: "btn btn-default btn-mini" %>
+        <%= link_to 'Destroy', [:admin, user], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
 
+<div class="pull-right">
+  <%= page_navigation_links @users%>
+</div>
+  
 <br />
 
 <%= link_to "New User", new_admin_user_path, class: "btn btn-primary btn-small" %>

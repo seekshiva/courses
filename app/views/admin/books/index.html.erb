@@ -2,6 +2,9 @@
   <caption><h3>
       Listing Books
   </h3></caption>
+  <div class="pull-right">
+    <%= page_navigation_links @books%>
+  </div>
   <thead>
     <tr>
       <th>Title</th>
@@ -46,6 +49,10 @@
 <% end %>
 </table>
 
+<div class="pull-right">
+  <%= page_navigation_links @books%>
+</div>
+  
 <br />
 
 <a href="<%= url_for new_admin_book_path %>" class="btn btn-default">

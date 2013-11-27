@@ -1,6 +1,8 @@
-
 <table class="table table-hover">
   <caption><h3>Listing faculties</h3></caption>
+  <div class="pull-right">
+    <%= page_navigation_links @faculties%>
+  </div>
   <thead>
     <tr>
       <th>Faculty</th>
@@ -23,4 +25,8 @@
   </tbody>
 </table>
 
+<div class="pull-right">
+  <%= page_navigation_links @faculties%>
+</div>
+  
 <%= link_to "New Faculty", new_admin_faculty_path, class: "btn btn-primary btn-large" %>

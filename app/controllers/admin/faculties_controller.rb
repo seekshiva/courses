@@ -2,7 +2,8 @@ class Admin::FacultiesController < Admin::BaseController
   # GET /faculties
   # GET /faculties.json
   def index
-    @faculties = Faculty.all
+    @page_no = params[:page] || 1
+    @faculties = Faculty.paginate(:page => @page_no, :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb

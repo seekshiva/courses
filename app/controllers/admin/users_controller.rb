@@ -2,7 +2,8 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @page_no = params[:page] || 1
+    @users = User.paginate(:page => @page_no, :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb

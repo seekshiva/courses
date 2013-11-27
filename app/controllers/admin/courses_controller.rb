@@ -3,10 +3,11 @@ class Admin::CoursesController < Admin::BaseController
   # GET /courses.json
   def index
     respond_to do |format|
+      @page_no = params[:page] || 1
       if params[:code]
-        @courses = Course.find_all_by_subject_code(params[:code])
+        @courses = Course.find_all_by_subject_code(params[:code]).paginate(:page => @page_no, :per_page => 20)
       else
-        @courses = Course.all
+        @courses = Course.paginate(:page => @page_no, :per_page => 20)
       end
       
       if params[:code] and params[:code].empty?

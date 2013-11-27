@@ -1,5 +1,8 @@
 <table class="table">
   <caption><h3>Courses</h3></caption>
+  <div class="pull-right">
+    <%= page_navigation_links @courses%>
+  </div>
   <thead>
     <tr>
       <th>Subject code</th>
@@ -22,6 +25,10 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="pull-right">
+  <%= page_navigation_links @courses%>
+</div>
 
 <br />
 
