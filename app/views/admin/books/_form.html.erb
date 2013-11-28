@@ -32,6 +32,9 @@
       <%= f.text_field :cover_url, class: "form-control", placeholder: "Cover pic URL" %>
     </div>
     <div class="field">
+      <input type="file" id="upload_cover"/>
+    </div>
+    <div class="field">
       <%= f.text_field :online_retail_url, class: "form-control", placeholder: "Online Retail URL" %>
     </div>
     <div class="field">
@@ -58,3 +61,24 @@
     </div>
   </fieldset>
 <% end %>
+
+<script type="text/javascript">
+  if(typeof uploadify === 'undefined'){
+    var uploadify = new Array();
+  }
+  uploadify.push({
+    "id" : "upload_cover",          // DOM id of the div that uploadify has to be applied
+    "multi" : "false",        // multiple files?
+    "auto" : "true",          // automatically upload files
+    "fileTypeDesc" : "Images",    // files type to be allowed
+    "name" : "cover_url",  // name of the hidden field that contains the uploaded file path
+    "fileSizeLimit" : "80000kb",
+    "onComplete" : function(event, queueID, fileObj, response, data){
+      console.log(event);
+      console.log(queueID);
+      console.log(fileObj);
+      console.log(response);
+      console.log(data);
+    }
+  });
+</script>
