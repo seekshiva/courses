@@ -34,6 +34,10 @@ GEM
     arel (3.0.2)
     bluecloth (2.2.0)
     builder (3.0.4)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.3)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -62,6 +66,11 @@ GEM
     mime-types (1.19)
     multi_json (1.5.0)
     mysql2 (0.3.11)
+    paperclip (3.5.2)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -132,7 +141,9 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   execjs
   jquery-rails
+  mime-types
   mysql2
+  paperclip
   rails (= 3.2.9)
   rails-backbone
   sass-rails (~> 3.2.3)

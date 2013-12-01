@@ -76,9 +76,9 @@
     </div>
   </div>
   <script type="text/javascript">
-  	var app={};
-  	app["session_key"] = "<%= Rails.application.config.session_options[:key] %>";
-  	app["session_val"] = "<%= cookies[Rails.application.config.session_options[:key]] %>";
+  	var app = {};
+  	app["session_key"] = '<%= Rails.application.config.session_options[:key] %>';
+  	app["session_val"] = '<%= cookies[Rails.application.config.session_options[:key]] %>';
   </script>
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "admin_app" %>

@@ -9,6 +9,8 @@ gem 'execjs'
 gem 'therubyracer'
 
 gem 'will_paginate', '~>3.0' 
+gem 'mime-types'
+gem 'paperclip'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

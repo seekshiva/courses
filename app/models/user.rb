@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   belongs_to :department
 
+  has_one :avatar, :dependent => :destroy
+
   attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email, :phone
 
   validates :email, :uniqueness => true

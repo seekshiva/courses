@@ -6,3 +6,9 @@ Courses::Application.config.session_store :cookie_store, key: '_courses_session'
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 # Courses::Application.config.session_store :active_record_store
+
+Rails.application.config.middleware.insert_before(
+  ActionDispatch::Session::CookieStore,
+  FlashsessioncookieMiddleware,
+  Rails.application.config.session_options[:key]
+)

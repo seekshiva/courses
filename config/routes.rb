@@ -78,6 +78,8 @@ Courses::Application.routes.draw do
   resources :courses
   resources :topics, :sections, :classrooms
 
+  post "upload/:tab" => "upload#create"
+
   match "authenticate" => "home#authenticate"
   match "signout" => "home#signout"
   match "me" => "home#me"

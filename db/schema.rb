@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131126063946) do
+ActiveRecord::Schema.define(:version => 20131130163007) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "about"
+  end
+
+  create_table "avatars", :force => true do |t|
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   create_table "book_authors", :force => true do |t|
@@ -30,6 +39,16 @@ ActiveRecord::Schema.define(:version => 20131126063946) do
   add_index "book_authors", ["author_id"], :name => "index_book_authors_on_author_id"
   add_index "book_authors", ["book_id"], :name => "index_book_authors_on_book_id"
 
+  create_table "book_covers", :force => true do |t|
+    t.integer  "uploaded_by"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+  end
+
   create_table "books", :force => true do |t|
     t.string   "title"
     t.string   "publisher"
@@ -38,9 +57,9 @@ ActiveRecord::Schema.define(:version => 20131126063946) do
     t.integer  "year"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.string   "cover_url"
-    t.string   "download_url"
     t.string   "online_retail_url"
+    t.integer  "book_cover_id"
+    t.integer  "file_id"
   end
 
   create_table "class_topics", :force => true do |t|
@@ -92,6 +111,16 @@ ActiveRecord::Schema.define(:version => 20131126063946) do
   end
 
   add_index "faculties", ["user_id"], :name => "index_faculties_on_user_id"
+
+  create_table "files", :force => true do |t|
+    t.integer  "uploaded_by"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
 
   create_table "references", :force => true do |t|
     t.integer  "term_reference_id"
@@ -170,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20131126063946) do
     t.datetime "updated_at",                       :null => false
     t.boolean  "admin",         :default => false
     t.string   "phone"
+    t.integer  "avatar_id"
   end
 
   add_index "users", ["department_id"], :name => "index_users_on_department_id"
