@@ -1,6 +1,4 @@
 class Avatar < ActiveRecord::Base
-  belongs_to :user
-
   attr_accessible :pic
   has_attached_file :pic,
 	:styles => { :thumb => "32x32", :small => "50x50#", :medium=>"160x160#", :large=>"320x320>" },

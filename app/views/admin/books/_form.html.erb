@@ -29,6 +29,11 @@
       <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
     </div>
     <div class="field">
+      <% if not @book.book_cover.nil? %>
+          <img src="<%= p @book.book_cover.cover.url(:thumb) %>"/>
+      <% end %>
+    </div>
+    <div class="field">
       <div id="upload_cover"></div>
     </div>
     <div class="field">
@@ -65,18 +70,23 @@
   }
   uploadify.push({
     "id" : "upload_cover",          // DOM id of the div that uploadify has to be applied
-    "multi" : false,        // multiple files?
-    "auto" : true,          // automatically upload files
-    "fileTypeDesc" : "Images",    // files type to be allowed
-    "name" : "cover_url",  // name of the hidden field that contains the uploaded file path
+    "multi" : false,                // multiple files?
+    "auto" : true,                  // automatically upload files
+    "fileTypeDesc" : "Images",      // files type to be allowed
     "fileSizeLimit" : "80000kb",
     "uploader" : "book_cover",
-    "onUploadSuccess" : function(event, queueID, fileObj){
-      console.log(event);
-      console.log(queueID);
-      console.log(fileObj);
-      queueID = JSON.parse(queueID);
-      $("#upload_cover-queue").html('<img src="'+queueID["url"]+'">');
+    "buttonText" : "Upload cover Pic",
+    "onUploadSuccess" : function(fileObj, res, status){
+      // console.log(fileObj);
+      // console.log(res);
+      // console.log(status);
+      res = JSON.parse(res);
+      $("#upload_cover-disp").html("");
+      $("#upload_cover-queue").parent().append('<div id="upload_cover-disp"></div>');
+      $("#upload_cover-disp").html('<img src="'+res["url"]+'">');
+      $("#book_cover_id").val(res["id"]);
+      $("#upload_cover-queue").parent().append('<input type="hidden" id="book_cover_id" name="book[book_cover_id]" value="'+res["id"]+'">'); 
+      $("#book_cover_id").val(res["id"]);
     }
   });
 </script>

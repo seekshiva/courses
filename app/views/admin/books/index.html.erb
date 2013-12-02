@@ -26,7 +26,7 @@
     <td>
       <% if book.authors.length == 0 %>
       No author found for this book.
-      <a href="<%= new_book_author_path %>" class="btn btn-small btn-primary">Add new author</a>
+      <a href="<%= url_for edit_admin_book_path(book) %>" class="btn btn-xs btn-primary">Add author</a>
       <% else %>
       <div>
 	<% book.authors.each do |author| %>

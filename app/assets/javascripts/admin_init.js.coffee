@@ -29,7 +29,7 @@ jQuery ->
 					"formData" : uploadify_script_data,
 					"buttonText" : val["buttonText"] || "Upload",
 					"method" : val["method"] || "post",
-					"removeCompleted": val["removeCompleted"] || false,
+					"removeCompleted": val["removeCompleted"] || true,
 					"multi" : val["multi"] || false,
 					"auto" : val["auto"] || true,
 					"fileTypeDesc" : val["fileTypeDesc"] || "Image",

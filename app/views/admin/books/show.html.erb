@@ -20,13 +20,15 @@
     <tr>
       <th>Author(s)</th>
       <td>
-	<% if @book.authors.length == 0 %>
-	No author found for this book.
-	<a href="<%= new_book_author_path %>" class="btn btn-mini btn-primary">Add new author</a>
+  <% if @book.authors.length == 0 %>
+    No author found for this book.
+      <%= link_to 'Add Author', edit_admin_book_path(@book) %>
 	<% else %>
 	<ul>
-	  <% @book.authors.each do |author| %>
-	  <li><%= link_to author.name, [:admin, author] %></li>
+    <% if not @book.authors.nil? %>
+  	  <% @book.authors.each do |author| %>
+  	  <li><%= link_to author.name, [:admin, author] %></li>
+      <% end %>
 	  <% end %>
 	</ul>
 	<% end %>
@@ -52,6 +54,13 @@
       <th>Online Retail URL:</th>
       <td><a href="<%= @book.online_retail_url %>"><%= @book.online_retail_url %></a></td>
     </tr>
+    <% if not @book.book_cover.nil? %>
+      <tr>
+        <th>Cover Pic:</th>
+        <td><img src="<%= p @book.book_cover.cover.url(:large) %>"/></td>
+      </tr>
+    <% end %>
+
   </tbody>
 </table>
 
