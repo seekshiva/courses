@@ -24,8 +24,8 @@ class TermsController < ApplicationController
               ct_status:        topic.ct_status,
             }
 
-            top_["reference"] = topic.references.collect do |ref|
-              {:book => ref.course_reference.book.title, :indices => ref.indices }
+            top_["reference"] = topic.references.uniq.collect do |ref|
+              {:book => ref.term_reference.book.title, :indices => ref.indices }
             end
             top_["classes"] = topic.classrooms.collect do |cl|
               {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
@@ -36,7 +36,7 @@ class TermsController < ApplicationController
         end
         
 
-        reference_books = term.course.books.collect do |book|
+        reference_books = term.course.books.uniq.collect do |book|
           book["authors"] = book.authors
           book
         end
@@ -46,7 +46,8 @@ class TermsController < ApplicationController
           instructors << {
             instructor: "#{faculty.prefix} #{faculty.user.name}",
             semester:   term.semester.ordinalize,
-            year:       "#{term.academic_year}-#{term.academic_year+1}"
+            year:       "#{term.academic_year}-#{term.academic_year+1}",
+            about:      BlueCloth.new(faculty.about).to_html
           }
         end
 
