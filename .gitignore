@@ -20,3 +20,9 @@
 #Ignore database config
 #Copy database.yml.sample to database.yml and configure accordingly
 /config/database.yml
+
+#Ignore emacs backup
+~*
+
+#Ignore uploaded files
+/public/system
