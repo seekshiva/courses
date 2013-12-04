@@ -18,7 +18,6 @@ class HomeController < ApplicationController
       end
 
       if flash[:imap_id]
-        flash[:imap_id] = flash[:imap_id]
         @user[:email] = flash[:imap_id]
         
         if @user.is_student?
@@ -34,14 +33,19 @@ class HomeController < ApplicationController
           
           @course_list = []
           Course.all.each do |course|
-            if not course.current_term.nil? and (course.current_term.semester+1)/2 == @user.nth_year
-              course.departments.each do |dept|
-                if dept.id == @user.department_id 
-                  @course_list << course
+            course.current_term.each do |term|
+              if (term.semester+1)/2 == @user.nth_year
+                term.departments.each do |dept|
+                  if dept.id == @user.department_id 
+                    @course_list << course
+                  end
                 end
               end
             end
           end
+          # This can be done in sql 
+          # @course_list = Course.all.current_term.where("semester = {@user.nth_year*2} OR semester = {(@user.nth_year*2)-1} )
+          # Please check before uncommenting the above line
         end
       else
         redirect_to "/#login"
