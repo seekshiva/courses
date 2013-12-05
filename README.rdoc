@@ -15,4 +15,7 @@ The only real limitation is that whenever you distribute Courses app in some way
 For full details, read the GPL, found at http://www.gnu.org/licenses/gpl.html
 
 
-Copyleft ({?}[http://www.gnu.org/copyleft/]) - {V Shiva Nandan}[https://github.com/seekshiva]
+=== Developers
+
+* {Shiva Nandan}[https://github.com/seekshiva]
+* {Vignesh}[https://github.com/nobelium]
