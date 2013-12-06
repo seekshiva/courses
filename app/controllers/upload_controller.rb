@@ -5,7 +5,10 @@ class UploadController < ApplicationController
   def index
   
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { 
+        current_user
+        render "home/dashboard" 
+      }
       format.json { render json: { message: "UploadController only responds to POST"} }
     end
   end
