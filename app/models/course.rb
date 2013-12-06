@@ -2,6 +2,9 @@ class Course < ActiveRecord::Base
 
   has_many :terms, :dependent => :destroy
 
+  has_many :subscriptions, :through => :terms
+  has_many :users, :through => :subscriptions
+
   has_many :term_departments, :through => :terms
   has_many :departments, :through => :term_departments
 

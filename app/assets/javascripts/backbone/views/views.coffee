@@ -121,9 +121,9 @@ jQuery ->
     template: Handlebars.compile($("#term-topics-template").html())
     selectors:
       ct_status:
-        "ct1": ""
+        "ct1": "btn-info"
         "ct2": "btn-info"
-        "postct": ""
+        "postct": "btn-info"
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "switch_active_topic"

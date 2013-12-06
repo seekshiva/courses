@@ -3,6 +3,11 @@ class User < ActiveRecord::Base
 
   has_one :avatar, :dependent => :destroy
 
+  has_many :subscriptions, :dependent => :destroy
+  has_many :terms, :through => :subscriptions
+
+  has_many :courses, :through => :terms
+
   attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email, :phone
 
   validates :email, :uniqueness => true
