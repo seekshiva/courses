@@ -340,13 +340,7 @@
 </script>
 
 <script type="text/template" id="term-subscription-template">
-  <div id="subscription-box">
-    {{#if sub_status.id}}
-      <button class="btn btn-default" id="subscription_status">UnSubscribe</button>
-    {{else}} 
-      <button class="btn btn-default btn-success" id="subscription_status">Subscribe</button>
-    {{/if}}
-  </div>
+    <button class="btn btn-default {{#if sub}}btn-success{{/if}}" id="subscription_status" data-placement="left" data-trigger="hover" data-toggle="tooltip" data-container="body">{{text}}</button>
 </script>
 
 <script type="text/template" id="term-info-template">
