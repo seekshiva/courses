@@ -47,9 +47,20 @@ jQuery ->
 
     urlRoot: "/topics/"
 
+  class SubscriptionModel extends Backbone.Model
+    paramRoot: 'subscription'
+
+    defaults:
+      term_id:     null
+      user_id:     null
+      attending:   null
+
+    urlRoot: "/subscriptions/"
+
    
   @app                       = window.app ? {}
   @app.DepartmentModel       = DepartmentModel
   @app.CourseModel           = CourseModel
   @app.TermModel             = TermModel
+  @app.SubscriptionModel     = SubscriptionModel
   @app.DepartmentsCollection = DepartmentsCollection

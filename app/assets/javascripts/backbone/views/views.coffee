@@ -101,6 +101,11 @@ jQuery ->
       $(@el).find("#specialized_view_selector li").removeClass("active")
       $(@el).find("#view_term_" + @view.type).addClass("active")
 
+      if @term_sub_status
+        @term_sub_status.render()
+      else 
+        @term_sub_status = new TermSubscriptionView(@)
+
       if @view.type == "topics"
         if @term_topics_view
           @term_topics_view.render()
@@ -115,7 +120,42 @@ jQuery ->
       $(@el).find("a:not(.local-nav a)").click @app.show_local_page
       @
 
+  class TermSubscriptionView extends Backbone.View
+    template: Handlebars.compile $("#term-subscription-template").html()
 
+    events:
+      "click #subscription-box > #subscription_status" : "updateSubscription"
+
+    initialize: (term_view) ->
+      @el = "#term_subscription_status"
+      if term_view.term.attributes.subscription.id
+        @sub_status = new term_view.app.SubscriptionModel({id : term_view.term.attributes.subscription.id})
+        @sub_status.fetch()
+      else
+        @sub_status = new term_view.app.SubscriptionModel({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
+      @sub_status.bind "change", @render, @
+      @sub_status.bind "destroy", @render, @
+      @render()
+      @
+
+    updateSubscription: (e) ->
+      e.preventDefault()
+      if @sub_status.id
+        @sub_status.destroy()
+        delete @sub_status.id
+        delete @sub_status.attributes.id
+        delete @sub_status.attributes.created_at
+        delete @sub_status.attributes.updated_at
+      else 
+        @sub_status.save()
+         
+      @render()
+      @
+
+    render: ->
+      $(@el).html @template
+        sub_status: @sub_status.attributes
+      @
 
   class TermTopicsView extends Backbone.View
     template: Handlebars.compile($("#term-topics-template").html())

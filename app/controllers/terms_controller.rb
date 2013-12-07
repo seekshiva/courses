@@ -7,6 +7,7 @@ class TermsController < ApplicationController
       }
       
       format.json { 
+        current_user
         term = Term.find(params[:id])
 
         sections = term.sections.collect do |section|
@@ -37,8 +38,9 @@ class TermsController < ApplicationController
         
 
         reference_books = term.course.books.uniq.collect do |book|
-          book["authors"] = book.authors
-          book
+          new_book = book
+          new_book["authors"] = book.authors
+          new_book
         end
 
         instructors = []
@@ -57,6 +59,17 @@ class TermsController < ApplicationController
           ret
         end
 
+        subscription = term.subscriptions.where(:user_id => @user.id).first
+        sub = Hash.new
+        if subscription.nil?
+          sub = {:id => nil, :term_id => term.id, :user_id => @user.id, :attending => nil}
+        else 
+          sub = { :id => subscription.id, 
+                  :term_id => term.id, 
+                  :user_id => @user.id, 
+                  :attending => subscription.attending
+                }
+        end
 
         @term = {
           id:              term.id,
@@ -71,7 +84,8 @@ class TermsController < ApplicationController
           departments:     term.departments,
           classes:         classes,
           sections:        sections,
-          instructors:     instructors
+          instructors:     instructors,
+          subscription:    sub
         }
         
         render json: @term

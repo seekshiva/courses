@@ -77,6 +77,7 @@ Courses::Application.routes.draw do
   resources :terms
   resources :courses
   resources :topics, :sections, :classrooms
+  resources :subscriptions
 
   post "upload/:tab" => "upload#create"
 
