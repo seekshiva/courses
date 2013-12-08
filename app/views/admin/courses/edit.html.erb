@@ -45,6 +45,7 @@
       If you enable this block it throws an error saying admin_course_section path is not defined
       It is bcz routes.rb doesn't have an entry for admin courses sections
       If this entry is made it disturbs the already existing term/:id/topics
+      Fix routes.rb to solve this problem
       <% if false %>
       <%= form_for [:admin, @course, @new_section] do |f| %>
         <fieldset>
