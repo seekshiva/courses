@@ -60,10 +60,10 @@ class Admin::TermsController < Admin::BaseController
   def create
     @course = Course.find(params[:course_id])
     @term = Term.new(params[:term])
+    old_term = @course.latest_term
 
     respond_to do |format|
       if @term.save
-        old_term = @course.latest_term
 
         # Copy the latest term's books, sections, topics and references
         # Copying term's books
