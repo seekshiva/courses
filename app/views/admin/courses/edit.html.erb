@@ -42,6 +42,12 @@
       </div>
 
     <div class="tab-pane" id="_info_4">
+      Throws an error saying undefined admin_course_section_path because its not included in 
+      routes.rb 
+      If an entry for admin/course/section is made in routes.rb, sections tab in course
+      info won't work because it is handled by admin course controller
+      Fix routes.rb to solve this problem
+      <% if false %>
       <%= form_for [:admin, @course, @new_section] do |f| %>
         <fieldset>
           <div class="field">
@@ -58,7 +64,8 @@
             <%= f.submit class: 'btn btn-primary' %>
           </div>
         </fieldset>
-        <% end %>
+      <% end %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -59,7 +59,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
 
     respond_to do |format|
-      if @subscription.update_attributes(params[:subscription].except(:created_at, :updated_at, :id))
+      if @subscription.update_attributes(params[:subscription])
         format.html { redirect_to @subscription, notice: 'Subscription was successfully updated.' }
         format.json { head :no_content }
       else

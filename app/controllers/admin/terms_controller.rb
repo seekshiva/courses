@@ -62,8 +62,8 @@ class Admin::TermsController < Admin::BaseController
     @term = Term.new(params[:term])
 
     respond_to do |format|
+      old_term = @course.latest_term
       if @term.save
-        old_term = @course.latest_term
 
         # Copy the latest term's books, sections, topics and references
         # Copying term's books

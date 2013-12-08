@@ -124,19 +124,18 @@ jQuery ->
     template: Handlebars.compile $("#term-subscription-template").html()
 
     events:
-      "click #subscription_status" : "updateSubscription"
+      "click #subscription-box > #subscription_status" : "updateSubscription"
 
     initialize: (term_view) ->
       @el = "#term_subscription_status"
-      @sub_status = new term_view.app.SubscriptionModel()
-      @sub_status.bind "destroy", @render, @
       if term_view.term.attributes.subscription.id
-        @sub_status.set({id : term_view.term.attributes.subscription.id})
-        @sub_status.bind "change", @render, @
+        @sub_status = new term_view.app.SubscriptionModel({id : term_view.term.attributes.subscription.id})
         @sub_status.fetch()
       else
-        @sub_status.bind "change", @render, @
-        @sub_status.set({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
+        @sub_status = new term_view.app.SubscriptionModel({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
+      @sub_status.bind "change", @render, @
+      @sub_status.bind "destroy", @render, @
+      @render()
       @
 
     updateSubscription: (e) ->
@@ -145,60 +144,17 @@ jQuery ->
         @sub_status.destroy()
         delete @sub_status.id
         delete @sub_status.attributes.id
-        delete @sub_status.attributes.attending
         delete @sub_status.attributes.created_at
         delete @sub_status.attributes.updated_at
       else 
         @sub_status.save()
-      @
-
-    updateAttending: (e) ->
-      e.preventDefault
-      if e.target.id == "attending"
-        @sub_status.set({attending : true})
-      else
-        @sub_status.set({attending : false})
-      @sub_status.save()
+         
+      @render()
       @
 
     render: ->
-      $(".tooltip").remove()
-      $("#subscription_status").popover("destroy")
-      sub = 0
-      if @sub_status.attributes.id
-        sub = 0
-        text = "Unsubscribe"
-        if @sub_status.attributes.attending == true
-          status = "Subscribed and attending"
-        else 
-          status = "You have subscribed to the course but not attending it"
-      else
-        sub = 1 
-        text = "Subscribe"
-        status = "Unsubscribed"
-
       $(@el).html @template
-        text: text
-        status: status
-        sub: sub
-
-      $('#subscription_status').tooltip({title: status}) 
-      if @sub_status.attributes.attending == null && @sub_status.id
-        $("#subscription_status").popover({
-          html: true,
-          placement: "left",
-          trigger: "click",
-          content: "Help us to tailor content for you.<br/> Are you attending this course? <br/><br/>
-                    <button class='btn btn-default btn-success' id='attending'>Yes</button>
-                    <button class='btn btn-default' id='not_attending'>No</button>",
-          container: "body"
-        }).popover("show")
-        
-      $(document).on("click", "#attending", _.bind(@updateAttending, @))
-      $(document).on("click", "#not_attending", _.bind(@updateAttending, @))
-      $(document).on("click", (e) -> 
-        $("#subscription_status").popover("destroy")
-      )
+        sub_status: @sub_status.attributes
       @
 
   class TermTopicsView extends Backbone.View
