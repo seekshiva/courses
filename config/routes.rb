@@ -73,6 +73,7 @@ Courses::Application.routes.draw do
 
   resources :users
   resources :departments
+  resources :profile
   
   resources :terms
   resources :courses

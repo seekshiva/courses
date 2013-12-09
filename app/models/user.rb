@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :courses, :through => :terms
 
+  belongs_to :avatar
+
   attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email, :phone
 
   validates :email, :uniqueness => true

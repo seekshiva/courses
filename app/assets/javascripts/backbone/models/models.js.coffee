@@ -57,10 +57,24 @@ jQuery ->
 
     urlRoot: "/subscriptions/"
 
+  class ProfileModel extends Backbone.Model
+    paramRoot: 'user'
+
+    defaults:
+      id:     null
+      name:   null
+      phone:  null
+      email:  null
+
+    urlRoot: "/profile/"
+
    
   @app                       = window.app ? {}
+  
   @app.DepartmentModel       = DepartmentModel
   @app.CourseModel           = CourseModel
   @app.TermModel             = TermModel
   @app.SubscriptionModel     = SubscriptionModel
+  @app.ProfileModel          = ProfileModel
+
   @app.DepartmentsCollection = DepartmentsCollection

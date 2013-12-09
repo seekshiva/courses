@@ -648,7 +648,83 @@
   {{/unless}}
 </script>
 
-
+<script type="text/template" id="profile-template">
+  {{#if info.found}}
+    {{#if info.edit}}
+      <div class="row">
+        <div class="pull-right field"><a href="./edit" class="btn btn-default btn-primary">Edit</a></div>  
+      </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-md-3">
+        <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
+      </div>
+      <div class="col-md-9">
+        <table class="table table-striped">
+          <tbody>
+            {{#if info.student}}
+              <tr>
+                <th>Name</th>
+                <td>{{info.name}}</td>
+              </tr>
+              <tr>
+                <th>Department</th>
+                <td>{{info.department}}({{info.department_short}})</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{info.email}}@nitt.edu</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>Student</td>
+              </tr>
+              <tr>
+                <th>Courses Subscribed</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Courses Attended/Attending</th>
+                <td></td>
+              </tr>
+            {{else}}
+              <tr>
+                <th>Name</th>
+                <td>{{info.prefix}} {{info.name}}</td>
+              </tr>
+              <tr>
+                <th>Department</th>
+                <td>{{info.department}}({{info.department_short}})</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{info.email}}@nitt.edu</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>Faculty</td>
+              </tr>
+              <tr>
+                <th>Designation</th>
+                <td>{{info.designation}}</td>
+              </tr>
+              <tr>
+                <th>About</th>
+                <td>{{{info.about}}}</td>
+              </tr>
+              <tr>
+                <th>Courses Handeled/Handling</th>
+                <td></td>
+              </tr>
+            {{/if}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {{else}}
+    <div>User not found</div>
+  {{/if}}
+</script>
 
 <script type="text/template" id="404-template">
   <h3 style="font-size: 60px; margin: 30px; ">Its a 404!</h3>

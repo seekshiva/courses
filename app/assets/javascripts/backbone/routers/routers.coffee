@@ -8,8 +8,10 @@ jQuery ->
       "courses/:course_id/:slug(/:id)": "course"
       "terms/:term_id(/:slug)": "term"
       "terms/:term_id/:slug(/:id)": "term"
-      "login": "login"
       "me": "me"
+      "profile/:id" : "profile"
+      "profile/:id(/:slug)" : "profile"
+      "login": "login"
       "*path": "four_oh_four"
 
     home: () ->
@@ -49,6 +51,16 @@ jQuery ->
 
     me: () ->
       $("#profileModal").modal()
+      @
+
+    profile: (id, type) ->
+      if @profile_view and @profile_view.id == id
+        @profile_view.type = type or "show"
+        @profile_view.render()
+      else
+        @profile_view = new @app.ProfileView
+          id: id
+          type: type or "show"
       @
 
     login: () ->

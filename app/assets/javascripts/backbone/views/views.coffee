@@ -271,6 +271,29 @@ jQuery ->
         else
           @current_section_id = +target.hash.substr(10)
 
+  class ProfileView extends Backbone.View
+    template: Handlebars.compile($("#profile-template").html())
+
+    el: "#content"
+
+    initialize: (options) ->
+      @app = window.app ? {}
+      @options = options
+      @profile = new @app.ProfileModel({id: options.id})
+      @profile.bind "change", @render, @
+      @profile.fetch()
+      # @render()
+      @
+
+    render: ->
+      console.log("reached")
+      avatar = @profile.avatar == "" ? 0 : 1
+      $(@el).html @template
+        type:     @options.type
+        info:     @profile.attributes
+        avatar:   avatar
+      @
+
 
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())
@@ -300,10 +323,12 @@ jQuery ->
 
 
   @app = window.app ? {}
+  
   @app.DepartmentsView = DepartmentsView
   @app.DepartmentView  = DepartmentView
   @app.CourseView      = CourseView
   @app.TermView        = TermView
+  @app.ProfileView     = ProfileView
   @app.LoginView       = LoginView
   @app.NotFoundView    = NotFoundView
 
