@@ -10,6 +10,7 @@
  *
  *= require twitter/bootstrap
  *= require bootstrap-select
+ *= require bootstrap-switch
  *= require_self
  *= require_tree .
  */

@@ -650,77 +650,153 @@
 
 <script type="text/template" id="profile-template">
   {{#if info.found}}
-    {{#if info.edit}}
+    {{#if edit_mode}}
       <div class="row">
-        <div class="pull-right field"><a href="./edit" class="btn btn-default btn-primary">Edit</a></div>  
+        <div class="col-md-3">
+          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
+        </div>
+        <div class="col-md-9">
+          {{#if info.student}}
+            <fieldset>
+              <legend>Edit Profile Info</legend>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name"/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled/>
+              </div>
+              <div class="field">
+                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone"/>
+              </div>
+              <div class="field">
+                <a class="btn btn-default btn-success" id="save" href="javascript:history.back()">Save</a>
+              </div>
+            </fieldset>
+          {{else}}
+            <fieldset>
+              <legend>Edit Profile Info</legend>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.prefix}}" placeholder="Name" id="name"/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name"/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled/>
+              </div>
+              <div class="field">
+                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone"/>
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" value="{{info.Designation}}" placeholder="Designation" id="designation"/>
+              </div>
+              <div class="field">
+                <textarea class="form-control" placeholder="About You" id="about">{{{info.about}}}</textare>
+              </div>
+              <div class="field">
+                <a class="btn btn-default btn-success" id="save" href="javascript:history.back()">Save</a>
+              </div>
+
+            </fieldset>
+          {{/if}}
+          <br/>
+          <br/>
+          <fieldset>
+            <legend>Settings</legend>
+            <div class="field">
+              Send Email Notifications : 
+              <div class="make-switch" data-on="success" data-off="warning">
+                <input type="checkbox" checked="checked" disabled/>
+              </div>
+            </div>
+            <div class="field">
+              Send SMS Notifications :
+              <div class="make-switch" data-on="success" data-off="warning">
+                <input type="checkbox" disabled/>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    {{else}}
+      {{#if info.edit}}
+        <div class="row">
+          <div class="pull-right field"><a href="/profile/{{info.email}}/edit" class="btn btn-default btn-primary" id="edit">Edit</a></div>  
+        </div>
+      {{/if}}
+      <div class="row">
+        <div class="col-md-3">
+          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
+        </div>
+        <div class="col-md-9">
+          <table class="table table-striped">
+            <tbody>
+              {{#if info.student}}
+                <tr>
+                  <th>Name</th>
+                  <td>{{info.name}}</td>
+                </tr>
+                <tr>
+                  <th>Department</th>
+                  <td>{{info.department}}({{info.department_short}})</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{info.email}}@nitt.edu</td>
+                </tr>
+                <tr>
+                  <th>Status</th>
+                  <td>Student</td>
+                </tr>
+                <tr>
+                  <th>Courses Subscribed</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Courses Attended/Attending</th>
+                  <td></td>
+                </tr>
+              {{else}}
+                <tr>
+                  <th>Name</th>
+                  <td>{{info.prefix}} {{info.name}}</td>
+                </tr>
+                <tr>
+                  <th>Department</th>
+                  <td>{{info.department}}({{info.department_short}})</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{{info.email}}@nitt.edu</td>
+                </tr>
+                <tr>
+                  <th>Status</th>
+                  <td>Faculty</td>
+                </tr>
+                <tr>
+                  <th>Designation</th>
+                  <td>{{info.designation}}</td>
+                </tr>
+                <tr>
+                  <th>About</th>
+                  <td>{{{info.about}}}</td>
+                </tr>
+                <tr>
+                  <th>Courses Handeled/Handling</th>
+                  <td></td>
+                </tr>
+              {{/if}}
+            </tbody>
+          </table>
+        </div>
       </div>
     {{/if}}
-    <div class="row">
-      <div class="col-md-3">
-        <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
-      </div>
-      <div class="col-md-9">
-        <table class="table table-striped">
-          <tbody>
-            {{#if info.student}}
-              <tr>
-                <th>Name</th>
-                <td>{{info.name}}</td>
-              </tr>
-              <tr>
-                <th>Department</th>
-                <td>{{info.department}}({{info.department_short}})</td>
-              </tr>
-              <tr>
-                <th>Email</th>
-                <td>{{info.email}}@nitt.edu</td>
-              </tr>
-              <tr>
-                <th>Status</th>
-                <td>Student</td>
-              </tr>
-              <tr>
-                <th>Courses Subscribed</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th>Courses Attended/Attending</th>
-                <td></td>
-              </tr>
-            {{else}}
-              <tr>
-                <th>Name</th>
-                <td>{{info.prefix}} {{info.name}}</td>
-              </tr>
-              <tr>
-                <th>Department</th>
-                <td>{{info.department}}({{info.department_short}})</td>
-              </tr>
-              <tr>
-                <th>Email</th>
-                <td>{{info.email}}@nitt.edu</td>
-              </tr>
-              <tr>
-                <th>Status</th>
-                <td>Faculty</td>
-              </tr>
-              <tr>
-                <th>Designation</th>
-                <td>{{info.designation}}</td>
-              </tr>
-              <tr>
-                <th>About</th>
-                <td>{{{info.about}}}</td>
-              </tr>
-              <tr>
-                <th>Courses Handeled/Handling</th>
-                <td></td>
-              </tr>
-            {{/if}}
-          </tbody>
-        </table>
-      </div>
-    </div>
   {{else}}
     <div>User not found</div>
   {{/if}}

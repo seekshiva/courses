@@ -13,3 +13,4 @@
 //= require uploadify.js
 //= require admin_init.js
 //= require bootstrap-select
+//= require bootstrap-switch

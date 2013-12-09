@@ -276,24 +276,42 @@ jQuery ->
 
     el: "#content"
 
+    events:
+      "click #edit" : "edit"
+      "click #save" : "save"
+
     initialize: (options) ->
       @app = window.app ? {}
       @options = options
-      @profile = new @app.ProfileModel({id: options.id})
+      @profile = new @app.ProfileModel({id: options.id, type: options.type})
       @profile.bind "change", @render, @
       @profile.fetch()
-      # @render()
       @
 
     render: ->
-      console.log("reached")
       avatar = @profile.avatar == "" ? 0 : 1
+      edit = @profile.attributes.type == "edit" ? 1 : 0
       $(@el).html @template
-        type:     @options.type
-        info:     @profile.attributes
-        avatar:   avatar
+        type:         @profile.attributes.type
+        info:         @profile.attributes
+        avatar:       avatar
+        edit_mode:    edit
+
+      $(".make-switch").bootstrapSwitch();
       @
 
+    edit: (e) ->
+      e.preventDefault()
+      @profile.set({type: "edit"})
+      @
+
+    save: (e) ->
+      e.preventDefault()
+      @profile.set(name : $("#name").val())
+      @profile.set(phone : $("#phone").val())
+      @profile.save()
+      @profile.set({type: "show"})
+      @
 
   class LoginView extends Backbone.View
     template: Handlebars.compile($("#login-template").html())

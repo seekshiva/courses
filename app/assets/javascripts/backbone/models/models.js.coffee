@@ -65,6 +65,7 @@ jQuery ->
       name:   null
       phone:  null
       email:  null
+      type:   null
 
     urlRoot: "/profile/"
 
