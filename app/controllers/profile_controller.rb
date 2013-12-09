@@ -75,12 +75,26 @@ class ProfileController < ApplicationController
   def update
     @user = User.find(params[:user][:user_id])
 
+    faculty_status = true
+    if not params[:user][:student]
+      @faculty = Faculty.find_by_user_id(params[:user][:user_id])
+
+      update = {
+        prefix:       params[:user][:prefix],
+        about:        params[:user][:about],
+        designation:  params[:user][:designation]
+      }
+
+      faculty_status = @faculty.update_attributes(update)
+    end
+    
     update = {
       name:     params[:user][:name],
       phone:    params[:user][:phone]      
     }
+
     respond_to do |format|
-      if @user.update_attributes(update)
+      if @user.update_attributes(update) && faculty_status
         format.html 
         format.json { render json: "saved" }
       else

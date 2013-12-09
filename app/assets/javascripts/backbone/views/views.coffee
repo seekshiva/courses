@@ -291,11 +291,18 @@ jQuery ->
     render: ->
       avatar = @profile.avatar == "" ? 0 : 1
       edit = @profile.attributes.type == "edit" ? 1 : 0
+      
+      prefix = {}
+      if !@profile.attributes.student
+        prefix = {"":false,"Dr.":false,"Prof.":false,"Ms.":false,"Mr.":false,"Mrs.":false}
+        prefix[@profile.attributes.prefix] = true
+
       $(@el).html @template
         type:         @profile.attributes.type
         info:         @profile.attributes
         avatar:       avatar
         edit_mode:    edit
+        prefix:       prefix
 
       $(".make-switch").bootstrapSwitch();
       @
@@ -309,6 +316,9 @@ jQuery ->
       e.preventDefault()
       @profile.set(name : $("#name").val())
       @profile.set(phone : $("#phone").val())
+      @profile.set(prefix: $("#prefix").val())
+      @profile.set(about: $("#about").val())
+      @profile.set(designation: $("#designation").val())
       @profile.save()
       @profile.set({type: "show"})
       @

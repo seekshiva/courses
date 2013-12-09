@@ -679,7 +679,11 @@
             <fieldset>
               <legend>Edit Profile Info</legend>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.prefix}}" placeholder="Name" id="name"/>
+                <select type="text" class="selectpicker show-tick show-menu-arrow" title="Select Prefix" data-header="Select Prefix" id="prefix"/>
+                  {{#each prefix}}
+                    <option value={{@key}} {{#if this}}selected{{/if}}>{{@key}}</option>
+                  {{/each}}
+                </select>
               </div>
               <div class="field">
                 <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name"/>
