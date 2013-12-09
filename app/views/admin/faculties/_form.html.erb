@@ -14,7 +14,7 @@
 <fieldset>
   <legend><%= @legend %></legend>
   <div class="field">
-    <%= f.select :prefix, options_for_select(@prefix_array, @faculty.prefix), {:include_blank => true}, { :class => "form-control"} %>
+    <%= f.select :prefix, options_for_select(@prefix_array, @faculty.prefix), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select Prefix", "data-header" => "Select Prefix"} %>
   </div>
   <% if @legend == "Edit Faculty" %>
     <div class="field">
@@ -25,7 +25,7 @@
     </div>
   <% else %>
     <div class="field">
-      <%= f.select :user_id, options_for_select(@users_array, @user_id), {}, {:class => "form-control"} %>
+      <%= f.select :user_id, options_for_select(@users_array, @user_id), {}, {:class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select email id", "data-header" => "Select email id"} %>
     </div>
   <% end %>
   <div class="field">

@@ -16,5 +16,6 @@
 //= require backbone_datalink
 //= require backbone/courses
 //= require_tree ./backbone
+//= require bootstrap-select
 //= require init.js
 //= require me.js

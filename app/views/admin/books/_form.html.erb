@@ -41,19 +41,8 @@
     </div>
     <div class="field">
       <%= label_tag(:authors, "Author(s):") %>
-      <table>
-        <% @book.authors.each do |author| %>
-          <tr>
-            <td><%= select_tag("authors[]", options_for_select(@authorslist, author.id), class: "form-control") %></td>
-          </tr>
-        <% end %>
-        <td><%= select_tag("authors[]", options_for_select(@authorslist), class: "form-control") %></td>
-      </table>
+      <%= select_tag "authors[]", options_for_select(@authorslist, @book.authors.collect {|author| author.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Author(s)", "data-header" => "Select Author(s)"  } %>
     </div>
-    <div class="field">
-      <a class="btn btn-primary btn-xs" id="addMoreAuthors" >Add More Authors</a>
-    </div>
-
     <div class="actions">
       <a href="<%= url_for admin_books_path %>" class="btn btn-default">
         <span class="glyphicon glyphicon-chevron-left"></span>

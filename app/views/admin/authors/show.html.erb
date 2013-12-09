@@ -12,7 +12,7 @@
   <b>Books Referenced:</b>
   <% if @author.books.length == 0 %>
     <p>No book for this author was found</p>
-    <a href="<%#= new_book_author_path %>" class="btn btn-small btn-primary">Add books for this author</a>
+    <a href="<%= edit_admin_author_path(@author) %>" class="btn btn-small btn-primary">Add books for this author</a>
   <% else %>
     <ul>
       <% @author.books.each do |book| %>

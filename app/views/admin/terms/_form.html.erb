@@ -26,7 +26,7 @@
     </div>
     <div class="field">
       <%= f.label :semester %>
-      <%= f.select :semester, options_for_select(@options, @term.semester), {}, {class: "form-control"} %>
+      <%= f.select :semester, options_for_select(@options, @term_semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
     </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>

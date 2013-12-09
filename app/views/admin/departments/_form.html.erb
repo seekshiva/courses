@@ -21,8 +21,7 @@
       <%= f.text_field :name, class: "form-control", placeholder: "Department Name" %>
     </div>
     <div class="field">
-      <%= f.label :hod_id, "HOD" %>
-      <%= f.select :hod_id, options_for_select(@faculties_array, @hod), class: "high" %>
+      <%= f.select :hod_id, options_for_select(@faculties_array, @hod), {}, {:class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select HOD", "data-header" => "Select a HOD" } %>
     </div>
     <div class="field">
       <%= f.text_field :rollno_prefix, class: "form-control", placeholder: "Roll Number Prefix" %>

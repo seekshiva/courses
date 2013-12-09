@@ -33,3 +33,5 @@ jQuery ->
         @app.router.navigate("/departments", {trigger: true})
       else if window.location.hash == "#me" or window.location.pathname == "/me"
         window.history.back()
+
+    $(".selectpicker").selectpicker()
