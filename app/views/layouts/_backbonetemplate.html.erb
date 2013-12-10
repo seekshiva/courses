@@ -663,7 +663,12 @@
     {{#if edit_mode}}
       <div class="row">
         <div class="col-md-3">
-          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
+          <div class="field">
+            <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} id="avatar"/>
+          </div>
+          <div class="field">
+            <div id="upload_avatar"></div>
+          </div>
         </div>
         <div class="col-md-9">
           {{#if info.student}}

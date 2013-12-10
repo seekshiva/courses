@@ -36,7 +36,8 @@ class ProfileController < ApplicationController
                 department:         profile.department.name,
                 department_short:   profile.department.short,
                 phone:              profile.phone,
-                avatar:             profile.avatar.nil? ? "" : profile.avatar.pic.url(:large)
+                avatar:             profile.avatar.nil? ? "" : profile.avatar.pic.url(:large),
+                avatar_id:          profile.avatar.nil? ? 0 : profile.avatar_id
             }
           if profile.is_student?
             ret[:student] = true
@@ -89,8 +90,9 @@ class ProfileController < ApplicationController
     end
     
     update = {
-      name:     params[:user][:name],
-      phone:    params[:user][:phone]      
+      name:       params[:user][:name],
+      phone:      params[:user][:phone],
+      avatar_id:  params[:user][:avatar_id]
     }
 
     respond_to do |format|

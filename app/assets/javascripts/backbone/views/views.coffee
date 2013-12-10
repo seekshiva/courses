@@ -290,9 +290,9 @@ jQuery ->
       @
 
     render: ->
-      avatar = @profile.avatar == "" ? 0 : 1
+      avatar = @profile.attributes.avatar_id != 0 ? 1 : 0
       edit = @profile.attributes.type == "edit" ? 1 : 0
-      
+
       prefix = {}
       if !@profile.attributes.student
         prefix = {"":false,"Dr.":false,"Prof.":false,"Ms.":false,"Mr.":false,"Mrs.":false}
@@ -306,6 +306,37 @@ jQuery ->
         prefix:       prefix
 
       $(".make-switch").bootstrapSwitch();
+
+      # Uploadify needs csrf tokens & session details
+      uploadify_script_data = {};
+
+      csrf_token = $('meta[name=csrf-token]').attr('content');
+      csrf_param = $('meta[name=csrf-param]').attr('content');
+      uploadify_script_data[csrf_param] = encodeURI(csrf_token);
+      uploadify_script_data[app["session_key"]] = app["session_val"];
+      
+      $("#upload_avatar").uploadify({
+          "swf" : "/uploadify.swf",
+          "uploader" : "/upload/avatar.json",
+          "formData" : uploadify_script_data,
+          "buttonText" : "Change Avatar",
+          "method" : "post",
+          "removeCompleted": true,
+          "multi" : false,
+          "auto" : true,
+          "fileTypeDesc" : "Image",
+          "fileSizeLimit" : "1000kb",
+          onUploadSuccess : _.bind(@changeprofilepic, @)
+        });
+      @
+
+    changeprofilepic: (fileobj, resp, status) ->
+      console.log(fileobj)
+      console.log(resp)
+      console.log(status)
+      resp = JSON.parse(resp)
+      @profile.set({avatar_id: resp.id, avatar: resp.url})
+      $("#avatar").attr({src: resp.url})
       @
 
     edit: (e) ->

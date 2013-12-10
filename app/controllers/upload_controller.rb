@@ -39,7 +39,7 @@ class UploadController < ApplicationController
 
       @avatar = Avatar.new(data)
       if @avatar.save
-        render :json => {:msg => "Upload Success", :status => "0", :id => @avatar.id, :url => @avatar.cover.url(:small) }
+        render :json => {:msg => "Upload Success", :status => "0", :id => @avatar.id, :url => @avatar.pic.url(:large) }
       else 
         render :json => {:msg => "Upload Failed", :error => @avatar.error}
       end
@@ -51,7 +51,7 @@ class UploadController < ApplicationController
 
       @file = File.new(data)
       if @file.save
-        render :json => {:msg => "Upload Success", :status => "0", :id => @file.id, :url => @avatar.cover.url(:small) }
+        render :json => {:msg => "Upload Success", :status => "0", :id => @file.id, :url => @file.file.url }
       else
         render :json => {:msg => "Upload Failed", :error => @file.error}
       end

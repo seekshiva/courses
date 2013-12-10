@@ -10,47 +10,47 @@
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> 
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/admin/">Courses</a>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
-	<li class="divider-vertical"></li>
-	<li><%= link_to "Departments", admin_departments_path %></li>
-	<li><%= link_to "Courses", admin_courses_path %></li>
-	<li><%= link_to "Users", admin_users_path %></li>
-	<li><%= link_to "Faculty", admin_faculties_path %></li>
-	<li><%= link_to "Books", admin_books_path %></li>
-	<li><%= link_to "Authors", admin_authors_path %></li>
+        <li class="divider-vertical"></li>
+        <li><%= link_to "Departments", admin_departments_path %></li>
+        <li><%= link_to "Courses", admin_courses_path %></li>
+        <li><%= link_to "Users", admin_users_path %></li>
+        <li><%= link_to "Faculty", admin_faculties_path %></li>
+        <li><%= link_to "Books", admin_books_path %></li>
+        <li><%= link_to "Authors", admin_authors_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	<li class="dropdown">
-	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-	    <strong>
-	      <i class="glyphicon glyphicon-user"></i>
-	      <%= @user[:name] %>
-	    </strong>
-	    <b class="caret"></b>
-	  </a>
-	  <ul class="dropdown-menu">
-	    <li role="presentation">
-	      <form action="<%= admin_switch_to_path  %>" method="post" class="navbar-form form-inline col-lg-4">
-		<input type="text" id="email" name="email" class="form-control input-sm" placeholder="God Mode" title="Enter the email of the user you want to switch to..">
-	      </form>
-	    </li>
-	    <li role="presentation"><a href="/">
-		<span class="glyphicon glyphicon-chevron-left"></span> Leave admin mode
-	    </a></li>
-	  </ul>
-	</li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <strong>
+              <i class="glyphicon glyphicon-user"></i>
+              <%= @user[:name] %>
+            </strong>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li role="presentation">
+              <form action="<%= admin_switch_to_path  %>" method="post" class="navbar-form form-inline col-lg-4">
+                <input type="text" id="email" name="email" class="form-control input-sm" placeholder="God Mode" title="Enter the email of the user you want to switch to..">
+              </form>
+            </li>
+            <li role="presentation"><a href="/">
+              <span class="glyphicon glyphicon-chevron-left"></span> Leave admin mode
+            </a></li>
+          </ul>
+        </li>
       </ul>
       <form action="<%= admin_courses_path %>" method="get" class="navbar-form input-group">
-	<span class="input-group-addon glyphicon glyphicon-search" style="top: 0; "></span>
-	<input type="text" name="code" class="form-control" placeholder="Course Code">
+        <span class="input-group-addon glyphicon glyphicon-search" style="top: 0; "></span>
+        <input type="text" name="code" class="form-control" placeholder="Course Code">
       </form>
     </div>
   </nav>
@@ -64,12 +64,12 @@
   <div id="footer">
     <div class="container">
       <p class="muted credit">
-	Copyleft
-	<!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
-	<span title="copyleft" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
-	  &copy;
-	</span>
-	<!--[if lte IE 8]></span><![endif]-->
+        Copyleft
+        <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
+        <span title="copyleft" style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
+          &copy;
+        </span>
+        <!--[if lte IE 8]></span><![endif]-->
 	
         2013 - Developed by <%= link_to "Delta Force", "http://delta.nitt.edu", target: '_blank' %>.
       </p>
