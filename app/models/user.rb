@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
 
   def admin?
-    self.admin != 0
+    self.admin == true
   end
   
   def is_student?
