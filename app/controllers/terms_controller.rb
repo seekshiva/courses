@@ -40,6 +40,7 @@ class TermsController < ApplicationController
         reference_books = term.course.books.uniq.collect do |book|
           new_book = book
           new_book["authors"] = book.authors
+          new_book["cover"] = book.book_cover.nil? ? false : book.book_cover.cover.url(:thumb)
           new_book
         end
 
@@ -47,6 +48,7 @@ class TermsController < ApplicationController
         term.faculties.each do |faculty|
           instructors << {
             instructor: "#{faculty.prefix} #{faculty.user.name}",
+            email:      faculty.user.email,
             semester:   term.semester.ordinalize,
             year:       "#{term.academic_year}-#{term.academic_year+1}",
             about:      BlueCloth.new(faculty.about).to_html

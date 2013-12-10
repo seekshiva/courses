@@ -14,8 +14,10 @@ class DepartmentsController < ApplicationController
 
           if dept.hod.nil?
             ret.last[:hod] = "-"
+            ret.last[:hod_email] = 0
           else
             ret.last[:hod] = dept.hod.full_name
+            ret.last[:hod_email] = dept.hod.user.email
           end
         end
         render json: ret
@@ -47,8 +49,10 @@ class DepartmentsController < ApplicationController
 
         if dept.hod.nil?
           ret[:hod] = "-"
+          ret[:hod_email] = 0
         else
           ret[:hod] = dept.hod.full_name
+          ret[:hod_email] = dept.hod.user.email
         end
         
 
@@ -70,7 +74,8 @@ class DepartmentsController < ApplicationController
             course[:instructors] = term.faculties.collect do |faculty|
               {
                 id:   faculty.id,
-                name: "#{faculty.prefix} #{faculty.user.name}"
+                name: "#{faculty.prefix} #{faculty.user.name}",
+                email: faculty.user.email
               }
             end
             arr << course

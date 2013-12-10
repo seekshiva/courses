@@ -5,6 +5,7 @@ jQuery ->
     defaults:
       name:          null
       hod:           null
+      hod_email:     null
       short:         null
       rollno_prefix: null
       terms:         null

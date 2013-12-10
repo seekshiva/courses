@@ -22,7 +22,7 @@
 <script type="text/template" id="departments-template">
   <div class="s-push"></div>
   <div class="panel panel-default">
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>Department</th>
@@ -35,7 +35,13 @@
             <td>
               <a href="/departments/{{this.id}}">{{this.name}}</a>
             </td>
-            <td>{{this.hod}}</td>
+            <td>
+              {{#if this.hod_email}}
+                <a href="/profile/{{this.hod_email}}">{{this.hod}}</a>
+              {{else}}
+                -
+              {{/if}}
+            </td>
           </tr>
         {{/each}}
       </tbody>
@@ -52,7 +58,7 @@
     {{dept.name}}
   </h3>
   <div>
-    Headed by <strong>{{dept.hod}}</strong>
+    Headed by <strong>{{#if dept.hod_email}}<a href="/profile/{{dept.hod_email}}">{{dept.hod}}</a>{{else}}-{{/if}}</strong>
   </div>
   <div class="s-push"></div>
 
@@ -80,7 +86,7 @@
             <td>
               <small>
                 {{#each this.instructors}}
-                  <div>{{this.name}}</div>
+                  <div><a href="/profile/{{this.email}}">{{this.name}}</a></div>
                 {{/each}}
               </small>
             </td>
@@ -317,7 +323,7 @@
     <p>
       <strong>Course Instructor:</strong>
       {{#each term.instructors}}
-      <span>{{this.instructor}}</span>
+      <span><a href="/profile/{{this.email}}">{{this.instructor}}</a></span>
       {{/each}}
     </p>
   {{/if}}
@@ -365,7 +371,7 @@
             </th>
             <td>
               {{#each term.instructors}}
-              {{this.instructor}}
+              <a href="/profile/{{this.email}}">{{this.instructor}}</a>
               {{/each}}
             </td>
           </tr>
@@ -383,7 +389,7 @@
       </div>
       <div class="tab-pane" id="info2">
         {{#each term.instructors}}
-          <h4>{{this.instructor}}</h4>
+          <h4><strong><a href="/profile/{{this.email}}">{{this.instructor}}</a></strong></h4>
           {{{this.about}}}
         {{/each}}
       </div>
@@ -637,7 +643,11 @@
                       <tr><th>ISBN</th><td>{{this.isbn}}</td></tr>
                     </tbody>
                   </table>
-                </td></tr>
+                </td>
+                {{#if this.cover}}
+                  <td><img src="{{this.cover}}"/></td>
+                {{/if}}
+                </tr>
               {{/each}}
             </tbody>
           </table>
