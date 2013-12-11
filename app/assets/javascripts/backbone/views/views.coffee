@@ -28,6 +28,49 @@ jQuery ->
 
       @
 
+  class SubscriptionsView extends Backbone.View
+    el: "#user_menu"
+    template: Handlebars.compile($("#usermenu-template").html())
+
+    initialize: ->
+      @app = window.app ? {}
+      @subscriptions = new @app.SubscriptionsCollection()
+      @subscriptions.bind "reset", @render, @
+      @subscriptions.bind "add", @render, @
+      @subscriptions.bind "remove", @render, @
+      @subscriptions.fetch()
+      @
+
+    render: () ->
+      subs = {}
+
+      subs_len = 0
+      attending = 0
+      @subscriptions.models.map (sub) ->
+        subs[sub.id] = {
+          id:             sub.get("id"),
+          course_name:    sub.get("course_name"),
+          term_id:        sub.get("term_id"),
+          attending:      sub.get("attending")
+        }
+        subs_len++
+        if sub.get("attending") == true 
+          attending = true
+
+      $(@el).html @template
+        user:       @app.user
+        subs:       subs
+        subs_len:   subs_len
+        attending:  attending
+
+      $(".local").find("a:not(.external)").click (e) ->
+        unless e.target.parentNode.id == "signin_link"
+          $("#signin_link").css({display: "block"})
+        @app = window.app ? {}
+        @app.show_local_page(e)
+
+      @
+
   class DepartmentView extends Backbone.View
     template: Handlebars.compile($("#department-template").html())
 
@@ -124,11 +167,10 @@ jQuery ->
   class TermSubscriptionView extends Backbone.View
     template: Handlebars.compile $("#term-subscription-template").html()
 
-    events:
-      "click #subscription_status" : "updateSubscription"
-
     initialize: (term_view) ->
       @el = "#term_subscription_status"
+      @term_id = term_view.term.attributes.subscription.term_id
+      @app = term_view.app
       @sub_status = new term_view.app.SubscriptionModel()
       @sub_status.bind "destroy", @render, @
       if term_view.term.attributes.subscription.id
@@ -141,8 +183,10 @@ jQuery ->
       @
 
     updateSubscription: (e) ->
+      console.log("clicking")
       e.preventDefault()
       if @sub_status.id
+        @app.menu_view.subscriptions.remove({id: @sub_status.id})
         @sub_status.destroy()
         delete @sub_status.id
         delete @sub_status.attributes.id
@@ -150,21 +194,28 @@ jQuery ->
         delete @sub_status.attributes.created_at
         delete @sub_status.attributes.updated_at
       else 
-        @sub_status.save()
+        @sub_status.set({attending : null})
+        @sub_status.save(null, { success: _.bind(@updateCollection, @) })
       @
+
+    updateCollection: (model, resp) ->
+      console.log(@sub_status)
+      @app.menu_view.subscriptions.remove({id: @sub_status.id}).add(@sub_status.attributes)
+      console.log(@app.menu_view.subscriptions)
+      
 
     updateAttending: (e) ->
       e.preventDefault
-      if e.target.id == "attending"
+      if e.target.id == @term_id+"attending"
         @sub_status.set({attending : true})
       else
         @sub_status.set({attending : false})
-      @sub_status.save()
+      @sub_status.save({}, { success: _.bind(@updateCollection, @) })
       @
 
     render: ->
       $(".tooltip").remove()
-      $("#subscription_status").popover("destroy")
+      $("#"+@term_id+"subscription_status").popover("destroy")
       sub = 0
       if @sub_status.attributes.id
         sub = 0
@@ -176,29 +227,31 @@ jQuery ->
       else
         sub = 1 
         text = "Subscribe"
-        status = "Unsubscribed"
+        status = "Not Subscribed"
 
       $(@el).html @template
         text: text
         status: status
         sub: sub
+        term_id: @term_id
 
-      $('#subscription_status').tooltip({title: status}) 
+      $('#'+@term_id+'subscription_status').tooltip({title: status}) 
       if @sub_status.attributes.attending == null && @sub_status.id
-        $("#subscription_status").popover({
+        $("#"+@term_id+"subscription_status").popover({
           html: true,
           placement: "left",
           trigger: "click",
           content: "Help us to tailor content for you.<br/> Are you attending this course? <br/><br/>
-                    <button class='btn btn-default btn-success' id='attending'>Yes</button>
-                    <button class='btn btn-default' id='not_attending'>No</button>",
+                    <button class='btn btn-default btn-success' id='"+@term_id+"attending'>Yes</button>
+                    <button class='btn btn-default' id='"+@term_id+"not_attending'>No</button>",
           container: "body"
         }).popover("show")
         
-      $(document).on("click", "#attending", _.bind(@updateAttending, @))
-      $(document).on("click", "#not_attending", _.bind(@updateAttending, @))
+      $("#"+@term_id+"subscription_status").bind("click", _.bind(@updateSubscription, @))
+      $(document).on("click", "#"+@term_id+"attending", _.bind(@updateAttending, @))
+      $(document).on("click", "#"+@term_id+"not_attending", _.bind(@updateAttending, @))
       $(document).on("click", (e) -> 
-        $("#subscription_status").popover("destroy")
+        $("button[id*=subscription_status]").popover("destroy")
       )
       @
 
@@ -331,9 +384,6 @@ jQuery ->
       @
 
     changeprofilepic: (fileobj, resp, status) ->
-      console.log(fileobj)
-      console.log(resp)
-      console.log(status)
       resp = JSON.parse(resp)
       @profile.set({avatar_id: resp.id, avatar: resp.url})
       $("#avatar").attr({src: resp.url})
@@ -384,11 +434,12 @@ jQuery ->
 
   @app = window.app ? {}
   
-  @app.DepartmentsView = DepartmentsView
-  @app.DepartmentView  = DepartmentView
-  @app.CourseView      = CourseView
-  @app.TermView        = TermView
-  @app.ProfileView     = ProfileView
-  @app.LoginView       = LoginView
-  @app.NotFoundView    = NotFoundView
+  @app.DepartmentsView      = DepartmentsView
+  @app.SubscriptionsView    = SubscriptionsView
+  @app.DepartmentView       = DepartmentView
+  @app.CourseView           = CourseView
+  @app.TermView             = TermView
+  @app.ProfileView          = ProfileView
+  @app.LoginView            = LoginView
+  @app.NotFoundView         = NotFoundView
 

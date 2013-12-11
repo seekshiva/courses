@@ -49,6 +49,32 @@
   </div>
 </script>
 
+<script type="text/template" id="usermenu-template">
+  <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
+  {{#if attending}}
+    {{#each subs}}
+      {{#if this.attending}}
+        <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+      {{/if}}
+    {{/each}}
+  {{else}}
+    <li role="presentation"><nobr>Sorry you don&#39;t seem to be</nobr><br/><nobr>attending any current course</nobr></li>
+  {{/if}}
+  <li role="presentation" class="divider"></li>
+  <li role="presentation" class="dropdown-header"><strong>My Subscriptions</strong></li>
+  {{#if subs_len}}
+    {{#each subs}}
+      <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+    {{/each}}
+  {{else}}
+    <li role="presentation"><nobr>Sorry you don&#39;t seem to be</nobr><br/><nobr>subscribed to any current course</nobr></li>
+  {{/if}}
+  <li role="presentation" class="divider"></li>
+  <li class="presentation"><a class="external" href="/admin">Admin panel</a></li>
+  <li role="presentation"><a href="profile/me">My Profile</a></li>
+  <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
+</script>
+
 <script type="text/template" id="department-template">
   <h3 style="font-weight: 400; ">
     <a href="/departments" class="btn btn-default btn-small" title="Department List">
@@ -346,7 +372,7 @@
 </script>
 
 <script type="text/template" id="term-subscription-template">
-    <button class="btn btn-default {{#if sub}}btn-success{{/if}}" id="subscription_status" data-placement="left" data-trigger="hover" data-toggle="tooltip" data-container="body">{{text}}</button>
+    <button class="btn btn-default {{#if sub}}btn-success{{/if}}" id="{{term_id}}subscription_status" data-placement="left" data-trigger="hover" data-toggle="tooltip" data-container="body">{{text}}</button>
 </script>
 
 <script type="text/template" id="term-info-template">

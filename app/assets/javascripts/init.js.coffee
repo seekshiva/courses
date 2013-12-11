@@ -27,11 +27,6 @@ jQuery ->
 
     Backbone.history.start({pushState: true})
 
-    $("#profileModal").on "hide", () ->
-      if window.history.length == 1
-        @app = window.app ? {}
-        @app.router.navigate("/departments", {trigger: true})
-      else if window.location.hash == "#me" or window.location.pathname == "/me"
-        window.history.back()
-
     $(".selectpicker").selectpicker()
+
+    @app.menu_view = new @app.SubscriptionsView()

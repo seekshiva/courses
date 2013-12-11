@@ -58,6 +58,10 @@ jQuery ->
 
     urlRoot: "/subscriptions/"
 
+  class SubscriptionsCollection extends Backbone.Collection
+    model: SubscriptionModel
+    url: "/subscriptions/"
+
   class ProfileModel extends Backbone.Model
     paramRoot: 'user'
 
@@ -79,4 +83,5 @@ jQuery ->
   @app.SubscriptionModel     = SubscriptionModel
   @app.ProfileModel          = ProfileModel
 
-  @app.DepartmentsCollection = DepartmentsCollection
+  @app.DepartmentsCollection      = DepartmentsCollection
+  @app.SubscriptionsCollection    = SubscriptionsCollection

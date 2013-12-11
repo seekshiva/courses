@@ -18,40 +18,29 @@
         <a class="navbar-brand" href="/">Courses</a>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
-  <ul class="nav local navbar-nav">
-    <li><%= link_to "Departments", "/departments" %></li>
-  </ul>
-  <% if @user.nil? %>
-    <ul class="nav navbar-nav local navbar-right">
-      <li id="signin_link">
-        <a href="/login">Sign In</a></li>
-    </ul>
-  <% else %>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <strong>
-            <i class="glyphicon glyphicon-user"></i>
-            <%= @user.name %>
-          </strong>
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu local">
-          <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
-          <li role="presentation"><a href="/terms/2">Advanced Database Management Systems</a></li>
-          <li role="presentation"><a href="/terms/1">Real-Time Systems</a></li>
-          <li role="presentation"><a href="/terms/15">Data Warehousing and Data Mining</a></li>
-          <li role="presentation"><a href="/terms/5">Industrial Economics</a></li>
-          <li role="presentation" class="divider"></li>
-          <% if @user.admin == true %>
-            <li class="presentation"><a class="external" href="/admin">Admin panel</a></li>
-          <% end %>
-          <li role="presentation"><a href="profile/me">My Profile</a></li>
-          <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
+        <ul class="nav local navbar-nav">
+          <li><%= link_to "Departments", "/departments" %></li>
         </ul>
-      </li>
-    </ul>
-  <% end %>
+        <% if @user.nil? %>
+          <ul class="nav navbar-nav local navbar-right">
+            <li id="signin_link">
+              <a href="/login">Sign In</a></li>
+          </ul>
+        <% else %>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <strong>
+                  <i class="glyphicon glyphicon-user"></i>
+                  <%= @user.name %>
+                </strong>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu local" id="user_menu">
+              </ul>
+            </li>
+          </ul>
+        <% end %>
       </div>
     </nav>
     <div class="container" id="content"></div>
@@ -73,14 +62,11 @@
   
   <%= render :partial => 'layouts/backbonetemplate'%>
   
-  <% unless @user.nil? %>
-    <script type="text/javascript">
-      var app = window.app ? window.app : {};
-      app.user = <%= raw @user.to_json %>
-    </script>
-  <% end %>
   <script type="text/javascript">
-    var app = {};
+    var app = window.app ? window.app : {};
+    <% unless @user.nil? %>
+      app["user"] = <%= raw @user.to_json %>
+    <% end %>
     app["session_key"] = '<%= Rails.application.config.session_options[:key] %>';
     app["session_val"] = '<%= cookies[Rails.application.config.session_options[:key]] %>';
   </script>
