@@ -183,7 +183,6 @@ jQuery ->
       @
 
     updateSubscription: (e) ->
-      console.log("clicking")
       e.preventDefault()
       if @sub_status.id
         @app.menu_view.subscriptions.remove({id: @sub_status.id})
@@ -199,10 +198,7 @@ jQuery ->
       @
 
     updateCollection: (model, resp) ->
-      console.log(@sub_status)
       @app.menu_view.subscriptions.remove({id: @sub_status.id}).add(@sub_status.attributes)
-      console.log(@app.menu_view.subscriptions)
-      
 
     updateAttending: (e) ->
       e.preventDefault

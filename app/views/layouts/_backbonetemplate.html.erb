@@ -58,7 +58,7 @@
       {{/if}}
     {{/each}}
   {{else}}
-    <li role="presentation"><nobr>Sorry you don&#39;t seem to be</nobr><br/><nobr>attending any current course</nobr></li>
+    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t </nobr><br/><nobr>seem to be attending any</nobr><br/><nobr> current course</nobr><a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
   <li role="presentation" class="dropdown-header"><strong>My Subscriptions</strong></li>
@@ -67,10 +67,10 @@
       <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
     {{/each}}
   {{else}}
-    <li role="presentation"><nobr>Sorry you don&#39;t seem to be</nobr><br/><nobr>subscribed to any current course</nobr></li>
+    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t </nobr><br/><nobr>seem to be subscribed to </nobr><br/><nobr>any current course</nobr></a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
-  <li class="presentation"><a class="external" href="/admin">Admin panel</a></li>
+  <li role="presentation"><a class="external" href="/admin">Admin panel</a></li>
   <li role="presentation"><a href="profile/me">My Profile</a></li>
   <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
 </script>
