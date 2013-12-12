@@ -14,16 +14,25 @@ jQuery ->
       "*path": "four_oh_four"
 
     home: () ->
-      @departments_view = new @app.DepartmentsView()
+      if @departments_view
+        @departments_view.render()
+      else
+        @departments_view = new @app.DepartmentsView()
       @
 
     index: () ->
-      @departments_view = new @app.DepartmentsView()
+      if @departments_view
+        @departments_view.render()
+      else
+        @departments_view = new @app.DepartmentsView()
       @
 
     department: (id) ->
-      @department_view = new @app.DepartmentView
-        id: id
+      if @department_view && @department_view.id == id
+        @department_view.render()
+      else
+        @department_view = new @app.DepartmentView
+          id: id
       @
 
     course: (course_id, type, id) ->
