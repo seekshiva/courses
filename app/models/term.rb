@@ -34,7 +34,6 @@ class Term < ActiveRecord::Base
 
   def this_year?
     current_academic_year = Time.now.year.to_i - (Time.now.month<6 ? 1 : 0)
-    return true if self.academic_year == current_academic_year
-    return false
+    self.academic_year == current_academic_year
   end
 end
