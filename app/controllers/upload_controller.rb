@@ -49,7 +49,7 @@ class UploadController < ApplicationController
       data[:file] = params[:Filedata]
       data[:file].content_type = MIME::Types.type_for(params[:Filedata].original_filename).to_s
 
-      @file = File.new(data)
+      @file = Document.new(data)
       if @file.save
         render :json => {:msg => "Upload Success", :status => "0", :id => @file.id, :url => @file.file.url }
       else
