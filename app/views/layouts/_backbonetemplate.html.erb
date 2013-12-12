@@ -54,23 +54,31 @@
   {{#if attending}}
     {{#each subs}}
       {{#if this.attending}}
-        <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+        {{#if this.current}}
+          <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+        {{/if}}
       {{/if}}
     {{/each}}
   {{else}}
-    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t </nobr><br/><nobr>seem to be attending any</nobr><br/><nobr> current course</nobr><a></li>
+    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be attending any</nobr><br/><nobr> current course</nobr><a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
   <li role="presentation" class="dropdown-header"><strong>My Subscriptions</strong></li>
-  {{#if subs_len}}
+  {{#if subscribed}}
     {{#each subs}}
-      <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+      {{#unless this.attending}}
+        {{#if this.current}}
+          <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+        {{/if}}
+      {{/unless}}
     {{/each}}
   {{else}}
-    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t </nobr><br/><nobr>seem to be subscribed to </nobr><br/><nobr>any current course</nobr></a></li>
+    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be subscribed to </nobr><br/><nobr>any current course</nobr></a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
-  <li role="presentation"><a class="external" href="/admin">Admin panel</a></li>
+  {{#if user.admin}}
+    <li role="presentation"><a class="external" href="/admin">Admin panel</a></li>
+  {{/if}}
   <li role="presentation"><a href="profile/me">My Profile</a></li>
   <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
 </script>
@@ -800,12 +808,42 @@
                   <td>Student</td>
                 </tr>
                 <tr>
-                  <th>Courses Subscribed</th>
-                  <td></td>
+                  <th>Currently Attending Courses</th>
+                  <td>
+                    {{#each info.subs}}
+                      {{#if this.attending}}
+                        {{#if this.current}}
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                        {{/if}}
+                      {{/if}}
+                    {{/each}}
+                  </td>
                 </tr>
                 <tr>
-                  <th>Courses Attended/Attending</th>
-                  <td></td>
+                  <th>Courses Subscribed</th>
+                  <td>
+                    {{#each info.subs}}
+                      {{#unless this.attending}}
+                        {{#if this.current}}
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                        {{/if}}
+                      {{/unless}}
+                    {{/each}}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Courses Completed</th>
+                  <td>
+                    {{#each info.subs}}
+                      {{#if this.attending}}
+                        {{#unless this.current}}
+                          {{#unless this.this_year}}
+                            <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - {{this.year}} - Semester {{this.sem}}
+                          {{/unless}}
+                        {{/unless}}
+                      {{/if}}
+                    {{/each}}
+                  </td>
                 </tr>
               {{else}}
                 <tr>
@@ -833,8 +871,26 @@
                   <td>{{{info.about}}}</td>
                 </tr>
                 <tr>
-                  <th>Courses Handeled/Handling</th>
-                  <td></td>
+                  <th>Courses Handling</th>
+                  <td>
+                    {{#each this.classes}}
+                      {{#if this.current}}
+                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}
+                      {{/if}}
+                    {{/each}}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Courses Handling</th>
+                  <td>
+                    {{#each this.classes}}
+                      {{#unless this.current}}
+                        {{#unless this.this_year}}
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}
+                        {{/unless}}
+                      {{/unless}}
+                    {{/each}}
+                  </td>
                 </tr>
               {{/if}}
             </tbody>

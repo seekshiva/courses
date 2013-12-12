@@ -44,23 +44,25 @@ jQuery ->
     render: () ->
       subs = {}
 
-      subs_len = 0
+      subscribed = 0
       attending = 0
       @subscriptions.models.map (sub) ->
         subs[sub.id] = {
           id:             sub.get("id"),
           course_name:    sub.get("course_name"),
           term_id:        sub.get("term_id"),
-          attending:      sub.get("attending")
+          attending:      sub.get("attending"),
+          current:        sub.get("current")
         }
-        subs_len++
-        if sub.get("attending") == true 
+        if sub.get("attending") != true  && sub.get("current") == true
+          subscribed = true
+        if sub.get("attending") == true  && sub.get("current") == true
           attending = true
 
       $(@el).html @template
         user:       @app.user
         subs:       subs
-        subs_len:   subs_len
+        subscribed: subscribed
         attending:  attending
 
       $(".local").find("a:not(.external)").click (e) ->

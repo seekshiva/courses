@@ -49,14 +49,9 @@ jQuery ->
       @
 
     profile: (id, type) ->
-      if @profile_view and @profile_view.id == id
-        @profile_view.type = type or "show"
-        @profile_view.render()
-        console.log(@profile_view)
-      else
-        @profile_view = new @app.ProfileView
-          id: id
-          type: type or "show"
+      @profile_view = new @app.ProfileView
+        id: id
+        type: type or "show"
       @
 
     login: () ->

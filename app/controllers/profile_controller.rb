@@ -41,6 +41,19 @@ class ProfileController < ApplicationController
             }
           if profile.is_student?
             ret[:student] = true
+            ret[:subs] = Subscription.where(:user_id => profile.id).collect do |sub|
+              {
+                id:           sub.id, 
+                term_id:      sub.term_id,
+                attending:    ((sub.attending.nil? || sub.attending == 0) ? 0 : 1),
+                course_name:  sub.term.course.name,
+                course_id:    sub.term.course_id,
+                current:      sub.term.is_current?,
+                this_year:    sub.term.this_year?,
+                year:         sub.term.academic_year,
+                sem:          sub.term.semester
+              }
+            end
           else
             faculty = Faculty.find_by_user_id(profile.id)
             info = {
@@ -49,6 +62,18 @@ class ProfileController < ApplicationController
               about:        faculty.about,
               designation:  faculty.designation
             }
+
+            ret[:classes] = TermFaculty.where(:faculty_id => faculty.id).collect do |tf|
+              {
+                id:           tf.id,
+                term_id:      tf.term_id,
+                course_name:  tf.term.course.name,
+                this_year:    tf.term.this_year?,
+                current:      tf.term.is_current?,
+                year:         tf.term.academic_year,
+                sem:          tf.term.semester
+              }
+            end
             ret.reverse_merge!(info)
           end
           if profile.email == @user.email
