@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  belongs_to :term
+  belongs_to :term, :dependent => :destroy
   attr_accessible :term_id, :title
 
   has_many :topics
