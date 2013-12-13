@@ -92,10 +92,10 @@ class Admin::TermsController < Admin::BaseController
         end
         departmentslist = departments.to_a
 
-        if not departmentslist.nil?
-          @dept_create_status = TermDepartment.create(departmentslist)
-        else
+        if departmentslist.nil? || departmentslist.empty?
           @dept_create_status = true
+        else
+          @dept_create_status = TermDepartment.create(departmentslist)
         end
 
         facultieslist = params[:faculties]
@@ -109,10 +109,10 @@ class Admin::TermsController < Admin::BaseController
         end
         facultieslist = faculties.to_a
 
-        if not facultieslist.nil?
-          @faculty_create_status = TermFaculty.create(facultieslist)
-        else
+        if facultieslist.nil? || facultieslist.empty?
           @faculty_create_status = true
+        else
+          @faculty_create_status = TermFaculty.create(facultieslist)
         end
 
         # Copy the latest term's books, sections, topics and references
@@ -122,7 +122,11 @@ class Admin::TermsController < Admin::BaseController
         books.each do |book|
           term_books << {:term_id => @term.id, :book_id => book.id}
         end
-        term_books = TermReference.create(term_books)
+        if term_books.nil? || term_books.empty?
+          term_books = true
+        else
+          term_books = TermReference.create(term_books)
+        end
 
         # Copying sections, topics and references
         # Copying sections
@@ -131,7 +135,11 @@ class Admin::TermsController < Admin::BaseController
         sections.each do |section|
           term_sections << {:term_id => @term.id, :title => section.title}
         end
-        term_sections = Section.create(term_sections)
+        if term_sections.nil? || term_sections.empty?
+          term_sections = true
+        else
+          term_sections = Section.create(term_sections)
+        end
 
         # Copying topics
         term_topics = Array.new()
@@ -143,7 +151,11 @@ class Admin::TermsController < Admin::BaseController
             term_topics << {:title => topic.title, :description => topic.description, :ct_status => topic.ct_status, :section_id => term_sections[i].id}
           end
         end
-        term_topics = Topic.create(term_topics)
+        if term_topics.nil? || term_topics.empty?
+          term_topics = true
+        else
+          term_topics = Topic.create(term_topics)
+        end
 
         # Copying references
         term_refs = Array.new()
@@ -153,9 +165,13 @@ class Admin::TermsController < Admin::BaseController
             term_refs << {:term_reference_id => ref.term_reference_id, :indices => ref.indices, :topic_id => term_topics[i].id}
           end
         end
-        term_refs = Reference.create(term_refs)
+        if term_refs.nil? || term_refs.empty?
+          term_refs = true
+        else
+          term_refs = Reference.create(term_refs)
+        end
 
-        if term_books and term_sections and term_topics and term_refs and @dept_create_status and @dept_destroy_status
+        if term_books and term_sections and term_topics and term_refs and @dept_create_status and @faculty_create_status
           format.html { redirect_to [:admin, @course, :terms], notice: 'Term was successfully created.' }
           format.json { render json: @term, status: :created, location: @term }
         else
@@ -188,10 +204,10 @@ class Admin::TermsController < Admin::BaseController
     departmentslist = departments.to_a
 
     @dept_destroy_status = TermDepartment.destroy_all(:term_id => params[:id])
-    if not departmentslist.nil?
-      @dept_create_status = TermDepartment.create(departmentslist)
-    else
+    if departmentslist.nil? || departmentslist.empty?
       @dept_create_status = true
+    else
+      @dept_create_status = TermDepartment.create(departmentslist)
     end
 
     facultieslist = params[:faculties]
@@ -206,10 +222,10 @@ class Admin::TermsController < Admin::BaseController
     facultieslist = faculties.to_a
 
     @faculty_destroy_status = TermFaculty.destroy_all(:term_id => params[:id])
-    if not facultieslist.nil?
-      @faculty_create_status = TermFaculty.create(facultieslist)
-    else
+    if facultieslist.nil? || facultieslist.empty?
       @faculty_create_status = true
+    else
+      @faculty_create_status = TermFaculty.create(facultieslist)
     end
 
     respond_to do |format|
