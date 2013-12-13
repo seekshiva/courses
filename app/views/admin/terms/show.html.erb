@@ -37,5 +37,5 @@
   </ul>
 </p>
 
-<%= link_to 'Back', [:admin, @term.course], class: "btn btn-default pull-left" %>
+<%= link_to 'Back', admin_course_terms_path(@course), class: "btn btn-default pull-left" %>
 <%= link_to 'Edit', [:edit, :admin, @course, @term], class: "btn btn-default pull-right" %>

@@ -16,11 +16,11 @@
     <% @courses.each do |course| %>
     <tr>
       <td><%= course.subject_code %></td>
-      <td><%= link_to course.name, [:admin, course], class: 'btn btn-link btn-small' %></td>
+      <td><%= link_to course.name, admin_course_terms_path(course), class: 'btn btn-link btn-small' %></td>
       <td><%= course.credits %></td>
       <td><%= course.terms.length %></td>
       <td><%= link_to 'Edit', edit_admin_course_path(course), class: 'btn btn-default btn-mini' %></td>
-      <td><%= link_to 'Destroy', [:admin, course], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
+      <td><%= link_to 'Remove', [:admin, course], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
     </tr>
     <% end %>
   </tbody>

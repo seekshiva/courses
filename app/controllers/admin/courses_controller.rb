@@ -77,13 +77,15 @@ class Admin::CoursesController < Admin::BaseController
     @new_section = @course.sections.build
     @current_ac_year = Time.now.year.to_i
     @current_ac_year -= Time.now.month<6 ? 1 : 0
-    @courses_array = Course.all.map do |course|
-      ["#{course.subject_code} - #{course.name}", course.id]
-    end
-    @faculty_array = Faculty.all.map do |faculty|
-      [faculty.user.name, faculty.id]
+    
+    @departmentslist = Department.all.collect do |dept|
+      [dept.name, dept.id]
     end
 
+    @facultieslist = Faculty.all.collect do |faculty|
+      [faculty.prefix+" "+faculty.user.name, faculty.id]
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @course }

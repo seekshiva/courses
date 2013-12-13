@@ -8,7 +8,6 @@
     <ul class="nav nav-pills nav-stacked col-md-3 local-nav">
       <li class="active"><a href="#_info_1" data-toggle="tab">Edit Course Details</a></li>
       <li><a href="#_info_3" data-toggle="tab">Add New Term</a></li>
-      <li><a href="#_info_4" data-toggle="tab">Add New Section</a></li>
     </ul>
     <div class="tab-content col-md-9">
       <div class="tab-pane active" id="_info_1">
@@ -35,37 +34,21 @@
             <%= f.label :semester %>
             <%= f.select :semester, options_for_select(@sem_options), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
           </div>
+          <div class="field">
+            <%= label_tag(:departments, "Department(s):") %>
+            <%= select_tag "departments[]", options_for_select(@departmentslist), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department(s)", "data-header" => "Select Department(s)"  } %>
+          </div>
+          <div class="field">
+            <%= label_tag(:faculties, "Faculty:") %>
+            <%= select_tag "faculties[]", options_for_select(@facultieslist), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Faculty", "data-header" => "Select Faculty"  } %>
+          </div>
           <div class="actions">
             <%= f.submit class: 'btn btn-primary' %>
           </div>
         <% end %>
       </div>
 
-    <div class="tab-pane" id="_info_4">
-      If you enable this block it throws an error saying admin_course_section path is not defined
-      It is bcz routes.rb doesn't have an entry for admin courses sections
-      If this entry is made it disturbs the already existing term/:id/topics
-      Fix routes.rb to solve this problem
-      <% if false %>
-      <%= form_for [:admin, @course, @new_section] do |f| %>
-        <fieldset>
-          <div class="field">
-            <%= @course.name %>
-          </div>
-          <div class="field">
-            <%= f.label :title %>
-            <%= f.text_field :title ,class: "form-control" %>
-          </div>
-          <div class="field">
-            <%= f.hidden_field :term_id, :value => @course.id%>
-          </div>
-          <div class="actions">
-            <%= f.submit class: 'btn btn-primary' %>
-          </div>
-        </fieldset>
-      <% end %>
-      <% end %>
-    </div>
+    
   </div>
 </div>
 
