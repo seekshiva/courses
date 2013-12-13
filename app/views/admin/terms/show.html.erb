@@ -23,22 +23,8 @@
   <b>Departments:</b>
   <ul>
     <% @term.departments.each do |dept| %>
-    <li><%= dept.name %></li>
+      <li><%= dept.name %></li>
     <% end %>
-    <li>
-      <%= form_for([:admin, @course, @new_department]) do |f| %>
-      Add new Department?
-      <div>
-      	<div class="field">
-          <%= f.hidden_field :term_id, value: @term.id %>
-        	<%= f.select :department_id, options_for_select(@departments_array), {}, {class: "form-control"} %><br />
-        </div>
-        <div class="action">
-          <%= f.submit class: "btn btn-default btn-success", value: "Go!" %>
-        </div>
-      </div>
-      <% end %>
-    </li>
   </ul>
 </p>
 
@@ -46,24 +32,10 @@
   <b>Faculty:</b>
   <ul>
     <% @term.faculties.each do |faculty| %>
-    <li><%= faculty.user.name %></li>
+      <li><%= faculty.user.name %></li>
     <% end %>
-    <li>
-      <%= form_for([:admin, @course, @new_faculty]) do |f| %>
-      Add new Faculty?
-      <div class="input-group">
-        <div class="field">
-          <%= f.hidden_field :term_id, value: @term.id %>	
-          <%= f.text_field :faculty, class: "form-control", placeholder: "faculty webmail id" %>
-        </div>
-        <div class="action">
-          <%= f.submit class: "btn btn-default btn-success", value: "Go!" %>
-        </div>
-      </div>
-      <% end %>
-    </li>
   </ul>
 </p>
 
-<%= link_to 'Back', admin_course_terms_path(@course), class: "btn btn-default pull-left" %>
+<%= link_to 'Back', [:admin, @term.course], class: "btn btn-default pull-left" %>
 <%= link_to 'Edit', [:edit, :admin, @course, @term], class: "btn btn-default pull-right" %>

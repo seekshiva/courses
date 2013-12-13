@@ -28,6 +28,14 @@
       <%= f.label :semester %>
       <%= f.select :semester, options_for_select(@options, @term_semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
     </div>
+    <div class="field">
+      <%= label_tag(:departments, "Department(s):") %>
+      <%= select_tag "departments[]", options_for_select(@departmentslist, @term.departments.collect {|dept| dept.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department(s)", "data-header" => "Select Department(s)"  } %>
+    </div>
+    <div class="field">
+      <%= label_tag(:faculties, "Faculty:") %>
+      <%= select_tag "faculties[]", options_for_select(@facultieslist, @term.faculties.collect {|faculty| faculty.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Faculty", "data-header" => "Select Faculty"  } %>
+    </div>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
       <%= link_to 'Back', admin_course_terms_path(@course), class: "btn btn-default btn-small" %>

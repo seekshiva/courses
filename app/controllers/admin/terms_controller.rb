@@ -36,6 +36,14 @@ class Admin::TermsController < Admin::BaseController
     @legend = "New Term"
     @options = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8]]
     
+    @departmentslist = Department.all.collect do |dept|
+      [dept.name, dept.id]
+    end
+
+    @facultieslist = Faculty.all.collect do |faculty|
+      [faculty.prefix+" "+faculty.user.name, faculty.id]
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @term }
@@ -48,6 +56,14 @@ class Admin::TermsController < Admin::BaseController
     @term = Term.find(params[:id])
     @legend = "Editing Term"
     @options = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8]]
+
+    @departmentslist = Department.all.collect do |dept|
+      [dept.name, dept.id]
+    end
+
+    @facultieslist = Faculty.all.collect do |faculty|
+      [faculty.prefix+" "+faculty.user.name, faculty.id]
+    end
 
     respond_to do |format|
       format.html # edit.html.erb
@@ -64,6 +80,40 @@ class Admin::TermsController < Admin::BaseController
 
     respond_to do |format|
       if @term.save
+
+        departmentslist = params[:departments]
+        departments = Set.new
+        if not departmentslist.nil?
+          departmentslist.each do |dept|
+            if dept.to_s!="0"
+              departments.add({ :department_id => dept, :term_id => @term.id })
+            end
+          end
+        end
+        departmentslist = departments.to_a
+
+        if not departmentslist.nil?
+          @dept_create_status = TermDepartment.create(departmentslist)
+        else
+          @dept_create_status = true
+        end
+
+        facultieslist = params[:faculties]
+        faculties = Set.new
+        if not facultieslist.nil?
+          facultieslist.each do |faculty|
+            if faculty.to_s!="0"
+              faculties.add({ :faculty_id => faculty, :term_id => @term.id })
+            end
+          end
+        end
+        facultieslist = faculties.to_a
+
+        if not facultieslist.nil?
+          @faculty_create_status = TermFaculty.create(facultieslist)
+        else
+          @faculty_create_status = true
+        end
 
         # Copy the latest term's books, sections, topics and references
         # Copying term's books
@@ -105,7 +155,7 @@ class Admin::TermsController < Admin::BaseController
         end
         term_refs = Reference.create(term_refs)
 
-        if term_books and term_sections and term_topics and term_refs
+        if term_books and term_sections and term_topics and term_refs and @dept_create_status and @dept_destroy_status
           format.html { redirect_to [:admin, @course, :terms], notice: 'Term was successfully created.' }
           format.json { render json: @term, status: :created, location: @term }
         else
@@ -126,8 +176,44 @@ class Admin::TermsController < Admin::BaseController
     @term = Term.find(params[:id])
     @term.course_id = params[:term_course_id]
     
+    departmentslist = params[:departments]
+    departments = Set.new
+    if not departmentslist.nil?
+      departmentslist.each do |dept|
+        if dept.to_s!="0"
+          departments.add({ :department_id => dept, :term_id => params[:id] })
+        end
+      end
+    end
+    departmentslist = departments.to_a
+
+    @dept_destroy_status = TermDepartment.destroy_all(:term_id => params[:id])
+    if not departmentslist.nil?
+      @dept_create_status = TermDepartment.create(departmentslist)
+    else
+      @dept_create_status = true
+    end
+
+    facultieslist = params[:faculties]
+    faculties = Set.new
+    if not facultieslist.nil?
+      facultieslist.each do |faculty|
+        if faculty.to_s!="0"
+          faculties.add({ :faculty_id => faculty, :term_id => params[:id] })
+        end
+      end
+    end
+    facultieslist = faculties.to_a
+
+    @faculty_destroy_status = TermFaculty.destroy_all(:term_id => params[:id])
+    if not facultieslist.nil?
+      @faculty_create_status = TermFaculty.create(facultieslist)
+    else
+      @faculty_create_status = true
+    end
+
     respond_to do |format|
-      if @term.update_attributes(params[:term])
+      if @term.update_attributes(params[:term]) && @dept_destroy_status && @dept_create_status && @faculty_destroy_status && @faculty_create_status
         format.html { redirect_to [:admin, @course, @term], notice: 'Term was successfully updated.' }
         format.json { head :no_content }
       else
