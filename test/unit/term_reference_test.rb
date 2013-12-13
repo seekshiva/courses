@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CourseListItemTest < ActiveSupport::TestCase
+class TermReferenceTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
