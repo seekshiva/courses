@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206152343) do
+ActiveRecord::Schema.define(:version => 20131212134819) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -101,6 +101,16 @@ ActiveRecord::Schema.define(:version => 20131206152343) do
     t.integer  "hod_id"
   end
 
+  create_table "documents", :force => true do |t|
+    t.integer  "uploaded_by"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
   create_table "faculties", :force => true do |t|
     t.integer  "user_id"
     t.string   "prefix"
@@ -111,16 +121,6 @@ ActiveRecord::Schema.define(:version => 20131206152343) do
   end
 
   add_index "faculties", ["user_id"], :name => "index_faculties_on_user_id"
-
-  create_table "files", :force => true do |t|
-    t.integer  "uploaded_by"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-  end
 
   create_table "references", :force => true do |t|
     t.integer  "term_reference_id"

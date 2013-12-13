@@ -5,6 +5,7 @@ $.ajaxSetup cache: false
 jQuery ->
   $(document).ready ->
     @app = window.app ? {}
+    @app.menu_view = new @app.SubscriptionsView()
     @app.router = new @app.ApplicationRouter()
 
     $.ajaxSetup
@@ -28,5 +29,3 @@ jQuery ->
     Backbone.history.start({pushState: true})
 
     $(".selectpicker").selectpicker()
-
-    @app.menu_view = new @app.SubscriptionsView()

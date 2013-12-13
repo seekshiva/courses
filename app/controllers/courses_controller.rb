@@ -24,7 +24,7 @@ class CoursesController < ApplicationController
             }
 
             top_["reference"] = topic.references.collect do |ref|
-              {:book => ref.course_reference.book.title, :indices => ref.indices }
+              {:book => ref.term_reference.book.title, :indices => ref.indices }
             end
             top_["classes"] = topic.classrooms.collect do |cl|
               {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
