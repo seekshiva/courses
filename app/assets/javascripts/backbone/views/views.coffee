@@ -265,11 +265,29 @@ jQuery ->
       "click .row > .list-group > .list-group-item": "switch_active_topic"
       "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
+      "click #create_section" : "createSection"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
       @term_view = term_view
       @updateSelector()
+
+    createSection: (e) ->
+      e.preventDefault()
+      title = $.trim($("#new_section_title").val())
+      $("#new_section_title").val("")
+      if title != ""
+        section = new @term_view.app.SectionModel({title : title, term_id: @term_view.term.id})
+        that = @
+        section.save(null, {success: (model, resp) ->
+          that.term_view.term.attributes.sections.push(section.attributes)
+          console.log(that.term_view.term.attributes.sections)
+          that.render()
+        })
+      @
+
+    createTopic: (e) ->
+      @
 
     deleteTopic: (e) ->
       topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
@@ -288,7 +306,7 @@ jQuery ->
 
     deleteSection: (e) -> 
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      section = new window.app.SectionModel({id : section_id})
+      section = new @term_view.app.SectionModel({id : section_id})
       section.destroy()
       elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
       index = @term_view.term.attributes.sections.indexOf(elem)

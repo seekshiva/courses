@@ -46,15 +46,22 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    @section = Section.new(params[:section])
+    section = Section.new({ term_id: params[:section][:term_id], title: params[:section][:title] })
 
     respond_to do |format|
-      if @section.save
+      if section.save
+        ret = {
+          id:               section.id,
+          title:            section.title,
+          short_title:      section.title.length > 30 ? "#{section.title[0,28]}..." : section.title,
+          show_short_title: section.title.length > 30,
+          topics:           Array.new
+        }
         format.html #{ redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render json: @section, status: :created, location: @section }
+        format.json { render json: ret, status: :created, location: @section }
       else
         format.html #{ render action: "new" }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
+        format.json { render json: section.errors, status: :unprocessable_entity }
       end
     end
   end

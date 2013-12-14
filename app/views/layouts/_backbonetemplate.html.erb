@@ -446,6 +446,16 @@
           {{this.short_title}}
         </a>
       {{/each}}
+      {{#if edit_mode}}
+        <div class="input-group tab-content col-md-12">
+          <div class="field">
+            <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
+          </div>
+          <div class="field">
+            <button class="form-action btn btn-primary" id="create_section">Add New Topic</button>
+          </div>
+        </div>
+      {{/if}}
     </div>
     <div class="tab-content col-md-9">
       <div id="topic_filter">

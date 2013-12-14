@@ -44,7 +44,8 @@ jQuery ->
     paramRoot: 'section'
 
     defaults:
-      topics:       null
+      title:       null
+      topics:      null
 
     urlRoot: "/sections/"
 
@@ -56,7 +57,9 @@ jQuery ->
     paramRoot: 'topic'
 
     defaults:
-      title:       null
+      title:        null
+      ct_status:    null
+      description:  null
 
     urlRoot: "/topics/"
 
