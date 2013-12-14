@@ -58,7 +58,7 @@ class SectionsController < ApplicationController
           topics:           Array.new
         }
         format.html #{ redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render json: ret, status: :created, location: @section }
+        format.json { render json: ret, status: :created, location: section }
       else
         format.html #{ render action: "new" }
         format.json { render json: section.errors, status: :unprocessable_entity }

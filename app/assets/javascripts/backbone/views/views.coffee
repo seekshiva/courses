@@ -266,6 +266,7 @@ jQuery ->
       "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
       "click #create_section" : "createSection"
+      "click .create_topic" : "createTopic"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
@@ -281,20 +282,36 @@ jQuery ->
         that = @
         section.save(null, {success: (model, resp) ->
           that.term_view.term.attributes.sections.push(section.attributes)
-          console.log(that.term_view.term.attributes.sections)
           that.render()
         })
       @
 
     createTopic: (e) ->
+      e.preventDefault()
+      section_id = $(e.target).attr("section-id")
+      topic_title = $.trim($("#topic_title_"+section_id.toString()).val())
+      topic_ct = $.trim($("#topic_ct_"+section_id.toString()).val())
+      topic_description = $.trim($("#topic_description_"+section_id.toString()).val())
+      topic = new @term_view.app.TopicModel({
+          title:          topic_title,
+          ct_status:      topic_ct,
+          description:    topic_description,
+          section_id:     section_id
+        })
+      that = this
+      topic.save(null, {success: (model, resp) -> 
+        elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+        elem.topics.push(topic.attributes)
+        that.render()
+        })
       @
 
     deleteTopic: (e) ->
+      e.preventDefault()
       topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
       topic = new @term_view.app.TopicModel({id: topic_id})
       topic.destroy()
       for section in @term_view.term.attributes.sections
-        console.log(section)
         elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
         if elem
           topic_index = section.topics.indexOf(elem)
@@ -305,6 +322,7 @@ jQuery ->
       @
 
     deleteSection: (e) -> 
+      e.preventDefault()
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
       section = new @term_view.app.SectionModel({id : section_id})
       section.destroy()

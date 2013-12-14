@@ -85,7 +85,7 @@
 
 <script type="text/template" id="department-template">
   <h3 style="font-weight: 400; ">
-    <a href="/departments" class="btn btn-default btn-small" title="Department List">
+    <a href="/departments" class="btn btn-default btn-sm" title="Department List">
       <i class="glyphicon glyphicon-chevron-left"></i>
     </a>
     <small>{{dept.short}}</small>
@@ -346,7 +346,7 @@
 
 <script type="text/template" id="term-template">
   <h3>
-    <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn {{#if edit_mode}}btn-success{{else}}btn-default greener{{/if}} btn-small">
+    <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn {{#if edit_mode}}btn-success{{else}}btn-default greener{{/if}} btn-sm">
       <i class="glyphicon glyphicon-pencil"></i>
     </a>
     <small>{{term.course.code}}</small>
@@ -452,7 +452,7 @@
             <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
           </div>
           <div class="field">
-            <button class="form-action btn btn-primary" id="create_section">Add New Topic</button>
+            <button class="form-action btn btn-primary btn-sm" id="create_section">Add New Topic</button>
           </div>
         </div>
       {{/if}}
@@ -462,9 +462,9 @@
         <div class="pull-right">
           <label class="muted">Filters:</label>
           <div id="ct_status_selector" class="btn-group" title="You can choose multiple options at once">
-            <button class="{{selectors.ct_status.ct1}} btn btn-default btn-small">CT 1</button>
-            <button class="{{selectors.ct_status.ct2}} btn btn-default btn-small">CT 2</button>
-            <button class="{{selectors.ct_status.postct}} btn btn-default btn-small">Post CT</button>
+            <button class="{{selectors.ct_status.ct1}} btn btn-default btn-sm">CT 1</button>
+            <button class="{{selectors.ct_status.ct2}} btn btn-default btn-sm">CT 2</button>
+            <button class="{{selectors.ct_status.postct}} btn btn-default btn-sm">Post CT</button>
           </div>
         </div>
         <div class="input-group">
@@ -541,10 +541,10 @@
               <tr><td>
                 {{#if ../edit_mode}}
                   <div class="btn-group pull-right">
-                    <div class="btn btn-default btn-small">
+                    <div class="btn btn-default btn-sm">
                       <i class="glyphicon glyphicon-pencil"></i>
                     </div>
-                    <div class="btn btn-small btn-danger delete_section" section-id="{{this.id}}">
+                    <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
                       <i class="glyphicon glyphicon-trash glyphicon-white"></i>
                     </div>
                   </div>
@@ -609,6 +609,26 @@
               {{/each}}
             </tbody>
           </table>
+          {{#if ../edit_mode}}
+            <div class="input-group col-md-12">
+              <div class="field">
+                <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Topic Title">
+              </div>
+              <div class="field">
+                <select id="topic_ct_{{this.id}}" class="form-control">
+                  <option value="CT1">CT1</option>
+                  <option value="CT2">CT2</option>
+                  <option value="Post CT">Post CT</option>
+                </select>
+              </div>
+              <div class="field">
+                <textarea id="topic_description_{{this.id}}" class="form-control"></textarea>
+              </div>
+              <div class="field">
+                <button class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}">Add New Topic</button>
+              </div>
+            </div>
+          {{/if}}
         </div>
       {{/each}}
     </div>
