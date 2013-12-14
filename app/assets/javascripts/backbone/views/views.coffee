@@ -274,7 +274,7 @@ jQuery ->
     deleteTopic: (e) ->
       topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
       topic = new @term_view.app.TopicModel({id: topic_id})
-      #topic.delete()
+      topic.destroy()
       for section in @term_view.term.attributes.sections
         console.log(section)
         elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
@@ -288,8 +288,8 @@ jQuery ->
 
     deleteSection: (e) -> 
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      section = new @term_view.app.SectionModel({id : section_id})
-      # section.delete()
+      section = new window.app.SectionModel({id : section_id})
+      section.destroy()
       elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
       index = @term_view.term.attributes.sections.indexOf(elem)
       @term_view.term.attributes.sections.splice(index, 1)

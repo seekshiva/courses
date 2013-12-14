@@ -1,5 +1,5 @@
 class Topic < ActiveRecord::Base
-  belongs_to :section, :dependent => :destroy
+  belongs_to :section
 
   attr_accessible :title, :description, :ct_status, :section_id
 
