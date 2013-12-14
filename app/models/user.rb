@@ -10,12 +10,16 @@ class User < ActiveRecord::Base
 
   belongs_to :avatar
 
-  attr_accessible :designation, :mobile, :name, :activated, :profile_pic, :department_id, :email, :phone, :avatar_id
+  attr_accessible :name, :email, :department_id, :phone, :avatar_id
 
   validates :email, :uniqueness => true
 
   def admin?
     self.admin == true
+  end
+  
+  def account_activated?
+    self.activated == true
   end
   
   def is_student?

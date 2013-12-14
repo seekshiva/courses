@@ -2,6 +2,7 @@ class Admin::TermFacultiesController < Admin::BaseController
   # GET /courses/:course_id/term_faculties
   # GET /courses/:course_id/term_faculties.json
   def index
+    @course = Course.find(params[:course_id])
     @term_faculties = TermFaculty.all
 
     respond_to do |format|
@@ -24,6 +25,7 @@ class Admin::TermFacultiesController < Admin::BaseController
   # GET /courses/:course_id/temr_faculties/new
   # GET /courses/:course_id/term_faculties/new.json
   def new
+    @course = Course.find(params[:course_id])
     @term_faculty = TermFaculty.new
 
     respond_to do |format|
@@ -34,7 +36,13 @@ class Admin::TermFacultiesController < Admin::BaseController
 
   # GET /courses/:course_id/term_faculties/1/edit
   def edit
+    @course = Course.find(params[:course_id])
     @term_faculty = TermFaculty.find(params[:id])
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @term_faculty }
+    end
   end
 
   # POST /courses/:course_id/term_faculties

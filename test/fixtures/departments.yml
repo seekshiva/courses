@@ -2,12 +2,12 @@
 
 one:
   name: MyString
-  hod: MyString
-  course: 
-  term: 
+  short: MyString
+  rollno_prefix: MyString
+  hod: 
 
 two:
   name: MyString
-  hod: MyString
-  course: 
-  term: 
+  short: MyString
+  rollno_prefix: MyString
+  hod: 

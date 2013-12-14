@@ -85,7 +85,7 @@ class HomeController < ApplicationController
           flash[:notice_type] = "alert-danger"
           redirect_to "/#login", notice: "Failed to authenticate"
         else
-          if @user.nil? or not @user[:activated]
+          if @user.nil? or not @user.account_activated?
             redirect_to "/me"
           else
             session[:user_id] = @user.id

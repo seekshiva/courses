@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  class: 
-  topic: 
+  classroom_id: 
+  topic_id: 
 
 two:
-  class: 
-  topic: 
+  classroom_id: 
+  topic_id: 

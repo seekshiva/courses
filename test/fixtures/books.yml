@@ -6,8 +6,9 @@ one:
   edition: MyString
   isbn: MyString
   year: 
-  purchase_link: MyString
-  purchase_link_site: MyString
+  online_retail_url: MyString
+  book_cover_id:
+  file_id:
 
 two:
   title: MyString
@@ -15,5 +16,6 @@ two:
   edition: MyString
   isbn: MyString
   year: 
-  purchase_link: MyString
-  purchase_link_site: MyString
+  online_retail_url: MyString
+  book_cover_id:
+  file_id:

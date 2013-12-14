@@ -1,5 +1,5 @@
 class Book < ActiveRecord::Base
-  attr_accessible :short, :edition, :isbn, :publisher, :title, :year, :book_cover_id, :download_url, :online_retail_url
+  attr_accessible :title, :publisher, :edition, :isbn, :year, :online_retail_url, :book_cover_id, :file_id
   
   has_many :book_authors, :dependent => :destroy
   has_many :authors, :through => :book_authors

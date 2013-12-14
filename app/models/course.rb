@@ -19,9 +19,13 @@ class Course < ActiveRecord::Base
 
   default_scope order("subject_code ASC")
   
-  attr_accessible :about, :credits, :name, :subject_code
+  attr_accessible :subject_code, :name, :credits, :about
 
+  validates :subject_code, :name, :about, :presence => {
+    :message => "-> not present"
+  }
   validates :name, :uniqueness => true
+  validates :credits, :numericality => {:greater_than_or_equal_to => 0} # zero credit courses can exist
 
   def current_term
     current = []

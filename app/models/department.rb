@@ -1,5 +1,5 @@
 class Department < ActiveRecord::Base
-  attr_accessible :short, :hod_id, :name, :rollno_prefix
+  attr_accessible :name, :short, :rollno_prefix, :hod_id
   belongs_to :hod, :class_name => "Faculty"
 
   has_many :term_departments, :dependent => :destroy

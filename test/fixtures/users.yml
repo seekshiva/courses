@@ -3,15 +3,14 @@
 one:
   name: MyString
   email: MyString
-  mobile: MyString
-  profile_pic: MyText
-  department: 
-  designation: MyString
+  department:
+  phone: MyString
+  avatar:
 
 two:
   name: MyString
   email: MyString
-  mobile: MyString
-  profile_pic: MyText
-  department: 
-  designation: MyString
+  department:
+  phone: MyString
+  avatar:
+

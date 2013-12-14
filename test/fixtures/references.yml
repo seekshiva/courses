@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  course_reference: 
+  term_reference: 
   topic: 
+  indices: MyString
 
 two:
-  course_reference: 
+  term_reference: 
   topic: 
+  indices: MyString
