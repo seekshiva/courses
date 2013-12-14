@@ -40,6 +40,18 @@ jQuery ->
 
     urlRoot: "/terms/"
 
+  class SectionModel extends Backbone.Model
+    paramRoot: 'section'
+
+    defaults:
+      topics:       null
+
+    urlRoot: "/sections/"
+
+  class SectionsCollection extends Backbone.Collection
+    model: SectionModel
+    url: "/sections/"
+
   class TopicModel extends Backbone.Model
     paramRoot: 'topic'
 
@@ -47,6 +59,24 @@ jQuery ->
       title:       null
 
     urlRoot: "/topics/"
+
+  class TopicsCollection extends Backbone.Collection
+    model: TopicModel
+    url: "/topics/"
+
+  class ReferenceModel extends Backbone.Model
+    paramRoot: "reference"
+
+    defaults:
+      term_id:      null
+      book_id:      null
+      title:        null
+
+    urlRoot: "/references/"
+
+  class ReferencesCollection extends Backbone.Collection
+    model: ReferenceModel
+    url: "/references/"
 
   class SubscriptionModel extends Backbone.Model
     paramRoot: 'subscription'
@@ -82,6 +112,12 @@ jQuery ->
   @app.TermModel             = TermModel
   @app.SubscriptionModel     = SubscriptionModel
   @app.ProfileModel          = ProfileModel
+  @app.SectionModel          = SectionModel
+  @app.TopicModel            = TopicModel
+  @app.ReferenceModel        = ReferenceModel
 
   @app.DepartmentsCollection      = DepartmentsCollection
   @app.SubscriptionsCollection    = SubscriptionsCollection
+  @app.SectionsCollection         = SectionsCollection
+  @app.TopicsCollection           = TopicsCollection
+  @app.ReferencesCollection       = ReferencesCollection

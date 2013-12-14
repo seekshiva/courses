@@ -263,11 +263,38 @@ jQuery ->
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "switch_active_topic"
+      "click .delete_section" : "deleteSection"
+      "click .delete_topic" : "deleteTopic"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
       @term_view = term_view
       @updateSelector()
+
+    deleteTopic: (e) ->
+      topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
+      topic = new @term_view.app.TopicModel({id: topic_id})
+      #topic.delete()
+      for section in @term_view.term.attributes.sections
+        console.log(section)
+        elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+        if elem
+          topic_index = section.topics.indexOf(elem)
+          section_index = @term_view.term.attributes.sections.indexOf(section)
+          @term_view.term.attributes.sections[section_index].topics.splice(topic_index, 1)
+          break
+      @render()
+      @
+
+    deleteSection: (e) -> 
+      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
+      section = new @term_view.app.SectionModel({id : section_id})
+      # section.delete()
+      elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+      index = @term_view.term.attributes.sections.indexOf(elem)
+      @term_view.term.attributes.sections.splice(index, 1)
+      @render()
+      @
 
     updateSelector: (e)->
       if e and e.target
