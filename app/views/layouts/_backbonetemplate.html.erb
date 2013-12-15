@@ -582,49 +582,112 @@
                   <dl>
                     <dt>
                       {{#if ../../edit_mode}}
-                        <div class="btn-group pull-right">
-                          <div class="btn btn-default btn-mini">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                          </div>
-                          <div class="btn btn-default btn-mini">
-                            <i class="glyphicon glyphicon-move"></i>
-                          </div>
-                          <div class="btn btn-danger btn-mini delete_topic" topic-id="{{this.id}}">
-                            <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                          </div>
-                        </div>
-                      {{/if}}
-                      {{this.title}}
-                      <span class="label label-success">{{this.ct_status}}</span>
-                    </dt>
-                    <dd>
-                      <p>
-                        <small>
-                          {{#if this.classes}}
-                            This topic was taught on
-                            {{#each this.classes}}
-                              {{this.date}}
+                        {{#if this.edit}}
+                            <form>
+                              <div class="btn-group pull-right field">
+                                <div class="btn btn-default btn-mini btn-success edit_topic" topic-id="{{this.id}}">
+                                  <i class="glyphicon glyphicon-ok"></i>
+                                </div>
+                                <div class="btn btn-default btn-mini toggle_edit_topic" topic-id="{{this.id}}">
+                                  <i class="glyphicon glyphicon-remove"></i>
+                                </div>
+                                <div class="btn btn-danger btn-mini delete_topic" topic-id="{{this.id}}">
+                                  <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                                </div>
+                              </div>
+                              <div class="field">
+                                <input type="text" value="{{this.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{this.id}}"/>
+                              </div>
+                              <div class="field">
+                                <select id="topic_ct_{{this.id}}" class="form-control">
+                                  {{#with this.ct_select}}
+                                    <option value="CT1" {{#if CT1 }}selected{{/if}}>CT1</option>
+                                    <option value="CT2" {{#if CT2 }}selected{{/if}}>CT2</option>
+                                    <option value="Post CT" {{#if PostCT }}selected{{/if}}>Post CT</option>
+                                  {{/with}}
+                                </select>
+                              </div>
+                            </dt>
+                            <dd>
+                              <div class="field">
+                                <textarea id="topic_description_{{this.id}}" class="form-control">{{this.description}}</textarea>
+                              </div>
+                            </dd>
+                          </form>
+                        {{else}}
+                            <div class="btn-group pull-right">
+                              <div class="btn btn-default btn-mini toggle_edit_topic" topic-id="{{this.id}}">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                              </div>
+                              <div class="btn btn-danger btn-mini delete_topic" topic-id="{{this.id}}">
+                                <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                              </div>
+                            </div>
+                            {{this.title}}
+                            <span class="label label-success">{{this.ct_status}}</span>
+                          </dt>
+                          <dd>
+                            <p>
+                              <small>
+                                {{#if this.classes}}
+                                  This topic was taught on
+                                  {{#each this.classes}}
+                                    {{this.date}}
+                                  {{/each}}
+                                  
+                                {{else}}
+                                  This topic has not been taught so far this semester
+                                {{/if}}
+                              </small>
+                            </p>
+                            <p>{{this.description}}</p>
+                            <table class="table table-bordered">
+                              <thead><tr>
+                                {{#each this.reference}}
+                                  <th><small>{{this.book}}</small></th>
+                                {{/each}}
+                              </tr></thead>
+                              <tbody><tr>
+                                {{#each this.reference}}
+                                  <td><small>{{this.indices}}</small></td>
+                                {{/each}}
+                              </tr></tbody>
+                            </table>
+                          </dd>
+                        {{/if}}
+                      {{else}}
+                        {{this.title}}
+                        <span class="label label-success">{{this.ct_status}}</span>
+                      </dt>
+                      <dd>
+                        <p>
+                          <small>
+                            {{#if this.classes}}
+                              This topic was taught on
+                              {{#each this.classes}}
+                                {{this.date}}
+                              {{/each}}
+                              
+                            {{else}}
+                              This topic has not been taught so far this semester
+                            {{/if}}
+                          </small>
+                        </p>
+                        <p>{{this.description}}</p>
+                        <table class="table table-bordered">
+                          <thead><tr>
+                            {{#each this.reference}}
+                              <th><small>{{this.book}}</small></th>
                             {{/each}}
-                            
-                          {{else}}
-                            This topic has not been taught so far this semester
-                          {{/if}}
-                        </small>
-                      </p>
-                      <p>{{this.description}}</p>
-                      <table class="table table-bordered">
-                        <thead><tr>
-                          {{#each this.reference}}
-                            <th><small>{{this.book}}</small></th>
-                          {{/each}}
-                        </tr></thead>
-                        <tbody><tr>
-                          {{#each this.reference}}
-                            <td><small>{{this.indices}}</small></td>
-                          {{/each}}
-                        </tr></tbody>
-                      </table>
-                    </dd>
+                          </tr></thead>
+                          <tbody><tr>
+                            {{#each this.reference}}
+                              <td><small>{{this.indices}}</small></td>
+                            {{/each}}
+                          </tr></tbody>
+                        </table>
+                      </dd>
+                      {{/if}}
                   </dl>
                 </td></tr>
               {{/each}}

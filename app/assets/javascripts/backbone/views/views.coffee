@@ -255,11 +255,13 @@ jQuery ->
 
   class TermTopicsView extends Backbone.View
     template: Handlebars.compile($("#term-topics-template").html())
+    
     selectors:
       ct_status:
         "ct1": "btn-info"
         "ct2": "btn-info"
         "postct": "btn-info"
+    
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "switch_active_topic"
@@ -270,6 +272,7 @@ jQuery ->
       "click .toggle_edit_section" : "toggleSectionEdit"
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
+      "click .edit_topic" : "updateTopic"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
@@ -313,12 +316,11 @@ jQuery ->
     toggleSectionEdit: (e) ->
       e.preventDefault()
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      console.log(e)
       if @section_id == section_id
         @section_id = null
       else
         @section_id = section_id
-      console.log(@section_id)
+      @topic_id = null
       @render()
       @
 
@@ -338,9 +340,36 @@ jQuery ->
       @
 
     toggleTopicEdit: (e) ->
+      e.preventDefault()
+      topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
+      if @topic_id == topic_id
+        @topic_id = null
+      else
+        @topic_id = topic_id
+      @section_id = null
+      @render()
       @
       
     updateTopic: (e) ->
+      e.preventDefault()
+      topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
+      title = $.trim($("#topic_title_"+topic_id).val())
+      ct_status = $.trim($("#topic_ct_"+topic_id).val())
+      description = $.trim($("#topic_description_"+topic_id).val())
+      if title != ""
+        topic = new @term_view.app.TopicModel({id: topic_id, title: title, ct_status: ct_status, description: description})
+        that = this
+        topic.save(null, { success: (model, resp) ->
+            for section in that.term_view.term.attributes.sections
+              elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+              if elem
+                elem.title = title
+                elem.ct_status = ct_status
+                elem.description = description
+                break
+            that.topic_id = null
+            that.render()
+          })
       @
       
     deleteSection: (e) -> 
@@ -398,6 +427,14 @@ jQuery ->
             section_clone["edit"] = false
         section_clone["topics"] = []
         for topic in section.topics
+          topic["edit"] = false
+          if @topic_id
+            if @topic_id.toString() == topic.id.toString()
+              topic["edit"] = true
+              delete topic["ct_select"]
+              status = topic.ct_status.toString().replace(" ","")
+              topic["ct_select"] = {}
+              topic["ct_select"][status] = true
           if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
             section_clone.topics.push topic
 
