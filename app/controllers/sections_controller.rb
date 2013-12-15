@@ -72,7 +72,7 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
 
     respond_to do |format|
-      if @section.update_attributes(params[:section])
+      if @section.update_attributes(params[:section].except(:id, :topics, :classes, :short_title, :show_short_title))
         format.html #{ redirect_to @section, notice: 'Section was successfully updated.' }
         format.json { head :no_content }
       else

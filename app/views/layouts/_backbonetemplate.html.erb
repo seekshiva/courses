@@ -448,12 +448,14 @@
       {{/each}}
       {{#if edit_mode}}
         <div class="input-group tab-content col-md-12">
-          <div class="field">
-            <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
-          </div>
-          <div class="field">
-            <button class="form-action btn btn-primary btn-sm" id="create_section">Add New Topic</button>
-          </div>
+          <form>
+            <div class="field">
+              <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
+            </div>
+            <div class="field">
+              <input type="submit" class="form-action btn btn-primary btn-sm" id="create_section" value="Add New Topic"/>
+            </div>
+          </form>
         </div>
       {{/if}}
     </div>
@@ -540,16 +542,35 @@
             <tbody>
               <tr><td>
                 {{#if ../edit_mode}}
-                  <div class="btn-group pull-right">
-                    <div class="btn btn-default btn-sm">
-                      <i class="glyphicon glyphicon-pencil"></i>
+                  {{#if this.edit}}
+                    <div class="field">
+                      <input type="text" class="form-control" id="section_title_{{this.id}}" value="{{this.title}}" placeholder="Topic title"/>
                     </div>
-                    <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
-                      <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                    <div class="btn-group pull-right">
+                      <div class="btn btn-default btn-sm btn-success edit_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-ok"></i>
+                      </div>
+                      <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-remove"></i>
+                      </div>
+                      <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                      </div>
                     </div>
-                  </div>
+                  {{else}}
+                    <div class="btn-group pull-right">
+                      <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                      </div>
+                      <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                      </div>
+                    </div>
+                    <h4>{{this.title}}</h4>
+                  {{/if}}
+                {{else}}
+                  <h4>{{this.title}}</h4>
                 {{/if}}
-                <h4>{{this.title}}</h4>
               </td></tr>
               {{#unless this.topics}}
                 <tr><td>
@@ -610,24 +631,27 @@
             </tbody>
           </table>
           {{#if ../edit_mode}}
-            <div class="input-group col-md-12">
-              <div class="field">
-                <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Topic Title">
+            <form>
+              <legend><small>Add New topic</small></legend>
+              <div class="input-group col-md-12">
+                <div class="field">
+                  <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Topic Title">
+                </div>
+                <div class="field">
+                  <select id="topic_ct_{{this.id}}" class="form-control">
+                    <option value="CT1">CT1</option>
+                    <option value="CT2">CT2</option>
+                    <option value="Post CT">Post CT</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <textarea id="topic_description_{{this.id}}" class="form-control"></textarea>
+                </div>
+                <div class="field">
+                  <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
+                </div>
               </div>
-              <div class="field">
-                <select id="topic_ct_{{this.id}}" class="form-control">
-                  <option value="CT1">CT1</option>
-                  <option value="CT2">CT2</option>
-                  <option value="Post CT">Post CT</option>
-                </select>
-              </div>
-              <div class="field">
-                <textarea id="topic_description_{{this.id}}" class="form-control"></textarea>
-              </div>
-              <div class="field">
-                <button class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}">Add New Topic</button>
-              </div>
-            </div>
+            </form>
           {{/if}}
         </div>
       {{/each}}

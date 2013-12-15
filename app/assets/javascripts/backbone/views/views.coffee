@@ -267,6 +267,9 @@ jQuery ->
       "click .delete_topic" : "deleteTopic"
       "click #create_section" : "createSection"
       "click .create_topic" : "createTopic"
+      "click .toggle_edit_section" : "toggleSectionEdit"
+      "click .toggle_edit_topic" : "toggleTopicEdit"
+      "click .edit_section" : "updateSection"
 
     initialize: (term_view)=>
       @el = "#specialized_view"
@@ -292,18 +295,63 @@ jQuery ->
       topic_title = $.trim($("#topic_title_"+section_id.toString()).val())
       topic_ct = $.trim($("#topic_ct_"+section_id.toString()).val())
       topic_description = $.trim($("#topic_description_"+section_id.toString()).val())
-      topic = new @term_view.app.TopicModel({
-          title:          topic_title,
-          ct_status:      topic_ct,
-          description:    topic_description,
-          section_id:     section_id
-        })
-      that = this
-      topic.save(null, {success: (model, resp) -> 
-        elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
-        elem.topics.push(topic.attributes)
-        that.render()
-        })
+      if topic_title != ""
+        topic = new @term_view.app.TopicModel({
+            title:          topic_title,
+            ct_status:      topic_ct,
+            description:    topic_description,
+            section_id:     section_id
+          })
+        that = this
+        topic.save(null, {success: (model, resp) -> 
+          elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+          elem.topics.push(topic.attributes)
+          that.render()
+          })
+      @
+    
+    toggleSectionEdit: (e) ->
+      e.preventDefault()
+      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
+      console.log(e)
+      if @section_id == section_id
+        @section_id = null
+      else
+        @section_id = section_id
+      console.log(@section_id)
+      @render()
+      @
+
+    updateSection: (e) ->
+      e.preventDefault()
+      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
+      title = $.trim($("#section_title_"+section_id).val())
+      if title != ""
+        section = new @term_view.app.SectionModel({id: section_id, title: title})
+        that = this
+        section.save(null, { success: (model, resp) ->
+            elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+            elem.title = title
+            that.section_id = null
+            that.render()
+          })
+      @
+
+    toggleTopicEdit: (e) ->
+      @
+      
+    updateTopic: (e) ->
+      @
+      
+    deleteSection: (e) -> 
+      e.preventDefault()
+      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
+      section = new @term_view.app.SectionModel({id : section_id})
+      section.destroy()
+      elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+      index = @term_view.term.attributes.sections.indexOf(elem)
+      @term_view.term.attributes.sections.splice(index, 1)
+      @render()
       @
 
     deleteTopic: (e) ->
@@ -318,17 +366,6 @@ jQuery ->
           section_index = @term_view.term.attributes.sections.indexOf(section)
           @term_view.term.attributes.sections[section_index].topics.splice(topic_index, 1)
           break
-      @render()
-      @
-
-    deleteSection: (e) -> 
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      section = new @term_view.app.SectionModel({id : section_id})
-      section.destroy()
-      elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
-      index = @term_view.term.attributes.sections.indexOf(elem)
-      @term_view.term.attributes.sections.splice(index, 1)
       @render()
       @
 
@@ -354,6 +391,11 @@ jQuery ->
       flag = true
       for section in @term_view.term.attributes.sections
         section_clone = Object.create(section)
+        if @section_id
+          if @section_id.toString() == section.id.toString()
+            section_clone["edit"] = true
+          else
+            section_clone["edit"] = false
         section_clone["topics"] = []
         for topic in section.topics
           if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
