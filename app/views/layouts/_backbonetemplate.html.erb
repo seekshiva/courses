@@ -53,27 +53,12 @@
   <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
   {{#if attending}}
     {{#each subs}}
-      {{#if this.attending}}
-        {{#if this.current}}
-          <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
-        {{/if}}
+      {{#if this.current}}
+        <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
       {{/if}}
     {{/each}}
   {{else}}
     <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be attending any</nobr><br/><nobr> current course</nobr></a></li>
-  {{/if}}
-  <li role="presentation" class="divider"></li>
-  <li role="presentation" class="dropdown-header"><strong>My Subscriptions</strong></li>
-  {{#if subscribed}}
-    {{#each subs}}
-      {{#unless this.attending}}
-        {{#if this.current}}
-          <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
-        {{/if}}
-      {{/unless}}
-    {{/each}}
-  {{else}}
-    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be subscribed to </nobr><br/><nobr>any current course</nobr></a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
   {{#if user.admin}}
@@ -380,7 +365,12 @@
 </script>
 
 <script type="text/template" id="term-subscription-template">
-    <button class="btn btn-default {{#if sub}}btn-success{{/if}}" id="{{term_id}}subscription_status" data-placement="left" data-trigger="hover" data-toggle="tooltip" data-container="body">{{text}}</button>
+  <div class="field">
+    Attending this term :
+    <div class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO">
+      <input type="checkbox" {{#if subscribed}}checked{{/if}} id="{{term_id}}_subscription_status"/>
+    </div>
+  </div>
 </script>
 
 <script type="text/template" id="term-info-template">

@@ -44,7 +44,6 @@ jQuery ->
     render: () ->
       subs = {}
 
-      subscribed = 0
       attending = 0
       @subscriptions.models.map (sub) ->
         subs[sub.id] = {
@@ -54,15 +53,12 @@ jQuery ->
           attending:      sub.get("attending"),
           current:        sub.get("current")
         }
-        if sub.get("attending") != true  && sub.get("current") == true
-          subscribed = true
-        if sub.get("attending") == true  && sub.get("current") == true
+        if sub.get("current") == true
           attending = true
 
       $(@el).html @template
         user:       @app.user
         subs:       subs
-        subscribed: subscribed
         attending:  attending
 
       $(".local").find("a:not(.external)").click (e) ->
@@ -202,55 +198,17 @@ jQuery ->
     updateCollection: (model, resp) ->
       @app.menu_view.subscriptions.remove({id: @sub_status.id}).add(@sub_status.attributes)
 
-    updateAttending: (e) ->
-      e.preventDefault
-      if e.target.id == @term_id+"attending"
-        @sub_status.set({attending : true})
-      else
-        @sub_status.set({attending : false})
-      @sub_status.save({}, { success: _.bind(@updateCollection, @) })
-      @
-
     render: ->
-      $(".tooltip").remove()
-      $("#"+@term_id+"subscription_status").popover("destroy")
-      sub = 0
+      sub = false
       if @sub_status.attributes.id
-        sub = 0
-        text = "Unsubscribe"
-        if @sub_status.attributes.attending == true
-          status = "Subscribed and attending"
-        else 
-          status = "You have subscribed to the course but not attending it"
-      else
-        sub = 1 
-        text = "Subscribe"
-        status = "Not Subscribed"
+        sub = true
 
       $(@el).html @template
-        text: text
-        status: status
-        sub: sub
+        subscribed: sub
         term_id: @term_id
 
-      $('#'+@term_id+'subscription_status').tooltip({title: status}) 
-      if @sub_status.attributes.attending == null && @sub_status.id
-        $("#"+@term_id+"subscription_status").popover({
-          html: true,
-          placement: "left",
-          trigger: "click",
-          content: "Help us to tailor content for you.<br/> Are you attending this course? <br/><br/>
-                    <button class='btn btn-default btn-success' id='"+@term_id+"attending'>Yes</button>
-                    <button class='btn btn-default' id='"+@term_id+"not_attending'>No</button>",
-          container: "body"
-        }).popover("show")
-        
-      $("#"+@term_id+"subscription_status").bind("click", _.bind(@updateSubscription, @))
-      $(document).on("click", "#"+@term_id+"attending", _.bind(@updateAttending, @))
-      $(document).on("click", "#"+@term_id+"not_attending", _.bind(@updateAttending, @))
-      $(document).on("click", (e) -> 
-        $("button[id*=subscription_status]").popover("destroy")
-      )
+      $(".make-switch").bootstrapSwitch();
+      $("#"+@term_id+"_subscription_status").bind("change", _.bind(@updateSubscription, @))
       @
 
   class TermTopicsView extends Backbone.View
