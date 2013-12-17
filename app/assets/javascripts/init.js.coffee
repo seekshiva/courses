@@ -14,10 +14,11 @@ jQuery ->
         xhr.setRequestHeader("X-CSRF-Token", $("meta[name='csrf-token']").attr("content"))
 
     @app.show_local_page = (e)->
-      e.preventDefault()
-      @app = window.app ? {}
-      @app.router.navigate $(e.target).attr("href") or $(e.target.parentNode).attr("href"),
-        trigger: true
+      unless e.ctrlKey or e.shiftKey
+        e.preventDefault()
+        @app = window.app ? {}
+        @app.router.navigate $(e.target).attr("href") or $(e.target.parentNode).attr("href"),
+          trigger: true
 
     $(".local").find("a:not(.external)").click (e) ->
       unless e.target.parentNode.id == "signin_link"
