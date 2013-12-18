@@ -1,0 +1,2 @@
+module TermDocumentsHelper
+end

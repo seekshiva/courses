@@ -1,8 +1,8 @@
 class CreateSectionDocuments < ActiveRecord::Migration
   def change
     create_table :section_documents do |t|
-      t.reference :document
-      t.reference :section
+      t.references :document
+      t.references :section
 
       t.timestamps
     end

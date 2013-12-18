@@ -1,0 +1,21 @@
+<h1>Listing term_documents</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @term_documents.each do |term_document| %>
+  <tr>
+    <td><%= link_to 'Show', term_document %></td>
+    <td><%= link_to 'Edit', edit_term_document_path(term_document) %></td>
+    <td><%= link_to 'Destroy', term_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Term document', new_term_document_path %>

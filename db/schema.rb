@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212134819) do
+ActiveRecord::Schema.define(:version => 20131217180849) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -133,6 +133,13 @@ ActiveRecord::Schema.define(:version => 20131212134819) do
   add_index "references", ["term_reference_id"], :name => "index_references_on_course_reference_id"
   add_index "references", ["topic_id"], :name => "index_references_on_topic_id"
 
+  create_table "section_documents", :force => true do |t|
+    t.integer  "document_id"
+    t.integer  "section_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "sections", :force => true do |t|
     t.integer  "term_id"
     t.string   "title"
@@ -157,6 +164,13 @@ ActiveRecord::Schema.define(:version => 20131212134819) do
 
   add_index "term_departments", ["department_id"], :name => "index_term_departments_on_department_id"
   add_index "term_departments", ["term_id"], :name => "index_term_departments_on_term_id"
+
+  create_table "term_documents", :force => true do |t|
+    t.integer  "document_id"
+    t.integer  "term_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "term_faculties", :force => true do |t|
     t.integer  "term_id"
@@ -188,6 +202,13 @@ ActiveRecord::Schema.define(:version => 20131212134819) do
   end
 
   add_index "terms", ["course_id"], :name => "index_terms_on_course_id"
+
+  create_table "topic_documents", :force => true do |t|
+    t.integer  "document_id"
+    t.integer  "topic_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "topics", :force => true do |t|
     t.string   "title"
