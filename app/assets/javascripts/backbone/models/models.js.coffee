@@ -77,6 +77,30 @@ jQuery ->
 
     urlRoot: "/references/"
 
+  class TermDocumentModel extends Backbone.Model
+    paramRoot: 'term_document'
+
+    defaults:
+      id:     null
+
+    urlRoot: "/term_document/"
+
+  class SectionDocumentModel extends Backbone.Model
+    paramRoot: 'section_document'
+
+    defaults:
+      id:     null
+
+    urlRoot: "/section_document/"
+
+  class TopicDocumentModel extends Backbone.Model
+    paramRoot: 'topic_document'
+
+    defaults:
+      id:     null
+
+    urlRoot: "/topic_document/"
+
   class ReferencesCollection extends Backbone.Collection
     model: ReferenceModel
     url: "/references/"
@@ -118,6 +142,9 @@ jQuery ->
   @app.SectionModel          = SectionModel
   @app.TopicModel            = TopicModel
   @app.ReferenceModel        = ReferenceModel
+  @app.TermDocumentModel     = TermDocumentModel
+  @app.SectionDocumentModel  = SectionDocumentModel
+  @app.TopicDocumentModel    = TopicDocumentModel
 
   @app.DepartmentsCollection      = DepartmentsCollection
   @app.SubscriptionsCollection    = SubscriptionsCollection
