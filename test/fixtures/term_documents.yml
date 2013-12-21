@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  document: 
-  term: 
+  document_id: 
+  term_id: 
 
 two:
-  document: 
-  term: 
+  document_id: 
+  term_id: 
