@@ -14,10 +14,7 @@ jQuery ->
       "*path": "four_oh_four"
 
     home: () ->
-      if @departments_view
-        @departments_view.render()
-      else
-        @departments_view = new @app.DepartmentsView()
+      @index()
       @
 
     index: () ->

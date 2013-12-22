@@ -3,23 +3,30 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions.json
   def index
     current_user
-    @subscriptions = Subscription.where(:user_id => @user.id)
+    if @user.nil?
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: "User not logged in" }
+      end
+    else
+      @subscriptions = Subscription.where(:user_id => @user.id)
 
-    subs = @subscriptions.collect do |sub|
-      {
-        id:           sub.id, 
-        term_id:      sub.term_id,
-        user_id:      @user.id,
-        attending:    sub.attending,
-        course_name:  sub.term.course.name,
-        course_id:    sub.term.course_id,
-        current:      sub.term.is_current?
-      }
-    end
+      subs = @subscriptions.collect do |sub|
+        {
+          id:           sub.id, 
+          term_id:      sub.term_id,
+          user_id:      @user.id,
+          attending:    sub.attending,
+          course_name:  sub.term.course.name,
+          course_id:    sub.term.course_id,
+          current:      sub.term.is_current?
+        }
+      end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: subs }
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: subs }
+      end
     end
   end
 
