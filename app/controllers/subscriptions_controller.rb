@@ -2,7 +2,6 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions
   # GET /subscriptions.json
   def index
-    current_user
     if @user.nil?
       respond_to do |format|
         format.html # index.html.erb

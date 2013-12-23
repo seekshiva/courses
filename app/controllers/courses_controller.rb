@@ -1,10 +1,7 @@
 class CoursesController < ApplicationController
   def show
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       
       format.json { 
         course = Course.find(params[:id])

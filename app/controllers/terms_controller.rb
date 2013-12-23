@@ -1,13 +1,9 @@
 class TermsController < ApplicationController
   def show
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       
       format.json { 
-        current_user
         term = Term.find(params[:id])
 
         sections = term.sections.collect do |section|

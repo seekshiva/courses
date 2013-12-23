@@ -5,10 +5,7 @@ class TopicsController < ApplicationController
     @topics = Topic.all
 
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: @topics }
     end
   end
@@ -19,10 +16,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
 
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: @topic }
     end
   end
@@ -33,10 +27,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new
 
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: @topic }
     end
   end

@@ -1,14 +1,11 @@
 class HomeController < ApplicationController
   def index
-    current_user
-
     respond_to do |format|
       format.html { render "home/dashboard" }
     end
   end
   
   def me
-    current_user
     if not @user.nil?
       render "home/dashboard"
     else

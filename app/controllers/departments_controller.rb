@@ -1,6 +1,7 @@
 class DepartmentsController < ApplicationController
   def index
     respond_to do |format|
+      format.html { render "home/dashboard" }
       format.json { 
         ret = []
         Department.all.collect do |dept|
@@ -23,19 +24,13 @@ class DepartmentsController < ApplicationController
         render json: ret
 
       }
-      format.html {
-        current_user
-        render "home/dashboard"
-      }
     end
   end
 
   def show
     respond_to do |format|
-      format.html {
-        current_user
-        render "home/dashboard"
-      }
+      format.html { render "home/dashboard" }
+	  
       format.json {
         dept = Department.find(params[:id])
 

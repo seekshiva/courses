@@ -5,10 +5,7 @@ class UploadController < ApplicationController
   def index
   
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: { message: "UploadController only responds to POST"} }
     end
   end
@@ -23,7 +20,7 @@ class UploadController < ApplicationController
       data = Hash.new
       data[:cover] = params[:Filedata]
       data[:cover].content_type = MIME::Types.type_for(params[:Filedata].original_filename).to_s
-      data[:uploaded_by] = current_user.id
+      data[:uploaded_by] = @user.id
 
       @book_cover = BookCover.new(data)
       if @book_cover.save()

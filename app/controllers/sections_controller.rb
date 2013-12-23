@@ -5,10 +5,7 @@ class SectionsController < ApplicationController
     @sections = Section.all
 
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: @sections }
     end
   end
@@ -19,10 +16,7 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
 
     respond_to do |format|
-      format.html { 
-        current_user
-        render "home/dashboard" 
-      }
+      format.html { render "home/dashboard" }
       format.json { render json: @section }
     end
   end

@@ -1,19 +1,13 @@
 class ProfileController < ApplicationController
   def index
     respond_to do |format|
-      format.html {
-        current_user
-        render "home/dashboard"
-      }
-      format.json {
-        render json: ""
-      }
+      format.html { render "home/dashboard" }
+      format.json { render json: "" }
     end
   end
 
   def show
     respond_to do |format|
-      current_user
       format.html {
         render "home/dashboard"
       }
@@ -91,10 +85,7 @@ class ProfileController < ApplicationController
 
   def edit
     respond_to do |format|
-      current_user
-      format.html {
-        render "home/dashboard"
-      }
+      format.html { render "home/dashboard" }
     end
   end
 
