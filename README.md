@@ -1,4 +1,4 @@
-# Courses [![Build Status](https://travis-ci.org/seekshiva/courses.png)](https://travis-ci.org/seekshiva/courses)
+# Courses [![Build Status](https://travis-ci.org/seekshiva/courses.png)](https://travis-ci.org/seekshiva/courses) [![Dependency Status](https://gemnasium.com/seekshiva/courses.png)](https://gemnasium.com/seekshiva/courses)
 
 Access detailed information about college course; like course syllabus, project deadlines, assignments and test schedule. Changes made to class schedule, assignment deadline, etc. are updated in realtime. It also acts as a medium for direct student-professor interaction.
 
