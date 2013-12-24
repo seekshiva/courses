@@ -1,54 +1,56 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
-gem 'unicorn-rails'
+gem 'rails', '>= 4.0.2'
 
-gem 'anjlab-bootstrap-rails', '>= 3.0', :require => 'bootstrap-rails'
+# Legacy Rails features, remove me!
+
+gem 'rails-observers'
+
+# protect attributes from mass assignment
+gem 'protected_attributes'
+
+# caches_page
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+
+# Appserver
+
+gem 'unicorn', '>= 4.7'
+
+# Authentication
+
+gem 'devise'
+
+# Views
+
 gem 'rails-backbone'
+gem 'will_paginate', '~>3.0'
+gem 'anjlab-bootstrap-rails', '>= 3.0', :require => 'bootstrap-rails'
 
-gem 'execjs'
-gem 'therubyracer'
+#CSS
 
-gem 'will_paginate', '~>3.0' 
+gem 'sass-rails',   '~> 4.0.1'
+
+# Database
+
+gem 'mysql2'
+
+# File uploading
 
 gem 'mime-types'
 gem 'paperclip'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# Javascript/Coffeescript
 
-gem 'sqlite3'
-gem 'mysql2'
+gem 'execjs'
+gem 'therubyracer'
+gem 'jquery-rails'
+gem 'coffee-rails', '~> 4.0.1'
 
+# Markdown support
 
-# Bluecloth is used here for converting markdown to html
 gem 'bluecloth'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+# Compression
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
-gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+gem 'uglifier', '>= 1.3.0'
