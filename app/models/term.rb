@@ -16,6 +16,9 @@ class Term < ActiveRecord::Base
   has_many :subscriptions, :dependent => :destroy
   has_many :users, :through => :subscriptions
 
+  has_many :term_documents, :dependent => :destroy
+  has_many :documents, :through => :term_documents
+
   attr_accessible :course_id, :academic_year, :semester
 
   default_scope :order => "semester ASC"

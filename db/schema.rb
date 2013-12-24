@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131217180849) do
+ActiveRecord::Schema.define(:version => 20131224102518) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -103,12 +103,12 @@ ActiveRecord::Schema.define(:version => 20131217180849) do
 
   create_table "documents", :force => true do |t|
     t.integer  "uploaded_by"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "faculties", :force => true do |t|

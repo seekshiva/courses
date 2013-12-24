@@ -83,7 +83,7 @@ jQuery ->
     defaults:
       id:     null
 
-    urlRoot: "/term_document/"
+    urlRoot: "/term_documents/"
 
   class SectionDocumentModel extends Backbone.Model
     paramRoot: 'section_document'

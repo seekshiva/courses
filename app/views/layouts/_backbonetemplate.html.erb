@@ -355,10 +355,10 @@
     </li>
     <li id="view_term_info"><a href="/terms/{{term.id}}/info">Info</a></li>
     <li id="view_term_topics"><a href="/terms/{{term.id}}/topics">Topics</a></li>
-    <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li>
+    <!-- <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li> -->
     <li id="view_term_reference"><a href="/terms/{{term.id}}/reference">
       Reference Material
-      <small class="badge">{{term.course.reference_books.length}}</small>
+      <small class="badge">{{term.course.reference_books.length}}{{#if term.attachments.length}} + {{term.attachments.length}}{{/if}}</small>
     </a></li>
   </ul>
   <div id="specialized_view" class="{{edit_mode}}"></div>
@@ -490,6 +490,7 @@
                       <dd>
                         <p>
                           <small>
+                            {{#if false}}
                             {{#if this.classes}}
                               This topic was taught on
                               {{#each this.classes}}
@@ -498,6 +499,7 @@
                             
                             {{else}}
                               This topic has not been taught so far this semester
+                            {{/if}}
                             {{/if}}
                           </small>
                         </p>
@@ -619,6 +621,7 @@
                           <dd>
                             <p>
                               <small>
+                                {{#if false}}
                                 {{#if this.classes}}
                                   This topic was taught on
                                   {{#each this.classes}}
@@ -627,6 +630,7 @@
                                   
                                 {{else}}
                                   This topic has not been taught so far this semester
+                                {{/if}}
                                 {{/if}}
                               </small>
                             </p>
@@ -652,6 +656,7 @@
                       <dd>
                         <p>
                           <small>
+                            {{#if false}}                          
                             {{#if this.classes}}
                               This topic was taught on
                               {{#each this.classes}}
@@ -660,6 +665,7 @@
                               
                             {{else}}
                               This topic has not been taught so far this semester
+                            {{/if}}
                             {{/if}}
                           </small>
                         </p>
@@ -747,24 +753,37 @@
 </script>
 
 <script type="text/template" id="term-reference-template">
-  {{#unless term.course.reference_books}}
-  
-    <table class="table bottom_line">
-      <tbody>
-        <tr><td style="padding: 20px;">
-          No Reference material found for this subject.
-        </td></tr>
-      </tbody>
-    </table>
-
-  {{else}}
-  
-    <div class="row">
-      <ul class="nav nav-pills nav-stacked local-nav col-md-3">
-        <li class="active"><a href="#_reference_books" data-toggle="tab">Books</a></li>
-      </ul>
-      <div class="tab-content col-md-9">
-        <div class="tab-pane active _reference_list" id="_reference_books">
+  <div class="row">
+    <ul class="nav nav-pills nav-stacked local-nav col-md-3">
+      <li class="active"><a href="#_reference_notes" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a></li>
+      <li ><a href="#_reference_books" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a></li>
+    </ul>
+    <div class="tab-content col-md-9">
+      <div class="tab-pane active _reference_list" id="_reference_notes">
+        <table class="table bottom_line">
+          <tbody>
+            {{#if term.attachments.length}}
+              {{#each term.attachments}}
+                <tr>
+                  <td style="padding-right: 20px; ">
+                    <strong>{{this.name}}</strong>
+                  </td>
+                  <td>
+                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{../host}}{{this.url}}" target="_blank">Read</a>
+                  </td>
+                </tr>
+              {{/each}}
+            {{else}}
+              No Notes found
+            {{/if}}
+          </tbody>
+          <div class="field">
+            <div id="upload_notes">
+          </div>
+        </table>
+      </div>
+      <div class="tab-pane _reference_list" id="_reference_books">
+        {{#if term.course.reference_books.length}}
           <table class="table bottom_line">
             <tbody>
               {{#each term.course.reference_books}}
@@ -792,11 +811,18 @@
               {{/each}}
             </tbody>
           </table>
-        </div>
+        {{else}}
+          <table class="table bottom_line">
+            <tbody>
+              <tr><td style="padding: 20px;">
+                No Reference material found for this subject.
+              </td></tr>
+            </tbody>
+          </table>
+        {{/if}}
       </div>
     </div>
-
-  {{/unless}}
+  </div>
 </script>
 
 <script type="text/template" id="profile-template">

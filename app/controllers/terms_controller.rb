@@ -32,6 +32,13 @@ class TermsController < ApplicationController
           ret
         end
         
+        attachments = term.documents.collect do |doc|
+          {
+            id:         doc.id,
+            name:       doc.document.original_filename,
+            url:        doc.document.url
+          }
+        end
 
         reference_books = term.course.books.uniq.collect do |book|
           new_book = book
@@ -82,6 +89,7 @@ class TermsController < ApplicationController
           departments:     term.departments,
           classes:         classes,
           sections:        sections,
+          attachments:     attachments,
           instructors:     instructors,
           subscription:    sub
         }

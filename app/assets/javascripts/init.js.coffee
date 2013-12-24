@@ -14,11 +14,8 @@ jQuery ->
         xhr.setRequestHeader("X-CSRF-Token", $("meta[name='csrf-token']").attr("content"))
 
     $(document).ajaxError (e, jqxhr, settings) ->
-      if jqxhr.status = 404
+      if jqxhr.status = 404 && jqxhr.responseText != "saved"
         @app.router.four_oh_four(settings.url)
-      else if jqxhr.status = 401
-        @app.router.navigate("/login")
-          trigger: true
 
     @app.show_local_page = (e)->
       unless e.ctrlKey or e.shiftKey
