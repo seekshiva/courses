@@ -59,7 +59,7 @@ Courses::Application.routes.draw do
       resources :term_departments, :term_faculties
       resources :classrooms
       resources :terms do 
-        match "follow" => "terms#follow"
+        get 'follow', to: 'terms#follow'
       end
       resources :class_topics
       get "new" => "courses#new"
@@ -68,7 +68,7 @@ Courses::Application.routes.draw do
     end
     resources :course_list_items, :course_references
     resources :books, :authors, :book_authors, :references
-    match "switch_to" => "users#switch_to"
+    get 'switch_to' => 'users#switch_to'
   end
 
   resources :users
@@ -81,23 +81,18 @@ Courses::Application.routes.draw do
   resources :term_documents, :section_document, :topic_document
   resources :subscriptions
 
-  post "upload/:tab" => "upload#create"
+  post 'upload/:tab', to: 'upload#create'
+  post 'authenticate', to: 'home#authenticate'
 
-  match "authenticate" => "home#authenticate"
-  match "signout" => "home#signout"
-  match "me" => "home#me"
+  get 'me', to: 'home#me'
+  get 'admin', to: 'admin/departments#index'
+  get 'login' => 'home#index'
+  get 'signout', to: 'home#signout'
 
-  match "admin" => "admin/departments#index"
-
-  match "login" => "home#index"
-
-  match ":slug.json" => "#{:slug}s#index"
-  match ":slug" => "#{:slug}s#index"
+  get ':slug.json' => '#{:slug}s#index'
+  get ':slug' => '#{:slug}s#index'
   #match ":slug" => "home#index"
-  match ":slug/*route" => "home#index"
-
-
-
+  get ':slug/*route' => 'home#index'
 
   root :to => 'home#index'
   
