@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  def initialize
+  before_filter :setupenv
+
+  def setupenv
 	@user = nil
     begin
 	  unless session[:user_id].nil?
