@@ -23,9 +23,8 @@ gem 'devise'
 
 # Views
 
-gem 'rails-backbone'
-gem 'will_paginate', '~>3.0'
-gem 'anjlab-bootstrap-rails', '>= 3.0', :require => 'bootstrap-rails'
+gem 'will_paginate', '~> 3.0'
+gem 'anjlab-bootstrap-rails', '~> 3.0.3', :require => 'bootstrap-rails'
 
 #CSS
 
@@ -33,18 +32,18 @@ gem 'sass-rails',   '~> 4.0.1'
 
 # Database
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.14'
 
 # File uploading
 
 gem 'mime-types'
-gem 'paperclip'
+gem 'paperclip', '~> 3.5.2'
 
 # Javascript/Coffeescript
 
 gem 'execjs'
-gem 'therubyracer'
-gem 'jquery-rails'
+gem 'therubyracer', '~> 0.12.0'
+gem 'rails-backbone', '~> 0.9.10'
 gem 'coffee-rails', '~> 4.0.1'
 
 # Markdown support
