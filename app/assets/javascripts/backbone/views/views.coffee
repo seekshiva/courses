@@ -406,6 +406,10 @@ jQuery ->
 
 
     render: =>
+      search_text = $("#search_box").val()
+      if search_text
+        search_text.replace(/^\s*/g, '')
+      search_regx = new RegExp(search_text, "i")
       current_topic = 0
 
       @term_sections = []
@@ -428,7 +432,8 @@ jQuery ->
               topic["ct_select"] = {}
               topic["ct_select"][status] = true
           if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
-            section_clone.topics.push topic
+            if search_text == "" || (topic.title && topic.title.search(search_regx) != -1) || (topic.description && topic.description.search(search_regx) != -1)
+              section_clone.topics.push topic
 
         if section_clone.topics.length or @term_view.view.id == "edit"
           @term_sections.push(section_clone)
@@ -444,6 +449,10 @@ jQuery ->
         term_sections: @term_sections
         selectors:     @selectors
         show_all:      flag
+
+      $("#search_box").val(search_text)
+      $("#search_box").focus()
+      $("#search_box").bind("input", _.bind(@render,@))
       @
 
     switch_active_topic: (e) =>
