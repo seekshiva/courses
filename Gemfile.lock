@@ -154,7 +154,6 @@ DEPENDENCIES
   coffee-rails (~> 4.0.1)
   devise
   execjs
-  jquery-rails
   mime-types
   mysql2 (~> 0.3.14)
   paperclip (~> 3.5.2)
