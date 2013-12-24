@@ -66,7 +66,6 @@ Courses::Application.routes.draw do
       get "edit" => "courses#edit"
       get ":tab" => "courses#show"
     end
-    resources :course_list_items, :course_references
     resources :books, :authors, :book_authors, :references
     get 'switch_to' => 'users#switch_to'
   end
