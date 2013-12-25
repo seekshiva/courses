@@ -1006,7 +1006,7 @@
                 <tr>
                   <th>Courses Handling</th>
                   <td>
-                    {{#each this.classes}}
+                    {{#each info.classes}}
                       {{#if this.current}}
                         <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}
                       {{/if}}
@@ -1014,9 +1014,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <th>Courses Handling</th>
+                  <th>Courses Handled</th>
                   <td>
-                    {{#each this.classes}}
+                    {{#each info.classes}}
                       {{#unless this.current}}
                         {{#unless this.this_year}}
                           <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}

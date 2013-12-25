@@ -1,5 +1,4 @@
 class UploadController < ApplicationController
-	
 	# GET /upload
   # GET /upload.json
   def index

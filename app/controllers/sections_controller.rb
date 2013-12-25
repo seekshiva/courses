@@ -1,42 +1,4 @@
 class SectionsController < ApplicationController
-  # GET /sections
-  # GET /sections.json
-  def index
-    @sections = Section.all
-
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: @sections }
-    end
-  end
-
-  # GET /sections/1
-  # GET /sections/1.json
-  def show
-    @section = Section.find(params[:id])
-
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: @section }
-    end
-  end
-
-  # GET /sections/new
-  # GET /sections/new.json
-  def new
-    @section = Section.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @section }
-    end
-  end
-
-  # GET /sections/1/edit
-  def edit
-    @section = Section.find(params[:id])
-  end
-
   # POST /sections
   # POST /sections.json
   def create

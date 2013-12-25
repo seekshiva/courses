@@ -1,11 +1,4 @@
 class ProfileController < ApplicationController
-  def index
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: "" }
-    end
-  end
-
   def show
     respond_to do |format|
       format.html {
@@ -80,12 +73,6 @@ class ProfileController < ApplicationController
           render :json => {found: false}          
         end
       }
-    end
-  end
-
-  def edit
-    respond_to do |format|
-      format.html { render "home/dashboard" }
     end
   end
 

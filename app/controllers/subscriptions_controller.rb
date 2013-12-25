@@ -50,22 +50,6 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # GET /subscriptions/new
-  # GET /subscriptions/new.json
-  def new
-    @subscription = Subscription.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @subscription }
-    end
-  end
-
-  # GET /subscriptions/1/edit
-  def edit
-    @subscription = Subscription.find(params[:id])
-  end
-
   # POST /subscriptions
   # POST /subscriptions.json
   def create

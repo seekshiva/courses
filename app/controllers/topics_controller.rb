@@ -1,42 +1,4 @@
 class TopicsController < ApplicationController
-  # GET /topics
-  # GET /topics.json
-  def index
-    @topics = Topic.all
-
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: @topics }
-    end
-  end
-
-  # GET /topics/1
-  # GET /topics/1.json
-  def show
-    @topic = Topic.find(params[:id])
-
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: @topic }
-    end
-  end
-
-  # GET /topics/new
-  # GET /topics/new.json
-  def new
-    @topic = Topic.new
-
-    respond_to do |format|
-      format.html { render "home/dashboard" }
-      format.json { render json: @topic }
-    end
-  end
-
-  # GET /topics/1/edit
-  def edit
-    @topic = Topic.find(params[:id])
-  end
-
   # POST /topics
   # POST /topics.json
   def create
