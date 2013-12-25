@@ -14,7 +14,10 @@ class ProfileController < ApplicationController
       format.json {
         id = params[:id].to_s
         profile = @user
-        profile = User.find_by_email(params[:id]) if params[:id].to_s != "me"
+
+        if params[:id].to_s != "me"
+          profile = User.find_by email: params[:id]
+        end
 
         if profile.nil? && !id.match(/^[[:alpha:]]+$/)
           profile = User.find(params[:id])
@@ -49,7 +52,7 @@ class ProfileController < ApplicationController
               }
             end
           else
-            faculty = Faculty.find_by_user_id(profile.id)
+            faculty = Faculty.find_by user_id: profile.id
             info = {
               student:      false,
               prefix:       faculty.prefix,
@@ -94,7 +97,7 @@ class ProfileController < ApplicationController
 
     faculty_status = true
     if not params[:user][:student]
-      @faculty = Faculty.find_by_user_id(params[:user][:user_id])
+      @faculty = Faculty.find_by user_id: params[:user][:user_id]
 
       update = {
         prefix:       params[:user][:prefix],
