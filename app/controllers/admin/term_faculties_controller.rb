@@ -50,7 +50,7 @@ class Admin::TermFacultiesController < Admin::BaseController
   def create
     @term_faculty = TermFaculty.new
     @term_faculty.term_id = params[:term_faculty][:term_id].to_i
-    @term_faculty.faculty_id = Faculty.find_by_user_id(User.find_by_email(params[:term_faculty][:faculty])).id
+    @term_faculty.faculty_id = Faculty.find_by(user_id: User.find_by(email: params[:term_faculty][:faculty])).id
 
     @course = @term_faculty.course
 

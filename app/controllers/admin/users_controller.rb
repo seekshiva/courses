@@ -97,6 +97,6 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def switch_to
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by email: params[:email]
   end
 end

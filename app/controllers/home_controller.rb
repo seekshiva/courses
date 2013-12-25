@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     if not @user.nil?
       render "home/dashboard"
     else
-      @user = User.find_by_email(flash[:imap_id])
+      @user = User.find_by email: flash[:imap_id]
       if @user.nil?
         @user = User.new
       end
@@ -19,7 +19,7 @@ class HomeController < ApplicationController
         
         if @user.is_student?
           begin
-            @user.department_id = Department.find_by_rollno_prefix(@user[:email][0..3]).id
+            @user.department_id = Department.find_by(rollno_prefix: @user[:email][0..3]).id
           rescue
             @user.department_id = 0
           end
@@ -71,7 +71,7 @@ class HomeController < ApplicationController
     end
 
     begin
-      @user = User.find_by_email(@username)
+      @user = User.find_by email: @username
     rescue
       @user = nil
     end
