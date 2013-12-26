@@ -1,0 +1,21 @@
+<%= form_for(@topic_reference) do |f| %>
+  <% if @topic_reference.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@topic_reference.errors.count, "error") %> prohibited this topic_reference from being saved:</h2>
+
+      <ul>
+      <% @topic_reference.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :references %><br />
+    <%= f.text_field :references %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
