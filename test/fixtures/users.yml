@@ -2,14 +2,14 @@
 
 one:
   name: MyString
-  email: MyString
+  email: email@one.com
   department:
   phone: MyString
   avatar:
 
 two:
   name: MyString
-  email: MyString
+  email: email@two.com
   department:
   phone: MyString
   avatar:
