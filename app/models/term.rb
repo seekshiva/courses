@@ -21,7 +21,7 @@ class Term < ActiveRecord::Base
 
   attr_accessible :course_id, :academic_year, :semester
 
-  default_scope :order => "semester ASC"
+  default_scope { order("semester ASC") }
   
   def year
     return "#{self.academic_year}-#{self.academic_year+1}"

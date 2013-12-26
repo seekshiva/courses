@@ -17,7 +17,7 @@ class Course < ActiveRecord::Base
   has_many :sections, :through => :terms
   has_many :topics, :through => :sections
 
-  default_scope order("subject_code ASC")
+  default_scope { order("subject_code ASC") }
   
   attr_accessible :subject_code, :name, :credits, :about
 
