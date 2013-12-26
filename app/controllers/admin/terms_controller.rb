@@ -117,10 +117,10 @@ class Admin::TermsController < Admin::BaseController
 
         # Copy the latest term's books, sections, topics and references
         # Copying term's books
-        books = TermReference.where(:term_id => old_term.id)
+        term_ref = TermReference.where(:term_id => old_term.id)
         term_books = Array.new()
-        books.each do |book|
-          term_books << {:term_id => @term.id, :book_id => book.id}
+        term_ref.each do |book|
+          term_books << {:term_id => @term.id, :book_id => book.book_id}
         end
         if term_books.nil? || term_books.empty?
           term_books = true

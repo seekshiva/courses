@@ -348,6 +348,61 @@ jQuery ->
       title = $.trim($("#topic_title_"+topic_id).val())
       ct_status = $.trim($("#topic_ct_"+topic_id).val())
       description = $.trim($("#topic_description_"+topic_id).val())
+      topic_reference = $(".topic_reference")
+      
+      for topic_ref in topic_reference
+        ref_id = $(topic_ref).attr("ref-id")
+        term_ref_id = $(topic_ref).attr("term-ref-id")
+        book_id = $(topic_ref).attr("book-id")
+        book = $(topic_ref).attr("book-name")
+        indices = $.trim($(topic_ref).val())
+        console.log(ref_id, term_ref_id, book_id, book, indices)
+        if ref_id
+          ref = new @term_view.app.TopicReferenceModel({term_reference_id: term_ref_id, topic_id: topic_id, indices: indices, id: ref_id, book_id: book_id, book: book})
+          that = this
+          if indices == ""
+            ref.destroy()
+            for section in that.term_view.term.attributes.sections
+              elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+              if elem
+                refs = _.find(elem.reference, (ref) -> return ref.id.toString() == ref_id.toString())
+                index = elem.reference.indexOf(refs)
+                elem.reference.splice(index, 1)
+                console.log(elem.reference)
+                that.render()
+                break
+          else
+            ref.save(null, { success: (model, resp) ->
+              for section in that.term_view.term.attributes.sections
+                elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                if elem
+                  elem = _.find(elem.reference, (elem) -> return elem.id.toString() == ref.id.toString())
+                  elem.indices = ref.attributes.indices
+                  that.render()
+                  break
+            })
+        else
+          if indices != ""
+            ref = new @term_view.app.TopicReferenceModel({term_reference_id: term_ref_id, topic_id: topic_id, indices: indices, book_id: book_id, book: book})
+            that = this
+            ref.save(null, { success: (model, resp) -> 
+              book = _.find(that.term_view.term.attributes.course.reference_books, (elem) ->
+                return elem.id == ref.attributes.book_id
+              )
+              for section in that.term_view.term.attributes.sections
+                elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                if elem
+                  elem.reference.push({
+                      id: ref.id,
+                      book_id: ref.attributes.book_id,
+                      indices: ref.attributes.indices,
+                      book: ref.attributes.book,
+                      term_ref_id: ref.attributes.term_reference_id
+                    })
+                  that.render()
+                  break
+            })
+
       if title != ""
         topic = new @term_view.app.TopicModel({id: topic_id, title: title, ct_status: ct_status, description: description})
         that = this
@@ -424,6 +479,10 @@ jQuery ->
         section_clone["topics"] = []
         for topic in section.topics
           topic["edit"] = false
+          books = _.filter(topic["reference"], (ele) ->
+              return $.trim(ele.indices) != ""
+            )
+          topic["reference"] = books
           if @topic_id
             if @topic_id.toString() == topic.id.toString()
               topic["edit"] = true
@@ -431,6 +490,27 @@ jQuery ->
               status = topic.ct_status.toString().replace(" ","")
               topic["ct_select"] = {}
               topic["ct_select"][status] = true
+              books = []
+              for book in @term_view.term.attributes.course.reference_books
+                ref_book = _.find(topic["reference"], (ele) ->
+                    return ele.book_id.toString() == book.id.toString()
+                  )
+                if ref_book
+                  books.push {
+                    id:           ref_book.id,
+                    book_id:      ref_book.book_id,
+                    indices:      ref_book.indices,
+                    book:         ref_book.book,
+                    term_ref_id:  book.term_ref_id
+                  }
+                else
+                  books.push {
+                    book_id:        book.id,
+                    indices:        "",
+                    book:           book.title,
+                    term_ref_id:    book.term_ref_id
+                  } 
+              topic["reference"] = books
           if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
             if search_text == "" || (topic.title && topic.title.search(search_regx) != -1) || (topic.description && topic.description.search(search_regx) != -1)
               section_clone.topics.push topic

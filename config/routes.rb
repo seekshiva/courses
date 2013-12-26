@@ -26,6 +26,7 @@ Courses::Application.routes.draw do
   resources :terms
   resources :courses
   resources :topics, :sections, :classrooms
+  resources :topic_references
   resources :term_documents, :section_document, :topic_document
   resources :subscriptions
 

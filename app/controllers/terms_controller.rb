@@ -21,8 +21,14 @@ class TermsController < ApplicationController
               ct_status:        topic.ct_status,
             }
 
-            top_["reference"] = topic.references.uniq.collect do |ref|
-              {:book => ref.term_reference.book.title, :indices => ref.indices }
+            top_["reference"] = topic.references.collect do |ref|
+              { 
+                :id => ref.id,
+                :term_ref_id => ref.term_reference.id,
+                :book_id => ref.term_reference.book.id,
+                :book => ref.term_reference.book.title, 
+                :indices => ref.indices 
+              }
             end
             top_["classes"] = topic.classrooms.collect do |cl|
               {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
@@ -40,11 +46,20 @@ class TermsController < ApplicationController
           }
         end
 
-        reference_books = term.course.books.uniq.collect do |book|
-          new_book = book
-          new_book["authors"] = book.authors
-          new_book["cover"] = book.book_cover.nil? ? false : book.book_cover.cover.url(:thumb)
-          new_book
+        reference_books = term.term_references.collect do |item|
+          {
+            id:             item.book.id,
+            term_ref_id:         item.id,
+            authors:        item.book.authors,
+            cover:          item.book.book_cover.nil? ? false : item.book.book_cover.cover.url(:thumb),
+            title:          item.book.title,
+            publisher:      item.book.publisher,
+            edition:        item.book.edition,
+            isbn:           item.book.isbn,
+            book_cover_id:  item.book.book_cover_id,
+            year:           item.book.year,
+            online_retail_url: item.book.online_retail_url,
+          }
         end
 
         instructors = []

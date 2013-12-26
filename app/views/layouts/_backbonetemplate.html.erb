@@ -604,6 +604,24 @@
                               <div class="field">
                                 <textarea id="topic_description_{{this.id}}" class="form-control">{{this.description}}</textarea>
                               </div>
+                              <table class="table table-bordered">
+                                {{#if this.reference}}
+                                  <thead>
+                                    <tr>
+                                      <th>Book</th>
+                                      <th>Index/Page No</th>
+                                    </tr>
+                                  <thead>
+                                {{/if}}
+                                <tbody>
+                                  {{#each this.reference}}
+                                    <tr>
+                                      <th><small>{{this.book}}</small></th>
+                                      <td><input type="text" value="{{this.indices}}" term-ref-id="{{this.term_ref_id}}" book-name="{{this.book}}" topic-id="{{../this.id}}" book-id="{{this.book_id}}" ref-id="{{this.id}}" class="form-control topic_reference"/></td>
+                                    </tr>
+                                  {{/each}}
+                                </tbody>
+                              </table>
                             </dd>
                           </form>
                         {{else}}
@@ -806,6 +824,8 @@
                 </td>
                 {{#if this.cover}}
                   <td><img src="{{this.cover}}"/></td>
+                {{else}}
+                  <td></td>
                 {{/if}}
                 </tr>
               {{/each}}
