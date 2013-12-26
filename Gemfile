@@ -42,6 +42,7 @@ gem 'paperclip', '~> 3.5.2'
 # Javascript/Coffeescript
 
 gem 'execjs'
+gem 'jquery-rails'
 gem 'therubyracer', '~> 0.12.0'
 gem 'rails-backbone', '~> 0.9.10'
 gem 'coffee-rails', '~> 4.0.1'
