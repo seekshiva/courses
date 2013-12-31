@@ -356,7 +356,6 @@ jQuery ->
         book_id = $(topic_ref).attr("book-id")
         book = $(topic_ref).attr("book-name")
         indices = $.trim($(topic_ref).val())
-        console.log(ref_id, term_ref_id, book_id, book, indices)
         if ref_id
           ref = new @term_view.app.TopicReferenceModel({term_reference_id: term_ref_id, topic_id: topic_id, indices: indices, id: ref_id, book_id: book_id, book: book})
           that = this
@@ -368,7 +367,6 @@ jQuery ->
                 refs = _.find(elem.reference, (ref) -> return ref.id.toString() == ref_id.toString())
                 index = elem.reference.indexOf(refs)
                 elem.reference.splice(index, 1)
-                console.log(elem.reference)
                 that.render()
                 break
           else

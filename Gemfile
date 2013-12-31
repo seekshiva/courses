@@ -24,7 +24,7 @@ gem 'devise'
 # Views
 
 gem 'will_paginate', '~> 3.0'
-gem 'anjlab-bootstrap-rails', '~> 3.0.3', :require => 'bootstrap-rails'
+gem 'bootstrap-sass', '~> 3.0.3.0'
 
 #CSS
 
