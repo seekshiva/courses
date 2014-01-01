@@ -22,7 +22,7 @@ class UploadController < ApplicationController
       # Process book cover
       data = Hash.new
       data[:cover] = params[:Filedata]
-      data[:cover].content_type = MIME::Types.type_for(params[:Filedata].original_filename).to_s
+      data[:cover].content_type = MIME::Types.type_for(params[:Filedata].original_filename).first.content_type
       data[:uploaded_by] = @user.id
 
       @book_cover = BookCover.new(data)
@@ -35,7 +35,7 @@ class UploadController < ApplicationController
       # Process avatar
       data = Hash.new
       data[:pic] = params[:Filedata]
-      data[:pic].content_type = MIME::Types.type_for(params[:Filedata].original_filename).to_s
+      data[:pic].content_type = MIME::Types.type_for(params[:Filedata].original_filename).first.content_type
 
       @avatar = Avatar.new(data)
       if @avatar.save
@@ -47,7 +47,7 @@ class UploadController < ApplicationController
       # Save file
       data = Hash.new
       data[:document] = params[:Filedata]
-      data[:document].content_type = MIME::Types.type_for(params[:Filedata].original_filename).to_s
+      data[:document].content_type = MIME::Types.type_for(params[:Filedata].original_filename)..first.content_type
       data[:uploaded_by] = @user.id
 
       @file = Document.new(data)
