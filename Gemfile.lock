@@ -46,6 +46,8 @@ GEM
     capistrano-rails (1.1.0)
       capistrano (>= 3.0.0)
       capistrano-bundler (>= 1.0.0)
+    capistrano-rvm (0.0.3)
+      capistrano
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -171,6 +173,7 @@ DEPENDENCIES
   bluecloth
   bootstrap-sass (~> 3.0.3.0)
   capistrano-rails
+  capistrano-rvm
   coffee-rails (~> 4.0.1)
   devise
   execjs
