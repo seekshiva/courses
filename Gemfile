@@ -54,3 +54,8 @@ gem 'bluecloth'
 # Compression
 
 gem 'uglifier', '>= 1.3.0'
+
+# Deployment
+group :development do
+  gem "capistrano-rails"
+end
