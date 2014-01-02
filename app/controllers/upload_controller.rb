@@ -47,7 +47,7 @@ class UploadController < ApplicationController
       # Save file
       data = Hash.new
       data[:document] = params[:Filedata]
-      data[:document].content_type = MIME::Types.type_for(params[:Filedata].original_filename)..first.content_type
+      data[:document].content_type = MIME::Types.type_for(params[:Filedata].original_filename).first.content_type
       data[:uploaded_by] = @user.id
 
       @file = Document.new(data)
