@@ -172,6 +172,7 @@ DEPENDENCIES
   actionpack-page_caching
   bluecloth
   bootstrap-sass (~> 3.0.3.0)
+  capistrano-bundler
   capistrano-rails
   capistrano-rvm
   coffee-rails (~> 4.0.1)

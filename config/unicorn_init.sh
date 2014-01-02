@@ -14,7 +14,7 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/home/cap/apps/courses/current
 PID=/tmp/unicorn.courseshub.pid
-CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
+CMD="cd $APP_ROOT && export RAILS_ENV=production && ~/.rvm/bin/rvm ruby-2.1.0 do bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
 AS_USER=cap
 set -u
 

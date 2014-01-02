@@ -59,4 +59,5 @@ gem 'uglifier', '>= 1.3.0'
 group :development do
   gem "capistrano-rails"
   gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
 end

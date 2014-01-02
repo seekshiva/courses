@@ -32,3 +32,5 @@ Capfile
 config/deploy.rb
 config/deploy/
 
+#Ignore all backup files
+*.bak
