@@ -15,7 +15,7 @@ jQuery ->
       for val in uploadify
         console.log(val);
         $("#"+val["id"]).uploadify({
-          "swf" : "/uploadify.swf",
+          "swf" : "/swf/uploadify.swf",
           "uploader" : "/upload/"+val["uploader"]+".json",
           "formData" : uploadify_script_data,
           "buttonText" : val["buttonText"] || "Upload",

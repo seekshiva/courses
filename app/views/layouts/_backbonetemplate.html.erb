@@ -852,7 +852,7 @@
       <div class="row">
         <div class="col-md-3">
           <div class="field">
-            <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} id="avatar"/>
+            <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar"/>
           </div>
           <div class="field">
             <div id="upload_avatar"></div>
@@ -939,7 +939,7 @@
       {{/if}}
       <div class="row">
         <div class="col-md-3">
-          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="/default_profile.jpg"{{/if}} width="215"/>
+          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar"/>
         </div>
         <div class="col-md-9">
           <table class="table table-striped">

@@ -173,7 +173,7 @@ jQuery ->
         uploadify_script_data[app["session_key"]] = app["session_val"];
         
         $("#upload_notes").uploadify({
-          "swf" : "/uploadify.swf",
+          "swf" : "/swf/uploadify.swf",
           "uploader" : "/upload/document.json",
           "formData" : uploadify_script_data,
           "buttonText" : "Upload Notes",
@@ -588,7 +588,7 @@ jQuery ->
       uploadify_script_data[app["session_key"]] = app["session_val"];
       
       $("#upload_avatar").uploadify({
-          "swf" : "/uploadify.swf",
+          "swf" : "/swf/uploadify.swf",
           "uploader" : "/upload/avatar.json",
           "formData" : uploadify_script_data,
           "buttonText" : "Change Avatar",
