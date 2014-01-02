@@ -32,7 +32,13 @@ class DepartmentsController < ApplicationController
       format.html { render "home/dashboard" }
 	  
       format.json {
-        dept = Department.find(params[:id])
+        id = params[:id].to_s
+
+        if id.match(/^[[:alpha:]]+$/)
+          dept = Department.find_by(:short => params[:id])
+        else
+          dept = Department.find(params[:id])
+        end
 
         ret = {
           id:            dept[:id],

@@ -19,6 +19,7 @@ jQuery ->
           name: dept.get("name")
           hod: dept.get("hod")
           hod_email: dept.get("hod_email")
+          short: dept.get("short")
         }
 
       $(@el).html @template
