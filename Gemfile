@@ -61,3 +61,12 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
 end
+
+group :development, :test do
+  # RSpec (unit tests, some integration tests)
+  gem 'rspec-rails', '~> 2.14'
+
+  # Jasmine (client side application tests (JS))
+  gem 'jasmine', '~> 2.0.0'
+end
+
