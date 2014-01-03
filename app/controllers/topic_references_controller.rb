@@ -1,4 +1,7 @@
 class TopicReferencesController < ApplicationController
+
+  before_action :require_user
+
   # POST /topic_references
   # POST /topic_references.json
   def create

@@ -1,4 +1,7 @@
 class SectionDocumentsController < ApplicationController
+
+  before_action :require_user
+
   # GET /section_documents
   # GET /section_documents.json
   def index

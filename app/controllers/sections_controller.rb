@@ -1,4 +1,7 @@
 class SectionsController < ApplicationController
+
+  before_action :require_user
+
   # POST /sections
   # POST /sections.json
   def create

@@ -60,13 +60,14 @@ jQuery ->
         type: type or "show"
       @
 
-    login: () ->
+    login: (path) ->
       $("#signin_link").css
         display: "none"
       if @app.user
         @home()
       else
-        @login_view = new @app.LoginView()
+        url = {path: path}
+        @login_view = new @app.LoginView(url)
       @
 
     four_oh_four: (path) ->

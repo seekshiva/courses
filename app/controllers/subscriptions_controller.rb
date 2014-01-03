@@ -1,11 +1,14 @@
 class SubscriptionsController < ApplicationController
+
+  before_action :require_user, except: [:index]
+
   # GET /subscriptions
   # GET /subscriptions.json
   def index
     if @user.nil?
       respond_to do |format|
         format.html # index.html.erb
-        format.json { render json: "User not logged in" }
+        format.json { render json: { status: "Request cannot be processed", note: "User not logged in" } }
       end
     else
       @subscriptions = Subscription.where(:user_id => @user.id)

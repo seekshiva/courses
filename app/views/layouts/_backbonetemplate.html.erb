@@ -9,7 +9,8 @@
       <% end %>
       <div class="form-group">
         <div class="input-group">
-          <input type="text" name="username" style="text-align: right;" class="form-control" placeholder="webmail id" autofocus autocomplete="off">
+          <input type="text" name="username" style="text-align: right;" class="form-control" placeholder="webmail id" autofocus autocomplete="off"/>
+          <input type="hidden" name="redirect_url" value="{{url}}"/>
           <span class="input-group-addon">@nitt.edu</span>
         </div>
         <input type="password" name="password" class="form-control" placeholder="password" style="text-align: center; ">
@@ -1060,6 +1061,19 @@
 <script type="text/template" id="404-template">
   <h3 style="font-size: 60px; margin: 30px; ">Its a 404!</h3>
   <p class="lead">This means, the page you&#39;re trying to access does not exist!</p>
+  <div>
+    <a href="javascript:history.back()" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i> Back
+    </a>
+    <a href="/" class="btn btn-default">
+      <i class="glyphicon glyphicon-home"></i> Home
+    </a>
+  </div>
+</script>
+
+<script type="text/template" id="500-template">
+  <h3 style="font-size: 60px; margin: 30px; ">Its a 500!</h3>
+  <p class="lead">The server is experiencing some problem. Please contact the site admin/support</p>
   <div>
     <a href="javascript:history.back()" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i> Back

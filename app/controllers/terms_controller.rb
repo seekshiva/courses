@@ -1,4 +1,7 @@
 class TermsController < ApplicationController
+
+  before_action :require_user
+
   def show
     respond_to do |format|
       format.html { render "home/dashboard" }

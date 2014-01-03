@@ -1,4 +1,7 @@
 class TermDocumentsController < ApplicationController
+
+  before_action :require_user
+
   # POST /term_documents
   # POST /term_documents.json
   def create

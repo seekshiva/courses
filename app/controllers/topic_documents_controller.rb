@@ -1,4 +1,7 @@
 class TopicDocumentsController < ApplicationController
+
+  before_action :require_user
+
   # GET /topic_documents
   # GET /topic_documents.json
   def index

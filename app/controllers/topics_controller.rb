@@ -1,4 +1,7 @@
 class TopicsController < ApplicationController
+
+  before_action :require_user
+
   # POST /topics
   # POST /topics.json
   def create
@@ -11,7 +14,7 @@ class TopicsController < ApplicationController
           title:            topic.title,
           description:      topic.description,
           ct_status:        topic.ct_status,
-          reference:       Array.new(),
+          reference:        Array.new(),
           classes:          Array.new()
         }
         format.html #{ redirect_to @topic, notice: 'Topic was successfully created.' }

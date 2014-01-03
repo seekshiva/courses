@@ -56,6 +56,7 @@ class HomeController < ApplicationController
       @failed = false
       @username = params[:username]
       @password = params[:password]
+      @redirect_url = params[:redirect_url]
       flash[:imap_id] = @username
 
       imap = Net::IMAP.new("mail.nitt.edu")
@@ -80,13 +81,13 @@ class HomeController < ApplicationController
       format.html { 
         if @failed
           flash[:notice_type] = "alert-danger"
-          redirect_to "/#login", notice: "Failed to authenticate"
+          redirect_to "/#login", notice: "Username or Password is Invalid"
         else
           if @user.nil? or not @user.account_activated?
             redirect_to "/me"
           else
             session[:user_id] = @user.id
-            redirect_to root_url
+            redirect_to @redirect_url || root_url
           end
           
         end

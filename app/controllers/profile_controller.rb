@@ -1,4 +1,7 @@
 class ProfileController < ApplicationController
+
+  before_action :require_user, except: [:show]
+
   def show
     respond_to do |format|
       format.html {
@@ -66,7 +69,7 @@ class ProfileController < ApplicationController
             end
             ret.reverse_merge!(info)
           end
-          if profile.email == @user.email
+          if !@user.nil? && profile.email == @user.email
             ret[:edit] = true
           else 
             ret[:edit] = false

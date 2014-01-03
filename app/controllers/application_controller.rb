@@ -1,11 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  before_filter :setupenv
+  before_action :setupenv
 
   def setupenv
-    @user = nil
-            
+    @user = nil            
     begin
       unless session[:user_id].nil?
         @user = User.find(session[:user_id])
@@ -15,4 +14,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_user
+    if @user.nil?
+      render nothing: true , :status => 401
+    end
+  end
+
 end

@@ -630,11 +630,13 @@ jQuery ->
 
     el: "#content"
 
-    initialize: ->
+    initialize: (url)->
+      @path = url.path
       @render()
 
     render:  ->
       $(@el).html @template
+        url: @path
       @
       
   class NotFoundView extends Backbone.View
@@ -651,6 +653,19 @@ jQuery ->
         url: @path
       @
 
+  class ServerErrorView extends Backbone.View
+    template: Handlebars.compile($("#500-template").html())
+
+    el: "#content"
+
+    initialize: (path)->
+      @path = path
+      @render()
+
+    render:  ->
+      $(@el).html @template
+        url: @path
+      @
 
   @app = window.app ? {}
   
@@ -662,4 +677,5 @@ jQuery ->
   @app.ProfileView          = ProfileView
   @app.LoginView            = LoginView
   @app.NotFoundView         = NotFoundView
+  @app.ServerErrorView      = ServerErrorView
 

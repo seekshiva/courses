@@ -1,4 +1,7 @@
 class ClassroomsController < Admin::BaseController
+
+  before_action :require_user
+
   # GET /classrooms
   # GET /classrooms.json
   def index

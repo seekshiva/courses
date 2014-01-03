@@ -1,8 +1,10 @@
 class UploadController < ApplicationController
+
+  before_action :require_user
+
 	# GET /upload
   # GET /upload.json
-  def index
-  
+  def index  
     respond_to do |format|
       format.html { render "home/dashboard" }
       format.json { render json: { message: "UploadController only responds to POST"} }
