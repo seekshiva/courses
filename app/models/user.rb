@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   belongs_to :avatar
 
-  attr_accessible :name, :email, :department_id, :phone, :avatar_id
+  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated
 
   validates :email, :uniqueness => true
 

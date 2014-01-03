@@ -1,7 +1,4 @@
-class UsersController < ApplicationController
-
-  before_action :require_user
-
+class UsersController < ApplicationController  
   # POST /users
   # POST /users.json
   def create
@@ -27,7 +24,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @failed
-        format.html { redirect_to "/me", notice: "Webmail username/password invalid." }
+        format.html { redirect_to "/me", notice: "Username or Password is Invalid" }
       elsif @user.save
         session[:user_id] = @user.id
         format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
@@ -64,7 +61,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @failed
-        format.html { redirect_to "/me", notice: "Webmail username/password invalid." }
+        format.html { redirect_to "/login", notice: "Username or Password is Invalid" }
       elsif @user.update_attributes(params[:user]) 
         session[:user_id] = @user.id
         format.html { redirect_to root_url, notice: 'Thank you for signing up!.' }

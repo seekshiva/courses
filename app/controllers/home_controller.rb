@@ -45,7 +45,7 @@ class HomeController < ApplicationController
           # Please check before uncommenting the above line
         end
       else
-        redirect_to "/#login"
+        redirect_to "/login"
       end
     end
   end
@@ -81,7 +81,7 @@ class HomeController < ApplicationController
       format.html { 
         if @failed
           flash[:notice_type] = "alert-danger"
-          redirect_to "/#login", notice: "Username or Password is Invalid"
+          redirect_to "/login", notice: "Username or Password is Invalid"
         else
           if @user.nil? or not @user.account_activated?
             redirect_to "/me"
