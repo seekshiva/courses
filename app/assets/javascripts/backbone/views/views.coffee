@@ -529,8 +529,7 @@ jQuery ->
         selectors:     @selectors
         show_all:      flag
 
-      $("#search_box").val(search_text)
-      $("#search_box").focus()
+      $("#search_box").focus().val(search_text)
       $("#search_box").bind("input", _.bind(@render,@))
       @
 

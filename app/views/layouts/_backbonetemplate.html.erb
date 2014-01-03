@@ -95,26 +95,30 @@
       </tr>
     </thead>
     <tbody>
-      {{#each dept.course_listing}}
-        <tr><th colspan="3">{{this.semester}}</th></tr>
-        {{#each this.course_list}}
-          <tr>
-            <td>
-              <a href="/terms/{{this.term_id}}">
-                {{this.code}} - {{this.name}}
-              </a>
-            </td>
-            <td>
-              <small>
-                {{#each this.instructors}}
-                  <div><a href="/profile/{{this.email}}">{{this.name}}</a></div>
-                {{/each}}
-              </small>
-            </td>
-            <td>{{this.credits}}</td>
-          </tr>
+      {{#if dept.course_listing}}
+        {{#each dept.course_listing}}
+          <tr><th colspan="3">{{this.semester}}</th></tr>
+          {{#each this.course_list}}
+            <tr>
+              <td>
+                <a href="/terms/{{this.term_id}}">
+                  {{this.code}} - {{this.name}}
+                </a>
+              </td>
+              <td>
+                <small>
+                  {{#each this.instructors}}
+                    <div><a href="/profile/{{this.email}}">{{this.name}}</a></div>
+                  {{/each}}
+                </small>
+              </td>
+              <td>{{this.credits}}</td>
+            </tr>
+          {{/each}}
         {{/each}}
-      {{/each}}
+      {{else}}
+        <tr><td>No course is being offered by this department this year.</td></tr>
+      {{/if}}
     </tbody>
   </table>
 </script>
