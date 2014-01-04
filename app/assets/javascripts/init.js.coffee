@@ -15,9 +15,9 @@ jQuery ->
 
     $(document).ajaxError (e, req, settings) ->
       console.log("AjaxError");
-      console.log(e);
-      console.log(req);
-      console.log(settings);
+      # console.log(e);
+      # console.log(req);
+      # console.log(settings);
       if req.status == 404 && req.responseText != "saved"
         @app.router.four_oh_four(settings.url)
       else if req.status == 401 && req.responseText != "saved"
