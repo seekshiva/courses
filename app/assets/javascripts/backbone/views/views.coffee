@@ -145,10 +145,6 @@ jQuery ->
       $(@el).find("#specialized_view_selector li").removeClass("active")
       $(@el).find("#view_term_" + @view.type).addClass("active")
 
-      if @term_sub_status
-        @term_sub_status.render()
-      else 
-        @term_sub_status = new TermSubscriptionView(@)
 
       if @view.type == "topics"
         if @term_topics_view
@@ -156,6 +152,11 @@ jQuery ->
         else
           @term_topics_view = new TermTopicsView(@)
       else
+        if @view.type == "info"
+          if @term_sub_status
+            @term_sub_status.render()
+          else 
+            @term_sub_status = new TermSubscriptionView(@)
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
           edit_mode:     if @view.id == "edit" then "edit_mode" else ""
@@ -529,7 +530,8 @@ jQuery ->
         selectors:     @selectors
         show_all:      flag
 
-      $("#search_box").focus().val(search_text)
+      if search_text != "" && search_text
+        $("#search_box").focus().val(search_text)
       $("#search_box").bind("input", _.bind(@render,@))
       @
 

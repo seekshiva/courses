@@ -343,7 +343,6 @@
     <small>{{term.course.code}}</small>
     {{term.course.name}}
   </h3>
-  <div class="pull-right" id="term_subscription_status"></div>
   {{#if term.instructors}}
     <p>
       <strong>Course Instructor:</strong>
@@ -371,12 +370,16 @@
 </script>
 
 <script type="text/template" id="term-subscription-template">
-  <div class="field">
+  <th>
     Attending this term :
-    <div class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO">
-      <input type="checkbox" {{#if subscribed}}checked{{/if}} id="{{term_id}}_subscription_status"/>
+  </th>
+  <td>
+    <div class="field">
+      <div class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO">
+        <input type="checkbox" {{#if subscribed}}checked{{/if}} id="{{term_id}}_subscription_status"/>
+      </div>
     </div>
-  </div>
+  </td>
 </script>
 
 <script type="text/template" id="term-info-template">
@@ -414,6 +417,8 @@
               {{this.name}}
               {{/each}}
             </td>
+          </tr>
+          <tr id="term_subscription_status">
           </tr>
         </table>
       </div>
