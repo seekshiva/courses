@@ -10,6 +10,7 @@
  *
  *= require bootstrap-select
  *= require bootstrap-switch
+ *= require font-awesome
  *= require bwizard
  *= require_self
  *= require_tree .
@@ -174,4 +175,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-nav.navbar-right:last-child{
     margin-right: 0px;
+}
+
+.copyleft {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    display: inline-block;
+}
+
+.container .text-muted {
+    margin: 20px 0;
 }

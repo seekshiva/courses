@@ -1,3 +1,5 @@
+require 'net/imap'
+
 class UsersController < ApplicationController  
   # POST /users
   # POST /users.json

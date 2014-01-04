@@ -69,6 +69,8 @@ GEM
     ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.0.2)
+    font-awesome-sass (4.0.2)
+      sass-rails (>= 3.1.1)
     hike (1.2.3)
     i18n (0.6.9)
     jasmine (2.0.0)
@@ -198,6 +200,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.1)
   devise
   execjs
+  font-awesome-sass (~> 4.0.2)
   jasmine (~> 2.0.0)
   jquery-rails
   mime-types

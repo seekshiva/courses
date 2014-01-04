@@ -25,6 +25,7 @@ gem 'devise'
 
 gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'font-awesome-sass', '~> 4.0.2'
 
 #CSS
 
