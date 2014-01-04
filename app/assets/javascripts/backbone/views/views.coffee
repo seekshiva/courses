@@ -152,11 +152,6 @@ jQuery ->
         else
           @term_topics_view = new TermTopicsView(@)
       else
-        if @view.type == "info"
-          if @term_sub_status
-            @term_sub_status.render()
-          else 
-            @term_sub_status = new TermSubscriptionView(@)
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
           edit_mode:     if @view.id == "edit" then "edit_mode" else ""
@@ -186,6 +181,12 @@ jQuery ->
           "fileSizeLimit" : "10000kb",
           onUploadSuccess : _.bind(@addnotes, @)
         });
+        
+      else if @view.type == "info"
+        if @term_sub_status
+          @term_sub_status.render()
+        else 
+          @term_sub_status = new TermSubscriptionView(@)
       @
 
     addnotes: (fileobj, resp, status) ->
