@@ -43,28 +43,24 @@
     .footer {position: fixed; bottom: 10px; }
 
     #myModal{
+      max-width: 840px;
+      max-height: 430px;
       background: #fff;
-      width: 840px;
       margin: auto;
       overflow: hidden;
-      height: 413px;
       border-radius: 5px;
       -moz-border-radius: 3px;
       -webkit-border-radius: 5px;
     }
-    
   </style>
 </head>
 <body>
 
   <div class="container-narrow">
-
     <div class="masthead">
       <h3 class="muted">Courses</h3>
     </div>
-
     <hr>
-
     <div class="jumbotron">
       <h1>Welcome!</h1>
       <p class="lead">Looks like you're logging in here for the first time.</p>
@@ -72,9 +68,6 @@
         Start Today <i class="fa fa-long-arrow-right"></i>
       </button>
     </div>
-
-
-
     <div class="footer">
       <div class="container">
         <p class="text-muted">
@@ -85,78 +78,75 @@
   </div>
   
   <%= form_for(@user) do |f| %>
-  <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">    
-    <div class="modal-header">
-      <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Get Started</h3>
-    </div>
-    <div class="modal-body">
-      <div id="wizard">
-        <ol>
-          <li>Name & Department</li>
-          <li>Course List</li>
-          <li>Verification</li>
-        </ol>
-      <div>
-      <div class="field">
-  	    <%= f.label :name, "Full Name" %>
-  	    <%= f.text_field :name, placeholder: "Full Name", class: "form-control input-lg" %>
-  	    <%= f.hidden_field :activated, value: true %>
-  	    <%= f.hidden_field :email %>    
-	  </div>
-	  <div class="field">
-	    <%= f.label :department_id, "Department" %>
-	    <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "form-control input-lg") %>
-	  </div>	
-	</div>
-	
-	<div>
-	  <% if @user.is_student?  %>
-  	  <div class="alert alert-info">
-  	    <strong>Note:</strong>
-  	    <small>You can add or delete Courses you follow by visiting your Profile page.</small>
-  	  </div>
-	  <% if @course_list.length != 0 %>
-	  <small>
-	    Based on your Roll Number, we were able to guess that you are attending the following classes.
-	  </small>
-	  <table class="table table-hover">
-	    <thead>
-	      <tr>
-		<th>Course</th>
-		<th>Offered for</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <% @course_list.each do |course| %>
-	      <tr>
-		<td><%= course.name %></td>
-		<td><%= course.current_term.semester.ordinalize %> semester</td>
-	      </tr>
-	      <% end %>
-	    </tbody>
-	  </table>
-	  <% end %>
-	  <% else %>
-	  Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
-	  <% end %>
-	</div>
-	
-	<div>
-	  <div class="field">
-	    <span class="form-control-static input-lg"><%= @user[:email] %>@nitt.edu</span>
-	  </div>
-	  <div class="field">
-	    <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "form-control input-lg") %>
-	  </div>
-	</div>
+    <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">    
+      <div class="modal-header">
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Get Started</h3>
+      </div>
+      <div class="modal-body">
+        <div id="wizard">
+          <ol>
+            <li>Name & Department</li>
+            <li>Course List</li>
+            <li>Verification</li>
+          </ol>
+        <div>
+          <div class="field">
+            <%= f.label :name, "Full Name" %>
+            <%= f.text_field :name, placeholder: "Full Name", class: "form-control input-lg" %>
+            <%= f.hidden_field :activated, value: true %>
+            <%= f.hidden_field :email %>    
+          </div>
+          <div class="field">
+            <%= f.label :department_id, "Department" %>
+            <%= f.select(:department_id, options_for_select(@departments_array, @user.department_id), {}, class: "form-control input-lg") %>
+          </div>	
+        </div>
+        <div>
+          <% if @user.is_student?  %>
+            <div class="alert alert-info">
+              <strong>Note:</strong>
+              <small>You can add or delete Courses you follow by visiting your Profile page.</small>
+            </div>
+            <% if @course_list.length != 0 %>
+              <small>
+                Based on your Roll Number, we were able to guess that you are attending the following classes.
+              </small>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Offered for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @course_list.each do |course| %>
+                    <tr>
+                      <td><%= course.name %></td>
+                      <td><%= course.current_term.semester.ordinalize %> semester</td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          <% else %>
+            Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
+          <% end %>
+        </div>
+        <div>
+          <div class="field">
+            <span class="form-control-static input-lg"><%= @user[:email] %>@nitt.edu</span>
+          </div>
+          <div class="field">
+            <%= password_field_tag("password", "", placeholder: "Re-enter Webmail Password", class: "form-control input-lg") %>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-	<%= f.submit class: "btn btn-primary", value: "Register" %>
+        <%= f.submit class: "btn btn-primary", value: "Register" %>
       </div>
     </div>
-    <% end %>
-  </div>
+  <% end %>
   
   <%= javascript_include_tag "vendor" %>
   <%= javascript_include_tag "me" %>
