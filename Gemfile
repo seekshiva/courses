@@ -71,6 +71,9 @@ end
 group :test do
   # Cucumber (integration tests)
   gem 'database_cleaner',  '1.1.0'
+
+  # General helpers
+  gem 'factory_girl_rails', '4.3.0'
 end
 
 group :development, :test do
