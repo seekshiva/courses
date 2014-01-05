@@ -607,8 +607,11 @@ jQuery ->
 
     changeprofilepic: (fileobj, resp, status) ->
       resp = JSON.parse(resp)
-      @profile.set({avatar_id: resp.id, avatar: resp.url})
-      $("#avatar").attr({src: resp.url})
+      if(resp.status.toString() == "0")
+        @profile.set({avatar_id: resp.id, avatar: resp.url})
+        $("#avatar").attr({src: resp.url})
+      else 
+        $("#" + fileobj.id).css("background-color", "#FDE5DD").find('.data').css('color', 'red').html(' - ' + resp.msg + " - " + resp.error.pic[0]);
       @
 
     edit: (e) ->

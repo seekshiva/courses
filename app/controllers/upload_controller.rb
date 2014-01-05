@@ -31,7 +31,7 @@ class UploadController < ApplicationController
       if @book_cover.save()
         render :json => {:msg => "Upload Success", :status => "0", :id => @book_cover.id, :url => @book_cover.cover.url(:thumb) }
       else
-        render :json => {:msg => "Upload Failed", :error => @book_cover.error}
+        render :json => {:msg => "Upload Failed", :status => "1", :error => @book_cover.errors}
       end
     elsif tag == "avatar"
       # Process avatar
@@ -43,7 +43,7 @@ class UploadController < ApplicationController
       if @avatar.save
         render :json => {:msg => "Upload Success", :status => "0", :id => @avatar.id, :url => @avatar.pic.url(:large) }
       else 
-        render :json => {:msg => "Upload Failed", :error => @avatar.error}
+        render :json => {:msg => "Upload Failed", :status => "1", :error => @avatar.errors}
       end
     elsif tag == "document"
       # Save file
@@ -56,7 +56,7 @@ class UploadController < ApplicationController
       if @file.save
         render :json => {:msg => "Upload Success", :status => "0", :id => @file.id, :url => @file.document.url, :name => @file.document.original_filename }
       else
-        render :json => {:msg => "Upload Failed", :error => @file.error}
+        render :json => {:msg => "Upload Failed", :status => "1", :error => @file.errors}
       end
     end
   end
