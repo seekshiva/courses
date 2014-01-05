@@ -39,6 +39,10 @@ Courses::Application.routes.draw do
   get 'login', to: 'home#index'
   get 'signout', to: 'home#signout'
 
+  get 'about' => 'high_voltage/pages#show', id: 'about'
+  get 'contact-us' => 'high_voltage/pages#show', id: 'contact-us'
+  get 'help' => 'high_voltage/pages#show', id: 'help'
+
   get ':slug.json', to: "#{:slug}s#index"
   get ':slug', to: "#{:slug}s#index"
   #match ":slug" => "home#index"

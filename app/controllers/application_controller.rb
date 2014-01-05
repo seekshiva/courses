@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   
   before_action :setupenv
 
+  HighVoltage.layout = 'staticpages'
+
   def setupenv
     @user = nil            
     begin

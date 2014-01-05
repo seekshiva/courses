@@ -1,7 +1,7 @@
+<html>
 <head>
   <title>Courses</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= stylesheet_link_tag "uploadify", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
@@ -43,7 +43,9 @@
         <% end %>
       </div>
     </nav>
-    <div class="container" id="content"></div>
+    <div class="container" id="content">
+      <%= yield %>
+    </div>
   </div>
   <div id="footer">
     <div class="container">
@@ -57,19 +59,36 @@
       </p>
     </div>
   </div>
-  
-  <%= render :partial => 'layouts/backbonetemplate'%>
+
+  <script type="text/template" id="usermenu-template">
+    <li role="presentation" class="dropdown-header"><strong>My Courses</strong></li>
+    {{#if attending}}
+      {{#each subs}}
+        {{#if this.current}}
+          <li role="presentation"><a href="/terms/{{this.term_id}}">{{this.course_name}}</a></li>
+        {{/if}}
+      {{/each}}
+    {{else}}
+      <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be attending any</nobr><br/><nobr> current course</nobr></a></li>
+    {{/if}}
+    <li role="presentation" class="divider"></li>
+    {{#if user.admin}}
+      <li role="presentation"><a class="external" href="/admin">Admin panel</a></li>
+    {{/if}}
+    <li role="presentation"><a href="/profile/me">My Profile</a></li>
+    <li role="presentation"><a class="external" href="/signout">Sign out</a></li>
+  </script>
+
   
   <script type="text/javascript">
     var app = window.app ? window.app : {};
     <% unless @user.nil? %>
       app["user"] = <%= raw @user.to_json %>
     <% end %>
-    app["session_key"] = '<%= Rails.application.config.session_options[:key] %>';
-    app["session_val"] = '<%= cookies[Rails.application.config.session_options[:key]] %>';
   </script>
+  
+  <%= javascript_include_tag "staticapp" %>
 
-  <%= javascript_include_tag "application" %>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -78,3 +97,4 @@
     ga('create', 'UA-46845942-1', 'courseshub.in');ga('send', 'pageview');
   </script>
 </body>
+</html>

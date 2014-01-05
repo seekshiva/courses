@@ -56,6 +56,10 @@ gem 'bluecloth'
 
 gem 'uglifier',            '~> 1.3.0'
 
+# Static Pages
+
+gem 'high_voltage',        '~> 2.1.0'
+
 group :development do
   # Deployment
 
