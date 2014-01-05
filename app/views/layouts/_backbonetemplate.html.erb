@@ -414,7 +414,7 @@
             </th>
             <td>
               {{#each term.departments}}
-              {{this.name}}
+                {{this.name}}   &nbsp;
               {{/each}}
             </td>
           </tr>
@@ -429,7 +429,23 @@
         {{/each}}
       </div>
       <div class="tab-pane" id="info3">
-        <h4>Outline</h4>
+        <h4>Outline Of Topics</h4>
+        <ul>
+          {{#if term.sections}}
+              {{#each term.sections}}
+                <li>
+                  {{this.title}}
+                  <ul>
+                    {{#each this.topics}}
+                      <li>{{this.title}}</li>
+                    {{/each}}
+                  </ul>
+                </li>
+              {{/each}}
+          {{else}}
+            Sorry, this course doesn&#39;t seem to have topics.
+          {{/if}}
+        </ul>
       </div>
     </div>
   </div>
@@ -977,7 +993,7 @@
                     {{#each info.subs}}
                       {{#if this.attending}}
                         {{#if this.current}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a><br/>
                         {{/if}}
                       {{/if}}
                     {{/each}}
@@ -989,7 +1005,7 @@
                     {{#each info.subs}}
                       {{#unless this.attending}}
                         {{#if this.current}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a><br/>
                         {{/if}}
                       {{/unless}}
                     {{/each}}
@@ -1002,7 +1018,7 @@
                       {{#if this.attending}}
                         {{#unless this.current}}
                           {{#unless this.this_year}}
-                            <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - {{this.year}} - Semester {{this.sem}}
+                            <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - {{this.year}} - Semester {{this.sem}} <br/>
                           {{/unless}}
                         {{/unless}}
                       {{/if}}
@@ -1039,7 +1055,7 @@
                   <td>
                     {{#each info.classes}}
                       {{#if this.current}}
-                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}
+                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}} <br/>
                       {{/if}}
                     {{/each}}
                   </td>
@@ -1050,7 +1066,7 @@
                     {{#each info.classes}}
                       {{#unless this.current}}
                         {{#unless this.this_year}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}}
+                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Year {{this.year}} - Semester {{this.sem}} <br/>
                         {{/unless}}
                       {{/unless}}
                     {{/each}}
