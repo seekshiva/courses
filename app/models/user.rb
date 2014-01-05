@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
   belongs_to :department
 
   has_one :avatar, :dependent => :destroy
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   belongs_to :avatar
 
-  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated
+  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin
 
   validates :email, :uniqueness => true
 
