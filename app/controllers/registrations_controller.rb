@@ -8,7 +8,6 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(params[:user].merge(:admin => false))
 
-    logger.debug "########## otha!!"
     begin
       @username = params[:user][:email]
       @password = params[:password]
@@ -17,7 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
       imap.login(@username, @password)
       flash[:imap_id] = @username
       
-    logger.debug "########## otha!!"
     rescue Net::IMAP::NoResponseError
       @failed = true
     rescue Net::IMAP::BadResponseError
@@ -28,19 +26,45 @@ class RegistrationsController < Devise::RegistrationsController
       @failed = true
     end
 
-    logger.debug "########## otha!!"
     respond_to do |format|
-    logger.debug "########## inn!!"
       if @failed
-    logger.debug "########## aaaa!!"
         format.html { redirect_to "/me", notice: "Username or Password is Invalid" }
       elsif @user.save
-    logger.debug "########## bbbb!!"
         session[:user_id] = @user.id
-        format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
-        format.json { render json: @user, status: :created, location: @user }
+
+        if @user.is_student?
+          sub_list = Set.new()
+          Course.all.each do |course|
+            course.current_term.each do |term|
+              if (term.semester+1)/2 == @user.nth_year
+                term.departments.each do |dept|
+                  if dept.id == @user.department_id 
+                    sub_list.add({:term_id => term.id, :user_id => @user.id})
+                  end
+                end
+              end
+            end
+          end
+          sub_list = sub_list.to_a
+
+          if sub_list.nil? || sub_list.empty?
+            sub_status = true
+          else
+            sub_status = Subscription.create(sub_list)
+          end
+
+          if sub_status
+            format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
+            format.json { render json: @user, status: :created, location: @user }
+          else
+            format.html { render action: "new" }
+            format.json { render json: sub_status.errors, status: :unprocessable_entity }
+          end
+        else
+          format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
+          format.json { render json: @user, status: :created, location: @user }
+        end
       else
-    logger.debug "########## cccc!!"
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

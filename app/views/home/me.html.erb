@@ -44,7 +44,7 @@
 
     #myModal{
       max-width: 840px;
-      max-height: 430px;
+      max-height: 530px;
       background: #fff;
       margin: auto;
       overflow: hidden;
@@ -115,24 +115,26 @@
             </div>
             <% if @course_list.length != 0 %>
               <small>
-                Based on your Roll Number, we were able to guess that you are attending the following classes.
+                Based on your Roll Number, we were able to guess that you will be attending the following classes.
               </small>
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Course</th>
-                    <th>Offered for</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @course_list.each do |course| %>
+              <div style="height:150px;overflow:scroll;">
+                <table class="table table-hover" >
+                  <thead>
                     <tr>
-                      <td><%= course.name %></td>
-                      <td><%= course.current_term.semester.ordinalize %> semester</td>
+                      <th>Course Name</th>
+                      <th>Course Code</th>
                     </tr>
-                  <% end %>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    <% @course_list.each do |course| %>
+                      <tr>
+                        <td><%= course.name %></td>
+                        <td><%= course.subject_code %> semester</td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
             <% end %>
           <% else %>
             Sorry! We were unable guess the courses you attend based on your roll number. You can follow courses from the Settings page.
