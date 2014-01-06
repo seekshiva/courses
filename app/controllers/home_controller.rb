@@ -14,6 +14,10 @@ class HomeController < ApplicationController
         @user = User.new
       end
 
+      @departments_array = Department.all.map do |department|
+        ["#{department.name}", department.id]
+      end
+
       if flash[:imap_id]
         @user[:email] = flash[:imap_id]
         
@@ -22,10 +26,6 @@ class HomeController < ApplicationController
             @user.department_id = Department.find_by(rollno_prefix: @user[:email][0..3]).id
           rescue
             @user.department_id = 0
-          end
-
-          @departments_array = Department.all.map do |department|
-            ["#{department.name}", department.id]
           end
           
           @course_list = []
@@ -43,6 +43,8 @@ class HomeController < ApplicationController
           # This can be done in sql 
           # @course_list = Course.all.current_term.where("semester = {@user.nth_year*2} OR semester = {(@user.nth_year*2)-1} )
           # Please check before uncommenting the above line
+        else 
+          @user.department_id = 0
         end
       else
         redirect_to "/login"
