@@ -115,60 +115,64 @@ class Admin::TermsController < Admin::BaseController
           @faculty_create_status = TermFaculty.create(facultieslist)
         end
 
-        # Copy the latest term's books, sections, topics and references
-        # Copying term's books
-        term_ref = TermReference.where(:term_id => old_term.id)
-        term_books = Array.new()
-        term_ref.each do |book|
-          term_books << {:term_id => @term.id, :book_id => book.book_id}
-        end
-        if term_books.nil? || term_books.empty?
-          term_books = true
-        else
-          term_books = TermReference.create(term_books)
-        end
-
-        # Copying sections, topics and references
-        # Copying sections
-        sections = Section.where(:term_id => old_term.id)
-        term_sections = Array.new()
-        sections.each do |section|
-          term_sections << {:term_id => @term.id, :title => section.title}
-        end
-        if term_sections.nil? || term_sections.empty?
-          term_sections = true
-        else
-          term_sections = Section.create(term_sections)
-        end
-
-        # Copying topics
-        term_topics = Array.new()
-        old_topics = Array.new()
-        sections.each_index do |i|
-          topics = Topic.where(:section_id => sections[i].id )
-          topics.each do |topic|
-            old_topics << topic
-            term_topics << {:title => topic.title, :description => topic.description, :ct_status => topic.ct_status, :section_id => term_sections[i].id}
+        if !old_term.nil?
+          # Copy the latest term's books, sections, topics and references
+          # Copying term's books
+          term_ref = TermReference.where(:term_id => old_term.id)
+          term_books = Array.new()
+          term_ref.each do |book|
+            term_books << {:term_id => @term.id, :book_id => book.book_id}
           end
-        end
-        if term_topics.nil? || term_topics.empty?
-          term_topics = true
-        else
-          term_topics = Topic.create(term_topics)
-        end
-
-        # Copying references
-        term_refs = Array.new()
-        old_topics.each_index do |i|
-          refs = Reference.where(:topic_id => old_topics[i].id)
-          refs.each do |ref|
-            term_refs << {:term_reference_id => ref.term_reference_id, :indices => ref.indices, :topic_id => term_topics[i].id}
+          if term_books.nil? || term_books.empty?
+            term_books = true
+          else
+            term_books = TermReference.create(term_books)
           end
-        end
-        if term_refs.nil? || term_refs.empty?
-          term_refs = true
+
+          # Copying sections, topics and references
+          # Copying sections
+          sections = Section.where(:term_id => old_term.id)
+          term_sections = Array.new()
+          sections.each do |section|
+            term_sections << {:term_id => @term.id, :title => section.title}
+          end
+          if term_sections.nil? || term_sections.empty?
+            term_sections = true
+          else
+            term_sections = Section.create(term_sections)
+          end
+
+          # Copying topics
+          term_topics = Array.new()
+          old_topics = Array.new()
+          sections.each_index do |i|
+            topics = Topic.where(:section_id => sections[i].id )
+            topics.each do |topic|
+              old_topics << topic
+              term_topics << {:title => topic.title, :description => topic.description, :ct_status => topic.ct_status, :section_id => term_sections[i].id}
+            end
+          end
+          if term_topics.nil? || term_topics.empty?
+            term_topics = true
+          else
+            term_topics = Topic.create(term_topics)
+          end
+
+          # Copying references
+          term_refs = Array.new()
+          old_topics.each_index do |i|
+            refs = Reference.where(:topic_id => old_topics[i].id)
+            refs.each do |ref|
+              term_refs << {:term_reference_id => ref.term_reference_id, :indices => ref.indices, :topic_id => term_topics[i].id}
+            end
+          end
+          if term_refs.nil? || term_refs.empty?
+            term_refs = true
+          else
+            term_refs = Reference.create(term_refs)
+          end
         else
-          term_refs = Reference.create(term_refs)
+          term_books = term_sections = term_topics = term_refs = true
         end
 
         if term_books and term_sections and term_topics and term_refs and @dept_create_status and @faculty_create_status

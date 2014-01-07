@@ -39,4 +39,8 @@ class Term < ActiveRecord::Base
     current_academic_year = Time.now.year.to_i - (Time.now.month<6 ? 1 : 0)
     self.academic_year == current_academic_year
   end
+
+  def is_odd_term?
+    self.semester%2 == 0 ? false : true
+  end
 end
