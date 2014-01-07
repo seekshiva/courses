@@ -124,7 +124,6 @@ class TermsController < ApplicationController
             @term[:faculty] = true
           end
         end
-
         
         render json: @term
       } 

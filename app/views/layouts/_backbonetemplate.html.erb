@@ -604,18 +604,22 @@
                       <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
                         <i class="glyphicon glyphicon-remove"></i>
                       </div>
-                      <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
-                        <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                      </div>
+                      {{#if ../../../faculty}}
+                        <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
+                          <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                        </div>
+                      {{/if}}
                     </div>
                   {{else}}
                     <div class="btn-group pull-right">
                       <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
                         <i class="glyphicon glyphicon-pencil"></i>
                       </div>
-                      <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
-                        <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                      </div>
+                      {{#if ../../../faculty}}
+                        <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
+                          <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                        </div>
+                      {{/if}}
                     </div>
                     <h4>{{this.title}}</h4>
                   {{/if}}
@@ -636,15 +640,17 @@
                         {{#if this.edit}}
                             <form>
                               <div class="btn-group pull-right field">
-                                <div class="btn btn-default btn-mini btn-success edit_topic" topic-id="{{this.id}}">
+                                <div class="btn btn-default btn-sm btn-success edit_topic" topic-id="{{this.id}}">
                                   <i class="glyphicon glyphicon-ok"></i>
                                 </div>
-                                <div class="btn btn-default btn-mini toggle_edit_topic" topic-id="{{this.id}}">
+                                <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{this.id}}">
                                   <i class="glyphicon glyphicon-remove"></i>
                                 </div>
-                                <div class="btn btn-danger btn-mini delete_topic" topic-id="{{this.id}}">
-                                  <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                                </div>
+                                {{#if ../../../../faculty}}
+                                  <div class="btn btn-danger btn-sm delete_topic" topic-id="{{this.id}}">
+                                    <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                                  </div>
+                                {{/if}}
                               </div>
                               <div class="field">
                                 <input type="text" value="{{this.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{this.id}}"/>
@@ -685,12 +691,14 @@
                           </form>
                         {{else}}
                             <div class="btn-group pull-right">
-                              <div class="btn btn-default btn-mini toggle_edit_topic" topic-id="{{this.id}}">
+                              <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{this.id}}">
                                 <i class="glyphicon glyphicon-pencil"></i>
                               </div>
-                              <div class="btn btn-danger btn-mini delete_topic" topic-id="{{this.id}}">
-                                <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                              </div>
+                              {{#if ../../../../faculty}}  
+                                <div class="btn btn-danger btn-sm delete_topic" topic-id="{{this.id}}">
+                                  <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                                </div>
+                              {{/if}}
                             </div>
                             {{this.title}}
                             <span class="label label-success">{{this.ct_status}}</span>

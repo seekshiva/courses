@@ -537,6 +537,7 @@ jQuery ->
         term_sections: @term_sections
         selectors:     @selectors
         show_all:      flag
+        faculty:       @term_view.term.attributes.faculty
 
       if search_text != "" && search_text
         $("#search_box").focus().val(search_text)
