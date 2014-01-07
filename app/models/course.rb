@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
   
   attr_accessible :subject_code, :name, :credits, :about
 
-  validates :subject_code, :name, :about, :presence => {
+  validates :subject_code, :name, :presence => {
     :message => "-> not present"
   }
   validates :name, :uniqueness => true
