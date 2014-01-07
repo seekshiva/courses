@@ -27,27 +27,28 @@ class Admin::CoursesController < Admin::BaseController
     @course = Course.find(course_id)
     @tab = params[:tab] || "info"
     
-    @course["references"] = @course.books.uniq
+    @course_obj = Hash.new
+    @course_obj["references"] = @course.books.uniq
 
-    @course["instructors"] = []
-    @course["departments"] = []
+    @course_obj["instructors"] = []
+    @course_obj["departments"] = []
     @course.this_year.each do |term|
       term.faculties.each do |faculty|
-        @course["instructors"] << {
+        @course_obj["instructors"] << {
           instructor: "#{faculty.prefix} #{faculty.user.name}",
           semester:   term.semester.ordinalize,
           year:       "#{term.academic_year}-#{term.academic_year+1}"
         }
       end
       term.departments.each do |department|
-        @course["departments"] << {
+        @course_obj["departments"] << {
           name: department.name.capitalize,
           short: department.short
         }
       end
     end
-    @course["departments"] = @course["departments"].uniq
-    @course["instructors"] = @course["instructors"].uniq
+    @course_obj["departments"] = @course_obj["departments"].uniq
+    @course_obj["instructors"] = @course_obj["instructors"].uniq
 
     respond_to do |format|
       format.html # show.html.erb
