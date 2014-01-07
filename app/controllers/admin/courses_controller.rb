@@ -5,7 +5,7 @@ class Admin::CoursesController < Admin::BaseController
     respond_to do |format|
       @page_no = params[:page] || 1
       if params[:code]
-        @courses = Course.find_all_by_subject_code(params[:code]).paginate(:page => @page_no, :per_page => 20)
+        @courses = Course.where(:subject_code => params[:code]).paginate(:page => @page_no, :per_page => 20)
       else
         @courses = Course.paginate(:page => @page_no, :per_page => 20)
       end
