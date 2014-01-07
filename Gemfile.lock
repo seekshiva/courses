@@ -228,6 +228,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
+  capybara (= 2.2.0)
   coffee-rails (~> 4.0.1)
   cucumber-rails (= 1.4.0)
   database_cleaner (= 1.1.0)

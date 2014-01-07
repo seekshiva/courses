@@ -70,6 +70,7 @@ end
 
 group :test do
   # Cucumber (integration tests)
+  gem 'capybara',          '2.2.0'
   gem 'database_cleaner',  '1.1.0'
 
   # General helpers
