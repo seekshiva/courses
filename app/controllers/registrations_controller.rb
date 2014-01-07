@@ -47,6 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
           end
           sub_list = sub_list.to_a
 
+          sub_status = false
           if sub_list.nil? || sub_list.empty?
             sub_status = true
           else
@@ -57,7 +58,7 @@ class RegistrationsController < Devise::RegistrationsController
             format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
             format.json { render json: @user, status: :created, location: @user }
           else
-            format.html { render action: "new" }
+            format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
             format.json { render json: sub_status.errors, status: :unprocessable_entity }
           end
         else
@@ -65,7 +66,7 @@ class RegistrationsController < Devise::RegistrationsController
           format.json { render json: @user, status: :created, location: @user }
         end
       else
-        format.html { render action: "new" }
+        format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
