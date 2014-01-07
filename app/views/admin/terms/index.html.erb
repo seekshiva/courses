@@ -19,7 +19,8 @@
         <% elsif term.this_year? 
             if term.is_odd_term?%><div class="label label-default">Completed
           <% else %><div class="label label-info">Scheduled
-        <%  end %>
+        <%  end 
+            else %><div class="label label-default">Completed
         <% end %>
         </div></td>
       <td><%= "#{term.academic_year}-#{term.academic_year+1}" %></td>

@@ -84,6 +84,11 @@ jQuery ->
       @department.fetch()
 
     render: =>
+      course_listing = []
+      for list in @department.attributes.course_listing
+        list.course_list.sort((a,b)-> return a.code>b.code)
+        course_listing.push list
+      @department.attributes.course_listing = course_listing
       $(@el).html @template
         dept: @department.attributes
       $(@el).find("a").click @app.show_local_page
