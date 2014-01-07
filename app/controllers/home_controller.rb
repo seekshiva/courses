@@ -89,6 +89,8 @@ class HomeController < ApplicationController
             redirect_to "/me"
           else
             session[:user_id] = @user.id
+            flash[:notice_type] = 'alert-success'
+            flash[:notice] = "You have successfully logged in!"
             redirect_to @redirect_url || root_url
           end
           
@@ -99,7 +101,8 @@ class HomeController < ApplicationController
   
   def signout
     session[:user_id] = nil
-    redirect_to root_url
+    flash[:notice_type] = 'alert-success'
+    redirect_to root_url, notice: "You have successfully logged out."
   end
 
 end
