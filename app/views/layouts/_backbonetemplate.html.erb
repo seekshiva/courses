@@ -340,6 +340,36 @@
     <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn {{#if edit_mode}}btn-success{{else}}btn-default greener{{/if}} btn-sm">
       <i class="glyphicon glyphicon-pencil"></i>
     </a>
+
+    {{#if term.faculty}}
+      <button data-target="#TermSubModal" role="button" class="btn btn-success btn-sm" data-toggle="modal">
+        <i class="glyphicon glyphicon-list"></i>
+      </button>
+      <div class="modal fade" id="TermSubModal" tabindex="-1" role="dialog" aria-hidden="true">    
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3>List of Students attending this course</h3>
+            </div>
+            <div class="modal-body">
+              <div style="height:350px;overflow:auto;">
+                <ul class="list-group">
+                  {{#if term.sub_list.length}}
+                    {{#each term.sub_list}}
+                      <li class="list-group-item"><a href="/profile/{{this.email}}">{{this.name}}</a></li>
+                    {{/each}}
+                  {{else}}
+                    <li>Sorry, no one seems to be subscribed to this course</li>
+                  {{/if}}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
     <small>{{term.course.code}}</small>
     {{term.course.name}}
   </h3>
@@ -418,8 +448,10 @@
               {{/each}}
             </td>
           </tr>
-          <tr id="term_subscription_status">
-          </tr>
+          {{#unless term.faculty}}
+            <tr id="term_subscription_status">
+            </tr>
+          {{/unless}}
         </table>
       </div>
       <div class="tab-pane" id="info2">

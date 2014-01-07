@@ -78,7 +78,6 @@ class TermsController < ApplicationController
 
         classes = Classroom.where("term_id = #{term.id}").collect do |cl|
           ret = {date: "#{cl.date.strftime('%-d').to_i.ordinalize} #{cl.date.strftime('%b')}", time: cl.time, room: cl.room, term_id: cl.term_id }
-          
           ret
         end
 
@@ -111,6 +110,21 @@ class TermsController < ApplicationController
           instructors:     instructors,
           subscription:    sub
         }
+        
+        if not @user.is_student?
+          faculty = Faculty.where(:user_id => @user.id)
+          if !faculty.nil? || !faculty.empty?
+            sub_list = term.subscriptions.collect do |sub|
+              {
+                name: sub.user.name ,
+                email: sub.user.email
+              }
+            end
+            @term[:sub_list] = sub_list
+            @term[:faculty] = true
+          end
+        end
+
         
         render json: @term
       } 

@@ -142,6 +142,7 @@ jQuery ->
         term: @term.attributes
         edit_mode: if @view.id == "edit" then "edit_mode" else ""
 
+      $("#TermSubModal").modal({"backdrop":"static","show":false});
       $(@el).find("#specialized_view_selector li").removeClass("active")
       $(@el).find("#view_term_" + @view.type).addClass("active")
 
@@ -158,7 +159,13 @@ jQuery ->
           term_sections: @term_sections
           host:          window.location.host
 
-      $(@el).find("a:not(.local-nav a, .external)").click @app.show_local_page
+      that = this
+      $(@el).find("a:not(.local-nav a, .external)").click( (e) ->
+          $('#TermSubModal').modal("hide").remove();
+          $('.modal-backdrop').remove();
+          $('body').removeClass( "modal-open" );
+          that.app.show_local_page(e)
+      )
 
       if @view.type == "reference"
         # Uploadify needs csrf tokens & session details
