@@ -28,7 +28,8 @@ class RegistrationsController < Devise::RegistrationsController
 
     respond_to do |format|
       if @failed
-        format.html { redirect_to "/me", notice: "Username or Password is Invalid" }
+        flash[:notice_type] = "alert-danger"
+        format.html { redirect_to "/login", notice: "Username or Password is Invalid" }
       elsif @user.save
         session[:user_id] = @user.id
 
@@ -55,17 +56,21 @@ class RegistrationsController < Devise::RegistrationsController
           end
 
           if sub_status
+            flash[:notice_type] = "alert-success"
             format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
             format.json { render json: @user, status: :created, location: @user }
           else
+            flash[:notice_type] = "alert-danger"
             format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
             format.json { render json: sub_status.errors, status: :unprocessable_entity }
           end
         else
+          flash[:notice_type] = "alert-success"
           format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
           format.json { render json: @user, status: :created, location: @user }
         end
       else
+        flash[:notice_type] = "alert-danger"
         format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
