@@ -1,3 +1,13 @@
+<div class="span12" style="text-align:center">
+  <caption><h3>Listing All Authors</h3></caption>
+</div>
+
+<a href="<%= url_for new_admin_author_path %>" class="btn btn-default">
+  <span class="glyphicon glyphicon-plus" style="color: green;"></span>
+  New Author
+</a>
+<br/>
+<br/>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -27,5 +37,7 @@
 </table>
 
 <br />
-
-<%= link_to 'New Author', new_admin_author_path, class: "btn btn-small btn-primary" %>
+<a href="<%= url_for new_admin_author_path %>" class="btn btn-default">
+  <span class="glyphicon glyphicon-plus" style="color: green;"></span>
+  New Author
+</a>

@@ -25,7 +25,8 @@
   <div class="field">
     <%= f.number_field :credits, class: "form-control", placeholder: "# Credits" %>
   </div>
-  <div class="field">
+  <div class="form-group">
+    <p class="help-block small pull-right">*Course Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
     <%= f.text_area :about, class: "form-control", placeholder: "About Course", rows: 10 %>
   </div>
   <div class="actions">

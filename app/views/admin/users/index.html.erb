@@ -6,6 +6,11 @@
   <div class="pull-right">
     <%= page_navigation_links @users%>
   </div>
+
+  <a href="<%= url_for new_admin_user_path %>" class="btn btn-default pull-left">
+    <span class="glyphicon glyphicon-plus" style="color: green; "></span>
+    New User
+  </a>
   
   <thead>
     <tr>
@@ -37,7 +42,7 @@
 <div class="pull-right">
   <%= page_navigation_links @users%>
 </div>
-  
-<br />
-
-<%= link_to "New User", new_admin_user_path, class: "btn btn-primary btn-small" %>
+<a href="<%= url_for new_admin_user_path %>" class="btn btn-default pull-left">
+  <span class="glyphicon glyphicon-plus" style="color: green; "></span>
+  New User
+</a>

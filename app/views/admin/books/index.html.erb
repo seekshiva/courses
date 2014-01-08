@@ -1,10 +1,15 @@
+<div class="span12" style="text-align:center">
+  <caption><h3>Listing Books</h3></caption>
+</div>
+
 <table class="table">
-  <caption><h3>
-      Listing Books
-  </h3></caption>
   <div class="pull-right">
     <%= page_navigation_links @books%>
   </div>
+  <a href="<%= url_for new_admin_book_path %>" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus" style="color: green;"></span>
+    New Book
+  </a>
   <thead>
     <tr>
       <th>Title</th>
@@ -52,9 +57,6 @@
 <div class="pull-right">
   <%= page_navigation_links @books%>
 </div>
-  
-<br />
-
 <a href="<%= url_for new_admin_book_path %>" class="btn btn-default">
   <span class="glyphicon glyphicon-plus" style="color: green;"></span>
   New Book
