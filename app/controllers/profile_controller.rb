@@ -49,23 +49,27 @@ class ProfileController < ApplicationController
             end
           else
             faculty = Faculty.find_by user_id: profile.id
-            info = {
-              student:      false,
-              prefix:       faculty.prefix,
-              about:        faculty.about,
-              designation:  faculty.designation
-            }
 
-            ret[:classes] = TermFaculty.where(:faculty_id => faculty.id).collect do |tf|
-              {
-                id:           tf.id,
-                term_id:      tf.term_id,
-                course_name:  tf.term.course.name,
-                this_year:    tf.term.this_year?,
-                current:      tf.term.is_current?,
-                year:         tf.term.academic_year,
-                sem:          tf.term.semester
+            ret[:student] = true;
+            if !faculty.nil?
+              info = {
+                student:      false,
+                prefix:       faculty.prefix,
+                about:        faculty.about,
+                designation:  faculty.designation
               }
+
+              ret[:classes] = TermFaculty.where(:faculty_id => faculty.id).collect do |tf|
+                {
+                  id:           tf.id,
+                  term_id:      tf.term_id,
+                  course_name:  tf.term.course.name,
+                  this_year:    tf.term.this_year?,
+                  current:      tf.term.is_current?,
+                  year:         tf.term.academic_year,
+                  sem:          tf.term.semester
+                }
+              end
             end
             ret.reverse_merge!(info)
           end
