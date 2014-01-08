@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
   validates :subject_code, :name, :presence => {
     :message => "-> not present"
   }
-  validates :name, :uniqueness => true
+  validates :subject_code, :uniqueness => true
   validates :credits, :numericality => {:greater_than_or_equal_to => 0} # zero credit courses can exist
 
   def current_term
