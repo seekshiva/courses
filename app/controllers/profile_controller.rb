@@ -52,6 +52,7 @@ class ProfileController < ApplicationController
 
             ret[:student] = true;
             if !faculty.nil?
+              ret[:student] = false;
               info = {
                 student:      false,
                 prefix:       faculty.prefix,
