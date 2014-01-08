@@ -364,7 +364,39 @@ jQuery ->
       ct_status = $.trim($("#topic_ct_"+topic_id).val())
       description = $.trim($("#topic_description_"+topic_id).val())
       topic_reference = $(".topic_reference")
-      
+      topic_notes = $("#topic_notes_"+topic_id).val()
+
+      for section in @term_view.term.attributes.sections
+        topic = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+        if topic
+          for note in topic.notes
+            sub = -1
+            if topic_notes!=null && note && note.note_id
+              sub = topic_notes.indexOf(note.note_id.toString())
+            if note && note.id && sub==-1
+              # Delete topic_notes
+              topic_note_model = new @term_view.app.TopicDocumentModel({id: note.id});
+              topic_note_model.destroy()
+              index = topic.notes.indexOf(note)
+              topic.notes.splice(index, 1)
+              @render()
+            else if sub!=-1 && note.id==null
+              # Create topic_notes
+              topic_note_model = new @term_view.app.TopicDocumentModel({note_id: note.note_id, url: note.url, name: note.name, topic_id: topic_id});
+              that = this
+              topic_note_model.save(null, { success: (model, resp) ->
+                for section in that.term_view.term.attributes.sections
+                  topic = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                  if topic
+                    topic.notes.push {
+                      id: topic_note_model.id,
+                      note_id: topic_note_model.attributes.note_id,
+                      url: topic_note_model.attributes.url,
+                      name: topic_note_model.attributes.name,
+                    }
+                    break;
+              })
+
       for topic_ref in topic_reference
         ref_id = $(topic_ref).attr("ref-id")
         term_ref_id = $(topic_ref).attr("term-ref-id")
@@ -495,7 +527,11 @@ jQuery ->
           books = _.filter(topic["reference"], (ele) ->
               return $.trim(ele.indices) != ""
             )
+          notes = _.filter(topic["notes"], (ele) ->
+              return ele.id != null
+            )
           topic["reference"] = books
+          topic["notes"] = notes
           if @topic_id
             if @topic_id.toString() == topic.id.toString()
               topic["edit"] = true
@@ -524,6 +560,26 @@ jQuery ->
                     term_ref_id:    book.term_ref_id
                   } 
               topic["reference"] = books
+              notes = []
+              for note in @term_view.term.attributes.attachments
+                ref_note = _.find(topic["notes"], (ele) -> 
+                  return ele.note_id.toString() == note.id.toString()
+                )
+                if ref_note
+                  notes.push {
+                    id:       ref_note.id,
+                    note_id:  ref_note.note_id,
+                    name:     ref_note.name,
+                    url:      ref_note.url
+                  }
+                else
+                  notes.push {
+                    id:       null,
+                    note_id:  note.id,
+                    name:     note.name,
+                    url:      note.url
+                  }
+              topic["notes"] = notes
           if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
             if search_text == "" || (topic.title && topic.title.search(search_regx) != -1) || (topic.description && topic.description.search(search_regx) != -1)
               section_clone.topics.push topic
@@ -543,6 +599,8 @@ jQuery ->
         selectors:     @selectors
         show_all:      flag
         faculty:       @term_view.term.attributes.faculty
+
+      $(".selectpicker").selectpicker()
 
       if search_text != "" && search_text
         $("#search_box").focus().val(search_text)

@@ -33,6 +33,14 @@ class TermsController < ApplicationController
                 :indices => ref.indices 
               }
             end
+            top_["notes"] = topic.topic_documents.collect do |topic_doc|
+              {
+                :id => topic_doc.id,
+                :note_id => topic_doc.document.id,
+                :name => topic_doc.document.document.original_filename,
+                :url => topic_doc.document.document.url
+              }
+            end
             top_["classes"] = topic.classrooms.collect do |cl|
               {id: cl.id, date: cl.date.strftime("%D"), time: cl.time, venue: cl.room}
             end

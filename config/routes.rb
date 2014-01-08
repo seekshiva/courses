@@ -28,7 +28,7 @@ Courses::Application.routes.draw do
   resources :courses
   resources :topics, :sections, :classrooms
   resources :topic_references
-  resources :term_documents, :section_document, :topic_document
+  resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
 
   post 'upload/:tab', to: 'upload#create'

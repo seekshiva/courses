@@ -99,7 +99,7 @@ jQuery ->
     defaults:
       id:     null
 
-    urlRoot: "/topic_document/"
+    urlRoot: "/topic_documents/"
 
   class ReferencesCollection extends Backbone.Collection
     model: ReferenceModel
