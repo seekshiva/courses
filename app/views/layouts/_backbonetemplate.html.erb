@@ -1097,39 +1097,27 @@
                 </tr>
                 <tr>
                   <th>Currently Attending Courses</th>
-                  <td>
+                  <td class="text-info">
                     {{#each info.subs}}
-                      {{#if this.attending}}
-                        {{#if this.current}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a><br/>
-                        {{/if}}
+                      {{#if this.current}}
+                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                        -
+                        <i>{{this.year}}</i> - {{this.sem}} semester<br/>
                       {{/if}}
-                    {{/each}}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Courses Subscribed</th>
-                  <td>
-                    {{#each info.subs}}
-                      {{#unless this.attending}}
-                        {{#if this.current}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a><br/>
-                        {{/if}}
-                      {{/unless}}
                     {{/each}}
                   </td>
                 </tr>
                 <tr>
                   <th>Courses Completed</th>
-                  <td>
+                  <td class="text-muted">
                     {{#each info.subs}}
-                      {{#if this.attending}}
-                        {{#unless this.current}}
-                          {{#unless this.this_year}}
-                            <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - {{this.year}} - Semester {{this.sem}} <br/>
-                          {{/unless}}
+                      {{#unless this.current}}
+                        {{#unless this.this_year}}
+                          <a href="/terms/{{this.term_id}}" class="text-muted">{{this.course_name}}</a>
+                          -
+                          <i>{{this.year}}</i> - {{this.sem}} semester<br/>
                         {{/unless}}
-                      {{/if}}
+                      {{/unless}}
                     {{/each}}
                   </td>
                 </tr>
@@ -1163,18 +1151,24 @@
                   <td>
                     {{#each info.classes}}
                       {{#if this.current}}
-                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Semester {{this.sem}} <br/>
+                        <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
+                        -
+                        <span class="text-info"><i>{{this.year}}</i> - {{this.sem}} semester</span>
+                        <br />
                       {{/if}}
                     {{/each}}
                   </td>
                 </tr>
                 <tr>
                   <th>Courses Handled</th>
-                  <td>
+                  <td class="text-muted">
                     {{#each info.classes}}
                       {{#unless this.current}}
                         {{#unless this.this_year}}
-                          <a href="/terms/{{this.term_id}}">{{this.course_name}}</a> - Year {{this.year}} - Semester {{this.sem}} <br/>
+                          <a href="/terms/{{this.term_id}}" class="text-muted">{{this.course_name}}</a>
+                          -
+                          <span><i>{{this.year}}</i> - {{this.sem}} semester</span>
+                          <br />
                         {{/unless}}
                       {{/unless}}
                     {{/each}}

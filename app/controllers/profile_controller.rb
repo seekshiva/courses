@@ -38,13 +38,12 @@ class ProfileController < ApplicationController
               {
                 id:           sub.id, 
                 term_id:      sub.term_id,
-                attending:    ((sub.attending.nil? || sub.attending == 0) ? 0 : 1),
                 course_name:  sub.term.course.name,
                 course_id:    sub.term.course_id,
                 current:      sub.term.is_current?,
                 this_year:    sub.term.this_year?,
-                year:         sub.term.academic_year,
-                sem:          sub.term.semester
+                year:         sub.term.year,
+                sem:          sub.term.semester.ordinalize
               }
             end
           else
@@ -67,8 +66,8 @@ class ProfileController < ApplicationController
                   course_name:  tf.term.course.name,
                   this_year:    tf.term.this_year?,
                   current:      tf.term.is_current?,
-                  year:         tf.term.academic_year,
-                  sem:          tf.term.semester
+                  year:         tf.term.year,
+                  sem:          tf.term.semester.ordinalize
                 }
               end
             end
