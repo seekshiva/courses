@@ -22,11 +22,11 @@
     </div>
     <div class="field">
       <%= f.label :academic_year %>
-      <%= f.number_field :academic_year, value: 0.year.from_now.year, class: "form-control" %>
+      <%= f.number_field :academic_year, value: @term.academic_year || 0.year.from_now.year, class: "form-control" %>
     </div>
     <div class="field">
       <%= f.label :semester %>
-      <%= f.select :semester, options_for_select(@options, @term_semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
+      <%= f.select :semester, options_for_select(@options, @term.semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
     </div>
     <div class="field">
       <%= label_tag(:departments, "Department(s):") %>
