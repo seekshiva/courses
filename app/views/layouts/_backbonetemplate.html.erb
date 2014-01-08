@@ -495,7 +495,7 @@
         </a>
       {{/each}}
       {{#if edit_mode}}
-        <div class="input-group tab-content col-md-12">
+        <div class="tab-content col-md-12">
           <form>
             <div class="field">
               <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
@@ -665,8 +665,9 @@
                               </div>
                             </dt>
                             <dd>
-                              <div class="field">
-                                <textarea id="topic_description_{{this.id}}" class="form-control">{{this.description}}</textarea>
+                              <div class="form-group">
+                                <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
+                                <textarea id="topic_description_{{this.id}}" class="form-control" rows="8">{{this.description}}</textarea>
                               </div>
                               <table class="table table-bordered">
                                 {{#if this.reference}}
@@ -774,27 +775,28 @@
             </tbody>
           </table>
           {{#if ../edit_mode}}
-            <form>
-              <legend><small>Add New topic</small></legend>
-              <div class="input-group col-md-12">
-                <div class="field">
-                  <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Topic Title">
+            <div class="wrap tab-content col-md-12" style="border:1px solid #ddd;background: #DEFFD3;">
+              <form role="form">
+                <legend><small>Add New Subtopic</small></legend>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Subtopic Title">
                 </div>
-                <div class="field">
+                <div class="form-group">
                   <select id="topic_ct_{{this.id}}" class="form-control">
                     <option value="CT1">CT1</option>
                     <option value="CT2">CT2</option>
                     <option value="Post CT">Post CT</option>
                   </select>
                 </div>
-                <div class="field">
-                  <textarea id="topic_description_{{this.id}}" class="form-control"></textarea>
+                <div class="form-group">
+                  <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
+                  <textarea id="topic_description_{{this.id}}" class="form-control" rows="8" placeholder="Description"></textarea>
                 </div>
                 <div class="field">
                   <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           {{/if}}
         </div>
       {{/each}}
@@ -968,13 +970,13 @@
               <div class="field">
                 <input type="text" class="form-control" value="{{info.Designation}}" placeholder="Designation" id="designation"/>
               </div>
-              <div class="field">
-                <textarea class="form-control" placeholder="About You" id="about">{{{info.about}}}</textarea>
+              <div class="form-group">
+                <p class="help-block small pull-right">*About section is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
+                <textarea class="form-control" placeholder="About You" id="about" rows="12">{{{info.about}}}</textarea>
               </div>
               <div class="field">
                 <a class="btn btn-default btn-success" id="save" href="javascript:history.back()">Save</a>
               </div>
-
             </fieldset>
           {{/if}}
           <br/>
