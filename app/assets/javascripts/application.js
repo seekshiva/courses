@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require vendor
+//= require markdown.js
 //= require uploadify.js
 //= require underscore
 //= require backbone

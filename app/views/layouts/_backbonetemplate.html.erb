@@ -198,7 +198,7 @@
                           {{this.title}}
                         </dt>
                         <dd>
-                          <p>{{this.description}}</p>
+                          <p>{{{toMarkdown this.description}}}</p>
                           <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -253,7 +253,7 @@
                             This topic has not been taught so far this semester
                           {{/if}}
                         </small></p>
-                        <p>{{this.description}}</p>
+                        <p>{{{toMarkdown this.description}}}</p>
                         <table class="table table-bordered">
                           <thead><tr>
                             {{#each this.reference}}
@@ -563,7 +563,7 @@
                           </small>
                         </p>
                         
-                        <p>{{this.description}}</p>
+                        <p>{{{toMarkdown this.description}}}</p>
                         <table class="table table-bordered">
                           <thead><tr>
                             {{#each this.reference}}
@@ -746,7 +746,7 @@
                                 {{/if}}
                               </small>
                             </p>
-                            <p>{{this.description}}</p>
+                            <p>{{{toMarkdown this.description}}}</p>
                             <table class="table table-bordered">
                               <thead><tr>
                                 {{#each this.reference}}
@@ -800,7 +800,7 @@
                             {{/if}}
                           </small>
                         </p>
-                        <p>{{this.description}}</p>
+                        <p>{{{toMarkdown this.description}}}</p>
                         <table class="table table-bordered">
                           <thead><tr>
                             {{#each this.reference}}

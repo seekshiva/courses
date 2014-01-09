@@ -32,9 +32,12 @@ jQuery ->
     $(".local").find("a:not(.external)").click (e) ->
       unless e.target.parentNode.id == "signin_link"
         $("#signin_link").css({display: "block"})
-
       @app = window.app ? {}
       @app.show_local_page(e)
+
+    Handlebars.registerHelper('toMarkdown',(value) ->
+      return markdown.toHTML(value);
+    );
 
     Backbone.history.start({pushState: true})
 
