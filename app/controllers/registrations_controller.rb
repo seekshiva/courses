@@ -33,6 +33,8 @@ class RegistrationsController < Devise::RegistrationsController
       elsif @user.save
         session[:user_id] = @user.id
 
+        UserMailer.welcome_email(@user).deliver
+        
         if @user.is_student?
           sub_list = Set.new()
           Course.all.each do |course|
