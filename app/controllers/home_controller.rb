@@ -89,6 +89,7 @@ class HomeController < ApplicationController
             redirect_to "/me"
           else
             session[:user_id] = @user.id
+            UserMailer.welcome_email(@user)
             flash[:notice_type] = 'alert-success'
             flash[:notice] = "You have successfully logged in!"
             redirect_to @redirect_url || root_url
