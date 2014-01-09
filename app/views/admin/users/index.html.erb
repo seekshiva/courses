@@ -24,7 +24,7 @@
   <tbody>
     <% @users.each do |user| %>
     <tr>
-      <td>
+      <td <%= "class=text-info style=font-weight:bold;" if user.admin? %>>
         <%= user.name %>
       </td>
       <td><%= user.email %></td>

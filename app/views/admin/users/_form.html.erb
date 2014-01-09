@@ -26,6 +26,11 @@
   <div class="field">
     <%= f.select :department_id, options_for_select(@departments_array, @dept), {:include_blank => true}, {:class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department", "data-header" => "Select Department", "data-width" => "auto"} %>
   </div>
+  <div class="field">
+    <%# Todo: replace this with bootstrap-switch %>
+    Admin:
+    <input id="user_admin" name="user[admin]" type="checkbox" <%= "checked" if @user.admin %> class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO" />
+  </div>
   <div class="actions">
     <%= f.submit class: "btn btn-primary" %>
     <%= link_to "Back", admin_users_path, class: "btn btn-default btn-small" %>

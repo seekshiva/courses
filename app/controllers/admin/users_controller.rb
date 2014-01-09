@@ -73,6 +73,10 @@ class Admin::UsersController < Admin::BaseController
   def update
     @user = User.find(params[:id])
 
+    # :admin param is not getting sent from browser if checkbox is off
+    # so, forcing :admin to false if the field is not found in payload
+    params[:user][:admin] = "false" if params[:user][:admin].nil?
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
