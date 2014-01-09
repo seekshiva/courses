@@ -579,7 +579,7 @@
                       </dd>
                       {{#if this.notes.length}}
                         <dd>
-                          <strong>Reference Notes:</strong>
+                          <strong><small>Reference Notes:</small></strong>
                           <table>
                             <tbody>
                               {{#each this.notes}}
@@ -762,7 +762,7 @@
                           </dd>
                           {{#if this.notes.length}}
                             <dd>
-                              <strong>Reference Notes:</strong>
+                              <strong><small>Reference Notes:</small></strong>
                               <table>
                                 <tbody>
                                   {{#each this.notes}}
@@ -816,7 +816,7 @@
                       </dd>
                       {{#if this.notes.length}}
                         <dd>
-                          <strong>Reference Notes:</strong>
+                          <strong><small>Reference Notes:</small></strong>
                           <table>
                             <tbody>
                               {{#each this.notes}}
@@ -1037,7 +1037,7 @@
               </div>
               <div class="form-group">
                 <p class="help-block small pull-right">*About section is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
-                <textarea class="form-control" placeholder="About You" id="about" rows="12">{{{info.about}}}</textarea>
+                <textarea class="form-control" placeholder="About You" id="about" rows="12">{{info.about}}</textarea>
               </div>
               <div class="field">
                 <a class="btn btn-default btn-success" id="save" href="javascript:history.back()">Save</a>
@@ -1142,7 +1142,7 @@
                 </tr>
                 <tr>
                   <th>About</th>
-                  <td>{{{info.about}}}</td>
+                  <td>{{{toMarkdown info.about}}}</td>
                 </tr>
                 <tr>
                   <th>Courses Handling</th>

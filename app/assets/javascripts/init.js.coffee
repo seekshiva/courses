@@ -36,7 +36,8 @@ jQuery ->
       @app.show_local_page(e)
 
     Handlebars.registerHelper('toMarkdown',(value) ->
-      return markdown.toHTML(value);
+      return markdown.toHTML(value) if value;
+      return "";
     );
 
     Backbone.history.start({pushState: true})
