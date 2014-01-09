@@ -219,19 +219,17 @@ jQuery ->
       @term_id = term_view.term.attributes.subscription.term_id
       @app = term_view.app
       @sub_status = new term_view.app.SubscriptionModel()
-      @sub_status.bind "destroy", @render, @
       if term_view.term.attributes.subscription.id
         @sub_status.set({id : term_view.term.attributes.subscription.id})
-        @sub_status.bind "change", @render, @
         @sub_status.fetch()
       else
-        @sub_status.bind "change", @render, @
         @sub_status.set({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
+      @render()
       @
 
-    updateSubscription: (e) ->
+    updateSubscription: (e, data) ->
       e.preventDefault()
-      if @sub_status.id
+      if not data.value
         @app.menu_view.subscriptions.remove({id: @sub_status.id})
         @sub_status.destroy()
         delete @sub_status.id
@@ -257,7 +255,7 @@ jQuery ->
         term_id: @term_id
 
       $(".make-switch").bootstrapSwitch();
-      $("#"+@term_id+"_subscription_status").bind("change", _.bind(@updateSubscription, @))
+      $("#"+@term_id+"_subscription_status").bind("switch-change", _.bind(@updateSubscription, @))
       @
 
   class TermTopicsView extends Backbone.View
