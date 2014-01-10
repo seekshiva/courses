@@ -4,8 +4,8 @@ class Admin::CoursesController < Admin::BaseController
   def index
     respond_to do |format|
       @page_no = params[:page] || 1
-      if params[:code]
-        @courses = Course.where(:subject_code => params[:code]).paginate(:page => @page_no, :per_page => 20)
+      if params[:search]
+        @courses = Course.where("subject_code like ? or name like ?", "%#{params[:search]}%", "%#{params[:search]}%").paginate(:page => @page_no, :per_page => 20)
       else
         @courses = Course.paginate(:page => @page_no, :per_page => 20)
       end

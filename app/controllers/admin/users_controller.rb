@@ -3,7 +3,11 @@ class Admin::UsersController < Admin::BaseController
   # GET /users.json
   def index
     @page_no = params[:page] || 1
-    @users = User.paginate(:page => @page_no, :per_page => 20)
+    if params[:search]
+      @users = User.where("email like ? or name like ? or phone like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").paginate(:page => @page_no, :per_page => 20)
+    else
+      @users = User.paginate(:page => @page_no, :per_page => 20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

@@ -3,7 +3,12 @@ class Admin::FacultiesController < Admin::BaseController
   # GET /faculties.json
   def index
     @page_no = params[:page] || 1
-    @faculties = Faculty.paginate(:page => @page_no, :per_page => 20)
+    if params[:search]
+      user_list = User.where("email like ? or name like ? or phone like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").pluck(:id)
+      @faculties = Faculty.where(:user_id => user_list).paginate(:page => @page_no, :per_page => 20)
+    else
+      @faculties = Faculty.paginate(:page => @page_no, :per_page => 20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

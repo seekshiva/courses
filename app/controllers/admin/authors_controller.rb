@@ -3,7 +3,11 @@ class Admin::AuthorsController < Admin::BaseController
   # GET /authors.json
   def index
     @page_no = params[:page] || 1
-    @authors = Author.paginate(:page => @page_no, :per_page => 20)
+    if params[:search]
+      @authors = Author.where("name like ?", "%#{params[:search]}%").paginate(:page => @page_no, :per_page => 20)
+    else
+      @authors = Author.paginate(:page => @page_no, :per_page => 20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

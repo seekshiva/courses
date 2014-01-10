@@ -2,6 +2,11 @@
   <caption><h3>Listing Books</h3></caption>
 </div>
 
+<form action="<%= admin_books_path %>" method="get" class="input-group form-group">
+  <span class="input-group-addon glyphicon glyphicon-search" style="top: 0; "></span>
+  <input type="text" name="search" class="form-control" placeholder="Book Title/publisher">
+</form>
+
 <table class="table">
   <div class="pull-right">
     <%= page_navigation_links @books%>

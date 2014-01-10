@@ -3,7 +3,11 @@ class Admin::BooksController < Admin::BaseController
   # GET /books.json
   def index
     @page_no = params[:page] || 1
-    @books = Book.paginate(:page => @page_no, :per_page => 20)
+    if params[:search]
+      @books = Book.where("title like ? or publisher like ?", "%#{params[:search]}%", "%#{params[:search]}%").paginate(:page => @page_no, :per_page => 20)
+    else
+      @books = Book.paginate(:page => @page_no, :per_page => 20)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
