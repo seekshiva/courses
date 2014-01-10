@@ -41,6 +41,7 @@
             <li role="presentation">
               <form action="<%= admin_switch_to_path  %>" method="post" class="navbar-form form-inline col-lg-4">
                 <input type="text" id="email" name="email" class="form-control input-sm" placeholder="God Mode" title="Enter the email of the user you want to switch to..">
+                <%= token_tag %>
               </form>
             </li>
             <li role="presentation"><a href="/">

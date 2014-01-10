@@ -100,9 +100,15 @@ class HomeController < ApplicationController
   end
   
   def signout
-    session[:user_id] = nil
-    flash[:notice_type] = 'alert-success'
-    redirect_to root_url, notice: "You have successfully logged out."
+    if not session[:admin_user_id].nil?
+      session[:user_id] = session[:admin_user_id]
+      session[:admin_user_id] = nil
+      redirect_to "/admin"
+    else
+      session[:user_id] = nil
+      flash[:notice_type] = 'alert-success'
+      redirect_to root_url, notice: "You have successfully logged out."
+    end
   end
 
 end

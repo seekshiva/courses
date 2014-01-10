@@ -105,6 +105,14 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def switch_to
-    @user = User.find_by email: params[:email]
+    user = User.where(email: params[:email]).first
+    if not user.nil?
+      session[:admin_user_id] = session[:user_id]
+      session[:user_id] = user.id
+      redirect_to root_url
+    else
+      flash[:notice_type] = 'alert-danger'
+      redirect_to "/admin", notice: "You have quit from God mode."
+    end
   end
 end
