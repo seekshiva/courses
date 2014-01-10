@@ -96,14 +96,14 @@ class ProfileController < ApplicationController
       update = {
         prefix:       params[:user][:prefix],
         about:        params[:user][:about],
-        designation:  params[:user][:designation]
+        designation:  params[:user][:designation].split.map(&:capitalize).join(' ')
       }
 
       faculty_status = @faculty.update_attributes(update)
     end
     
     update = {
-      name:       params[:user][:name],
+      name:       params[:user][:name].split.map(&:capitalize).join(' '),
       phone:      params[:user][:phone],
       avatar_id:  params[:user][:avatar_id]
     }

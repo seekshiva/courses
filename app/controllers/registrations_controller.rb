@@ -6,7 +6,9 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    @user = User.new(params[:user].merge(:admin => false))
+    data = params[:user].merge(:admin => false)
+    data[:name].split.map(&:capitalize).join(' ')
+    @user = User.new(data)
 
     begin
       @username = params[:user][:email]

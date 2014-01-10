@@ -5,15 +5,51 @@
   </head>
   <body>
     <div style="width:480px;margin:auto;border:solid #eee 2px;padding:10px;">
-      Hi <%= @user.name %>
-      <h3>Welcome to courseshub.in</h3>
-      <p>
-        You have successfully signed up for courseshub.in,<br/>
-        your login name is: <%= @user.email %>.<br/>
-      </p>
-      <p>
-        To login to the site, just follow this link: <%= @url %>.
-      </p>
+      <% if @user.is_student? %>
+        Hi <%= @user.name %>
+        <h3>Welcome to courseshub.in</h3>
+        <p>
+          Your account has been created.<br/>
+          your login name is: <%= @user.email %>.<br/>
+        </p>
+        <p>
+          To login to the site, just follow this link: <%= @host+"login" %>.
+          Your profile settings can be accessed from: <%= @host+"profile/me" %>
+        </p>
+      <% else %>
+        <% if not @faculty.nil? %>
+          Hi <%= @faculty.prefix+" "+@user.name %>,
+          <h3>Welcome to courseshub.in</h3>
+          <p>
+            Your account has been created.<br/>
+            your login name is: <%= @user.email %>.<br/>
+          </p>
+          <p>
+            Please email us the details of the course that you will be handling this semester.
+            We will setup a page for you to communicated with your students.
+          </p>
+          <p>
+            To login to the site, just follow this link: <%= @url %>.
+            Your profile settings can be accessed from: <%= @host+"profile/me" %>
+          </p>
+        <% else %>
+          Hi <%= @user.name %>
+          <h3>Welcome to courseshub.in</h3>
+          <p>
+            Your account has been created.<br/>
+            your login name is: <%= @user.email %>.<br/>
+          </p>
+          <p>
+            You don't seem to be a student. Unfortunately we don't have any information about you. 
+            Please do send us a mail if you are faculty and the details of the courses you will be handling 
+            this semester. We will set up a page for you to communicate with your students.
+          </p>
+          <p>
+            To login to the site, just follow this link: <%= @url %>.
+            Your profile settings can be accessed from: <%= @host+"profile/me" %>
+          </p>
+        <% end %>
+      <% end %>
       <p>Thanks for joining and have a great day!</p>
     </div>
   </body>
