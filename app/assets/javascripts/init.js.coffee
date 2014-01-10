@@ -4,10 +4,6 @@ $.ajaxSetup cache: false
 
 jQuery ->
   $(document).ready ->
-    @app = window.app ? {}
-    @app.menu_view = new @app.SubscriptionsView()
-    @app.router = new @app.ApplicationRouter()
-
     $.ajaxSetup
       global: true,
       beforeSend: (xhr) ->
@@ -21,6 +17,20 @@ jQuery ->
         @app.router.login(settings.url)
       else if req.status == 500 && req.responseText != "saved"
         view = new @app.ServerErrorView()
+
+    $(document).ajaxSend(()->
+        $("#content").css({opacity: 0.5});
+        $("#loading").css({top: (($(window).height()-180)/2), left: (($(window).width()-128)/2), position: "absolute" }).show(400);
+      )
+
+    $(document).ajaxComplete(()->
+        $("#content").css({opacity: 1});
+        $("#loading").hide(200);
+      )
+
+    @app = window.app ? {}
+    @app.menu_view = new @app.SubscriptionsView()
+    @app.router = new @app.ApplicationRouter()
 
     @app.show_local_page = (e)->
       unless e.ctrlKey or e.shiftKey
