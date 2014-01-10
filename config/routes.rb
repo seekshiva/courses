@@ -43,9 +43,9 @@ Courses::Application.routes.draw do
   get 'contact-us' => 'high_voltage/pages#show', id: 'contact-us'
   get 'help' => 'high_voltage/pages#show', id: 'help'
 
-  get ':slug.json', to: "#{:slug}s#index"
-  get ':slug', to: "#{:slug}s#index"
-  #match ":slug" => "home#index"
+  # get ':slug.json', to: "#{:slug}s#index"
+  # get ':slug', to: "#{:slug}s#index"
+  get ":slug" => "home#index"
   get ':slug/*route', to: 'home#index'
 
   root :to => 'home#index'
