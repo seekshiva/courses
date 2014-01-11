@@ -18,9 +18,6 @@ class Admin::TermsController < Admin::BaseController
     @term = Term.find(params[:id])
     @new_faculty = TermFaculty.new
     @new_department = TermDepartment.new
-    @departments_array = Department.all.collect do |dept|
-      [dept.name, dept.id]
-    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,6 +41,8 @@ class Admin::TermsController < Admin::BaseController
       [faculty.prefix+" "+faculty.user.name, faculty.id]
     end
 
+    @tab = "new"
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @term }
@@ -65,6 +64,11 @@ class Admin::TermsController < Admin::BaseController
       [faculty.prefix+" "+faculty.user.name, faculty.id]
     end
 
+    @bookslist = Book.all.collect do |book|
+      ["#{book.title} - #{book.publisher} - #{book.edition}", book.id]
+    end
+
+    @tab = "edit"
     respond_to do |format|
       format.html # edit.html.erb
       format.json { render json: @term }
@@ -195,6 +199,24 @@ class Admin::TermsController < Admin::BaseController
     @course = Course.find(params[:course_id])
     @term = Term.find(params[:id])
     @term.course_id = params[:term_course_id]
+
+    bookslist = params[:books]
+    books = Set.new
+    if not bookslist.nil?
+      bookslist.each do |book|
+        if book.to_s!="0"
+          books.add({ :book_id => book, :term_id => params[:id] })
+        end
+      end
+    end
+    bookslist = books.to_a
+
+    @book_destroy_status = TermReference.destroy_all(:term_id => params[:id])
+    if bookslist.nil? || bookslist.empty?
+      @book_create_status = true
+    else
+      @book_create_status = TermReference.create(bookslist)
+    end
     
     departmentslist = params[:departments]
     departments = Set.new
@@ -233,7 +255,7 @@ class Admin::TermsController < Admin::BaseController
     end
 
     respond_to do |format|
-      if @term.update_attributes(params[:term]) && @dept_destroy_status && @dept_create_status && @faculty_destroy_status && @faculty_create_status
+      if @term.update_attributes(params[:term]) && @dept_destroy_status && @dept_create_status && @faculty_destroy_status && @faculty_create_status && @book_destroy_status && @book_create_status
         format.html { redirect_to [:admin, @course, @term], notice: 'Term was successfully updated.' }
         format.json { head :no_content }
       else

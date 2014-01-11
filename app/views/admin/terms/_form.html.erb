@@ -36,6 +36,12 @@
       <%= label_tag(:faculties, "Faculty:") %>
       <%= select_tag "faculties[]", options_for_select(@facultieslist, @term.faculties.collect {|faculty| faculty.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Faculty", "data-header" => "Select Faculty"  } %>
     </div>
+    <% if !@tab.nil? && @tab != "new" %>
+      <div class="field">
+        <%= label_tag(:books, "Reference Books:") %>
+        <%= select_tag "books[]", options_for_select(@bookslist, @term.books.collect {|book| book.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Reference Books", "data-header" => "Select Reference Books"  } %>
+      </div>
+    <% end %>
     <div class="actions">
       <%= f.submit class: 'btn btn-primary' %>
       <%= link_to 'Back', admin_course_terms_path(@course), class: "btn btn-default btn-small" %>
