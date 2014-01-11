@@ -11,18 +11,33 @@ class SubscriptionsController < ApplicationController
         format.json { render json: { status: "Request cannot be processed", note: "User not logged in" } }
       end
     else
-      @subscriptions = Subscription.where(:user_id => @user.id)
+      faculty = Faculty.where(:user_id => @user.id).first
+      if faculty.nil?
+        @subscriptions = Subscription.where(:user_id => @user.id)
 
-      subs = @subscriptions.collect do |sub|
-        {
-          id:           sub.id, 
-          term_id:      sub.term_id,
-          user_id:      @user.id,
-          attending:    sub.attending,
-          course_name:  sub.term.course.name,
-          course_id:    sub.term.course_id,
-          current:      sub.term.is_current?
-        }
+        subs = @subscriptions.collect do |sub|
+          {
+            id:           sub.id, 
+            term_id:      sub.term_id,
+            user_id:      @user.id,
+            attending:    sub.attending,
+            course_name:  sub.term.course.name,
+            course_id:    sub.term.course_id,
+            current:      sub.term.is_current?
+          }
+        end
+      else
+        term_faculties = TermFaculty.where(:faculty_id => faculty.id)
+        
+        subs = term_faculties.collect do |term_fac|
+          {
+            term_id:      term_fac.term_id,
+            user_id:      @user.id,
+            course_name:  term_fac.term.course.name,
+            course_id:    term_fac.term.course_id,
+            current:      term_fac.term.is_current?
+          }
+        end
       end
 
       respond_to do |format|
