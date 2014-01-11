@@ -61,13 +61,17 @@ jQuery ->
       @
 
     login: (path) ->
-      $("#signin_link").css
-        display: "none"
-      if @app.user
-        @home()
+      if window.app["user"]!=undefined
+        window.app.router.navigate "",
+          trigger: true
       else
-        url = {path: path}
-        @login_view = new @app.LoginView(url)
+        $("#signin_link").css
+          display: "none"
+        if @app.user
+          @home()
+        else
+          url = {path: path}
+          @login_view = new @app.LoginView(url)
       @
 
     four_oh_four: (path) ->
