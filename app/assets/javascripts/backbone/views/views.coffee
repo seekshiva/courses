@@ -84,6 +84,7 @@ jQuery ->
       @department.fetch()
 
     render: =>
+      document.title = "Courses - "+@department.attributes.short
       course_listing = []
       for list in @department.attributes.course_listing
         list.course_list.sort((a,b)-> return a.code>b.code)
@@ -151,6 +152,7 @@ jQuery ->
       $(@el).find("#specialized_view_selector li").removeClass("active")
       $(@el).find("#view_term_" + @view.type).addClass("active")
 
+      document.title = @term.attributes.course.name
 
       if @view.type == "topics"
         if @term_topics_view
@@ -641,6 +643,8 @@ jQuery ->
       avatar = @profile.attributes.avatar_id != 0 ? 1 : 0
       edit = @profile.attributes.type == "edit" ? 1 : 0
 
+      document.title = "Courses - "+@profile.attributes.name
+
       prefix = {}
       if !@profile.attributes.student
         prefix = {" ":false,"Dr.":false,"Prof.":false,"Ms.":false,"Mr.":false,"Mrs.":false}
@@ -731,6 +735,7 @@ jQuery ->
 
     initialize: (path)->
       @path = path
+      document.title = "Courses - 404"
       @render()
 
     render:  ->
@@ -745,6 +750,7 @@ jQuery ->
 
     initialize: (path)->
       @path = path
+      document.title = "Courses - 500"
       @render()
 
     render:  ->

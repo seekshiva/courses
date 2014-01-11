@@ -18,6 +18,7 @@ jQuery ->
       @
 
     index: () ->
+      document.title = "Courses"
       if @departments_view
         @departments_view.render()
       else
