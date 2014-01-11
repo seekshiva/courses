@@ -643,8 +643,11 @@ jQuery ->
 
       prefix = {}
       if !@profile.attributes.student
-        prefix = {"":false,"Dr.":false,"Prof.":false,"Ms.":false,"Mr.":false,"Mrs.":false}
-        prefix[@profile.attributes.prefix] = true
+        prefix = {" ":false,"Dr.":false,"Prof.":false,"Ms.":false,"Mr.":false,"Mrs.":false}
+        if @profile.attributes.prefix != null
+          prefix[@profile.attributes.prefix] = true
+        else 
+          prefix[" "] = true
 
       $(@el).html @template
         type:         @profile.attributes.type
@@ -654,6 +657,7 @@ jQuery ->
         prefix:       prefix
 
       $(".make-switch").bootstrapSwitch();
+      $(".selectpicker").selectpicker()
 
       # Uploadify needs csrf tokens & session details
       uploadify_script_data = {};
@@ -694,11 +698,14 @@ jQuery ->
 
     save: (e) ->
       e.preventDefault()
-      @profile.set(name : $("#name").val())
-      @profile.set(phone : $("#phone").val())
-      @profile.set(prefix: $("#prefix").val())
-      @profile.set(about: $("#about").val())
-      @profile.set(designation: $("#designation").val())
+      data = {  
+                name : $("#name").val(),
+                phone : $("#phone").val(),
+                prefix: $("#prefix").val(),
+                about: $("#about").val(),
+                designation: $("#designation").val()
+              }
+      @profile.set(data)
       @profile.save()
       @profile.set({type: "show"})
       @

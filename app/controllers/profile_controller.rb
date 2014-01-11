@@ -87,35 +87,40 @@ class ProfileController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:user][:user_id])
+    if @user.id == params[:user][:user_id]
+      user = User.find(params[:user][:user_id])
 
-    faculty_status = true
-    if not params[:user][:student]
-      @faculty = Faculty.find_by user_id: params[:user][:user_id]
+      faculty_status = true
+      if not params[:user][:student]
+        @faculty = Faculty.find_by user_id: params[:user][:user_id]
 
+        update = {
+          prefix:       params[:user][:prefix],
+          about:        params[:user][:about],
+          designation:  params[:user][:designation].split.map(&:capitalize).join(' ')
+        }
+
+        faculty_status = @faculty.update_attributes(update)
+      end
+      
       update = {
-        prefix:       params[:user][:prefix],
-        about:        params[:user][:about],
-        designation:  params[:user][:designation].split.map(&:capitalize).join(' ')
+        name:       params[:user][:name].split.map(&:capitalize).join(' '),
+        phone:      params[:user][:phone],
+        avatar_id:  params[:user][:avatar_id]
       }
 
-      faculty_status = @faculty.update_attributes(update)
-    end
-    
-    update = {
-      name:       params[:user][:name].split.map(&:capitalize).join(' '),
-      phone:      params[:user][:phone],
-      avatar_id:  params[:user][:avatar_id]
-    }
-
-    respond_to do |format|
-      if @user.update_attributes(update) && faculty_status
-        format.html 
-        format.json { render json: "saved" }
-      else
-        format.html 
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if user.update_attributes(update) && faculty_status
+          format.html 
+          format.json { render json: "saved" }
+        else
+          format.html 
+          format.json { render json: user.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      format.html 
+      format.json { render json: "permission denied", status: :unprocessable_entity }
     end
   end
 end
