@@ -31,6 +31,12 @@ jQuery ->
     @app = window.app ? {}
     @app.menu_view = new @app.SubscriptionsView()
     @app.router = new @app.ApplicationRouter()
+    @app.router.bind('all', (route) ->
+      ga('send', 'pageview', {
+        'page' : window.location.pathname,
+        'title' : document.title
+      });
+    )
 
     @app.show_local_page = (e)->
       unless e.ctrlKey or e.shiftKey
@@ -53,3 +59,4 @@ jQuery ->
     Backbone.history.start({pushState: true})
 
     $(".selectpicker").selectpicker()
+    
