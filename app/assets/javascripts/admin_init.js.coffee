@@ -28,3 +28,12 @@ jQuery ->
           "onUploadSuccess" : val["onUploadSuccess"]
         });
 
+    $("#departments_").change(() -> 
+      value = $("#departments_").val();
+      if value.length == 1 && value[0]=="2"
+        $("#semester").append("<option value='9' class='sem_update'>9</option><option value='10' class='sem_update'>10</option>");
+        $(".selectpicker").selectpicker("refresh");
+      else 
+        $(".sem_update").remove();
+        $(".selectpicker").selectpicker("refresh");
+    );

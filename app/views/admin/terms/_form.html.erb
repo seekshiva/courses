@@ -25,12 +25,12 @@
       <%= f.number_field :academic_year, value: @term.academic_year || 0.year.from_now.year, class: "form-control" %>
     </div>
     <div class="field">
-      <%= f.label :semester %>
-      <%= f.select :semester, options_for_select(@options, @term.semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
-    </div>
-    <div class="field">
       <%= label_tag(:departments, "Department(s):") %>
       <%= select_tag "departments[]", options_for_select(@departmentslist, @term.departments.collect {|dept| dept.id}), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department(s)", "data-header" => "Select Department(s)"  } %>
+    </div>
+    <div class="field">
+      <%= f.label :semester %>
+      <%= f.select :semester, options_for_select(@options, @term.semester), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester", :id => "semester" } %>
     </div>
     <div class="field">
       <%= label_tag(:faculties, "Faculty:") %>

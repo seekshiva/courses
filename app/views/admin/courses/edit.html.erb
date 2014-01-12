@@ -31,12 +31,12 @@
             </span>
           </div>
           <div class="field">
-            <%= f.label :semester %>
-            <%= f.select :semester, options_for_select(@sem_options), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester" } %>
+            <%= label_tag(:departments, "Department(s):") %>
+            <%= select_tag "departments[]", options_for_select(@departmentslist), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department(s)", "data-header" => "Select Department(s)", :id => "departments_"  } %>
           </div>
           <div class="field">
-            <%= label_tag(:departments, "Department(s):") %>
-            <%= select_tag "departments[]", options_for_select(@departmentslist), { :multiple => true, :class => "selectpicker show-tick show-menu-arrow", "data-live-search" => "true", :title => "Select Department(s)", "data-header" => "Select Department(s)"  } %>
+            <%= f.label :semester %>
+            <%= f.select :semester, options_for_select(@sem_options), {}, { :class => "selectpicker show-tick show-menu-arrow", :title => "Select a Semester", "data-header" => "Select a semester", :id => "semester" } %>
           </div>
           <div class="field">
             <%= label_tag(:faculties, "Faculty:") %>
