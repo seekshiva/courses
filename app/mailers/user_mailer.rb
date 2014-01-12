@@ -8,6 +8,6 @@ class UserMailer < ActionMailer::Base
     if not @user.is_student?
       @faculty = Faculty.where user_id: @user.id
     end
-    mail(to: "#{@user.name} <me@vignesh.info>", subject: "Welcome to Courseshub")
+    mail(to: "#{@user.name} <#{@user.email}@nitt.edu>", subject: "Welcome to Courseshub")
   end
 end
