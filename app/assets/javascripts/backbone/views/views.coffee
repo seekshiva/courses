@@ -192,7 +192,7 @@ jQuery ->
           "removeCompleted": true,
           "multi" : false,
           "auto" : true,
-          "fileSizeLimit" : "10000kb",
+          "fileSizeLimit" : "30000KB",
           onUploadSuccess : _.bind(@addnotes, @)
         });
         
@@ -681,7 +681,7 @@ jQuery ->
           "multi" : false,
           "auto" : true,
           "fileTypeDesc" : "Image",
-          "fileSizeLimit" : "1000kb",
+          "fileSizeLimit" : "6000KB",
           onUploadSuccess : _.bind(@changeprofilepic, @)
         });
       @
