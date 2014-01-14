@@ -184,6 +184,14 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
 }
 
+._topic_list .glyphicon-book,
+._topic_list .fa-book {
+    font-size: 2em;
+    margin-right: 20px;
+    color: #428bca;
+    opacity: .6;
+}
+
 #_reference_books img {
     box-shadow: 0.5px 0px 6px #aaa;
 }

@@ -544,58 +544,46 @@
                     <dl>
                       <dt>
                         {{this.title}}
-                        <span class="label label-success">{{this.ct_status}}</span>
+                        <span class="label label-primary">{{this.ct_status}}</span>
                       </dt>
                       <dd>
-                        <p>
-                          <small>
-                            {{#if false}}
-                            {{#if this.classes}}
-                              This topic was taught on
-                              {{#each this.classes}}
-                                {{this.date}}
-                              {{/each}}
-                            
-                            {{else}}
-                              This topic has not been taught so far this semester
-                            {{/if}}
-                            {{/if}}
-                          </small>
-                        </p>
+                        {{#if false}}
+                          <p>
+                            <small>
+                              {{#if this.classes}}
+                                This topic was taught on
+                                {{#each this.classes}}
+                                  {{this.date}}
+                                {{/each}}
+                              {{else}}
+                                This topic has not been taught so far this semester
+                              {{/if}}
+                            </small>
+                          </p>
+                        {{/if}}
                         
-                        <p>{{{toMarkdown this.description}}}</p>
-                        <table class="table table-bordered">
-                          <thead><tr>
-                            {{#each this.reference}}
-                              <th><small>{{this.book}}</small></th>
-                            {{/each}}
-                          </tr></thead>
-                          <tbody><tr>
-                            {{#each this.reference}}
-                              <td><small>{{this.indices}}</small></td>
-                            {{/each}}
-                          </tr></tbody>
-                        </table>
+                        <p>{{{toMarkdown this.description}}}</p><br />
+                        
+                        <div class="list-group">
+                          {{#each this.reference}}
+                            <div class="list-group-item">
+                              <i class="glyphicon glyphicon-book pull-left"></i>
+                              <div class="list-group-item-heading">{{this.book}}</div>
+                              <p class="list-group-item-text">{{this.indices}}</p>
+                            </div>
+                          {{/each}}
+                          {{#each this.notes}}
+                            <div class="list-group-item">
+                              <i class="fa fa-book fa-2x pull-left"></i>
+                              <div class="list-group-item-heading">{{this.name}}</div>
+                              <p class="list-group-item-text">
+                                <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                                <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                              </p>
+                            </div>
+                          {{/each}}
+                        </div>
                       </dd>
-                      {{#if this.notes.length}}
-                        <dd>
-                          <strong><small>Reference Notes:</small></strong>
-                          <table>
-                            <tbody>
-                              {{#each this.notes}}
-                                <tr>
-                                  <td style="padding-right: 20px; ">
-                                    {{this.name}}
-                                  </td>
-                                  <td>
-                                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                                  </td>
-                                </tr>
-                              {{/each}}
-                            </tbody>
-                          </table>
-                        </dd>
-                      {{/if}}
                     </dl>
                   </td></tr>
                 {{/each}}
@@ -728,7 +716,7 @@
                               {{/if}}
                             </div>
                             {{this.title}}
-                            <span class="label label-success">{{this.ct_status}}</span>
+                            <span class="label label-primary">{{this.ct_status}}</span>
                           </dt>
                           <dd>
                             <p>
@@ -747,42 +735,33 @@
                               </small>
                             </p>
                             <p>{{{toMarkdown this.description}}}</p>
-                            <table class="table table-bordered">
-                              <thead><tr>
-                                {{#each this.reference}}
-                                  <th><small>{{this.book}}</small></th>
-                                {{/each}}
-                              </tr></thead>
-                              <tbody><tr>
-                                {{#each this.reference}}
-                                  <td><small>{{this.indices}}</small></td>
-                                {{/each}}
-                              </tr></tbody>
-                            </table>
+
+
+                            <div class="list-group">
+                              {{#each this.reference}}
+                              <div class="list-group-item">
+                                <i class="glyphicon glyphicon-book pull-left"></i>
+                                <div class="list-group-item-heading">{{this.book}}</div>
+                                <p class="list-group-item-text">{{this.indices}}</p>
+                              </div>
+                              {{/each}}
+                              {{#each this.notes}}
+                              <div class="list-group-item">
+                                <i class="fa fa-book fa-2x pull-left"></i>
+                                <div class="list-group-item-heading">{{this.name}}</div>
+                                <p class="list-group-item-text">
+                                  <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                                  <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                                </p>
+                              </div>
+                              {{/each}}
+                            </div>
+
                           </dd>
-                          {{#if this.notes.length}}
-                            <dd>
-                              <strong><small>Reference Notes:</small></strong>
-                              <table>
-                                <tbody>
-                                  {{#each this.notes}}
-                                    <tr>
-                                      <td style="padding-right: 20px; ">
-                                        {{this.name}}
-                                      </td>
-                                      <td>
-                                        <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                                      </td>
-                                    </tr>
-                                  {{/each}}
-                                </tbody>
-                              </table>
-                            </dd>
-                          {{/if}}
                         {{/if}}
                       {{else}}
                         {{this.title}}
-                        <span class="label label-success">{{this.ct_status}}</span>
+                        <span class="label label-primary">{{this.ct_status}}</span>
                       </dt>
                       <dd>
                         <p>
@@ -801,38 +780,27 @@
                           </small>
                         </p>
                         <p>{{{toMarkdown this.description}}}</p>
-                        <table class="table table-bordered">
-                          <thead><tr>
-                            {{#each this.reference}}
-                              <th><small>{{this.book}}</small></th>
-                            {{/each}}
-                          </tr></thead>
-                          <tbody><tr>
-                            {{#each this.reference}}
-                              <td><small>{{this.indices}}</small></td>
-                            {{/each}}
-                          </tr></tbody>
-                        </table>
-                      </dd>
-                      {{#if this.notes.length}}
-                        <dd>
-                          <strong><small>Reference Notes:</small></strong>
-                          <table>
-                            <tbody>
-                              {{#each this.notes}}
-                                <tr>
-                                  <td style="padding-right: 20px; ">
-                                    {{this.name}}
-                                  </td>
-                                  <td>
-                                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                                  </td>
-                                </tr>
-                              {{/each}}
-                            </tbody>
-                          </table>
-                        </dd>
-                      {{/if}}
+
+
+                        <div class="list-group">
+                          {{#each this.reference}}
+                            <div class="list-group-item">
+                              <i class="glyphicon glyphicon-book pull-left"></i>
+                              <div class="list-group-item-heading">{{this.book}}</div>
+                              <p class="list-group-item-text">{{this.indices}}</p>
+                            </div>
+                          {{/each}}
+                          {{#each this.notes}}
+                            <div class="list-group-item">
+                              <i class="fa fa-book fa-2x pull-left"></i>
+                              <div class="list-group-item-heading">{{this.name}}</div>
+                              <p class="list-group-item-text">
+                                <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                                <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                              </p>
+                            </div>
+                          {{/each}}
+                        </div>
                       {{/if}}
                   </dl>
                 </td></tr>
