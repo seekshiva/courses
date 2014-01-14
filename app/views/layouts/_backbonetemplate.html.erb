@@ -449,7 +449,7 @@
       </div>
       <div class="tab-pane" id="info2">
         {{#each term.instructors}}
-          <h4><strong><a href="/profile/{{this.email}}">{{this.instructor}}</a></strong></h4>
+          <h4>{{this.instructor}} <small>({{this.email}})</small></h4>
           {{{this.about}}}
         {{/each}}
       </div>
