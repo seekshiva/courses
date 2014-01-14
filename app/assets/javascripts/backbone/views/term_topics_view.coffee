@@ -10,7 +10,7 @@ jQuery ->
     
     events:
       "click #ct_status_selector > .btn": "updateSelector"
-      "click .row > .list-group > .list-group-item": "switch_active_topic"
+      "click .row > .list-group > .list-group-item": "updateCurrentSection"
       "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
       "click #create_section" : "createSection"
@@ -350,16 +350,11 @@ jQuery ->
       $("#search_box").bind("input", _.bind(@render,@))
       @
 
-    switch_active_topic: (e) =>
-        @app = window.app ? {}
-        target = if e.target.nodeName == "A" then e.target else e.target.parentNode
-        $(target).siblings().filter(".active").removeClass("active")
-        $(target).addClass("active")
-
-        if target.hash == "#_all_sections"
-          @current_section_id = -1
-        else
-          @current_section_id = +target.hash.substr(10)
+    updateCurrentSection: (e) =>
+      if target.hash == "#_all_sections"
+        @current_section_id = -1
+      else
+        @current_section_id = +target.hash.substr(10)
 
   @app = window.app ? {}
   @app.TermTopicsView = TermTopicsView

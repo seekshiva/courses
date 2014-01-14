@@ -382,11 +382,6 @@
   {{/if}}
 
   <ul class="nav nav-tabs" id="specialized_view_selector">
-    <li class="span2">
-      <span class="nav_container">
-        <p class="label label-default">{{term.course.credits}} credits</p>
-      </span>
-    </li>
     <li id="view_term_info"><a href="/terms/{{term.id}}/info">Info</a></li>
     <li id="view_term_topics"><a href="/terms/{{term.id}}/topics">Topics</a></li>
     <!-- <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li> -->
@@ -411,40 +406,41 @@
 
 <script type="text/template" id="term-info-template">
   <div class="row">
-    <ul class="nav nav-pills nav-stacked local-nav col-md-3">
-      <li class="active"><a href="#info1" data-toggle="tab">Overview</a></li>
-      <li><a href="#info2" data-toggle="tab">Instructor</a></li>
-      <li><a href="#info3" data-toggle="tab">Outline</a></li>
-    </ul>
+    <div class="list-group local-nav col-md-3">
+      <a class="list-group-item active" href="#overview" data-toggle="tab">Overview</a>
+      <a class="list-group-item" href="#info2" data-toggle="tab">Instructor</a>
+      <a class="list-group-item" href="#info3" data-toggle="tab">Outline</a>
+    </div>
     <div class="tab-content col-md-9">
-      <div class="tab-pane active" id="info1">
-        <h4>Overview</h4>
+      <div class="tab-pane active" id="overview">
         <table class="table bottom_line">
           <tr>
             <td colspan="2">
               {{{term.course.about}}}
             </td>
           </tr>
-          <tr>
-            <th>
+          <tr><th>
               <strong>Course Instructor</strong>
             </th>
             <td>
               {{#each term.instructors}}
               <a href="/profile/{{this.email}}">{{this.instructor}}</a>
               {{/each}}
-            </td>
-          </tr>
-          <tr>
-            <th>
+          </td></tr>
+          <tr><th>
+              <strong>Workload</strong>
+            </th>
+            <td>
+              {{term.course.credits}} hours of work / week
+          </td></tr>
+          <tr><th>
               <strong>Departments Offered</strong>
             </th>
             <td>
               {{#each term.departments}}
                 {{this.name}}   &nbsp;
               {{/each}}
-            </td>
-          </tr>
+          </td></tr>
           {{#unless term.faculty}}
             <tr id="term_subscription_status">
             </tr>
@@ -873,10 +869,10 @@
 
 <script type="text/template" id="term-reference-template">
   <div class="row">
-    <ul class="nav nav-pills nav-stacked local-nav col-md-3">
-      <li class="active"><a href="#_reference_notes" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a></li>
-      <li ><a href="#_reference_books" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a></li>
-    </ul>
+    <div class="list-group local-nav col-md-3">
+      <a href="#_reference_notes" class="list-group-item active" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a>
+      <a href="#_reference_books" class="list-group-item" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a>
+    </div>
     <div class="tab-content col-md-9">
       <div class="tab-pane active _reference_list" id="_reference_notes">
         <table class="table bottom_line">

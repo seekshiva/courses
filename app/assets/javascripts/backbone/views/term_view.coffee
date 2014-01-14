@@ -3,6 +3,9 @@ jQuery ->
     template: Handlebars.compile($("#term-template").html())
 
     el: "#content"
+
+    events:
+      "click .row > .list-group > .list-group-item": "switch_active_topic"
     
     initialize: (options) ->
       @app = window.app ? {}
@@ -13,6 +16,12 @@ jQuery ->
       @term.fetch()
       @
 
+    switch_active_topic: (e) =>
+      @app = window.app ? {}
+      target = if e.target.nodeName == "A" then e.target else e.target.parentNode
+      $(target).siblings().filter(".active").removeClass("active")
+      $(target).addClass("active")
+      
     render: =>
       find_template = (type)->
         Handlebars.compile $("#term-" + type + "-template").html()
