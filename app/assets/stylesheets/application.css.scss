@@ -132,7 +132,10 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid #ddd;
 }
 
-._topic_list > table,
+._topic_list > .panel {
+    margin-top: 20px;
+}
+
 ._reference_list > table {
     margin-left: -10px;
 }
