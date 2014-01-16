@@ -30,6 +30,9 @@ jQuery ->
         @sub_status.save(null, { success: _.bind(@updateCollection, @) })
       @
 
+    switch_active_topic: (e) ->
+      @
+
     updateCollection: (model, resp) ->
       @app.menu_view.subscriptions.remove({id: @sub_status.id}).add(@sub_status.attributes)
 

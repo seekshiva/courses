@@ -349,6 +349,10 @@ jQuery ->
       $("#search_box").bind("input", _.bind(@render,@))
       @
 
+    switch_active_topic: (e) =>
+      @
+
+      
     updateCurrentSection: (e) =>
       if target.hash == "#_all_sections"
         @current_section_id = -1
