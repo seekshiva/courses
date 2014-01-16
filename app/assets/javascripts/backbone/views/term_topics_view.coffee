@@ -4,9 +4,9 @@ jQuery ->
     
     selectors:
       ct_status:
-        "ct1": "btn-info"
-        "ct2": "btn-info"
-        "postct": "btn-info"
+        "ct1": false
+        "ct2": false
+        "postct": false
     
     events:
       "click #ct_status_selector > .btn": "updateSelector"
@@ -24,6 +24,7 @@ jQuery ->
       @el = "#specialized_view"
       @term_view = term_view
       @updateSelector()
+      @
 
     createSection: (e) ->
       e.preventDefault()
@@ -232,13 +233,8 @@ jQuery ->
     updateSelector: (e)->
       if e and e.target
         e.preventDefault()
-        timeframe = $(e.target).html().toLowerCase().replace(" ", "")
-        @selectors.ct_status[timeframe] =  if @selectors.ct_status[timeframe] == "btn-info" then "" else "btn-info"
-        flag =  false
-        for k,v of @selectors.ct_status
-          flag ||= (v == "btn-info")
-        
-        @selectors.ct_status[timeframe] = "btn-info" if not flag
+        timeframe = $(e.target).textContent.trim.toLowerCase().replace(" ", "")
+        @selectors.ct_status[timeframe] =  not @selectors.ct_status[timeframe]
 
       @render()
       @
@@ -319,7 +315,10 @@ jQuery ->
                     url:      note.url
                   }
               topic["notes"] = notes
-          if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
+
+          no_filter = not (@selectors.ct_status["ct1"] || @selectors.ct_status["ct2"] || @selectors.ct_status["postct"])
+
+          if no_filter or @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")]
             if search_text == "" || (topic.title && topic.title.search(search_regx) != -1) || (topic.description && topic.description.search(search_regx) != -1)
               section_clone.topics.push topic
 

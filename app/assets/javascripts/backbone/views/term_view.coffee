@@ -49,11 +49,11 @@ jQuery ->
           host:          window.location.host
 
       that = this
-      $(@el).find("a:not(.local-nav a, .external)").click( (e) ->
-          $('#TermSubModal').modal("hide").remove();
-          $('.modal-backdrop').remove();
-          $('body').removeClass( "modal-open" );
-          that.app.show_local_page(e)
+      $(@el).find(".local a:not(.external)").click( (e) ->
+        $('#TermSubModal').modal("hide").remove();
+        $('.modal-backdrop').remove();
+        $('body').removeClass( "modal-open" );
+        that.app.show_local_page(e)
       )
 
       if @view.type == "reference"

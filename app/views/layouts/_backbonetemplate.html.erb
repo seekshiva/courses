@@ -130,7 +130,7 @@
     {{course.name}}
   </h3>
 
-  <ul class="nav nav-tabs" id="specialized_view_selector">
+  <ul class="nav nav-tabs local" id="specialized_view_selector">
     <li class="span2">
       <span class="nav_container">
         <strong class="label label-default">{{course.credits}} credits</strong>
@@ -381,7 +381,7 @@
     </p>
   {{/if}}
 
-  <ul class="nav nav-tabs" id="specialized_view_selector">
+  <ul class="nav nav-tabs local" id="specialized_view_selector">
     <li id="view_term_info"><a href="/terms/{{term.id}}/info">Info</a></li>
     <li id="view_term_topics"><a href="/terms/{{term.id}}/topics">Topics</a></li>
     <!-- <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li> -->
@@ -507,10 +507,16 @@
       <div id="topic_filter">
         <div class="pull-right">
           <label class="muted">Filters:</label>
-          <div id="ct_status_selector" class="btn-group" title="You can choose multiple options at once">
-            <button class="{{selectors.ct_status.ct1}} btn btn-default btn-sm">CT 1</button>
-            <button class="{{selectors.ct_status.ct2}} btn btn-default btn-sm">CT 2</button>
-            <button class="{{selectors.ct_status.postct}} btn btn-default btn-sm">Post CT</button>
+          <div id="ct_status_selector" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default">
+              <input id="_ct1" type="checkbox" {{#if selectors.ct_status.ct1}}checked{{/if}}> CT 1
+            </label>
+            <label class="btn btn-default">
+              <input id="_ct2" type="checkbox" {{#if selectors.ct_status.ct2}}checked{{/if}}> CT 2
+            </label>
+            <label class="btn btn-default">
+              <input id="_post_ct" type="checkbox" {{#if selectors.ct_status.ct1}}checked{{/if}}> Post CT
+            </label>
           </div>
         </div>
         <div class="input-group">
@@ -609,6 +615,7 @@
               <h4>{{this.title}}</h4>
             {{/if}}
           </div>
+          
           {{#unless this.topics}}
             <div class="panel panel-default">
               <div class="panel-body">
@@ -619,12 +626,12 @@
           {{#each this.topics}}
             <div class="panel panel-default">
               <div class="panel-heading">
-                {{#if ../../../../faculty}}  
-                  <div class="btn-group pull-right">
-                    <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{this.id}}">
+                {{#if ../../edit_mode}}
+                  <div class="btn-group btn-group-xs pull-right">
+                    <div class="btn btn-default toggle_edit_topic" topic-id="{{this.id}}">
                       <i class="glyphicon glyphicon-pencil"></i>
                     </div>
-                    <div class="btn btn-danger btn-sm delete_topic" topic-id="{{this.id}}">
+                    <div class="btn btn-danger delete_topic" topic-id="{{this.id}}">
                       <i class="glyphicon glyphicon-trash glyphicon-white"></i>
                     </div>
                   </div>
@@ -718,9 +725,12 @@
             </div>
           {{/each}}
           {{#if ../edit_mode}}
-              <div class="wrap tab-content col-md-12" style="border:1px solid #ddd;background: #DEFFD3;">
+            <div class="panel panel-success">
+              <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#add_new_subtopic" style="cursor: pointer; ">
+                Add New Subtopic
+              </div>
+              <div class="panel-body panel-collapse collapse" id="add_new_subtopic">
                 <form role="form">
-                  <legend><small>Add New Subtopic</small></legend>
                   <div class="form-group">
                     <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Subtopic Title">
                   </div>
@@ -735,11 +745,12 @@
                     <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
                     <textarea id="topic_description_{{this.id}}" class="form-control" rows="8" placeholder="Description"></textarea>
                   </div>
-                  <div class="field">
+                  <div class="field pull-right">
                     <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
                   </div>
                 </form>
               </div>
+            </div>
           {{/if}}
         </div>
       {{/each}}
