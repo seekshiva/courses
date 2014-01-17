@@ -508,14 +508,14 @@
         <div class="pull-right">
           <label class="muted">Filters:</label>
           <div id="ct_status_selector" class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default">
-              <input id="_ct1" type="checkbox" {{#if selectors.ct_status.ct1}}checked{{/if}}> CT 1
+            <label class="btn btn-default {{#if selectors.ct_status.ct1}}active{{/if}}">
+              <input type="checkbox"> CT 1
             </label>
-            <label class="btn btn-default">
-              <input id="_ct2" type="checkbox" {{#if selectors.ct_status.ct2}}checked{{/if}}> CT 2
+            <label class="btn btn-default {{#if selectors.ct_status.ct2}}active{{/if}}">
+              <input type="checkbox"> CT 2
             </label>
-            <label class="btn btn-default">
-              <input id="_post_ct" type="checkbox" {{#if selectors.ct_status.ct1}}checked{{/if}}> Post CT
+            <label class="btn btn-default {{#if selectors.ct_status.postct}}active{{/if}}">
+              <input type="checkbox"> Post CT
             </label>
           </div>
         </div>

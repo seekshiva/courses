@@ -4,6 +4,7 @@ jQuery ->
 
     initialize: (term_view) ->
       @el = "#term_subscription_status"
+      @events = {}
       @term_id = term_view.term.attributes.subscription.term_id
       @app = term_view.app
       @sub_status = new term_view.app.SubscriptionModel()
@@ -28,9 +29,6 @@ jQuery ->
       else 
         @sub_status.set({attending : null})
         @sub_status.save(null, { success: _.bind(@updateCollection, @) })
-      @
-
-    switch_active_topic: (e) ->
       @
 
     updateCollection: (model, resp) ->
