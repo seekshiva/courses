@@ -553,20 +553,24 @@
                 
                 <div class="list-group">
                   {{#each this.reference}}
-                    <div class="list-group-item">
-                      <i class="glyphicon glyphicon-book pull-left"></i>
-                      <div class="list-group-item-heading">{{this.book}}</div>
-                      <p class="list-group-item-text">{{this.indices}}</p>
+                    <div class="list-group-item media">
+                      <i class="glyphicon glyphicon-book pull-left media-object"></i>
+                      <div class="media-body">
+                        <div class="list-group-item-heading">{{this.book}}</div>
+                        <p class="list-group-item-text">{{this.indices}}</p>
+                      </div>
                     </div>
                   {{/each}}
                   {{#each this.notes}}
-                    <div class="list-group-item">
-                      <i class="fa fa-book fa-2x pull-left"></i>
-                      <div class="list-group-item-heading">{{this.name}}</div>
-                      <p class="list-group-item-text">
-                        <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                        <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                      </p>
+                    <div class="list-group-item media">
+                      <i class="fa fa-book fa-2x pull-left media-object"></i>
+                      <div class="media-body">
+                        <div class="list-group-item-heading">{{this.name}}</div>
+                        <p class="list-group-item-text">
+                          <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                          <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                        </p>
+                      </div>
                     </div>
                   {{/each}}
                 </div>
@@ -651,9 +655,6 @@
                           <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{this.id}}">
                             <i class="glyphicon glyphicon-remove"></i>
                           </div>
-                          <div class="btn btn-danger btn-sm delete_topic" topic-id="{{this.id}}">
-                            <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                          </div>
                         </div>
                       {{/if}}
                       <div class="field">
@@ -705,20 +706,24 @@
                       
               <div class="list-group">
                 {{#each this.reference}}
-                  <div class="list-group-item">
-                    <i class="glyphicon glyphicon-book pull-left"></i>
-                    <div class="list-group-item-heading">{{this.book}}</div>
-                    <p class="list-group-item-text">{{this.indices}}</p>
+                  <div class="list-group-item media">
+                    <i class="glyphicon glyphicon-book pull-left media-object"></i>
+                    <div class="media-body">
+                      <div class="list-group-item-heading">{{this.book}}</div>
+                      <p class="list-group-item-text">{{this.indices}}</p>
+                    </div>
                   </div>
                 {{/each}}
                 {{#each this.notes}}
-                  <div class="list-group-item">
-                    <i class="fa fa-book fa-2x pull-left"></i>
-                    <div class="list-group-item-heading">{{this.name}}</div>
-                    <p class="list-group-item-text">
-                      <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                      <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                    </p>
+                  <div class="list-group-item media">
+                    <i class="fa fa-book fa-2x pull-left media-object"></i>
+                    <div class="media-body">
+                      <div class="list-group-item-heading">{{this.name}}</div>
+                      <p class="list-group-item-text">
+                        <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                        <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                      </p>
+                    </div>
                   </div>
                 {{/each}}
               </div>
