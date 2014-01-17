@@ -374,10 +374,11 @@ jQuery ->
       @
 
     updateCurrentSection: (e) =>
-      if target.hash == "#_all_sections"
+      hash = $(e.target).closest("a")[0].hash
+      if hash == "#_all_sections"
         @current_section_id = -1
       else
-        @current_section_id = +target.hash.substr(10)
+        @current_section_id = +hash.substr(10)
 
   @app = window.app ? {}
   @app.TermTopicsView = TermTopicsView

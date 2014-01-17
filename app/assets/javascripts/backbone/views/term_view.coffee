@@ -18,7 +18,7 @@ jQuery ->
 
     switch_active_topic: (e) =>
       @app = window.app ? {}
-      target = if e.target.nodeName == "A" then e.target else e.target.parentNode
+      target = $(e.target).closest("a")
       $(target).siblings().filter(".active").removeClass("active")
       $(target).addClass("active")
       
