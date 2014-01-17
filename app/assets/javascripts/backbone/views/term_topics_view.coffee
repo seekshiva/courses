@@ -1,6 +1,18 @@
 jQuery ->
   class TermTopicsView extends Backbone.View
+    el: "#specialized_view"
     template: Handlebars.compile($("#term-topics-template").html())
+    events:
+      "click #ct_status_selector > .btn": "updateSelector"
+      "click .row > .list-group > .list-group-item": "updateCurrentSection"
+      "click .delete_section" : "deleteSection"
+      "click .delete_topic" : "deleteTopic"
+      "click #create_section" : "createSection"
+      "click .create_topic" : "createTopic"
+      "click .toggle_edit_section" : "toggleSectionEdit"
+      "click .toggle_edit_topic" : "toggleTopicEdit"
+      "click .edit_section" : "updateSection"
+      "click .edit_topic" : "updateTopic"
     selectors:
       ct_status:
         "ct1": false
@@ -8,21 +20,7 @@ jQuery ->
         "postct": false
     
     initialize: (term_view)=>
-      @el = "#specialized_view"
       @term_view = term_view
-      @events =
-        "click #ct_status_selector > .btn": "updateSelector"
-        "click .row > .list-group > .list-group-item": "updateCurrentSection"
-        "click .delete_section" : "deleteSection"
-        "click .delete_topic" : "deleteTopic"
-        "click #create_section" : "createSection"
-        "click .create_topic" : "createTopic"
-        "click .toggle_edit_section" : "toggleSectionEdit"
-        "click .toggle_edit_topic" : "toggleTopicEdit"
-        "click .edit_section" : "updateSection"
-        "click .edit_topic" : "updateTopic"
-
-      @updateSelector()
       @
 
     createSection: (e) ->
@@ -255,17 +253,12 @@ jQuery ->
       @
 
     updateSelector: (e)->
-      console.log "lolo"
       if e and e.target
         e.preventDefault()
         timeframe = $(e.target).text().trim().toLowerCase().replace(" ", "")
         @selectors.ct_status[timeframe] = not @selectors.ct_status[timeframe]
-
-      @render()
-      console.log "lolo"
       @
-
-
+    
     render: =>
       search_text = $("#search_box").val()
       if search_text

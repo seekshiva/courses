@@ -37,10 +37,11 @@ jQuery ->
       document.title = @term.attributes.course.name
 
       if @view.type == "topics"
-        if @term_topics_view
-          @term_topics_view.render()
-        else
-          @term_topics_view = new @app.TermTopicsView(@)
+        unless @term_topics_view
+          @term_topics_view = new @app.TermTopicsView
+          @term_topics_view.initialize(@)
+          
+        @term_topics_view.render()
       else
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
@@ -79,10 +80,10 @@ jQuery ->
         });
         
       else if @view.type == "info"
-        if @term_sub_status
-          @term_sub_status.render()
-        else 
-          @term_sub_status = new @app.TermSubscriptionView(@)
+        unless @term_sub_status
+          @term_sub_status = new @app.TermSubscriptionView
+          @term_sub_status.initialize(@)
+        @term_sub_status.render()
       @
 
     addnotes: (fileobj, resp, status) ->
