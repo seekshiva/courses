@@ -27,6 +27,9 @@
 #Ignore uploaded files
 /public/system
 
+#Ignore coffee sourcemap files
+/public/assets/source_maps/
+
 #Ignore capistrano files
 Capfile
 config/deploy.rb
