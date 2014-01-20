@@ -22,6 +22,14 @@ html, body {
     height: 100%;
 }
 
+a:hover {
+    outline: 0;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
 .greener:hover {
     color: #47a447;
 }
@@ -186,6 +194,31 @@ h1, h2, h3, h4, h5, h6 {
     width: 128px;
     display: none;
 }
+
+.panel-heading-actions li {
+    list-style-type: none;
+    float: left;
+    margin: 0 0 0 8px;
+}
+
+.panel-heading .glyphicon,
+.panel-heading .fa {
+    color: #939AA0;
+    margin: 2px 2px 0 1px;
+}
+
+.panel-heading .panel-heading-actions li .glyphicon,
+.panel-heading .panel-heading-actions li .fa {
+    transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in 0;
+    text-decoration: none;
+}
+
+.panel-heading .panel-heading-actions li:hover .glyphicon, {
+    color:#4183c4;
+}
+
+
 
 ._topic_list .media-object {
     font-size: 2em;

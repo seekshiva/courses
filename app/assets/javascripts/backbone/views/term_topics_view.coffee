@@ -13,6 +13,7 @@ jQuery ->
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
+
     selectors:
       ct_status:
         "ct1": false
@@ -20,7 +21,7 @@ jQuery ->
         "postct": false
     
     initialize: (term_view)=>
-      @term_view = term_view
+      @term_view = term_view if term_view
       @
 
     createSection: (e) ->
@@ -226,6 +227,8 @@ jQuery ->
       
     deleteSection: (e) ->
       e.preventDefault()
+      unless confirm("Are you sure you want to delete this?")
+        return
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
       section = new @term_view.app.SectionModel({id : section_id})
       section.destroy()
@@ -238,6 +241,8 @@ jQuery ->
 
     deleteTopic: (e) ->
       e.preventDefault()
+      unless confirm("Are you sure you want to delete this?")
+        return
       topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
       topic = new @term_view.app.TopicModel({id: topic_id})
       topic.destroy()
@@ -350,6 +355,7 @@ jQuery ->
       edit_mode = ""
       if @term_view.view.id == "edit" && @term_view.term.attributes.faculty == true
         edit_mode = "edit_mode"
+
       $(@el).html @template
         term:          @term_view.term.attributes
         edit_mode:     edit_mode
