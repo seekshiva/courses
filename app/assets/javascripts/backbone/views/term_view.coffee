@@ -46,7 +46,7 @@ jQuery ->
           host:          window.location.host
 
       that = this
-      $(@el).find(".local a:not(.external)").click( (e) ->
+      $(@el).find("a.local, .local a:not(.external)").click( (e) ->
         $('#TermSubModal').modal("hide").remove();
         $('.modal-backdrop').remove();
         $('body').removeClass( "modal-open" );
