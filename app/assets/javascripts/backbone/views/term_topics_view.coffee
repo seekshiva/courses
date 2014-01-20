@@ -13,17 +13,12 @@ jQuery ->
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
-
     selectors:
       ct_status:
         "ct1": false
         "ct2": false
         "postct": false
     
-    initialize: (term_view)=>
-      @term_view = term_view if term_view
-      @
-
     createSection: (e) ->
       e.preventDefault()
       title = $.trim($("#new_section_title").val())
@@ -264,7 +259,9 @@ jQuery ->
         @selectors.ct_status[timeframe] = not @selectors.ct_status[timeframe]
       @
     
-    render: =>
+    render: (term_view) =>
+      @term_view = term_view if term_view
+
       search_text = $("#search_box").val()
       if search_text
         search_text.replace(/^\s*/g, '')

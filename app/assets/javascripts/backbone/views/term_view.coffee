@@ -37,11 +37,7 @@ jQuery ->
       document.title = @term.attributes.course.name
 
       if @view.type == "topics"
-        unless @term_topics_view
-          @term_topics_view = new @app.TermTopicsView
-          @term_topics_view.initialize(@)
-          
-        @term_topics_view.render()
+        (new @app.TermTopicsView).render(@)
       else
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
