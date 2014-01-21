@@ -739,30 +739,32 @@
             </div>
           {{/each}}
           {{#if ../edit_mode}}
-            <div class="panel panel-success">
-              <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#add_new_subtopic" style="cursor: pointer; ">
-                Add New Subtopic
-              </div>
-              <div class="panel-body panel-collapse collapse" id="add_new_subtopic">
-                <form role="form">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Subtopic Title">
-                  </div>
-                  <div class="form-group">
-                    <select id="topic_ct_{{this.id}}" class="form-control">
-                      <option value="CT1">CT1</option>
-                      <option value="CT2">CT2</option>
-                      <option value="Post CT">Post CT</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
-                    <textarea id="topic_description_{{this.id}}" class="form-control" rows="8" placeholder="Description"></textarea>
-                  </div>
-                  <div class="field pull-right">
-                    <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
-                  </div>
-                </form>
+            <div id="accordion_{{this.id}}">
+              <div class="panel panel-success">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_{{this.id}}" href="#add_new_subtopic_{{this.id}}" style="cursor: pointer; ">
+                  Add New Subtopic
+                </div>
+                <div class="panel-body panel-collapse collapse" id="add_new_subtopic_{{this.id}}">
+                  <form role="form">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Subtopic Title">
+                    </div>
+                    <div class="form-group">
+                      <select id="topic_ct_{{this.id}}" class="form-control">
+                        <option value="CT1">CT1</option>
+                        <option value="CT2">CT2</option>
+                        <option value="Post CT">Post CT</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
+                      <textarea id="topic_description_{{this.id}}" class="form-control" rows="8" placeholder="Description"></textarea>
+                    </div>
+                    <div class="field pull-right">
+                      <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           {{/if}}
