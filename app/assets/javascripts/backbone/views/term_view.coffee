@@ -18,7 +18,7 @@ jQuery ->
 
     switch_active_topic: (e) =>
       @app = window.app ? {}
-      target = if e.target.nodeName == "A" then e.target else e.target.parentNode
+      target = $(e.target).closest("a")
       $(target).siblings().filter(".active").removeClass("active")
       $(target).addClass("active")
       
@@ -37,10 +37,7 @@ jQuery ->
       document.title = @term.attributes.course.name
 
       if @view.type == "topics"
-        if @term_topics_view
-          @term_topics_view.render()
-        else
-          @term_topics_view = new @app.TermTopicsView(@)
+        (new @app.TermTopicsView).render(@)
       else
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
@@ -49,11 +46,11 @@ jQuery ->
           host:          window.location.host
 
       that = this
-      $(@el).find("a:not(.local-nav a, .external)").click( (e) ->
-          $('#TermSubModal').modal("hide").remove();
-          $('.modal-backdrop').remove();
-          $('body').removeClass( "modal-open" );
-          that.app.show_local_page(e)
+      $(@el).find("a.local, .local a:not(.external)").click( (e) ->
+        $('#TermSubModal').modal("hide").remove();
+        $('.modal-backdrop').remove();
+        $('body').removeClass( "modal-open" );
+        that.app.show_local_page(e)
       )
 
       if @view.type == "reference"
@@ -79,10 +76,10 @@ jQuery ->
         });
         
       else if @view.type == "info"
-        if @term_sub_status
-          @term_sub_status.render()
-        else 
-          @term_sub_status = new @app.TermSubscriptionView(@)
+        unless @term_sub_status
+          @term_sub_status = new @app.TermSubscriptionView
+          @term_sub_status.initialize(@)
+        @term_sub_status.render()
       @
 
     addnotes: (fileobj, resp, status) ->

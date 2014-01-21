@@ -1,9 +1,10 @@
 jQuery ->
   class TermSubscriptionView extends Backbone.View
+    el: "#term_subscription_status"
     template: Handlebars.compile $("#term-subscription-template").html()
 
     initialize: (term_view) ->
-      @el = "#term_subscription_status"
+      return if not term_view
       @term_id = term_view.term.attributes.subscription.term_id
       @app = term_view.app
       @sub_status = new term_view.app.SubscriptionModel()
@@ -12,7 +13,6 @@ jQuery ->
         @sub_status.fetch()
       else
         @sub_status.set({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
-      @render()
       @
 
     updateSubscription: (e, data) ->

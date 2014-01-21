@@ -66,6 +66,10 @@ group :development do
   gem "capistrano-rails"
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
+
+  # Coffeescript Sourcemap debugging
+
+  gem 'coffee-rails-source-maps'
 end
 
 group :test do

@@ -1,13 +1,7 @@
 jQuery ->
   class TermTopicsView extends Backbone.View
+    el: "#specialized_view"
     template: Handlebars.compile($("#term-topics-template").html())
-    
-    selectors:
-      ct_status:
-        "ct1": "btn-info"
-        "ct2": "btn-info"
-        "postct": "btn-info"
-    
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
@@ -19,18 +13,20 @@ jQuery ->
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
-
-    initialize: (term_view)=>
-      @el = "#specialized_view"
-      @term_view = term_view
-      @updateSelector()
-
+    selectors:
+      ct_status:
+        "ct1": false
+        "ct2": false
+        "postct": false
+    
     createSection: (e) ->
       e.preventDefault()
       title = $.trim($("#new_section_title").val())
       $("#new_section_title").val("")
       if title != ""
-        section = new @term_view.app.SectionModel({title : title, term_id: @term_view.term.id})
+        section = new @term_view.app.SectionModel
+          title   : title
+          term_id : @term_view.term.id
         that = @
         section.save(null, {success: (model, resp) ->
           that.term_view.term.attributes.sections.push(section.attributes)
@@ -40,23 +36,24 @@ jQuery ->
 
     createTopic: (e) ->
       e.preventDefault()
-      section_id = $(e.target).attr("section-id")
-      topic_title = $.trim($("#topic_title_"+section_id.toString()).val())
-      topic_ct = $.trim($("#topic_ct_"+section_id.toString()).val())
-      topic_description = $.trim($("#topic_description_"+section_id.toString()).val())
+      section_id = $(e.target).attr("section-id").toString()
+      topic_title = $.trim($("#topic_title_"+section_id).val())
+      topic_ct = $.trim($("#topic_ct_"+section_id).val())
+      topic_description = $.trim($("#topic_description_"+section_id).val())
       if topic_title != ""
         topic = new @term_view.app.TopicModel({
-            title:          topic_title,
-            ct_status:      topic_ct,
-            description:    topic_description,
-            section_id:     section_id
-          })
+          title:          topic_title,
+          ct_status:      topic_ct,
+          description:    topic_description,
+          section_id:     parseInt(section_id)
+        })
         that = this
-        topic.save(null, {success: (model, resp) -> 
-          elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+        topic.save null, success: (model, resp) ->
+          term = that.term_view.term
+          elem = _.find term.attributes.sections, (obj) ->
+            return obj.id.toString() == section_id
           elem.topics.push(topic.attributes)
           that.render()
-          })
       @
     
     toggleSectionEdit: (e) ->
@@ -77,12 +74,14 @@ jQuery ->
       if title != ""
         section = new @term_view.app.SectionModel({id: section_id, title: title})
         that = this
-        section.save(null, { success: (model, resp) ->
-            elem = _.find(that.term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
-            elem.title = title
-            that.section_id = null
-            that.render()
-          })
+        section.save null, success: (model, resp) ->
+          term_attributes = that.term_view.term.attributes
+          elem = _.find term_attributes.sections, (obj) ->
+            return obj.id.toString() == section_id.toString()
+          elem.title = title
+          that.section_id = null
+          that.render()
+
       @
 
     toggleTopicEdit: (e) ->
@@ -106,7 +105,8 @@ jQuery ->
       topic_notes = $("#topic_notes_"+topic_id).val()
 
       for section in @term_view.term.attributes.sections
-        topic = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+        topic = _.find section.topics, (topic) ->
+          return topic.id.toString() == topic_id.toString()
         if topic
           for note in topic.notes
             sub = -1
@@ -114,26 +114,31 @@ jQuery ->
               sub = topic_notes.indexOf(note.note_id.toString())
             if note && note.id && sub==-1
               # Delete topic_notes
-              topic_note_model = new @term_view.app.TopicDocumentModel({id: note.id});
+              topic_note_model = new @term_view.app.TopicDocumentModel
+                id: note.id
               topic_note_model.destroy()
               index = topic.notes.indexOf(note)
               topic.notes.splice(index, 1)
               @render()
             else if sub!=-1 && note.id==null
               # Create topic_notes
-              topic_note_model = new @term_view.app.TopicDocumentModel({note_id: note.note_id, url: note.url, name: note.name, topic_id: topic_id});
+              topic_note_model = new @term_view.app.TopicDocumentModel
+                note_id:   note.note_id
+                url:       note.url
+                name:      note.name
+                topic_id:  topic_id
               that = this
               topic_note_model.save(null, { success: (model, resp) ->
                 for section in that.term_view.term.attributes.sections
-                  topic = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                  topic = _.find section.topics, (topic) ->
+                    return topic.id.toString() == topic_id.toString()
                   if topic
-                    topic.notes.push {
+                    topic.notes.push
                       id: topic_note_model.id,
                       note_id: topic_note_model.attributes.note_id,
                       url: topic_note_model.attributes.url,
                       name: topic_note_model.attributes.name,
-                    }
-                    break;
+                    break
               })
 
       for topic_ref in topic_reference
@@ -143,14 +148,22 @@ jQuery ->
         book = $(topic_ref).attr("book-name")
         indices = $.trim($(topic_ref).val())
         if ref_id
-          ref = new @term_view.app.TopicReferenceModel({term_reference_id: term_ref_id, topic_id: topic_id, indices: indices, id: ref_id, book_id: book_id, book: book})
+          ref = new @term_view.app.TopicReferenceModel
+            term_reference_id: term_ref_id
+            topic_id: topic_id
+            indices: indices
+            id: ref_id
+            book_id: book_id
+            book: book
           that = this
           if indices == ""
             ref.destroy()
             for section in that.term_view.term.attributes.sections
-              elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+              elem = _.find section.topics, (topic) ->
+                return topic.id.toString() == topic_id.toString()
               if elem
-                refs = _.find(elem.reference, (ref) -> return ref.id.toString() == ref_id.toString())
+                refs = _.find elem.reference, (ref) ->
+                  return ref.id.toString() == ref_id.toString()
                 index = elem.reference.indexOf(refs)
                 elem.reference.splice(index, 1)
                 that.render()
@@ -158,9 +171,11 @@ jQuery ->
           else
             ref.save(null, { success: (model, resp) ->
               for section in that.term_view.term.attributes.sections
-                elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                elem = _.find section.topics, (topic) ->
+                  return topic.id.toString() == topic_id.toString()
                 if elem
-                  elem = _.find(elem.reference, (elem) -> return elem.id.toString() == ref.id.toString())
+                  elem = _.find elem.reference, (elem) ->
+                    return elem.id.toString() == ref.id.toString()
                   elem.indices = ref.attributes.indices
                   that.render()
                   break
@@ -169,20 +184,21 @@ jQuery ->
           if indices != ""
             ref = new @term_view.app.TopicReferenceModel({term_reference_id: term_ref_id, topic_id: topic_id, indices: indices, book_id: book_id, book: book})
             that = this
-            ref.save(null, { success: (model, resp) -> 
-              book = _.find(that.term_view.term.attributes.course.reference_books, (elem) ->
+            ref.save(null, { success: (model, resp) ->
+              term_attributes = that.term_view.term.attributes
+              book = _.find term_attributes.course.reference_books, (elem) ->
                 return elem.id == ref.attributes.book_id
-              )
+
               for section in that.term_view.term.attributes.sections
-                elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+                elem = _.find section.topics, (topic) ->
+                  return topic.id.toString() == topic_id.toString()
                 if elem
-                  elem.reference.push({
-                      id: ref.id,
-                      book_id: ref.attributes.book_id,
-                      indices: ref.attributes.indices,
-                      book: ref.attributes.book,
-                      term_ref_id: ref.attributes.term_reference_id
-                    })
+                  elem.reference.push
+                    id: ref.id,
+                    book_id: ref.attributes.book_id,
+                    indices: ref.attributes.indices,
+                    book: ref.attributes.book,
+                    term_ref_id: ref.attributes.term_reference_id
                   that.render()
                   break
             })
@@ -190,25 +206,29 @@ jQuery ->
       if title != ""
         topic = new @term_view.app.TopicModel({id: topic_id, title: title, ct_status: ct_status, description: description})
         that = this
-        topic.save(null, { success: (model, resp) ->
-            for section in that.term_view.term.attributes.sections
-              elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
-              if elem
-                elem.title = title
-                elem.ct_status = ct_status
-                elem.description = description
-                break
-            that.topic_id = null
-            that.render()
-          })
+        topic.save null, success: (model, resp) ->
+          for section in that.term_view.term.attributes.sections
+            elem = _.find section.topics, (topic) ->
+              return topic.id.toString() == topic_id.toString()
+            if elem
+              elem.title = title
+              elem.ct_status = ct_status
+              elem.description = description
+              break
+          that.topic_id = null
+          that.render()
+
       @
       
-    deleteSection: (e) -> 
+    deleteSection: (e) ->
       e.preventDefault()
+      unless confirm("Are you sure you want to delete this?")
+        return
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
       section = new @term_view.app.SectionModel({id : section_id})
       section.destroy()
-      elem = _.find(@term_view.term.attributes.sections, (obj) ->  return obj.id.toString() == section_id.toString())
+      elem = _.find @term_view.term.attributes.sections, (obj) ->
+        return obj.id.toString() == section_id.toString()
       index = @term_view.term.attributes.sections.indexOf(elem)
       @term_view.term.attributes.sections.splice(index, 1)
       @render()
@@ -216,11 +236,14 @@ jQuery ->
 
     deleteTopic: (e) ->
       e.preventDefault()
+      unless confirm("Are you sure you want to delete this?")
+        return
       topic_id = $(e.target).attr("topic-id") || $(e.target).parent().attr("topic-id")
       topic = new @term_view.app.TopicModel({id: topic_id})
       topic.destroy()
       for section in @term_view.term.attributes.sections
-        elem = _.find(section.topics, (topic) -> return topic.id.toString() == topic_id.toString())
+        elem = _.find section.topics, (topic) ->
+          return topic.id.toString() == topic_id.toString()
         if elem
           topic_index = section.topics.indexOf(elem)
           section_index = @term_view.term.attributes.sections.indexOf(section)
@@ -232,19 +255,13 @@ jQuery ->
     updateSelector: (e)->
       if e and e.target
         e.preventDefault()
-        timeframe = $(e.target).html().toLowerCase().replace(" ", "")
-        @selectors.ct_status[timeframe] =  if @selectors.ct_status[timeframe] == "btn-info" then "" else "btn-info"
-        flag =  false
-        for k,v of @selectors.ct_status
-          flag ||= (v == "btn-info")
-        
-        @selectors.ct_status[timeframe] = "btn-info" if not flag
-
-      @render()
+        timeframe = $(e.target).text().trim().toLowerCase().replace(" ", "")
+        @selectors.ct_status[timeframe] = not @selectors.ct_status[timeframe]
       @
+    
+    render: (term_view) =>
+      @term_view = term_view if term_view
 
-
-    render: =>
       search_text = $("#search_box").val()
       if search_text
         search_text.replace(/^\s*/g, '')
@@ -263,12 +280,12 @@ jQuery ->
         section_clone["topics"] = []
         for topic in section.topics
           topic["edit"] = false
-          books = _.filter(topic["reference"], (ele) ->
-              return $.trim(ele.indices) != ""
-            )
-          notes = _.filter(topic["notes"], (ele) ->
-              return ele.id != null
-            )
+          books = _.filter topic["reference"], (ele) ->
+            return $.trim(ele.indices) != ""
+
+          notes = _.filter topic["notes"], (ele) ->
+            return ele.id != null
+
           topic["reference"] = books
           topic["notes"] = notes
           if @topic_id
@@ -280,46 +297,47 @@ jQuery ->
               topic["ct_select"][status] = true
               books = []
               for book in @term_view.term.attributes.course.reference_books
-                ref_book = _.find(topic["reference"], (ele) ->
-                    return ele.book_id.toString() == book.id.toString()
-                  )
+                ref_book = _.find topic["reference"], (ele) ->
+                  return ele.book_id.toString() == book.id.toString()
+
                 if ref_book
-                  books.push {
+                  books.push
                     id:           ref_book.id,
                     book_id:      ref_book.book_id,
                     indices:      ref_book.indices,
                     book:         ref_book.book,
                     term_ref_id:  book.term_ref_id
-                  }
                 else
-                  books.push {
+                  books.push
                     book_id:        book.id,
                     indices:        "",
                     book:           book.title,
                     term_ref_id:    book.term_ref_id
-                  } 
+
               topic["reference"] = books
               notes = []
               for note in @term_view.term.attributes.attachments
-                ref_note = _.find(topic["notes"], (ele) -> 
+                ref_note = _.find(topic["notes"], (ele) ->
                   return ele.note_id.toString() == note.id.toString()
                 )
                 if ref_note
-                  notes.push {
-                    id:       ref_note.id,
-                    note_id:  ref_note.note_id,
-                    name:     ref_note.name,
+                  notes.push
+                    id:       ref_note.id
+                    note_id:  ref_note.note_id
+                    name:     ref_note.name
                     url:      ref_note.url
-                  }
                 else
-                  notes.push {
-                    id:       null,
-                    note_id:  note.id,
-                    name:     note.name,
+                  notes.push
+                    id:       null
+                    note_id:  note.id
+                    name:     note.name
                     url:      note.url
-                  }
+
               topic["notes"] = notes
-          if @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")] == "btn-info"
+
+          no_filter = not (@selectors.ct_status["ct1"] || @selectors.ct_status["ct2"] || @selectors.ct_status["postct"])
+
+          if no_filter or @selectors.ct_status[topic.ct_status.toLowerCase().replace(" ", "")]
             if search_text == "" || (topic.title && topic.title.search(search_regx) != -1) || (topic.description && topic.description.search(search_regx) != -1)
               section_clone.topics.push topic
 
@@ -332,8 +350,9 @@ jQuery ->
             section_clone.active = false
 
       edit_mode = ""
-      if @term_view.view.id == "edit" && @term_view.term.attributes.faculty == true 
+      if @term_view.view.id == "edit" && @term_view.term.attributes.faculty == true
         edit_mode = "edit_mode"
+
       $(@el).html @template
         term:          @term_view.term.attributes
         edit_mode:     edit_mode
@@ -351,10 +370,11 @@ jQuery ->
       @
 
     updateCurrentSection: (e) =>
-      if target.hash == "#_all_sections"
+      hash = $(e.target).closest("a")[0].hash
+      if hash == "#_all_sections"
         @current_section_id = -1
       else
-        @current_section_id = +target.hash.substr(10)
+        @current_section_id = +hash.substr(10)
 
   @app = window.app ? {}
   @app.TermTopicsView = TermTopicsView
