@@ -34,3 +34,6 @@ config/deploy/
 
 #Ignore all backup files
 *.bak
+
+#Ignore files from coffee rails debug
+/public/assets
