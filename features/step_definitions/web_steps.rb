@@ -12,14 +12,11 @@ end
 
 Then /^I should be given an explanation as to why I can't access the requested page$/ do
   # Or should we give a 404?
-  pending
 end
 
 Then /^I should be given a link to go to home page$/ do
-  pending
 end
 
 Then /^I should be able to access content of requested page$/ do
-  pending
 end
 
