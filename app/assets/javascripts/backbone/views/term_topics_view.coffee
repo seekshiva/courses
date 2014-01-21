@@ -363,7 +363,6 @@ jQuery ->
         selectors:     @selectors
         show_all:      flag
         faculty:       @term_view.term.attributes.faculty
-        host:          window.location.host
 
       $(".selectpicker").selectpicker()
 

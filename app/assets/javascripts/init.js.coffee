@@ -56,6 +56,10 @@ jQuery ->
       return "";
     );
 
+    Handlebars.registerHelper('hostName',() ->
+      return window.location.host;
+    );
+
     Backbone.history.start({pushState: true})
 
     $(".selectpicker").selectpicker()
