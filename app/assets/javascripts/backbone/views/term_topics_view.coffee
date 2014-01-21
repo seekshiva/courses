@@ -257,6 +257,7 @@ jQuery ->
         e.preventDefault()
         timeframe = $(e.target).text().trim().toLowerCase().replace(" ", "")
         @selectors.ct_status[timeframe] = not @selectors.ct_status[timeframe]
+        @render()
       @
     
     render: (term_view) =>
