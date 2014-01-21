@@ -260,7 +260,9 @@ jQuery ->
       @
     
     render: (term_view) =>
-      @term_view = term_view if term_view
+      @app = window.app ? {}
+      if term_view and term_view instanceof @app.TermView
+        @term_view = term_view
 
       search_text = $("#search_box").val()
       if search_text
