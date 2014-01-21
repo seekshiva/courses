@@ -553,23 +553,27 @@
                 
                 <div class="list-group">
                   {{#each this.reference}}
-                    <div class="list-group-item media">
-                      <i class="glyphicon glyphicon-book pull-left media-object"></i>
-                      <div class="media-body">
-                        <div class="list-group-item-heading">{{this.book}}</div>
-                        <p class="list-group-item-text">{{this.indices}}</p>
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="glyphicon glyphicon-book pull-left media-object"></i>
+                        <div class="media-body">
+                          <div class="list-group-item-heading">{{this.book}}</div>
+                          <p class="list-group-item-text">{{this.indices}}</p>
+                        </div>
                       </div>
                     </div>
                   {{/each}}
                   {{#each this.notes}}
-                    <div class="list-group-item media">
-                      <i class="fa fa-book fa-2x pull-left media-object"></i>
-                      <div class="media-body">
-                        <div class="list-group-item-heading">{{this.name}}</div>
-                        <p class="list-group-item-text">
-                          <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                          <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                        </p>
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="fa fa-book fa-2x pull-left media-object"></i>
+                        <div class="media-body">
+                          <div class="list-group-item-heading">{{this.name}}</div>
+                          <p class="list-group-item-text">
+                            <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                            <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   {{/each}}
@@ -583,22 +587,24 @@
 
       {{#each term_sections}}
         <div class="tab-pane _topic_list {{#if this.active}}active{{/if}}" id="_section_{{this.id}}">
-          <div>
+          <div class="panel">
             {{#if ../edit_mode}}
               {{#if this.edit}}
-                <div class="field">
-                  <input type="text" class="form-control" id="section_title_{{this.id}}" value="{{this.title}}" placeholder="Topic title"/>
-                </div>
-                {{#if ../../../faculty}}
-                  <div class="btn-group pull-right">
-                    <div class="btn btn-default btn-sm btn-success edit_section" section-id="{{this.id}}">
-                      <i class="glyphicon glyphicon-ok"></i>
-                    </div>
-                    <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
-                      <i class="glyphicon glyphicon-remove"></i>
-                    </div>
+                <div class="clearfix">
+                  <div class="field">
+                    <input type="text" class="form-control" id="section_title_{{this.id}}" value="{{this.title}}" placeholder="Topic title"/>
                   </div>
-                {{/if}}
+                  {{#if ../../../faculty}}
+                    <div class="btn-group pull-right">
+                      <div class="btn btn-default btn-sm btn-success edit_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-ok"></i>
+                      </div>
+                      <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
+                        <i class="glyphicon glyphicon-remove"></i>
+                      </div>
+                    </div>
+                  {{/if}}
+                </div>
               {{else}}
                 <div class="btn-group pull-right">
                   <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
@@ -695,39 +701,41 @@
                   </div>
                 {{/if}}
               {{/if}}
-              {{#if this.description}}
-                <div class="panel-body">
-                  <p>{{{toMarkdown this.description}}}</p>
+              {{#unless this.edit}}
+                {{#if this.description}}
+                  <div class="panel-body">
+                    <p>{{{toMarkdown this.description}}}</p>
+                  </div>
+                {{/if}}
+                        
+                <div class="list-group">
+                  {{#each this.reference}}
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="glyphicon glyphicon-book pull-left media-object"></i>
+                        <div class="media-body">
+                          <div class="list-group-item-heading">{{this.book}}</div>
+                          <p class="list-group-item-text">{{this.indices}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {{/each}}
+                  {{#each this.notes}}
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="fa fa-book fa-2x pull-left media-object"></i>
+                        <div class="media-body">
+                          <div class="list-group-item-heading">{{this.name}}</div>
+                          <p class="list-group-item-text">
+                            <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                            <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  {{/each}}
                 </div>
-              {{/if}}
-                      
-              <div class="list-group">
-                {{#each this.reference}}
-                  <div class="list-group-item">
-                    <div class="media">
-                      <i class="glyphicon glyphicon-book pull-left media-object"></i>
-                      <div class="media-body">
-                        <div class="list-group-item-heading">{{this.book}}</div>
-                        <p class="list-group-item-text">{{this.indices}}</p>
-                      </div>
-                    </div>
-                  </div>
-                {{/each}}
-                {{#each this.notes}}
-                  <div class="list-group-item">
-                    <div class="media">
-                      <i class="fa fa-book fa-2x pull-left media-object"></i>
-                      <div class="media-body">
-                        <div class="list-group-item-heading">{{this.name}}</div>
-                        <p class="list-group-item-text">
-                          <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                          <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                {{/each}}
-              </div>
+              {{/unless}}
             </div>
           {{/each}}
           {{#if ../edit_mode}}
