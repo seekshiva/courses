@@ -674,25 +674,21 @@
             <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
             <textarea id="topic_description_{{topic.id}}" class="form-control" rows="8">{{topic.description}}</textarea>
           </div>
-          {{#if topic.reference}}
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Book</th>
-                  <th>Index/Page No</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each topic.reference}}
-                  <tr>
-                    <th><small>{{book}}</small></th>
-                    <td><input type="text" value="{{indices}}" term-ref-id="{{term_ref_id}}" book-name="{{book}}" topic-id="{{../id}}" book-id="{{book_id}}" ref-id="{{id}}" class="form-control topic_reference"/></td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          {{/if}}
+
         </form>
+      </div>
+      <div class="list-group">
+        {{#each topic.reference}}
+        <div class="list-group-item">
+          <div class="media">
+            <i class="glyphicon glyphicon-book pull-left media-object"></i>
+            <div class="media-body">
+              <div class="list-group-item-heading">{{book}}</div>
+              <input type="text" value="{{indices}}" term-ref-id="{{term_ref_id}}" book-name="{{book}}" topic-id="{{../id}}" book-id="{{book_id}}" ref-id="{{id}}" class="form-control input-sm topic_reference" placeholder="Index/Page no.">
+            </div>
+          </div>
+        </div>
+        {{/each}}
       </div>
       <div class="panel-footer">
         <div class="btn btn-success btn-sm pull-right edit_topic" topic-id="{{topic.id}}">

@@ -260,7 +260,7 @@ jQuery ->
       val = $(e.target).text()
       btn = $(e.target).closest(".ct_select_btn")
       $(btn).find("button > span").text(val)
-      val = $(e.target).text().toLowerCase().replace(" ", "")
+      $(btn).siblings("[type=hidden]").val(val)
       @
 
     updateSelector: (e)->
