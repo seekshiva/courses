@@ -2,6 +2,7 @@ jQuery ->
   class TermTopicsView extends Backbone.View
     el: "#specialized_view"
     template: Handlebars.compile($("#term-topics-template").html())
+    topic_template: Handlebars.compile($("#topic-template").html())
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
@@ -13,6 +14,8 @@ jQuery ->
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
+      "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
+      
     selectors:
       ct_status:
         "ct1": false
@@ -252,6 +255,14 @@ jQuery ->
       @render()
       @
 
+    updateCTSelection: (e)->
+      e.preventDefault()
+      val = $(e.target).text()
+      btn = $(e.target).closest(".ct_select_btn")
+      $(btn).find("button > span").text(val)
+      val = $(e.target).text().toLowerCase().replace(" ", "")
+      @
+
     updateSelector: (e)->
       if e and e.target
         e.preventDefault()
@@ -356,14 +367,26 @@ jQuery ->
       if @term_view.view.id == "edit" && @term_view.term.attributes.faculty == true
         edit_mode = "edit_mode"
 
+      that =
+        term_topics: @
+        faculty: @term_view.term.attributes.faculty
+        
+        
+      Handlebars.registerHelper "show_topic",  ->
+        that.term_topics.topic_template
+          topic: @
+          faculty: that.faculty
+          edit_mode: edit_mode
+
       $(@el).html @template
-        term:          @term_view.term.attributes
-        edit_mode:     edit_mode
-        term_sections: @term_sections
-        selectors:     @selectors
-        show_all:      flag
-        faculty:       @term_view.term.attributes.faculty
-        host:          window.location.host
+        term:            @term_view.term.attributes
+        topic_template:  @topic_template
+        edit_mode:       edit_mode
+        term_sections:   @term_sections
+        selectors:       @selectors
+        show_all:        flag
+        faculty:         @term_view.term.attributes.faculty
+        host:            window.location.host
 
       $(".selectpicker").selectpicker()
 

@@ -540,45 +540,7 @@
         <div class="tab-pane _topic_list {{#if show_all}}active{{/if}}" id="_all_sections">
           {{#each term_sections}}
             {{#each this.topics}}
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  {{this.title}}
-                  <small class="text-muted">- {{this.ct_status}}</small>
-                </div>
-                {{#if this.description}}
-                  <div class="panel-body">
-                    <p>{{{toMarkdown this.description}}}</p>
-                  </div>
-                {{/if}}
-                
-                <div class="list-group">
-                  {{#each this.reference}}
-                    <div class="list-group-item">
-                      <div class="media">
-                        <i class="glyphicon glyphicon-book pull-left media-object"></i>
-                        <div class="media-body">
-                          <div class="list-group-item-heading">{{this.book}}</div>
-                          <p class="list-group-item-text">{{this.indices}}</p>
-                        </div>
-                      </div>
-                    </div>
-                  {{/each}}
-                  {{#each this.notes}}
-                    <div class="list-group-item">
-                      <div class="media">
-                        <i class="fa fa-book fa-2x pull-left media-object"></i>
-                        <div class="media-body">
-                          <div class="list-group-item-heading">{{this.name}}</div>
-                          <p class="list-group-item-text">
-                            <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                            <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  {{/each}}
-                </div>
-              </div>
+              {{#show_topic}}{{/show_topic}}
             {{/each}}
           {{/each}}
         </div>
@@ -629,114 +591,7 @@
             </div>
           {{/unless}}
           {{#each this.topics}}
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                {{#if ../../edit_mode}}
-                  <div class="pull-right">
-                    <ul class="panel-heading-actions">
-                      <li><i class="glyphicon glyphicon-pencil toggle_edit_topic" topic-id="{{this.id}}"></i></li>
-                      <li><i class="glyphicon glyphicon-remove-circle delete_topic" topic-id="{{this.id}}"></i></li>
-                    </ul>
-                  </div>
-                {{/if}}
-                {{this.title}}
-                <span class="text-muted">- {{this.ct_status}}</span>
-              </div>
-              {{#if ../../edit_mode}}
-                {{#if this.edit}}
-                  <div class="panel-body">
-                    <form>
-                      {{#if ../../../../faculty}}
-                        <div class="btn-group pull-right field">
-                          <div class="btn btn-default btn-sm btn-success edit_topic" topic-id="{{this.id}}">
-                            <i class="glyphicon glyphicon-ok"></i>
-                          </div>
-                          <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{this.id}}">
-                            <i class="glyphicon glyphicon-remove"></i>
-                          </div>
-                        </div>
-                      {{/if}}
-                      <div class="field">
-                        <input type="text" value="{{this.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{this.id}}"/>
-                      </div>
-                      <div class="field">
-                        <select id="topic_ct_{{this.id}}" class="form-control">
-                          {{#with this.ct_select}}
-                            <option value="CT1" {{#if CT1 }}selected{{/if}}>CT1</option>
-                            <option value="CT2" {{#if CT2 }}selected{{/if}}>CT2</option>
-                            <option value="Post CT" {{#if PostCT }}selected{{/if}}>Post CT</option>
-                          {{/with}}
-                        </select>
-                      </div>
-                      <div class="field">
-                        <select multiple=true class="selectpicker show-tick show-menu-arrow" data-live-search="true" data-width='auto' title="Select Related Note(s)" data-header="Select Related Note(s)" id="topic_notes_{{this.id}}">
-                          {{#each this.notes}}
-                            <option value="{{this.note_id}}" {{#if this.id}}selected{{/if}}>{{this.name}}</option>
-                          {{/each}}
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
-                        <textarea id="topic_description_{{this.id}}" class="form-control" rows="8">{{this.description}}</textarea>
-                      </div>
-                      {{#if this.reference}}
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Book</th>
-                              <th>Index/Page No</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {{#each this.reference}}
-                              <tr>
-                                <th><small>{{this.book}}</small></th>
-                                <td><input type="text" value="{{this.indices}}" term-ref-id="{{this.term_ref_id}}" book-name="{{this.book}}" topic-id="{{../this.id}}" book-id="{{this.book_id}}" ref-id="{{this.id}}" class="form-control topic_reference"/></td>
-                              </tr>
-                            {{/each}}
-                          </tbody>
-                        </table>
-                      {{/if}}
-                    </form>
-                  </div>
-                {{/if}}
-              {{/if}}
-              {{#unless this.edit}}
-                {{#if this.description}}
-                  <div class="panel-body">
-                    <p>{{{toMarkdown this.description}}}</p>
-                  </div>
-                {{/if}}
-                        
-                <div class="list-group">
-                  {{#each this.reference}}
-                    <div class="list-group-item">
-                      <div class="media">
-                        <i class="glyphicon glyphicon-book pull-left media-object"></i>
-                        <div class="media-body">
-                          <div class="list-group-item-heading">{{this.book}}</div>
-                          <p class="list-group-item-text">{{this.indices}}</p>
-                        </div>
-                      </div>
-                    </div>
-                  {{/each}}
-                  {{#each this.notes}}
-                    <div class="list-group-item">
-                      <div class="media">
-                        <i class="fa fa-book fa-2x pull-left media-object"></i>
-                        <div class="media-body">
-                          <div class="list-group-item-heading">{{this.name}}</div>
-                          <p class="list-group-item-text">
-                            <a class="external" href="{{this.url}}" target="_blank">Download</a> |
-                            <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  {{/each}}
-                </div>
-              {{/unless}}
-            </div>
+            {{#show_topic}}{{/show_topic}}
           {{/each}}
           {{#if ../edit_mode}}
             <div id="accordion_{{this.id}}">
@@ -771,6 +626,120 @@
         </div>
       {{/each}}
     </div>
+  </div>
+</script>
+
+<script type="text/template" id="topic-template">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{#if faculty}}
+        <div class="pull-right">
+          <ul class="panel-heading-actions">
+            <li><i class="glyphicon glyphicon-pencil toggle_edit_topic" topic-id="{{topic.id}}"></i></li>
+            <li><i class="glyphicon glyphicon-remove-circle delete_topic" topic-id="{{topic.id}}"></i></li>
+          </ul>
+        </div>
+      {{/if}}
+      {{topic.title}}
+      <small class="text-muted">- {{topic.ct_status}}</small>
+    </div>
+    {{#if topic.edit}}
+      <div class="panel-body">
+        <form>
+          {{#if faculty}}
+            <div class="btn-group pull-right field">
+              <div class="btn btn-default btn-sm btn-success edit_topic" topic-id="{{topic.id}}">
+                <i class="glyphicon glyphicon-ok"></i>
+              </div>
+              <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{topic.id}}">
+                <i class="glyphicon glyphicon-remove"></i>
+              </div>
+            </div>
+          {{/if}}
+          <div class="field">
+            <div class="input-group">
+              <div class="input-group-btn ct_select_btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span>{{topic.ct_status}}</span>
+                  <i class="caret"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">CT 1</a></li>
+                  <li><a href="#">CT 2</a></li>
+                  <li><a href="#">Post CT</a></li>
+                </ul>
+              </div>
+              <input type="hidden" value="{{topic.ct_status}}" id="topic_ct_{{topic.id}}"/>
+              <input type="text" value="{{topic.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{topic.id}}"/>
+            </div>
+          </div>
+          <div class="field">
+            <select multiple=true class="selectpicker show-tick show-menu-arrow" data-live-search="true" data-width='auto' title="Select Related Note(s)" data-header="Select Related Note(s)" id="topic_notes_{{topic.id}}">
+              {{#each topic.notes}}
+                <option value="{{this.note_id}}" {{#if this.id}}selected{{/if}}>{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
+            <textarea id="topic_description_{{topic.id}}" class="form-control" rows="8">{{topic.description}}</textarea>
+          </div>
+          {{#if topic.reference}}
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Book</th>
+                  <th>Index/Page No</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each topic.reference}}
+                  <tr>
+                    <th><small>{{this.book}}</small></th>
+                    <td><input type="text" value="{{this.indices}}" term-ref-id="{{this.term_ref_id}}" book-name="{{this.book}}" topic-id="{{../this.id}}" book-id="{{this.book_id}}" ref-id="{{this.id}}" class="form-control topic_reference"/></td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{/if}}
+        </form>
+      </div>
+    {{/if}}
+    {{#unless topic.edit}}
+      {{#if topic.description}}
+        <div class="panel-body">
+          <p>{{{toMarkdown topic.description}}}</p>
+        </div>
+      {{/if}}
+    
+      <div class="list-group">
+        {{#each topic.reference}}
+          <div class="list-group-item">
+            <div class="media">
+              <i class="glyphicon glyphicon-book pull-left media-object"></i>
+              <div class="media-body">
+                <div class="list-group-item-heading">{{this.book}}</div>
+                <p class="list-group-item-text">{{this.indices}}</p>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+        {{#each topic.notes}}
+          <div class="list-group-item">
+            <div class="media">
+              <i class="fa fa-book fa-2x pull-left media-object"></i>
+              <div class="media-body">
+                <div class="list-group-item-heading">{{name}}</div>
+                <p class="list-group-item-text">
+                  <a class="external" href="{{this.url}}" target="_blank">Download</a> |
+                  <a class="external" href="http://docs.google.com/viewer?url={{../../../../../host}}{{this.url}}" target="_blank">Read</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/unless}}
   </div>
 </script>
 
