@@ -646,16 +646,6 @@
     {{#if topic.edit}}
       <div class="panel-body">
         <form>
-          {{#if faculty}}
-            <div class="btn-group pull-right field">
-              <div class="btn btn-default btn-sm btn-success edit_topic" topic-id="{{topic.id}}">
-                <i class="glyphicon glyphicon-ok"></i>
-              </div>
-              <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{topic.id}}">
-                <i class="glyphicon glyphicon-remove"></i>
-              </div>
-            </div>
-          {{/if}}
           <div class="field">
             <div class="input-group">
               <div class="input-group-btn ct_select_btn">
@@ -695,14 +685,22 @@
               <tbody>
                 {{#each topic.reference}}
                   <tr>
-                    <th><small>{{this.book}}</small></th>
-                    <td><input type="text" value="{{this.indices}}" term-ref-id="{{this.term_ref_id}}" book-name="{{this.book}}" topic-id="{{../this.id}}" book-id="{{this.book_id}}" ref-id="{{this.id}}" class="form-control topic_reference"/></td>
+                    <th><small>{{book}}</small></th>
+                    <td><input type="text" value="{{indices}}" term-ref-id="{{term_ref_id}}" book-name="{{book}}" topic-id="{{../id}}" book-id="{{book_id}}" ref-id="{{id}}" class="form-control topic_reference"/></td>
                   </tr>
                 {{/each}}
               </tbody>
             </table>
           {{/if}}
         </form>
+      </div>
+      <div class="panel-footer">
+        <div class="btn btn-success btn-sm pull-right edit_topic" topic-id="{{topic.id}}">
+          <i class="glyphicon glyphicon-ok"></i> Save
+        </div>
+        <div class="btn btn-default btn-sm toggle_edit_topic" topic-id="{{topic.id}}">
+          <i class="glyphicon glyphicon-remove"></i> Cancel
+        </div>
       </div>
     {{/if}}
     {{#unless topic.edit}}
