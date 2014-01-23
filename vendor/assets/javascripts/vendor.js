@@ -5,4 +5,5 @@
 //= require bootstrap-switch
 //= require markdown
 //= require uploadify
+//= require strophe
 //= require_tree .

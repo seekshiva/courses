@@ -19,3 +19,4 @@
 //= require_tree ./backbone
 //= require init.js
 //= require me.js
+//= require xmpp.js
