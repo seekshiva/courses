@@ -11,15 +11,11 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require vendor
-//= require markdown.js
-//= require uploadify.js
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/courses
 //= require_tree ./backbone
-//= require bootstrap-select
-//= require bootstrap-switch
 //= require init.js
 //= require me.js
