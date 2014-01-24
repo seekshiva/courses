@@ -5,4 +5,6 @@
 //= require bootstrap-switch
 //= require markdown
 //= require uploadify
+//= require respond
+//= require html5shiv
 //= require_tree .
