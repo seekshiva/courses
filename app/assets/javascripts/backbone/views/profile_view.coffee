@@ -20,7 +20,7 @@ jQuery ->
       avatar = @profile.attributes.avatar_id != 0 ? 1 : 0
       edit = @profile.attributes.type == "edit" ? 1 : 0
 
-      document.title = "Courses - "+@profile.attributes.name
+      document.title = "CoursesHub - "+@profile.attributes.name
 
       prefix = {}
       if !@profile.attributes.student
