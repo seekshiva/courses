@@ -274,7 +274,7 @@ jQuery ->
       @term_sections = []
       flag = true
       for section in @term_view.term.attributes.sections
-        section_clone = Object.create(section)
+        section_clone = jQuery.extend(true, {}, section)
         if @section_id
           if @section_id.toString() == section.id.toString()
             section_clone["edit"] = true
