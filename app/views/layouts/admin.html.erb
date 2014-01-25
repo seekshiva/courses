@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Courses - Admin</title>
+  <title>CoursesHub - Admin</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "uploadify", :media => "all" %>
   <%= csrf_meta_tags %>
@@ -16,7 +16,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/admin/">Courses</a>
+      <a class="navbar-brand" href="/admin/">CoursesHub</a>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
@@ -62,7 +62,7 @@
   <div id="footer">
     <div class="container">
       <p class="text-muted">
-        CoursesHub <span class="copyleft" title="Copyleft">&copy;</span> 2014
+        <%= raw Rails.application.config.copyleft_text %>
         <span class="pull-right">
           <%= link_to "About", "/about" %> | 
           <%= link_to "Contact-Us", "/contact-us" %> | 

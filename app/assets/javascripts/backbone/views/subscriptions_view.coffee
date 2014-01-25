@@ -16,7 +16,7 @@ jQuery ->
       subs = {}
 
       attending = 0
-      @subscriptions.models.map (sub) ->
+      _.map( @subscriptions.models, (sub) ->
         subs[sub.id] = {
           id:             sub.get("id"),
           course_name:    sub.get("course_name"),
@@ -26,7 +26,8 @@ jQuery ->
         }
         if sub.get("current") == true
           attending = true
-
+      )
+      
       $(@el).html @template
         user:       @app.user
         subs:       subs

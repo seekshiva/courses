@@ -6,7 +6,7 @@ jQuery ->
 
     initialize: (path)->
       @path = path
-      document.title = "Courses - 500"
+      document.title = "CoursesHub - 500"
       @render()
 
     render:  ->

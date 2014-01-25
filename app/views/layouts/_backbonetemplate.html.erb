@@ -553,7 +553,7 @@ S><script type="text/template" id="login-template">
         </div>
         <div class="input-group">
           <span class="input-group-addon glyphicon glyphicon-search" style="top: 0;"></span>
-          <input type="search" class="form-control" placeholder="Search a Topic" id="search_box">
+          <input type="search" class="form-control" placeholder="Search a Topic" id="search_box" onfocus="this.value = this.value;">
         </div>
       </div>
 
@@ -761,7 +761,7 @@ S><script type="text/template" id="login-template">
                     <strong>{{this.name}}</strong>
                   </td>
                   <td>
-                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{../host}}{{this.url}}" target="_blank">Read</a>
+                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{hostName}}{{this.url}}" target="_blank">Read</a>
                   </td>
                 </tr>
               {{/each}}

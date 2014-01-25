@@ -13,7 +13,7 @@ jQuery ->
       @department.fetch()
 
     render: =>
-      document.title = "Courses - "+@department.attributes.short
+      document.title = "CoursesHub - "+@department.attributes.short
       course_listing = []
       for list in @department.attributes.course_listing
         list.course_list.sort((a,b)-> return a.code>b.code)

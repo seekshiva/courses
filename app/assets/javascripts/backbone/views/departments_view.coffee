@@ -13,7 +13,7 @@ jQuery ->
     render: ->
       depts = {}
 
-      @departments.models.map (dept) ->
+      _.map( @departments.models, (dept) ->
         depts[dept.id] = {
           id: dept.get("id")
           name: dept.get("name")
@@ -21,6 +21,7 @@ jQuery ->
           hod_email: dept.get("hod_email")
           short: dept.get("short")
         }
+      )
 
       $(@el).html @template
         depts: depts

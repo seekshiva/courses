@@ -1,4 +1,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-select
+//= require bootstrap-switch
+//= require markdown
+//= require uploadify
+//= require respond
+//= require html5shiv
 //= require_tree .
