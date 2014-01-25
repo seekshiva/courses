@@ -1,4 +1,4 @@
-<script type="text/template" id="login-template">
+S><script type="text/template" id="login-template">
   <div class="container">
     <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin" style="text-align: center; ">
       <h2 class="form-signin-heading">Sign In</H2>
@@ -455,22 +455,41 @@
       </div>
       <div class="tab-pane" id="info3">
         <h4>Outline Of Topics</h4>
-        <ul>
-          {{#if term.sections}}
-              {{#each term.sections}}
-                <li>
-                  {{this.title}}
-                  <ul>
-                    {{#each this.topics}}
-                      <li>{{this.title}}</li>
-                    {{/each}}
-                  </ul>
-                </li>
-              {{/each}}
-          {{else}}
-            Sorry, this course doesn&#39;t seem to have topics.
-          {{/if}}
-        </ul>
+        {{#if term.sections}}
+          <ul>
+            {{#each term.sections}}
+              <li>
+                {{this.title}}
+                <ul>
+                  {{#each this.topics}}
+                    <li>{{this.title}}</li>
+                  {{/each}}
+                </ul>
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p>Sorry, this course doesn&#39;t seem to have topics.</p>
+        {{/if}}
+        {{#if term.faculty}}
+          <hr>
+          <h4>Add new topic</h4>
+          <div class="row">
+            <div class="col-md-9">
+              <form class="form-inline">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
+                  <div class="input-group-btn">
+                    <button type="submit" class="form-action btn btn-primary" id="create_section">
+                      Add <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <br><br>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -479,29 +498,13 @@
 <script type="text/template" id="term-topics-template">
   <div class="row">
     <div class="list-group local-nav col-md-3">
-      {{#unless edit_mode}}
-        <a class="list-group-item {{#if show_all}}active{{/if}}" href="#_all_sections" data-toggle="tab">All</a>
-      {{/unless}}
+      <a class="list-group-item {{#if show_all}}active{{/if}}" href="#_all_sections" data-toggle="tab">All</a>
       {{#each term_sections}}
         <a class="list-group-item {{#if this.active}}active{{/if}}" href="#_section_{{this.id}}" data-toggle="tab"{{#if this.show_short_title}} title="{{this.title}}"{{/if}}>
           <span class="badge">{{this.topics.length}}</span>
           {{this.short_title}}
         </a>
       {{/each}}
-      {{#if edit_mode}}
-        {{#if faculty}}
-          <div class="tab-content col-md-12">
-            <form>
-              <div class="field">
-                <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
-              </div>
-              <div class="field">
-                <input type="submit" class="form-action btn btn-primary btn-sm" id="create_section" value="Add New Topic"/>
-              </div>
-            </form>
-          </div>
-        {{/if}}
-      {{/if}}
     </div>
     <div class="tab-content col-md-9">
       <div id="topic_filter">
@@ -525,26 +528,24 @@
         </div>
       </div>
 
-      {{#unless edit_mode}}
-        {{#unless term_sections}}
-          <div class="tab-pane active _topic_list" id="_topic_all">
-            <table class="table bottom_line">
-              <tbody>
-                <tr><td>
+      {{#unless term_sections}}
+        <div class="tab-pane active _topic_list" id="_topic_all">
+          <table class="table bottom_line">
+            <tbody>
+              <tr><td>
                   No topics were found that matched the given criteria.
-                </td></tr>
-              </tbody>
-            </table>
-          </div>
-        {{/unless}}
-        <div class="tab-pane _topic_list {{#if show_all}}active{{/if}}" id="_all_sections">
-          {{#each term_sections}}
-            {{#each this.topics}}
-              {{#show_topic}}{{/show_topic}}
-            {{/each}}
-          {{/each}}
+              </td></tr>
+            </tbody>
+          </table>
         </div>
       {{/unless}}
+      <div class="tab-pane _topic_list {{#if show_all}}active{{/if}}" id="_all_sections">
+        {{#each term_sections}}
+          {{#each this.topics}}
+            {{#show_topic}}{{/show_topic}}
+          {{/each}}
+        {{/each}}
+      </div>
 
 
       {{#each term_sections}}

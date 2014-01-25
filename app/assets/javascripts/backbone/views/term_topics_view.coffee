@@ -8,7 +8,6 @@ jQuery ->
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
       "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
-      "click #create_section" : "createSection"
       "click .create_topic" : "createTopic"
       "click .toggle_edit_section" : "toggleSectionEdit"
       "click .toggle_edit_topic" : "toggleTopicEdit"
@@ -21,21 +20,6 @@ jQuery ->
         "ct1": false
         "ct2": false
         "postct": false
-    
-    createSection: (e) ->
-      e.preventDefault()
-      title = $.trim($("#new_section_title").val())
-      $("#new_section_title").val("")
-      if title != ""
-        section = new @term_view.app.SectionModel
-          title   : title
-          term_id : @term_view.term.id
-        that = @
-        section.save(null, {success: (model, resp) ->
-          that.term_view.term.attributes.sections.push(section.attributes)
-          that.render()
-        })
-      @
 
     createTopic: (e) ->
       e.preventDefault()

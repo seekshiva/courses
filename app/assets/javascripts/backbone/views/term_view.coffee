@@ -6,6 +6,7 @@ jQuery ->
 
     events:
       "click .row > .list-group > .list-group-item": "switch_active_topic"
+      "click #create_section" : "createSection"
     
     initialize: (options) ->
       @app = window.app ? {}
@@ -21,6 +22,21 @@ jQuery ->
       target = $(e.target).closest("a")
       $(target).siblings().filter(".active").removeClass("active")
       $(target).addClass("active")
+
+    createSection: (e) ->
+      e.preventDefault()
+      title = $.trim($("#new_section_title").val())
+      $("#new_section_title").val("")
+      if title != ""
+        section = new @app.SectionModel
+          title   : title
+          term_id : @term_id
+        that = @
+        section.save(null, {success: (model, resp) ->
+          that.term.attributes.sections.push(section.attributes)
+          that.render()
+        })
+      @
       
     render: =>
       find_template = (type)->
