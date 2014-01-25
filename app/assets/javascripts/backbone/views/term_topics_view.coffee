@@ -8,7 +8,6 @@ jQuery ->
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
       "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
-      "click .create_topic" : "createTopic"
       "click .toggle_edit_section" : "toggleSectionEdit"
       "click .toggle_edit_topic" : "toggleTopicEdit"
       "click .edit_section" : "updateSection"
@@ -21,28 +20,6 @@ jQuery ->
         "ct2": false
         "postct": false
 
-    createTopic: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id").toString()
-      topic_title = $.trim($("#topic_title_"+section_id).val())
-      topic_ct = $.trim($("#topic_ct_"+section_id).val())
-      topic_description = $.trim($("#topic_description_"+section_id).val())
-      if topic_title != ""
-        topic = new @term_view.app.TopicModel({
-          title:          topic_title,
-          ct_status:      topic_ct,
-          description:    topic_description,
-          section_id:     parseInt(section_id)
-        })
-        that = this
-        topic.save null, success: (model, resp) ->
-          term = that.term_view.term
-          elem = _.find term.attributes.sections, (obj) ->
-            return obj.id.toString() == section_id
-          elem.topics.push(topic.attributes)
-          that.render()
-      @
-    
     toggleSectionEdit: (e) ->
       e.preventDefault()
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")

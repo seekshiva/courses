@@ -459,11 +459,40 @@ S><script type="text/template" id="login-template">
           <ul>
             {{#each term.sections}}
               <li>
-                {{this.title}}
+                {{title}}
+                <a href="#add_subtopic_{{id}}" class="small" data-toggle="collapse">[Add subtopic]</a>
                 <ul>
-                  {{#each this.topics}}
-                    <li>{{this.title}}</li>
+                  {{#each topics}}
+                    <li>
+                      {{title}}
+                      <span class="text-muted">- {{ct_status}}</span>
+                    </li>
                   {{/each}}
+                  <li id="add_subtopic_{{id}}" class="collapse">
+                    <form class="create_subtopic" section-id="{{id}}">
+                      <div class="field">
+                        <strong class="text-success">Add new sub-topic:</strong>
+                        <div class="input-group">
+                          <div class="input-group-btn ct_select_btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span>CT 1</span>
+                              <i class="caret"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#">CT 1</a></li>
+                              <li><a href="#">CT 2</a></li>
+                              <li><a href="#">Post CT</a></li>
+                            </ul>
+                          </div>
+                          <input type="hidden" value="CT 1" id="topic_ct_status"/>
+                          <input type="text" value="" class="form-control" placeholder="SubTopic Title" id="topic_title"/>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                      </div>
+                    </form>
+                  </li>
                 </ul>
               </li>
             {{/each}}
@@ -594,36 +623,6 @@ S><script type="text/template" id="login-template">
           {{#each this.topics}}
             {{#show_topic}}{{/show_topic}}
           {{/each}}
-          {{#if ../edit_mode}}
-            <div id="accordion_{{this.id}}">
-              <div class="panel panel-success">
-                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion_{{this.id}}" href="#add_new_subtopic_{{this.id}}" style="cursor: pointer; ">
-                  Add New Subtopic
-                </div>
-                <div class="panel-body panel-collapse collapse" id="add_new_subtopic_{{this.id}}">
-                  <form role="form">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="topic_title_{{this.id}}" placeholder="New Subtopic Title">
-                    </div>
-                    <div class="form-group">
-                      <select id="topic_ct_{{this.id}}" class="form-control">
-                        <option value="CT1">CT1</option>
-                        <option value="CT2">CT2</option>
-                        <option value="Post CT">Post CT</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <p class="help-block small pull-right">*Description is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
-                      <textarea id="topic_description_{{this.id}}" class="form-control" rows="8" placeholder="Description"></textarea>
-                    </div>
-                    <div class="field pull-right">
-                      <input type="submit" class="form-action btn btn-primary btn-sm create_topic" section-id="{{this.id}}" value="Add New Topic"/>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          {{/if}}
         </div>
       {{/each}}
     </div>

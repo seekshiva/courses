@@ -7,6 +7,8 @@ jQuery ->
     events:
       "click .row > .list-group > .list-group-item": "switch_active_topic"
       "click #create_section" : "createSection"
+      "submit .create_subtopic" : "createSubTopic"
+      "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
     
     initialize: (options) ->
       @app = window.app ? {}
@@ -23,6 +25,14 @@ jQuery ->
       $(target).siblings().filter(".active").removeClass("active")
       $(target).addClass("active")
 
+    updateCTSelection: (e)->
+      e.preventDefault()
+      val = $(e.target).text()
+      btn = $(e.target).closest(".ct_select_btn")
+      $(btn).find("button > span").text(val)
+      $(btn).siblings("[type=hidden]").val(val)
+      @
+
     createSection: (e) ->
       e.preventDefault()
       title = $.trim($("#new_section_title").val())
@@ -31,13 +41,35 @@ jQuery ->
         section = new @app.SectionModel
           title   : title
           term_id : @term_id
-        that = @
+        that = this
         section.save(null, {success: (model, resp) ->
           that.term.attributes.sections.push(section.attributes)
           that.render()
         })
       @
-      
+
+    createSubTopic: (e) ->
+      e.preventDefault()
+      target = e.target
+      section_id = parseInt($(e.target).attr("section-id"))
+      topic_title = $.trim($(target).find("#topic_title").val())
+      topic_ct = $.trim($("#topic_ct_status").val())
+      if topic_title != ""
+        topic = new @app.TopicModel({
+          title:          topic_title,
+          ct_status:      topic_ct,
+          description:    "",
+          section_id:     section_id
+        })
+        that = this
+        topic.save null, success: (model, resp) ->
+          term = that.term
+          elem = _.find term.attributes.sections, (obj) ->
+            return obj.id == section_id
+          elem.topics.push(topic.attributes)
+          that.render()
+      @
+
     render: =>
       find_template = (type)->
         Handlebars.compile $("#term-" + type + "-template").html()
