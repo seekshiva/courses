@@ -6,11 +6,8 @@ jQuery ->
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
-      "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
-      "click .toggle_edit_section" : "toggleSectionEdit"
       "click .toggle_edit_topic" : "toggleTopicEdit"
-      "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
       "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
       
@@ -19,34 +16,6 @@ jQuery ->
         "ct1": false
         "ct2": false
         "postct": false
-
-    toggleSectionEdit: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      if @section_id == section_id
-        @section_id = null
-      else
-        @section_id = section_id
-      @topic_id = null
-      @render()
-      @
-
-    updateSection: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      title = $.trim($("#section_title_"+section_id).val())
-      if title != ""
-        section = new @term_view.app.SectionModel({id: section_id, title: title})
-        that = this
-        section.save null, success: (model, resp) ->
-          term_attributes = that.term_view.term.attributes
-          elem = _.find term_attributes.sections, (obj) ->
-            return obj.id.toString() == section_id.toString()
-          elem.title = title
-          that.section_id = null
-          that.render()
-
-      @
 
     toggleTopicEdit: (e) ->
       e.preventDefault()
@@ -184,20 +153,6 @@ jQuery ->
 
       @
       
-    deleteSection: (e) ->
-      e.preventDefault()
-      unless confirm("Are you sure you want to delete this?")
-        return
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      section = new @term_view.app.SectionModel({id : section_id})
-      section.destroy()
-      elem = _.find @term_view.term.attributes.sections, (obj) ->
-        return obj.id.toString() == section_id.toString()
-      index = @term_view.term.attributes.sections.indexOf(elem)
-      @term_view.term.attributes.sections.splice(index, 1)
-      @render()
-      @
-
     deleteTopic: (e) ->
       e.preventDefault()
       unless confirm("Are you sure you want to delete this?")

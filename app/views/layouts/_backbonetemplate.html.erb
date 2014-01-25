@@ -570,6 +570,9 @@ S><script type="text/template" id="login-template">
       {{/unless}}
       <div class="tab-pane _topic_list {{#if show_all}}active{{/if}}" id="_all_sections">
         {{#each term_sections}}
+          <div class="panel">
+            <h4>{{title}}</h4>
+          </div>
           {{#each this.topics}}
             {{#show_topic}}{{/show_topic}}
           {{/each}}
@@ -580,37 +583,7 @@ S><script type="text/template" id="login-template">
       {{#each term_sections}}
         <div class="tab-pane _topic_list {{#if this.active}}active{{/if}}" id="_section_{{this.id}}">
           <div class="panel">
-            {{#if ../edit_mode}}
-              {{#if this.edit}}
-                <div class="clearfix">
-                  <div class="field">
-                    <input type="text" class="form-control" id="section_title_{{this.id}}" value="{{this.title}}" placeholder="Topic title"/>
-                  </div>
-                  {{#if ../../../faculty}}
-                    <div class="btn-group pull-right">
-                      <div class="btn btn-default btn-sm btn-success edit_section" section-id="{{this.id}}">
-                        <i class="glyphicon glyphicon-ok"></i>
-                      </div>
-                      <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
-                        <i class="glyphicon glyphicon-remove"></i>
-                      </div>
-                    </div>
-                  {{/if}}
-                </div>
-              {{else}}
-                <div class="btn-group pull-right">
-                  <div class="btn btn-default btn-sm toggle_edit_section" section-id="{{this.id}}">
-                    <i class="glyphicon glyphicon-pencil"></i>
-                  </div>
-                  <div class="btn btn-sm btn-danger delete_section" section-id="{{this.id}}">
-                    <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                  </div>
-                </div>
-                <h4>{{this.title}}</h4>
-              {{/if}}
-            {{else}}
-              <h4>{{this.title}}</h4>
-            {{/if}}
+            <h4>{{this.title}}</h4>
           </div>
           
           {{#unless this.topics}}
