@@ -338,9 +338,6 @@ S><script type="text/template" id="login-template">
 <script type="text/template" id="term-template">
   <h3>
     {{#if term.faculty}}
-      <a href="/terms/{{term.id}}/topics{{#unless edit_mode}}/edit{{/unless}}" class="btn {{#if edit_mode}}btn-success{{else}}btn-default greener{{/if}} btn-sm local">
-        <i class="glyphicon glyphicon-pencil"></i>
-      </a>
       <button data-target="#TermSubModal" role="button" class="btn btn-success btn-sm" data-toggle="modal">
         <i class="glyphicon glyphicon-list"></i>
       </button>
