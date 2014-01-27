@@ -40,6 +40,17 @@ production:
   pool: 5
   timeout: 5000
 
+xmpp:
+  adapter: mysql2
+  username: username
+  password: password
+  port: 5432
+  database: courses
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  timeout: 5000  
+
 development_mail:
   adapter: mysql2
   username: username

@@ -37,6 +37,12 @@ class RegistrationsController < Devise::RegistrationsController
 
         UserMailer.welcome_email(@user).deliver
         
+        xmpp = XmppUser.where(:username => @user.email).first
+        if xmpp.nil?
+          xmpp = XmppUser.create(:username => @user.email, :password => Digest::MD5.hexdigest(@password))
+        end
+        session[:xmpp_pass] = xmpp.password
+            
         if @user.is_student?
           sub_list = Set.new()
           Course.all.each do |course|
@@ -59,7 +65,7 @@ class RegistrationsController < Devise::RegistrationsController
             sub_status = Subscription.create(sub_list)
           end
 
-          if sub_status
+          if sub_status && xmpp
             flash[:notice_type] = "alert-success"
             format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
             format.json { render json: @user, status: :created, location: @user }
@@ -68,10 +74,14 @@ class RegistrationsController < Devise::RegistrationsController
             format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
             format.json { render json: sub_status.errors, status: :unprocessable_entity }
           end
-        else
+        elsif xmpp
           flash[:notice_type] = "alert-success"
           format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
-          format.json { render json: @user, status: :created, location: @user }
+          format.json { render json: @user.errors, status: :created, location: @user }
+        else 
+          flash[:notice_type] = "alert-danger"
+          format.html { redirect_to "/login", notics: "Sorry, failed to save data" }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
         flash[:notice_type] = "alert-danger"

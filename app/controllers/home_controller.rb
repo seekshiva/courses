@@ -89,6 +89,11 @@ class HomeController < ApplicationController
             redirect_to "/me"
           else
             session[:user_id] = @user.id
+            xmpp = XmppUser.where(:username => @user.email).first
+            if xmpp.nil?
+              xmpp = XmppUser.create(:username => @user.email, :password => Digest::MD5.hexdigest(@password))
+            end
+            session[:xmpp_pass] = xmpp.password
             flash[:notice_type] = 'alert-success'
             flash[:notice] = "You have successfully logged in!"
             redirect_to @redirect_url || root_url
