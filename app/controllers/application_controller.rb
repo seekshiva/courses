@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   def setupenv
     @user = nil            
+    @xmpp_pass = session[:xmpp_pass]
     begin
       unless session[:user_id].nil?
         @user = User.find(session[:user_id])

@@ -65,6 +65,8 @@
     var app = window.app ? window.app : {};
     <% unless @user.nil? %>
       app["user"] = <%= raw @user.to_json %>
+      app["xmpp_user"] = '<%=  raw @user.email %>'
+      app["xmpp_pass"] = '<%=  raw @xmpp_pass %>'
     <% end %>
     app["session_key"] = '<%= Rails.application.config.session_options[:key] %>';
     app["session_val"] = '<%= cookies[Rails.application.config.session_options[:key]] %>';

@@ -1,4 +1,6 @@
 jQuery ->
+  @app = window.app ? {}
+
   Xmpp = (jid, passwd, host) ->
     @jid = jid
     @passwd = passwd
@@ -11,10 +13,13 @@ jQuery ->
     @
 
   Xmpp::connect = () ->
-    @conn = new Strophe.Connection(@host);
+    @log("connect function")
+    @conn = new Strophe.Connection("http://"+@host+"/http-bind");
+    @conn.connect(@jid+"@"+@host, @passwd, @onConnect.bind(@))
     @
 
   Xmpp::onConnect = (status) ->
+    @log("onConnect function")
     if status == Strophe.Status.CONNECTING
       @log('Strophe is connecting.');
     else if status == Strophe.Status.CONNFAIL
@@ -48,3 +53,8 @@ jQuery ->
     # we must return true to keep the handler alive.  
     # returning false would remove it after it finishes.
     return true;
+
+  Xmpp::sendMessage = (msg) ->
+    @
+
+  @app.Xmpp = Xmpp
