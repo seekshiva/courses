@@ -18,15 +18,6 @@ jQuery ->
       else if req.status == 500 && req.responseText != "saved"
         view = new @app.ServerErrorView()
 
-    $(document).ajaxSend(()->
-        $("#content").css({opacity: 0.5});
-        $("#loading").css({top: (($(window).height()-180)/2), left: (($(window).width()-128)/2), position: "absolute" }).show(400);
-      )
-
-    $(document).ajaxComplete(()->
-        $("#content").css({opacity: 1});
-        $("#loading").hide(200);
-      )
 
     @app = window.app ? {}
     @app.menu_view = new @app.SubscriptionsView()
@@ -44,6 +35,19 @@ jQuery ->
         @app = window.app ? {}
         @app.router.navigate $(e.target).attr("href") or $(e.target.parentNode).attr("href"),
           trigger: true
+
+    @app.show_loading = ()->
+      $("#content").css({opacity: 0.5});
+      $("#loading").css({top: (($(window).height()-180)/2), left: (($(window).width()-128)/2), position: "absolute" }).show(400);
+
+
+    @app.hide_loading = ()->
+      $("#content").css({opacity: 1});
+      $("#loading").hide(200);
+
+    $(document).ajaxSend(@app.show_loading)
+
+    # $(document).ajaxComplete(@app.hide_loading)
 
     $(".local").find("a:not(.external)").click (e) ->
       unless e.target.parentNode.id == "signin_link"

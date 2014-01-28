@@ -12,6 +12,8 @@ jQuery ->
     render:  ->
       $(@el).html @template
         url: @path
+
+      @app.hide_loading()
       @
 
   @app = window.app ? {}

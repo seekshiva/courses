@@ -6,12 +6,15 @@ jQuery ->
 
     initialize: (path)->
       @path = path
+      @app = window.app ? {}
       document.title = "CoursesHub - 500"
       @render()
 
     render:  ->
       $(@el).html @template
         url: @path
+
+      @app.hide_loading()
       @
 
   @app = window.app ? {}

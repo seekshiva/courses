@@ -44,6 +44,7 @@ jQuery ->
           edit_mode:     if @view.id == "edit" then "edit_mode" else ""
           term_sections: @term_sections
           host:          window.location.host
+        @app.hide_loading()
 
       that = this
       $(@el).find("a.local, .local a:not(.external)").click( (e) ->
@@ -76,9 +77,8 @@ jQuery ->
         });
         
       else if @view.type == "info"
-        unless @term_sub_status
-          @term_sub_status = new @app.TermSubscriptionView
-          @term_sub_status.initialize(@)
+        @term_sub_status = new @app.TermSubscriptionView
+        @term_sub_status.initialize(@)
         @term_sub_status.render()
       @
 

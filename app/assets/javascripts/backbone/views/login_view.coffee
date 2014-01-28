@@ -6,11 +6,14 @@ jQuery ->
 
     initialize: (url)->
       @path = url.path
+      @app = window.app ? {}
       @render()
 
     render:  ->
       $(@el).html @template
         url: @path
+
+      @app.hide_loading()
       @
 
   @app = window.app ? {}

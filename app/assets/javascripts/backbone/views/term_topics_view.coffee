@@ -364,6 +364,8 @@ jQuery ->
         show_all:      flag
         faculty:       @term_view.term.attributes.faculty
 
+      @app.hide_loading()
+      
       $(".selectpicker").selectpicker()
 
       if search_text != "" && search_text

@@ -33,6 +33,8 @@ jQuery ->
         subs:       subs
         attending:  attending
 
+      @app.hide_loading()
+
       $(".local").find("a:not(.external)").click (e) ->
         unless e.target.parentNode.id == "signin_link"
           $("#signin_link").css({display: "block"})
