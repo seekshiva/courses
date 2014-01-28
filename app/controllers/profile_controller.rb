@@ -32,7 +32,7 @@ class ProfileController < ApplicationController
                 avatar:             profile.avatar.nil? ? "" : profile.avatar.pic.url(:large),
                 avatar_id:          profile.avatar.nil? ? 0 : profile.avatar_id
             }
-          if profile.is_student?
+          if profile.student?
             ret[:student] = true
             ret[:subs] = Subscription.where(:user_id => profile.id).collect do |sub|
               {

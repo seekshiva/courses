@@ -26,12 +26,12 @@ class User < ActiveRecord::Base
     self.activated == true
   end
   
-  def is_student?
-    return self[:email].to_i != 0
+  def student?
+    return self[:email].to_i.to_s == self[:email]
   end
   
   def nth_year
-    if self.is_student?
+    if self.student?
       return Time.now.year%100 - self[:email][4..5].to_i
     else
       nil
