@@ -91,4 +91,16 @@ FactoryGirl.define do
     email  "me.admin"
     admin  true
   end
+
+  factory :faculty do
+    user
+    prefix "Ms."
+    designation "Prof"
+    about "Some intro about the prof"
+  end
+
+  factory :term_faculty do
+    term
+    faculty
+  end
 end
