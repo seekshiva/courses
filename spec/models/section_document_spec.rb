@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe SectionDocument do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should allow_mass_assignment_of(:section_id) }
+  it { should allow_mass_assignment_of(:document_id) }
+
+  it { should validate_uniqueness_of(:section_id).scoped_to(:document_id) }
 end

@@ -1,14 +1,7 @@
 require 'spec_helper'
 
 describe Faculty do
-  it "has unique {user}" do
-    user = FactoryGirl.create(:user)
-    FactoryGirl.create(:faculty, user: user)
-
-    expect {
-      FactoryGirl.create(:faculty, user: user)
-    }.to raise_exception
-  end
+  it { should validate_uniqueness_of(:user_id) }
 
   it "has a full name" do
     user = FactoryGirl.create(:user, name: "John Doe")

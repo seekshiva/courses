@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe Section do
-  it "should have unique {term, title}" do
-    term = FactoryGirl.create(:term)
-    title = "SectionTitle"
-    FactoryGirl.create(:section, term: term, title: title)
-    expect {
-      FactoryGirl.create(:section, term: term, title: title)
-    }.to raise_exception
-  end
+  it { should belong_to(:term) }
+  it { should have_many(:topics) }
+
+  it { should allow_mass_assignment_of(:term_id) }
+  it { should allow_mass_assignment_of(:title) }
+
+  it { should validate_uniqueness_of(:term_id).scoped_to(:title) }
 end

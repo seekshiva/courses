@@ -26,6 +26,11 @@ FactoryGirl.define do
     short "CHEM"
     rollno_prefix "1021"
   end
+
+  factory :term_department do
+    term
+    department
+  end
   
   # Documents
 
@@ -35,6 +40,11 @@ FactoryGirl.define do
 
   factory :term_document do
     term
+    document
+  end
+
+  factory :section_document do
+    section
     document
   end
 
