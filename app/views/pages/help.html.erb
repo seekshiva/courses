@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-sm-6 col-md-4">
 		<div class="thumbnail">
-			<img src="<%= asset_path 'student.png' %>" alt="...">
+			<%= link_to( image_tag(asset_path 'student.png'), page_path("help/student") )%>
 			<div class="caption">
 				<h3><%= link_to 'Students', page_path("help/student")%></h3>
 			</div>
@@ -14,7 +14,7 @@
 	</div>
 	<div class="col-sm-6 col-md-4">
 		<div class="thumbnail">
-			<img src="<%= asset_path 'professor.png' %>" alt="...">
+			<%= link_to( image_tag(asset_path 'professor.png'), page_path("help/faculty") )%>
 			<div class="caption">
 				<h3><%= link_to 'Faculty', page_path("help/faculty")%></h3>
 			</div>
@@ -22,7 +22,7 @@
 	</div>
 	<div class="col-sm-6 col-md-4">
 		<div class="thumbnail">
-			<img src="<%= asset_path 'admin.png' %>" alt="...">
+			<%= link_to( image_tag(asset_path 'admin.png'), page_path("help/admin") )%>
 			<div class="caption">
 				<h3><%= link_to 'Administrator', page_path("help/admin")%></h3>
 			</div>
