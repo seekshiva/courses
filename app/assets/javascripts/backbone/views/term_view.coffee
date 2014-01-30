@@ -109,7 +109,6 @@ jQuery ->
 
       $(@el).html @template
         term: @term.attributes
-        edit_mode: if @view.id == "edit" then "edit_mode" else ""
 
       $("#TermSubModal").modal({"backdrop":"static","show":false});
       $(@el).find("#specialized_view_selector li").removeClass("active")
@@ -122,7 +121,6 @@ jQuery ->
       else
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
-          edit_mode:     if @view.id == "edit" then "edit_mode" else ""
           term_sections: @term_sections
           host:          window.location.host
 
