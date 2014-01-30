@@ -844,19 +844,24 @@
             <tbody>
               {{#each term.course.reference_books}}
                 <tr><td style="padding-right: 20px; ">
-                  <h4>{{this.title}} <small>({{this.year}})</small></h4>
+                  <h4>{{title}} <small>({{year}})</small></h4>
                   <table class="table table-striped table-condensed">
                     <tbody>
                       <tr><th width="30%">Authors</th><td>
                         <ul style="padding-left: 15px;">
-                          {{#each this.authors}}
-                            <li>{{this.name}}</li>
+                          {{#each authors}}
+                            <li>{{name}}</li>
                           {{/each}}
                         </ul>
                       </td></tr>
-                      <tr><th>Publisher</th><td>{{this.publisher}}</td></tr>
-                      <tr><th>Edition</th><td>{{this.edition}}</td></tr>
-                      <tr><th>ISBN</th><td>{{this.isbn}}</td></tr>
+                      <tr><th>Publisher</th><td>{{publisher}}</td></tr>
+                      <tr><th>Edition</th><td>{{edition}}</td></tr>
+                      {{#if isbn-10}}
+                        <tr><th>ISBN-10</th><td>{{isbn-10}}</td></tr>
+                      {{/if}}
+                      {{#if isbn-13}}
+                        <tr><th>ISBN-13</th><td>{{isbn-13}}</td></tr>
+                      {{/if}}
                     </tbody>
                   </table>
                 </td>

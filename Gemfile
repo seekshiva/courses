@@ -52,6 +52,10 @@ gem 'coffee-rails',        '~> 4.0.1'
 
 gem 'bluecloth'
 
+# ISBN Library
+
+gem 'lisbn',               '~> 0.2.0'
+
 # Compression
 
 gem 'uglifier',            '~> 1.3.0'
