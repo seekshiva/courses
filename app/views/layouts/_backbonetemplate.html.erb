@@ -402,11 +402,11 @@ S><script type="text/template" id="login-template">
 </script>
 
 <script type="text/template" id="term-info-template">
-  <div class="row">
+  <div class="row" id="term-info-page">
     <div class="list-group local-nav col-md-3">
       <a class="list-group-item active" href="#overview" data-toggle="tab">Overview</a>
-      <a class="list-group-item" href="#info2" data-toggle="tab">Instructor</a>
-      <a class="list-group-item" href="#info3" data-toggle="tab">Outline</a>
+      <a class="list-group-item" href="#instructor" data-toggle="tab">Instructor</a>
+      <a class="list-group-item" href="#outline" data-toggle="tab">Outline</a>
     </div>
     <div class="tab-content col-md-9">
       <div class="tab-pane active" id="overview">
@@ -444,20 +444,22 @@ S><script type="text/template" id="login-template">
           {{/unless}}
         </table>
       </div>
-      <div class="tab-pane" id="info2">
+      <div class="tab-pane" id="instructor">
         {{#each term.instructors}}
           <h4>{{this.instructor}} <small>({{this.email}})</small></h4>
           {{{this.about}}}
         {{/each}}
       </div>
-      <div class="tab-pane" id="info3">
+      <div class="tab-pane" id="outline">
         <h4>Outline Of Topics</h4>
         {{#if term.sections}}
           <ul>
             {{#each term.sections}}
               <li>
+                <div class="delete_section pull-right" section-id="{{this.id}}">
+                  <i class="glyphicon glyphicon-trash glyphicon-white"></i>
+                </div>
                 {{title}}
-                <a href="#add_subtopic_{{id}}" class="small" data-toggle="collapse">[Add subtopic]</a>
                 <ul>
                   {{#each topics}}
                     <li>
@@ -465,10 +467,10 @@ S><script type="text/template" id="login-template">
                       <span class="text-muted">- {{ct_status}}</span>
                     </li>
                   {{/each}}
-                  <li id="add_subtopic_{{id}}" class="collapse">
-                    <form class="create_subtopic" section-id="{{id}}">
+                  <li>
+                    <a href="#add_subtopic_{{id}}" class="small" data-toggle="collapse">[Add subtopic]</a>
+                    <form id="add_subtopic_{{id}}" class="create_subtopic collapse" section-id="{{id}}">
                       <div class="field">
-                        <strong class="text-success">Add new sub-topic:</strong>
                         <div class="input-group">
                           <div class="input-group-btn ct_select_btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

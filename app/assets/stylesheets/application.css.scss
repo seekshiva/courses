@@ -218,8 +218,6 @@ h1, h2, h3, h4, h5, h6 {
     color:#4183c4;
 }
 
-
-
 ._topic_list .media-object {
     font-size: 2em;
     margin-top: 5px;
@@ -230,4 +228,10 @@ h1, h2, h3, h4, h5, h6 {
 
 #_reference_books img {
     box-shadow: 0.5px 0px 6px #aaa;
+}
+
+// Term Info
+
+#term-info-page #outline li:hover {
+    background-color: rgba(222,222,222,.5);
 }
