@@ -3,30 +3,30 @@
 <span class="text-muted">Sometimes you just need a little help.</span>
 <hr/>
 <div class="well">We have categorized help pages based on the type of user. Choose your role.</div>
-<div class="row">
+<div class="row" id="help_page_selector">
 	<div class="col-sm-6 col-md-4">
-		<div class="thumbnail">
-			<%= link_to( image_tag(asset_path 'student.png'), page_path("help/student") )%>
+		<a class="thumbnail" href="<%= page_path('help/student') %>">
+			<%= image_tag(asset_path 'student.png') %>
 			<div class="caption">
-				<h3><%= link_to 'Students', page_path("help/student")%></h3>
+				<h3>Students</h3>
 			</div>
-		</div>
+		</a>
 	</div>
 	<div class="col-sm-6 col-md-4">
-		<div class="thumbnail">
-			<%= link_to( image_tag(asset_path 'professor.png'), page_path("help/faculty") )%>
+		<a class="thumbnail" href="<%= page_path('help/faculty') %>">
+			<%= image_tag(asset_path 'professor.png') %>
 			<div class="caption">
-				<h3><%= link_to 'Faculty', page_path("help/faculty")%></h3>
+				<h3>Faculty</h3>
 			</div>
-		</div>
+		</a>
 	</div>
 	<div class="col-sm-6 col-md-4">
-		<div class="thumbnail">
-			<%= link_to( image_tag(asset_path 'admin.png'), page_path("help/admin") )%>
+		<a class="thumbnail" href="<%= page_path('help/admin') %>">
+			<%= image_tag(asset_path 'admin.png') %>
 			<div class="caption">
-				<h3><%= link_to 'Administrator', page_path("help/admin")%></h3>
+				<h3>Administrator</h3>
 			</div>
-		</div>
+		</a>
 	</div>
 </div>
 
