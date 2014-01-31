@@ -21,7 +21,7 @@ class HomeController < ApplicationController
       if flash[:imap_id]
         @user[:email] = flash[:imap_id]
         
-        if @user.is_student?
+        if @user.student?
           begin
             @user.department_id = Department.find_by(rollno_prefix: @user[:email][0..3]).id
           rescue

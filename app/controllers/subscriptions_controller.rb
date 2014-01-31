@@ -23,7 +23,7 @@ class SubscriptionsController < ApplicationController
             attending:    sub.attending,
             course_name:  sub.term.course.name,
             course_id:    sub.term.course_id,
-            current:      sub.term.is_current?
+            current:      sub.term.current?
           }
         end
       else
@@ -35,7 +35,7 @@ class SubscriptionsController < ApplicationController
             user_id:      @user.id,
             course_name:  term_fac.term.course.name,
             course_id:    term_fac.term.course_id,
-            current:      term_fac.term.is_current?
+            current:      term_fac.term.current?
           }
         end
       end
@@ -59,7 +59,7 @@ class SubscriptionsController < ApplicationController
       attending:    sub.attending,
       course_name:  sub.term.course.name,
       course_id:    sub.term.course_id,
-      current:      sub.term.is_current?
+      current:      sub.term.current?
     }
 
     respond_to do |format|
@@ -82,7 +82,7 @@ class SubscriptionsController < ApplicationController
           attending:    sub.attending,
           course_name:  sub.term.course.name,
           course_id:    sub.term.course_id,
-          current:      sub.term.is_current?
+          current:      sub.term.current?
         }
         format.html { redirect_to ret, notice: 'Subscription was successfully created.' }
         format.json { render json: ret, status: :created, location: @subscription }

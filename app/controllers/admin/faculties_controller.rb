@@ -35,7 +35,7 @@ class Admin::FacultiesController < Admin::BaseController
     @user_id = nil 
     @users_array = [["",-1]]
     User.all.each do |user|
-      if not user.is_student?
+      if not user.student?
         @users_array << [user.email, user.id]
       end
     end

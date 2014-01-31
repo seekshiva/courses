@@ -30,7 +30,7 @@ class Course < ActiveRecord::Base
   def current_term
     current = []
     self.terms.each do |term|
-      if term.is_current?
+      if term.current?
         current << term
       end
     end

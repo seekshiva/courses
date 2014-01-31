@@ -1,5 +1,4 @@
 class Avatar < ActiveRecord::Base
-  attr_accessible :pic
   has_one :user
   has_attached_file :pic,
     :styles => { :thumb => "32x32", :small => "50x50#", :medium=>"160x160#", :large=>"215x215#" },
@@ -11,6 +10,7 @@ class Avatar < ActiveRecord::Base
     :content_type => { :content_type => [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp'] },
     :size => { :in => 0..6000.kilobytes }
   
+  attr_accessible :pic
 
   def file_dimensions
     dimensions = Paperclip::Geometry.from_file(pic.queued_for_write[:original].path)

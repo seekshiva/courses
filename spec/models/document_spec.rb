@@ -1,5 +1,11 @@
 require 'spec_helper'
 
 describe Document do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it { should allow_mass_assignment_of(:document) }
+
+  it { should have_attached_file(:document) }
+
+  it { should allow_mass_assignment_of(:uploaded_by) } 
+
 end

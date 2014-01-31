@@ -1,7 +1,6 @@
 class TermFaculty < ActiveRecord::Base
   belongs_to :term
   belongs_to :faculty
-  has_one :course, :through => :term
 
   attr_accessible :term_id, :faculty_id, :faculty_email
   

@@ -32,7 +32,7 @@ class ProfileController < ApplicationController
                 avatar:             profile.avatar.nil? ? "" : profile.avatar.pic.url(:large),
                 avatar_id:          profile.avatar.nil? ? 0 : profile.avatar_id
             }
-          if profile.is_student?
+          if profile.student?
             ret[:student] = true
             ret[:subs] = Subscription.where(:user_id => profile.id).collect do |sub|
               {
@@ -40,7 +40,7 @@ class ProfileController < ApplicationController
                 term_id:      sub.term_id,
                 course_name:  sub.term.course.name,
                 course_id:    sub.term.course_id,
-                current:      sub.term.is_current?,
+                current:      sub.term.current?,
                 this_year:    sub.term.this_year?,
                 year:         sub.term.year,
                 sem:          sub.term.semester.ordinalize
@@ -65,7 +65,7 @@ class ProfileController < ApplicationController
                   term_id:      tf.term_id,
                   course_name:  tf.term.course.name,
                   this_year:    tf.term.this_year?,
-                  current:      tf.term.is_current?,
+                  current:      tf.term.current?,
                   year:         tf.term.year,
                   sem:          tf.term.semester.ordinalize
                 }
