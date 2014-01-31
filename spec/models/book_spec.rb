@@ -15,11 +15,13 @@ describe Book do
   it { should allow_mass_assignment_of(:book_cover_id) }
   it { should allow_mass_assignment_of(:file_id) }
 
-  describe ".isbn-10" do
-    pending
+  it "has a isbn_10" do
+    book = FactoryGirl.create(:book)
+    book.isbn_10.should eq Lisbn.new(book.isbn).isbn10
   end
 
-  describe ".isbn-13" do
-    pending
+  it "has a isbn_13" do
+    book = FactoryGirl.create(:book)
+    book.isbn_13.should eq Lisbn.new(book.isbn).isbn13
   end
 end
