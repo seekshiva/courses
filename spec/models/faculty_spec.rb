@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe Faculty do
+  it { should belong_to(:user) }
+
   it { should validate_uniqueness_of(:user_id) }
+
+  it { should allow_mass_assignment_of(:prefix) }
+  it { should allow_mass_assignment_of(:user_id) }
+  it { should allow_mass_assignment_of(:designation) }
+  it { should allow_mass_assignment_of(:about) }
 
   it "has a full name" do
     user = FactoryGirl.create(:user, name: "John Doe")

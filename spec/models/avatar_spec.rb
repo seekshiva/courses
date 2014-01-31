@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe Avatar do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it { should have_one(:user) }
+
+  describe ".file_dimension" do
+    pending
+  end
 end

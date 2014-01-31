@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe BookCover do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it { should have_one(:book) }
+
+  it { should allow_mass_assignment_of(:cover) }
+  it { should allow_mass_assignment_of(:uploaded_by) }
+
 end

@@ -3,16 +3,14 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable
-  belongs_to :department
 
-  has_one :avatar, :dependent => :destroy
+  belongs_to :avatar
+  belongs_to :department
 
   has_many :subscriptions, :dependent => :destroy
   has_many :terms, :through => :subscriptions
 
   has_many :courses, :through => :terms
-
-  belongs_to :avatar
 
   attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin
 

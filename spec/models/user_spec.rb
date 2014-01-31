@@ -1,6 +1,25 @@
 require 'spec_helper'
 
 describe User do
+
+  it { should belong_to(:avatar) }
+  it { should belong_to(:department) }
+
+  it { should have_many(:subscriptions).dependent(:destroy) }
+  it { should have_many(:terms).through(:subscriptions) }
+
+  it { should have_many(:courses).through(:terms) }
+  
+  it { should allow_mass_assignment_of(:name) }
+  it { should allow_mass_assignment_of(:email) }
+  it { should allow_mass_assignment_of(:department_id) }
+  it { should allow_mass_assignment_of(:phone) }
+  it { should allow_mass_assignment_of(:avatar_id) }
+  it { should allow_mass_assignment_of(:activated) }
+  it { should allow_mass_assignment_of(:admin) }
+
+  it { should validate_uniqueness_of(:email) }
+
   context "#admin?" do
     it "return true if user is admin" do
       user = FactoryGirl.build(:admin)
