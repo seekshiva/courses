@@ -811,34 +811,11 @@
 <script type="text/template" id="term-reference-template">
   <div class="row">
     <div class="list-group local-nav col-md-3">
-      <a href="#_reference_notes" class="list-group-item" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a>
-      <a href="#_reference_books" class="list-group-item active" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a>
+      <a href="#_reference_books" class="list-group-item {{#if tab.books}}active{{/if}}" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a>
+      <a href="#_reference_notes" class="list-group-item {{#if tab.notes}}active{{/if}}" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a>
     </div>
     <div class="tab-content col-md-9">
-      <div class="tab-pane _reference_list" id="_reference_notes">
-        <table class="table bottom_line">
-          <tbody>
-            {{#if term.attachments.length}}
-              {{#each term.attachments}}
-                <tr>
-                  <td style="padding-right: 20px; ">
-                    <strong>{{this.name}}</strong>
-                  </td>
-                  <td>
-                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{hostName}}{{this.url}}" target="_blank">Read</a>
-                  </td>
-                </tr>
-              {{/each}}
-            {{else}}
-              No Notes found
-            {{/if}}
-          </tbody>
-          <div class="field">
-            <div id="upload_notes">
-          </div>
-        </table>
-      </div>
-      <div class="tab-pane active _reference_list" id="_reference_books">
+      <div class="tab-pane {{#if tab.books}}active{{/if}} _reference_list" id="_reference_books">
         {{#if term.course.reference_books.length}}
           <table class="table bottom_line">
             <tbody>
@@ -883,6 +860,29 @@
             </tbody>
           </table>
         {{/if}}
+      </div>
+      <div class="tab-pane {{#if tab.notes}}active{{/if}} _reference_list" id="_reference_notes">
+        <table class="table bottom_line">
+          <tbody>
+            {{#if term.attachments.length}}
+              {{#each term.attachments}}
+                <tr>
+                  <td style="padding-right: 20px; ">
+                    <strong>{{this.name}}</strong>
+                  </td>
+                  <td>
+                    <a class="external" href="{{this.url}}" target="_blank">Download</a> | <a class="external" href="http://docs.google.com/viewer?url={{hostName}}{{this.url}}" target="_blank">Read</a>
+                  </td>
+                </tr>
+              {{/each}}
+            {{else}}
+              No Notes found
+            {{/if}}
+          </tbody>
+          <div class="field">
+            <div id="upload_notes">
+          </div>
+        </table>
       </div>
     </div>
   </div>
