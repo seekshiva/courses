@@ -77,6 +77,9 @@ group :development do
 end
 
 group :test do
+  # RSpec (unit tests)
+  gem 'shoulda-matchers',  '2.5.0'
+
   # Cucumber (integration tests)
   gem 'capybara',          '2.2.0'
   gem 'database_cleaner',  '1.1.0'

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Book do
+
   it { should belong_to(:book_cover) }
   
   it { should have_many(:book_authors).dependent(:destroy) }

@@ -15,9 +15,9 @@
     <tr>
       <td><%= link_to "#{term.course.subject_code} - #{term.course.name}", [:admin, @course, term], class: "btn btn-small btn-link" %></td>
       <td>
-        <% if term.is_current? %><div class="label label-success">In Progress
+        <% if term.current? %><div class="label label-success">In Progress
         <% elsif term.this_year? 
-            if term.is_odd_term?%><div class="label label-default">Completed
+            if term.odd_term?%><div class="label label-default">Completed
           <% else %><div class="label label-info">Scheduled
         <%  end 
             else %><div class="label label-default">Completed

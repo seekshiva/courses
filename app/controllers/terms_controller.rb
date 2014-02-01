@@ -120,7 +120,7 @@ class TermsController < ApplicationController
           subscription:    sub
         }
         
-        if not @user.is_student?
+        if not @user.student?
           faculty = Faculty.where(:user_id => @user.id)
           if !faculty.nil? || !faculty.empty?
             sub_list = term.subscriptions.collect do |sub|

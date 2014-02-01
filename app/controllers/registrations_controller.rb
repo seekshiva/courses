@@ -37,7 +37,7 @@ class RegistrationsController < Devise::RegistrationsController
 
         UserMailer.welcome_email(@user).deliver
         
-        if @user.is_student?
+        if @user.student?
           sub_list = Set.new()
           Course.all.each do |course|
             course.current_term.each do |term|
