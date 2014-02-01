@@ -602,7 +602,7 @@ S><script type="text/template" id="login-template">
 </script>
 
 <script type="text/template" id="topic-template">
-  <div class="panel panel-default">
+  <div class="panel panel-default" id="topic_{{topic.id}}">
     <div class="panel-heading">
       {{#if faculty}}
         <div class="pull-right">
@@ -612,7 +612,7 @@ S><script type="text/template" id="login-template">
           </ul>
         </div>
       {{/if}}
-      {{topic.title}}
+      <a href="#topic_{{topic.id}}" style="color:#333;">{{topic.title}}</a>
       <small class="text-muted">- {{topic.ct_status}}</small>
     </div>
     {{#if topic.edit}}
