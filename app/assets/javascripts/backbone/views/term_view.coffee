@@ -20,7 +20,7 @@ jQuery ->
       @term.bind "change", @render, @
       @term.fetch()
       @tab = {}
-      @tab["info"] = {"overview":true, "instructor": false, "outline": true}
+      @tab["info"] = {"overview":true, "instructor": false, "outline": false}
       @tab["reference"] = {"books": true, "notes": false}
       @
 
@@ -65,6 +65,7 @@ jQuery ->
       elem = _.find @term.attributes.sections, (obj) ->
         return obj.id.toString() == section_id.toString()
       index = @term.attributes.sections.indexOf(elem)
+      @tab["info"] = {"overview":false, "instructor": false, "outline": true}
       @term.attributes.sections.splice(index, 1)
       @render()
       @
@@ -73,6 +74,7 @@ jQuery ->
       e.preventDefault()
       title = $.trim($("#new_section_title").val())
       $("#new_section_title").val("")
+      @tab["info"] = {"overview":false, "instructor": false, "outline": true}
       if title != ""
         section = new @app.SectionModel
           title   : title
@@ -98,6 +100,7 @@ jQuery ->
           section_id:     section_id
         })
         that = this
+        @tab["info"] = {"overview":false, "instructor": false, "outline": true}
         topic.save null, success: (model, resp) ->
           term = that.term
           elem = _.find term.attributes.sections, (obj) ->
@@ -162,6 +165,7 @@ jQuery ->
         });
         
       else if @view.type == "info"
+        @tab["info"] = {"overview":true, "instructor": false, "outline": false}
         @term_sub_status = new @app.TermSubscriptionView
         @term_sub_status.initialize(@)
         @term_sub_status.render()

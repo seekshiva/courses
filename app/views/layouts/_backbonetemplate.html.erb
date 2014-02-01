@@ -404,12 +404,12 @@ S><script type="text/template" id="login-template">
 <script type="text/template" id="term-info-template">
   <div class="row" id="term-info-page">
     <div class="list-group local-nav col-md-3">
-      <a class="list-group-item active" href="#overview" data-toggle="tab">Overview</a>
-      <a class="list-group-item" href="#instructor" data-toggle="tab">Instructor</a>
-      <a class="list-group-item" href="#outline" data-toggle="tab">Outline</a>
+      <a class="list-group-item {{#if tab.overview}}active{{/if}}" href="#overview" data-toggle="tab">Overview</a>
+      <a class="list-group-item {{#if tab.instructor}}active{{/if}}" href="#instructor" data-toggle="tab">Instructor</a>
+      <a class="list-group-item {{#if tab.outline}}active{{/if}}" href="#outline" data-toggle="tab">Outline</a>
     </div>
     <div class="tab-content col-md-9">
-      <div class="tab-pane active" id="overview">
+      <div class="tab-pane {{#if tab.overview}}active{{/if}}" id="overview">
         <table class="table bottom_line">
           <tr>
             <td colspan="2">
@@ -444,13 +444,13 @@ S><script type="text/template" id="login-template">
           {{/unless}}
         </table>
       </div>
-      <div class="tab-pane" id="instructor">
+      <div class="tab-pane {{#if tab.instructor}}active{{/if}}" id="instructor">
         {{#each term.instructors}}
           <h4>{{this.instructor}} <small>({{this.email}})</small></h4>
           {{{this.about}}}
         {{/each}}
       </div>
-      <div class="tab-pane" id="outline">
+      <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline">
         <h4>Outline Of Topics</h4>
         {{#if term.sections}}
           <ul>
