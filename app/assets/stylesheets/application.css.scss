@@ -231,7 +231,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // Term Info
-
 #term-info-page #outline li:hover {
     background-color: rgba(222,222,222,.5);
+
+// Help pages
+#help_page_selector a.thumbnail {
+    transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in 0;
+}
+
+#help_page_selector a.thumbnail:hover {
+    text-decoration: none;
+    background: rgba(248, 248, 248, .6);
+}
+
+#help_page_selector a.thumbnail h3 {
+    text-align: center;
+    color: #0088CC;
+}
+
+#help_page_selector a.thumbnail:hover h3 {
+    color: #005580;
 }

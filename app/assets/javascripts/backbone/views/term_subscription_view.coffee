@@ -25,6 +25,7 @@ jQuery ->
         delete @sub_status.attributes.attending
         delete @sub_status.attributes.created_at
         delete @sub_status.attributes.updated_at
+        @app.hide_loading()
       else 
         @sub_status.set({attending : null})
         @sub_status.save(null, { success: _.bind(@updateCollection, @) })
@@ -41,6 +42,8 @@ jQuery ->
       $(@el).html @template
         subscribed: sub
         term_id: @term_id
+
+      @app.hide_loading()
 
       $(".make-switch").bootstrapSwitch();
       $("#"+@term_id+"_subscription_status").bind("switch-change", _.bind(@updateSubscription, @))

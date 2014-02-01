@@ -59,17 +59,18 @@ class TermsController < ApplicationController
 
         reference_books = term.term_references.collect do |item|
           {
-            id:             item.book.id,
+            id:                  item.book.id,
             term_ref_id:         item.id,
-            authors:        item.book.authors,
-            cover:          item.book.book_cover.nil? ? false : item.book.book_cover.cover.url(:thumb),
-            title:          item.book.title,
-            publisher:      item.book.publisher,
-            edition:        item.book.edition,
-            isbn:           item.book.isbn,
-            book_cover_id:  item.book.book_cover_id,
-            year:           item.book.year,
-            online_retail_url: item.book.online_retail_url,
+            authors:             item.book.authors,
+            cover:               item.book.book_cover.nil? ? false : item.book.book_cover.cover.url(:thumb),
+            title:               item.book.title,
+            publisher:           item.book.publisher,
+            edition:             item.book.edition,
+            "isbn-10" =>         item.book.isbn_10,
+            "isbn-13" =>         item.book.isbn_13,
+            book_cover_id:       item.book.book_cover_id,
+            year:                item.book.year,
+            online_retail_url:   item.book.online_retail_url,
           }
         end
 
@@ -119,7 +120,7 @@ class TermsController < ApplicationController
           subscription:    sub
         }
         
-        if not @user.is_student?
+        if not @user.student?
           faculty = Faculty.where(:user_id => @user.id)
           if !faculty.nil? || !faculty.empty?
             sub_list = term.subscriptions.collect do |sub|

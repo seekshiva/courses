@@ -21,6 +21,8 @@ jQuery ->
       @department.attributes.course_listing = course_listing
       $(@el).html @template
         dept: @department.attributes
+
+      @app.hide_loading()
       $(@el).find("a").click @app.show_local_page
       @
 

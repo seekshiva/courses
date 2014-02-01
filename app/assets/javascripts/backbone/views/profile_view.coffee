@@ -37,6 +37,8 @@ jQuery ->
         edit_mode:    edit
         prefix:       prefix
 
+      @app.hide_loading()
+
       $(".make-switch").bootstrapSwitch();
       $(".selectpicker").selectpicker()
 

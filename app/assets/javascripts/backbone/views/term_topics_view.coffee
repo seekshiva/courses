@@ -298,6 +298,8 @@ jQuery ->
         faculty:         @term_view.term.attributes.faculty
         host:            window.location.host
 
+      @app.hide_loading()
+      
       $(".selectpicker").selectpicker()
 
       if search_text != "" && search_text

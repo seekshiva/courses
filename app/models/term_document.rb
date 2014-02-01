@@ -5,4 +5,6 @@ class TermDocument < ActiveRecord::Base
   validates :document_id, uniqueness: { scope: :term_id }
   
   attr_accessible :document_id, :term_id
+
+  validates :term_id, :uniqueness => { scope: :document_id }
 end

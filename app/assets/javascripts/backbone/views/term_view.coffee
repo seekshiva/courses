@@ -19,6 +19,9 @@ jQuery ->
       @term = new @app.TermModel({id: @term_id})
       @term.bind "change", @render, @
       @term.fetch()
+      @tab = {}
+      @tab["info"] = {"overview":true, "instructor": false, "outline": true}
+      @tab["reference"] = {"books": true, "notes": false}
       @
 
     switch_active_topic: (e) =>
@@ -123,6 +126,8 @@ jQuery ->
           term:          @term.attributes
           term_sections: @term_sections
           host:          window.location.host
+          tab:           @tab[@view.type]
+        @app.hide_loading()
 
       that = this
       $(@el).find("a.local, .local a:not(.external)").click( (e) ->
@@ -134,6 +139,8 @@ jQuery ->
 
       if @view.type == "reference"
         # Uploadify needs csrf tokens & session details
+        @tab["reference"] = {"books": true, "notes": false}
+
         uploadify_script_data = {};
 
         csrf_token = $('meta[name=csrf-token]').attr('content');
@@ -155,9 +162,8 @@ jQuery ->
         });
         
       else if @view.type == "info"
-        unless @term_sub_status
-          @term_sub_status = new @app.TermSubscriptionView
-          @term_sub_status.initialize(@)
+        @term_sub_status = new @app.TermSubscriptionView
+        @term_sub_status.initialize(@)
         @term_sub_status.render()
       @
 
@@ -165,6 +171,7 @@ jQuery ->
       resp = JSON.parse(resp)
       term_doc = new @app.TermDocumentModel({term_id: @term_id, document_id: resp.id})
       that = this
+      @tab["reference"] = {"books": false, "notes": true}
       term_doc.save(null, {success: () ->
           that.term.attributes.attachments.push({id: term_doc.id, name: resp.name, url: resp.url})
           that.render()

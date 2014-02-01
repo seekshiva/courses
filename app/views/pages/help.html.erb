@@ -1,2 +1,32 @@
 <%= content_for :page_title, 'Courses - Help' %>
-Help Page
+<h3>CoursesHub Help</h3>
+<span class="text-muted">Sometimes you just need a little help.</span>
+<hr/>
+<div class="well">We have categorized help pages based on the type of user. Choose your role.</div>
+<div class="row" id="help_page_selector">
+	<div class="col-sm-6 col-md-4">
+		<a class="thumbnail" href="<%= page_path('help/student') %>">
+			<%= image_tag(asset_path 'student.png') %>
+			<div class="caption">
+				<h3>Students</h3>
+			</div>
+		</a>
+	</div>
+	<div class="col-sm-6 col-md-4">
+		<a class="thumbnail" href="<%= page_path('help/faculty') %>">
+			<%= image_tag(asset_path 'professor.png') %>
+			<div class="caption">
+				<h3>Faculty</h3>
+			</div>
+		</a>
+	</div>
+	<div class="col-sm-6 col-md-4">
+		<a class="thumbnail" href="<%= page_path('help/admin') %>">
+			<%= image_tag(asset_path 'admin.png') %>
+			<div class="caption">
+				<h3>Administrator</h3>
+			</div>
+		</a>
+	</div>
+</div>
+

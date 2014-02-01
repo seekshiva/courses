@@ -5,7 +5,7 @@
   </head>
   <body>
     <div style="width:480px;margin:auto;border:solid #eee 2px;padding:10px;">
-      <% if @user.is_student? %>
+      <% if @user.student? %>
         Hi <%= @user.name %>
         <h3>Welcome to courseshub.in</h3>
         <p>

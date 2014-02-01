@@ -7,7 +7,7 @@
 </head>
 <body>
   <div id="wrap">
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -42,7 +42,10 @@
           </ul>
         <% end %>
       </div>
-    </nav>
+    </header>
+    <!--[if lt IE 9]>
+      <div class="alert alert-danger container">Warning! Courseshub doesn't support IE8 or below. Please upgrade your browser or use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a></div>
+    <![endif]-->
     <div class="container" id="content"></div>
     <div id="loading"><img src="<%= asset_path 'loading.gif' %>"></div>
   </div>

@@ -11,7 +11,6 @@ jQuery ->
       @course.bind "change", @render, @
       @course.bind "destroy", @render, @
       @course.fetch()
-
       @
 
     render: =>
@@ -28,6 +27,7 @@ jQuery ->
       $(@el).find("#view_course_" + @view.type).addClass("active")
 
       $(@el).find("a:not(.local-nav a)").click @app.show_local_page
+      @app.hide_loading()
       @
 
   @app = window.app ? {}

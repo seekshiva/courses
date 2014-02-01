@@ -66,8 +66,7 @@ jQuery ->
         window.app.router.navigate "",
           trigger: true
       else
-        $("#signin_link").css
-          display: "none"
+        $("#signin_link").hide()
         if @app.user
           @home()
         else

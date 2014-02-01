@@ -26,6 +26,8 @@ jQuery ->
       $(@el).html @template
         depts: depts
 
+      @app.hide_loading()
+
       $(@el).find("a").click @app.show_local_page
 
       @
