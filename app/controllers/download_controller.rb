@@ -19,7 +19,13 @@ class DownloadController < ApplicationController
         render "home/dashboard"
       end
       if not @document.nil?
-        send_file(@document.document.path, :type => @document.document_content_type, :filename => @document.document.original_filename , :disposition => 'inline')
+        file = File.basename(@document.document.path)
+        if Rails.env == "production"
+          path = "/home/cap/apps/courses/shared/public/system/files/"+file
+        else
+          path = @document.document.path
+        end
+        send_file(path, :filename => @document.document.original_filename, :type => @document.document_content_type)
       end
     end
   end
