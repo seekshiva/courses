@@ -89,6 +89,7 @@ class HomeController < ApplicationController
             redirect_to "/me"
           else
             session[:user_id] = @user.id
+            @user.update_attributes({ :doc_access_token => Digest::MD5.hexdigest(@user.email+Time.now().to_s) })
             flash[:notice_type] = 'alert-success'
             flash[:notice] = "You have successfully logged in!"
             redirect_to @redirect_url || root_url
@@ -105,6 +106,7 @@ class HomeController < ApplicationController
       session[:admin_user_id] = nil
       redirect_to "/admin"
     else
+      @user.update_attributes({ :doc_access_token => nil })      
       session[:user_id] = nil
       flash[:notice_type] = 'alert-success'
       redirect_to root_url, notice: "You have successfully logged out."

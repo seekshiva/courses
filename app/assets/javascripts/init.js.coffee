@@ -60,8 +60,10 @@ jQuery ->
       return "";
     );
 
-    Handlebars.registerHelper('hostName',() ->
-      return window.location.host;
+    Handlebars.registerHelper('previewUrl',(url) ->
+      token = app.user.doc_access_token;
+      url = window.location.host+url+"&access_token="+token
+      return "http://docs.google.com/viewer?url="+encodeURIComponent(url)
     );
 
     Backbone.history.start({pushState: true})
