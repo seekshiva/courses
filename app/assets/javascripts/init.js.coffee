@@ -60,9 +60,12 @@ jQuery ->
       return "";
     );
 
-    Handlebars.registerHelper('previewUrl',(url) ->
+    Handlebars.registerHelper('previewUrl',(url, name) ->
       token = app.user.doc_access_token;
-      url = window.location.host+url+"&access_token="+token
+      path = url.split("?")
+      csrf_token = path[1]
+      path = path[0]
+      url = window.location.host+path+"/"+name+"?"+csrf_token+"&access_token="+token
       return "http://docs.google.com/viewer?url="+encodeURIComponent(url)
     );
 
