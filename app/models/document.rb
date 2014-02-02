@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
   has_attached_file :document,
-    :url => '/system/files/:hash.:extension',
+    :url => '/download/:id',
   	:path => ':rails_root/public/system/files/:hash.:extension',
   	:hash_secret => Courses::Application.config.secret_token
 

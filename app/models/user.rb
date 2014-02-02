@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :courses, :through => :terms
 
-  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin
+  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin, :doc_access_token
 
   validates :email, :uniqueness => true
 

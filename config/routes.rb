@@ -31,6 +31,8 @@ Courses::Application.routes.draw do
   resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
 
+  get 'download/:id', to: 'download#show'
+
   post 'upload/:tab', to: 'upload#create'
   post 'authenticate', to: 'home#authenticate'
 
