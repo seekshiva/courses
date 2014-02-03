@@ -34,7 +34,7 @@
         <td><%= document.no_of_hits %></td>
         <td><%= number_to_human_size(document.document.size) %></td>
         <td>
-          <%= link_to 'Preview', "http://docs.google.com/viewer?url="+URI::encode(request.host+document.document.url+"&access_token="+@user.doc_access_token), class: "btn btn-mini btn-success", target: "_blank" %>
+          <%= link_to 'Preview', "http://docs.google.com/viewer?url="+Rack::Utils.escape(request.host+document.document.url+"&access_token="+@user.doc_access_token), class: "btn btn-mini btn-success", target: "_blank" %>
           <%= link_to 'Download', document.document.url, class: "btn btn-mini btn-default" %>
           <%= link_to 'Remove', [:admin, document], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
         </td>
