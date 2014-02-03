@@ -89,7 +89,20 @@ class HomeController < ApplicationController
             redirect_to "/me"
           else
             session[:user_id] = @user.id
-            @user.update_attributes({ :doc_access_token => Digest::MD5.hexdigest(@user.email+Time.now().to_s) })
+            if (!@user.current_sign_in_at.nil? && @user.current_sign_in_at - Time.now() > 1.week) || @user.doc_access_token.nil?
+              access_token = Digest::MD5.hexdigest(@user.email+Time.now().to_s)
+            else
+              access_token = @user.doc_access_token
+            end
+            @user.update_attributes(
+              { 
+                :doc_access_token     => access_token,
+                :sign_in_count        => @user.sign_in_count+1,
+                :last_sign_in_at      => @user.current_sign_in_at,
+                :current_sign_in_at   => Time.now(),
+                :last_sign_in_ip      => @user.current_sign_in_ip,
+                :current_sign_in_ip   => request.remote_ip
+              })
             flash[:notice_type] = 'alert-success'
             flash[:notice] = "You have successfully logged in!"
             redirect_to @redirect_url || root_url
