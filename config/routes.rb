@@ -5,6 +5,7 @@ Courses::Application.routes.draw do
     resources :users
     resources :faculties
     resources :departments
+    resources :documents
     resources :courses do
       resources :term_departments, :term_faculties
       resources :classrooms

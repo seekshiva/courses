@@ -19,6 +19,7 @@ class DownloadController < ApplicationController
         render "home/dashboard"
       end
       if not @document.nil?
+        @document.update_attributes({:no_of_hits => @document.no_of_hits+1})
         file = File.basename(@document.document.path)
         if Rails.env == "production"
           path = "/home/cap/apps/courses/shared/public/system/files/"+file

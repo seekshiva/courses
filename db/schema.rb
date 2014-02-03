@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140202090459) do
+ActiveRecord::Schema.define(version: 20140203203202) do
 
   create_table "authors", force: true do |t|
     t.string   "name"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20140202090459) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "no_of_hits",            default: 0
   end
 
   create_table "faculties", force: true do |t|
