@@ -15,7 +15,7 @@ jQuery ->
   Xmpp::connect = () ->
     @log("connect function")
     @conn = new Strophe.Connection("http://"+@host+"/http-bind");
-    @conn.connect(@jid+"@"+@host, @passwd, @onConnect.bind(@))
+    @conn.connect(@jid+"@courseshub", @passwd, @onConnect.bind(@))
     @
 
   Xmpp::onConnect = (status) ->
@@ -24,37 +24,72 @@ jQuery ->
       @log('Strophe is connecting.');
     else if status == Strophe.Status.CONNFAIL
       @log('Strophe failed to connect.');
+      @log('Strophe is trying to connect again.');
       @connect()
-      @log('Strophe trying to connect again.');
     else if status == Strophe.Status.DISCONNECTING
       @log('Strophe is disconnecting.');
     else if status == Strophe.Status.DISCONNECTED
       @log('Strophe is disconnected.');
     else if status == Strophe.Status.CONNECTED
       @log('Strophe is connected.');
-      @conn.send($pres().tree())
+      @onConnected()
     @
 
-  Xmpp::onMessage = (msg) ->
-    to = msg.getAttribute('to');
-    from = msg.getAttribute('from');
-    type = msg.getAttribute('type');
+  Xmpp::onConnected = () ->
+    @log("onConnected function")
+    # Send presence info, set carbon copy, enable archiving, get archives
+    @conn.send($pres().tree())
+    @domain = Strophe.getDomainFromJid(@conn.jid)
+    # Handler Syntax
+    # addHandler(function_name, ns, name, type, id, from)
+    @conn.addHandler(@handle_pong.bind(@), null, 'iq', null, 'ping1')
+    @conn.addHandler(@handle_message.bind(@), null, 'message', 'notification', null, 'courseshub@courseshub')
+    @conn.addHandler(@handle_message.bind(@), null, 'message')
+    @conn.addHandler(@handle_iq.bind(@), null, 'iq')
+    $(window).bind("beforeunload", @unload_handler.bind(@))
+    
+    @conn.send($iq({xmlns:'jabber:client', from:@conn.jid, id:'enable1', type: "set"}).c("enable", {xmlns: "urn:xmpp:carbons:2"}))
+    @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
+    @sendMessage("Hi. How are you?", "vignesh@courseshub")
+    # @send_ping()
+
+  Xmpp::unload_handler = () ->
+    @conn.disconnect()
+
+  Xmpp::send_ping = () ->
+    @log("sending ping to "+@domain)
+    ping = $iq({ to: @domain, type: "get", id: "ping1"}).c("ping", {xmplns: "urn:xmpp:ping"})
+    @start_time_ping = (new Date()).getTime()
+    @conn.send(ping)
+
+  Xmpp::handle_pong = (iq) ->
+    elapsed = (new Date()).getTime() - @.start_time_ping
+    @log("Received pong after "+  elapsed + " ms")
+    return false
+
+  Xmpp::handle_message = (msg) ->
+    @log("Got msg")
+    @log(msg)
+    return true
+
+  Xmpp::handle_iq = (iq) ->
+    @log("Got iq")
+    @log(iq)
+    return true
+
+  Xmpp::handle_notification = (msg) ->
     elems = msg.getElementsByTagName('body');
 
-    if (type == "notification" && elems.length > 0)
-      body = elems[0];
-      @log('Got a message from ' + from + ': ' + Strophe.getText(body));
-      # push notification to backbone view and render
-    else if (type == "chat" && elems.length > 0)
-      body = elems[0];
-      @log('Got a message from ' + from + ': ' + Strophe.getText(body));
-      # push chat to backbone view and render
+    body = elems[0];
+    @log('Got a message from ' + from + ': ' + Strophe.getText(body));
+    # push notification to backbone view and render
 
     # we must return true to keep the handler alive.  
     # returning false would remove it after it finishes.
     return true;
 
-  Xmpp::sendMessage = (msg) ->
+  Xmpp::sendMessage = (msg, to) ->
+    @conn.send($msg({to: to, type:"chat"}).c('body').t(msg))
     @
 
   @app.Xmpp = Xmpp
