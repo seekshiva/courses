@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Section do
   it { should belong_to(:term) }
-  it { should have_many(:topics) }
+  it { should have_many(:topics).dependent(:destroy) }
 
   it { should allow_mass_assignment_of(:term_id) }
   it { should allow_mass_assignment_of(:title) }
