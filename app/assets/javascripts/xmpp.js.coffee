@@ -37,26 +37,31 @@ jQuery ->
 
   Xmpp::onConnected = () ->
     @log("onConnected function")
-    # Send presence info, set carbon copy, enable archiving, get archives
-    @conn.send($pres().tree())
-    @domain = Strophe.getDomainFromJid(@conn.jid)
+
     # Handler Syntax
     # addHandler(function_name, ns, name, type, id, from)
     @conn.addHandler(@handle_pong.bind(@), null, 'iq', null, 'ping1')
-    @conn.addHandler(@handle_message.bind(@), null, 'message', 'notification', null, 'courseshub@courseshub')
-    @conn.addHandler(@handle_message.bind(@), null, 'message')
     @conn.addHandler(@handle_iq.bind(@), null, 'iq')
+    @conn.addHandler(@handle_message.bind(@), null, 'message')
+
     $(window).bind("beforeunload", @unload_handler.bind(@))
     
+    # Send presence info
+    @conn.send($pres().tree())
+    
+    # Enable carbon copy
     @conn.send($iq({xmlns:'jabber:client', from:@conn.jid, id:'enable1', type: "set"}).c("enable", {xmlns: "urn:xmpp:carbons:2"}))
-    @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
-    @sendMessage("Hi. How are you?", "vignesh@courseshub")
+    # @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
+
+    # @sendMessage("Hi. How are you?", "vignesh@courseshub")
     # @send_ping()
 
   Xmpp::unload_handler = () ->
+    console.log("disconnecting xmpp connection")
     @conn.disconnect()
 
   Xmpp::send_ping = () ->
+    @domain = Strophe.getDomainFromJid(@conn.jid)
     @log("sending ping to "+@domain)
     ping = $iq({ to: @domain, type: "get", id: "ping1"}).c("ping", {xmplns: "urn:xmpp:ping"})
     @start_time_ping = (new Date()).getTime()
@@ -64,12 +69,18 @@ jQuery ->
 
   Xmpp::handle_pong = (iq) ->
     elapsed = (new Date()).getTime() - @.start_time_ping
+    @log(iq)
     @log("Received pong after "+  elapsed + " ms")
     return false
 
   Xmpp::handle_message = (msg) ->
-    @log("Got msg")
-    @log(msg)
+    from = msg.getAttribute('from');
+    if from == "courseshub@courseshub/courseshub"
+      @handle_notification(msg)
+    else 
+      @log("Got msg")
+      @log(msg)
+      # User chat
     return true
 
   Xmpp::handle_iq = (iq) ->
@@ -79,9 +90,10 @@ jQuery ->
 
   Xmpp::handle_notification = (msg) ->
     elems = msg.getElementsByTagName('body');
+    from = msg.getAttribute('from');
 
     body = elems[0];
-    @log('Got a message from ' + from + ': ' + Strophe.getText(body));
+    @log('Got a notification from ' + from + ': ' + Strophe.getText(body));
     # push notification to backbone view and render
 
     # we must return true to keep the handler alive.  
