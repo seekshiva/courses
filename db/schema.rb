@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127071749) do
+ActiveRecord::Schema.define(version: 20140210150940) do
 
   create_table "authors", force: true do |t|
     t.string   "name"
@@ -103,12 +103,13 @@ ActiveRecord::Schema.define(version: 20140127071749) do
 
   create_table "documents", force: true do |t|
     t.integer  "uploaded_by"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "document_file_name"
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "no_of_hits",            default: 0
   end
 
   create_table "faculties", force: true do |t|
@@ -121,6 +122,13 @@ ActiveRecord::Schema.define(version: 20140127071749) do
   end
 
   add_index "faculties", ["user_id"], name: "index_faculties_on_user_id", using: :btree
+
+  create_table "notifications", force: true do |t|
+    t.string   "message_id"
+    t.string   "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "references", force: true do |t|
     t.integer  "term_reference_id"
@@ -238,6 +246,7 @@ ActiveRecord::Schema.define(version: 20140127071749) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "doc_access_token"
   end
 
   add_index "users", ["department_id"], name: "index_users_on_department_id", using: :btree

@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   has_many :courses, :through => :terms
 
+  has_many :notifications, :dependent => :destroy
+
   belongs_to :avatar
 
   attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin

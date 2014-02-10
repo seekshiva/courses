@@ -7,6 +7,8 @@ class TermsController < ApplicationController
       format.html { render "home/dashboard" }
       
       format.json { 
+        noti = Notification.new()
+        noti.send_notification(@user, "You have visited a term.")
         term = Term.find(params[:id])
 
         sections = term.sections.collect do |section|

@@ -32,6 +32,12 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
+    blather (0.8.7)
+      activesupport (>= 2.3.11)
+      eventmachine (>= 1.0.0)
+      girl_friday
+      niceogiri (~> 1.0)
+      nokogiri (~> 1.5, >= 1.5.6)
     bluecloth (2.2.0)
     bootstrap-sass (3.0.3.0)
       sass (~> 3.2)
@@ -67,6 +73,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    connection_pool (1.2.0)
     cucumber (1.3.10)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -88,6 +95,7 @@ GEM
     diff-lcs (1.2.5)
     ejs (1.1.1)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.0.2)
     factory_girl (4.3.0)
       activesupport (>= 3.0.0)
@@ -98,6 +106,9 @@ GEM
       sass-rails (>= 3.1.1)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    girl_friday (0.11.2)
+      connection_pool (~> 1.0)
+      rubinius-actor
     high_voltage (2.1.0)
     hike (1.2.3)
     i18n (0.6.9)
@@ -124,6 +135,8 @@ GEM
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
+    niceogiri (1.1.2)
+      nokogiri (~> 1.5)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
@@ -174,6 +187,9 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubinius-actor (0.0.2)
+      rubinius-core-api
+    rubinius-core-api (0.0.1)
     sass (3.2.13)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -225,6 +241,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
+  blather
   bluecloth
   bootstrap-sass (~> 3.0.3.0)
   capistrano-bundler

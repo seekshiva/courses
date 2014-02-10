@@ -60,6 +60,10 @@ gem 'uglifier',            '~> 1.3.0'
 
 gem 'high_voltage',        '~> 2.1.0'
 
+# XMPP Client
+
+gem 'blather'
+
 group :development do
   # Deployment
 
