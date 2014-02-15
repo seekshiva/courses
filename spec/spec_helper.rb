@@ -7,6 +7,7 @@ require 'rspec/autorun'
 require 'paperclip/matchers'
 
 # Coverage profiling
+Coveralls::Output.no_color = true
 Coveralls.wear!
 
 # Requires supporting ruby files with custom matchers and macros, etc,
