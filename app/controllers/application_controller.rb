@@ -18,7 +18,10 @@ class ApplicationController < ActionController::Base
   
   def require_user
     if @user.nil?
-      render nothing: true , :status => 401
+      respond_to do |format|
+        format.html { render "home/dashboard" }
+        format.json { render nothing: true , :status => 401 }
+      end
     end
   end
 

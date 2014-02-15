@@ -17,6 +17,12 @@ describe User do
   it { should allow_mass_assignment_of(:avatar_id) }
   it { should allow_mass_assignment_of(:activated) }
   it { should allow_mass_assignment_of(:admin) }
+  it { should allow_mass_assignment_of(:doc_access_token) }
+  it { should allow_mass_assignment_of(:sign_in_count) }
+  it { should allow_mass_assignment_of(:current_sign_in_at) }
+  it { should allow_mass_assignment_of(:last_sign_in_at) }
+  it { should allow_mass_assignment_of(:current_sign_in_ip) }
+  it { should allow_mass_assignment_of(:last_sign_in_ip) }
 
   it { should validate_uniqueness_of(:email) }
 

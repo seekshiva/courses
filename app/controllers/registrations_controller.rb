@@ -34,7 +34,12 @@ class RegistrationsController < Devise::RegistrationsController
         format.html { redirect_to "/login", notice: "Username or Password is Invalid" }
       elsif @user.save
         session[:user_id] = @user.id
-
+        @user.update_attributes({ :doc_access_token => Digest::MD5.hexdigest(@user.email+Time.now().to_s),
+          :sign_in_count        => 1,
+          :current_sign_in_at   => Time.now(),
+          :current_sign_in_ip   => request.remote_ip 
+        })
+        
         UserMailer.welcome_email(@user).deliver
         
         if @user.student?

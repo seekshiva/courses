@@ -9,13 +9,6 @@ describe TermFaculty do
   it { should allow_mass_assignment_of(:faculty_id) }
   it { should allow_mass_assignment_of(:faculty_email) }
 
+  it { should validate_uniqueness_of(:term_id).scoped_to(:faculty_id) }
 
-  it "has unique {term, faculty}" do
-    term = FactoryGirl.create(:term)
-    faculty = FactoryGirl.create(:faculty)
-    FactoryGirl.create(:term_faculty, term: term, faculty: faculty)
-    expect {
-      FactoryGirl.create(:term_faculty, term: term, faculty: faculty)
-    }.to raise_exception
-  end
 end

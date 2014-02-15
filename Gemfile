@@ -84,6 +84,9 @@ group :test do
   gem 'capybara',          '2.2.0'
   gem 'database_cleaner',  '1.1.0'
 
+  # Coverage testing
+  gem 'coveralls', github: 'lemurheavy/coveralls-ruby', require: false
+
   # General helpers
   gem 'factory_girl_rails', '4.3.0'
 end

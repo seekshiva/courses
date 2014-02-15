@@ -1,8 +1,18 @@
 class Document < ActiveRecord::Base
-  has_attached_file :document,
-    :url => '/system/files/:hash.:extension',
-  	:path => ':rails_root/public/system/files/:hash.:extension',
-  	:hash_secret => Courses::Application.config.secret_token
+  
+  belongs_to :user, foreign_key: "uploaded_by"
+  
+  has_many :topic_documents, :dependent => :destroy
+  has_many :topics, :through => :topic_documents
 
-  attr_accessible :document, :uploaded_by
+  has_one :term_document, :dependent => :destroy
+  has_one :term, :through => :term_document
+
+  has_attached_file :document,
+    :url => '/download/:id',
+    :path => ':rails_root/public/system/files/:hash.:extension',
+    :hash_secret => Courses::Application.config.secret_token
+  
+  attr_accessible :document, :uploaded_by, :no_of_hits
+
 end

@@ -1,0 +1,46 @@
+<div class="span12" style="text-align:center">
+  <caption><h3>Listing all Uploaded Notes</h3></caption>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<form action="<%= admin_documents_path %>" method="get" class="input-group form-group">
+  <span class="input-group-addon glyphicon glyphicon-search" style="top: 0; "></span>
+  <input type="text" name="search" class="form-control" placeholder="Id/Name/type">
+</form>
+
+<table class="table table-hover">
+  <div class="pull-right">
+    <%= page_navigation_links @documents%>
+  </div>
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Uploaded by</th>
+      <th>No.of Downloads</th>
+      <th>Size</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.document.original_filename %></td>
+        <td><%= document.document_content_type %></td>
+        <td><%= link_to document.user.email, [:admin, document.user] %></td>
+        <td><%= document.no_of_hits %></td>
+        <td><%= number_to_human_size(document.document.size) %></td>
+        <td>
+          <%= link_to 'Preview', "http://docs.google.com/viewer?url="+Rack::Utils.escape(request.host+document.document.url+"&access_token="+@user.doc_access_token), class: "btn btn-mini btn-success", target: "_blank" %>
+          <%= link_to 'Download', document.document.url, class: "btn btn-mini btn-default" %>
+          <%= link_to 'Remove', [:admin, document], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

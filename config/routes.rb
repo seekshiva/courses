@@ -5,6 +5,7 @@ Courses::Application.routes.draw do
     resources :users
     resources :faculties
     resources :departments
+    resources :documents
     resources :courses do
       resources :term_departments, :term_faculties
       resources :classrooms
@@ -30,6 +31,8 @@ Courses::Application.routes.draw do
   resources :topic_references
   resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
+
+  get 'download/:id(/:name)', to: 'download#show'
 
   post 'upload/:tab', to: 'upload#create'
   post 'authenticate', to: 'home#authenticate'

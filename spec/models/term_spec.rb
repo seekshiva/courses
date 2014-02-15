@@ -4,7 +4,7 @@ describe Term do
   it { should belong_to(:course) }
 
   it { should have_many(:sections).dependent(:destroy) }
-  it { should have_many(:topics).through(:sections).dependent(:destroy) }
+  it { should have_many(:topics).through(:sections) }
 
   it { should have_many(:term_departments).dependent(:destroy) }
   it { should have_many(:departments).through(:term_departments) }
