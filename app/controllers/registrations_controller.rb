@@ -40,7 +40,9 @@ class RegistrationsController < Devise::RegistrationsController
           :current_sign_in_ip   => request.remote_ip 
         })
         
-        UserMailer.welcome_email(@user).deliver
+        if Rails.env.production?
+          UserMailer.welcome_email(@user).deliver
+        end
         
         if @user.student?
           sub_list = Set.new()
