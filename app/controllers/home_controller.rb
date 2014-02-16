@@ -12,11 +12,9 @@ class HomeController < ApplicationController
     end
   end
   
-  # GET /me
-  def me
-    if not @user.nil?
-      render "home/dashboard"
-    else
+  # GET /getting_started
+  def getting_started
+    if @user.nil? or not @user.activated?
       @user = User.find_by email: flash[:imap_id]
       if @user.nil?
         @user = User.new
@@ -57,6 +55,8 @@ class HomeController < ApplicationController
       else
         redirect_to login_path
       end
+    else
+      redirect_to root_path
     end
   end
 
@@ -95,7 +95,7 @@ class HomeController < ApplicationController
           redirect_to "/login", notice: "Username or Password is Invalid"
         else
           if @user.nil? or not @user.account_activated?
-            redirect_to "/me"
+            redirect_to getting_started_path
           else
             session[:user_id] = @user.id
             if (!@user.current_sign_in_at.nil? && @user.current_sign_in_at - Time.now() > 1.week) || @user.doc_access_token.nil?

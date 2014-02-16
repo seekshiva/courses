@@ -16,24 +16,33 @@ describe HomeController do
     end
   end
 
-  describe "#me" do
+  describe "#getting_started" do
     before do
-      get :me
+      get :getting_started
     end
 
-    context "user not logged in" do
+    context "user is not logged in" do
+      before do
+        sign_out :user
+      end
+
       it "should redirect user to login_path" do
-        pending
         response.should be_redirect
       end
     end
-
-    pending
   end
 
   describe "#authenticate" do
     before do
       post :authenticate
+    end
+    
+    pending
+  end
+
+  describe "#signout" do
+    before do
+      post :signout
     end
     
     pending

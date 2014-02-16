@@ -32,15 +32,15 @@ Courses::Application.routes.draw do
   resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
 
+  get 'getting_started',      to: 'home#getting_started',   as: "getting_started"
+  get 'admin',                to: 'admin/departments#index'
+  get 'login',                to: 'home#index'
+  get 'signout',              to: 'home#signout'
+
   get 'download/:id(/:name)', to: 'download#show'
 
-  post 'upload/:tab', to: 'upload#create'
-  post 'authenticate', to: 'home#authenticate'
-
-  get 'me', to: 'home#me'
-  get 'admin', to: 'admin/departments#index'
-  get 'login', to: 'home#index'
-  get 'signout', to: 'home#signout'
+  post 'upload/:tab',         to: 'upload#create'
+  post 'authenticate',        to: 'home#authenticate'
 
   get 'about' => 'high_voltage/pages#show', id: 'about'
   get 'contact-us' => 'high_voltage/pages#show', id: 'contact-us'

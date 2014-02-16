@@ -26,11 +26,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @failed
-        format.html { redirect_to "/me", notice: "Username or Password is Invalid" }
+        format.html { redirect_to gettin_started_path, notice: "Username or Password is Invalid" }
       elsif @user.save
         session[:user_id] = @user.id
         @user.update_attributes({ :doc_access_token => Digest::MD5.hexdigest(@user.email+Time.now().to_s) })    
-        format.html { redirect_to root_url, notice: 'Thank you for signing up!' }
+        format.html { redirect_to root_path, notice: 'Thank you for signing up!' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
       elsif @user.update_attributes(params[:user]) 
         session[:user_id] = @user.id
         @user.update_attributes({ :doc_access_token => Digest::MD5.hexdigest(@user.email+Time.now().to_s) })    
-        format.html { redirect_to root_url, notice: 'Thank you for signing up!.' }
+        format.html { redirect_to root_path, notice: 'Thank you for signing up!.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
