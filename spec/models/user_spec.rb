@@ -38,15 +38,15 @@ describe User do
     end
   end
 
-  context "#account_activated?" do
+  context "#activated?" do
     it "return true if user has logged in before" do
       user = FactoryGirl.build(:user, activated: true)
-      user.account_activated?.should be_true
+      user.activated?.should be_true
     end
     
     it "return false if user is logging in for the first time" do
       user = FactoryGirl.build(:user, activated: false)
-      user.account_activated?.should be_false
+      user.activated?.should be_false
     end
   end
 
@@ -79,6 +79,9 @@ describe User do
         end
       end
     end
-    
+  end
+
+  context "#update_access_token" do
+    pending
   end
 end

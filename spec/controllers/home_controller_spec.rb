@@ -40,12 +40,4 @@ describe HomeController do
     pending
   end
 
-  describe "#signout" do
-    before do
-      post :signout
-    end
-    
-    pending
-  end
-
 end
