@@ -84,8 +84,11 @@ group :test do
   gem 'capybara',          '2.2.0'
   gem 'database_cleaner',  '1.1.0'
 
-  # Coverage testing
+  # Coverage stats
   gem 'coveralls', github: 'lemurheavy/coveralls-ruby', require: false
+
+  # Run tests automatically
+  gem 'guard-rspec',        '4.2.6'
 
   # General helpers
   gem 'factory_girl_rails', '4.3.0'
