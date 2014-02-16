@@ -53,7 +53,7 @@ jQuery ->
     @conn.send($iq({xmlns:'jabber:client', from:@conn.jid, id:'enable1', type: "set"}).c("enable", {xmlns: "urn:xmpp:carbons:2"}))
     # @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
 
-    # @sendMessage("Hi. How are you?", "vignesh@courseshub")
+    @sendMessage("vignesh@courseshub", "Hi. How are you?")
     # @send_ping()
 
   Xmpp::unload_handler = () ->
@@ -100,7 +100,8 @@ jQuery ->
     # returning false would remove it after it finishes.
     return true;
 
-  Xmpp::sendMessage = (msg, to) ->
+  Xmpp::sendMessage = (to, msg) ->
+    @log("Sending msg to: "+to+" msg: "+msg)
     @conn.send($msg({to: to, type:"chat"}).c('body').t(msg))
     @
 

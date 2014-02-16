@@ -29,7 +29,9 @@ jQuery ->
       )
 
     @app = window.app ? {}
-    @app.menu_view = new @app.SubscriptionsView()
+    if app['user']
+      @app.menu_view = new @app.SubscriptionsView()
+      @app.notification = new @app.NotificationView()
     @app.router = new @app.ApplicationRouter()
     @app.router.bind('all', (route) ->
       ga('send', 'pageview', {
