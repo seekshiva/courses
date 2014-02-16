@@ -82,17 +82,18 @@ class HomeController < ApplicationController
       @failed = true
     end
 
-    begin
-      @user = User.find_by email: @username
-    rescue
-      @user = nil
+    @user = User.find_by email: @username
+
+    if @user.nil?
+      @user = User.new email: @username, name: "", activated: false, admin: false
+      @user.save
     end
 
     respond_to do |format|
       format.html { 
         if @failed
           flash[:notice_type] = "alert-danger"
-          redirect_to "/login", notice: "Username or Password is Invalid"
+          redirect_to login_path, notice: "Username or Password is Invalid"
         else
           if @user.nil? or not @user.account_activated?
             redirect_to getting_started_path
