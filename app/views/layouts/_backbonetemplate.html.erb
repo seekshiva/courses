@@ -1,4 +1,4 @@
-S><script type="text/template" id="login-template">
+<script type="text/template" id="login-template">
   <div class="container">
     <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin" style="text-align: center; ">
       <h2 class="form-signin-heading">Sign In</H2>
@@ -9,8 +9,8 @@ S><script type="text/template" id="login-template">
       <% end %>
       <div class="form-group">
         <div class="input-group">
-          <input type="text" name="username" style="text-align: right;" class="form-control" placeholder="webmail id" autofocus autocomplete="off"/>
-          <input type="hidden" name="redirect_url" value="{{url}}"/>
+          <input type="text" name="username" style="text-align: right;" class="form-control" placeholder="webmail id" autofocus autocomplete="off">
+          <input type="hidden" name="redirect_url" value="{{url}}">
           <span class="input-group-addon">@nitt.edu</span>
         </div>
         <input type="password" name="password" class="form-control" placeholder="password" style="text-align: center; ">
@@ -60,7 +60,7 @@ S><script type="text/template" id="login-template">
       {{/if}}
     {{/each}}
   {{else}}
-    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br/><nobr>to be attending any</nobr><br/><nobr> current course</nobr></a></li>
+    <li role="presentation"><a href="#"><nobr>Sorry you don&#39;t seem </nobr><br><nobr>to be attending any</nobr><br><nobr> current course</nobr></a></li>
   {{/if}}
   <li role="presentation" class="divider"></li>
   {{#if user.admin}}
@@ -307,7 +307,7 @@ S><script type="text/template" id="login-template">
           <table class="table bottom_line">
             <tbody>
               {{#each course.reference_books}}
-                <tr><td style="padding-right: 20px; " >
+                <tr><td style="padding-right: 20px;">
                   <h4>{{this.title}} <small>({{this.year}})</small></h4>
                   <table class="table table-striped table-condensed">
                     <tbody>
@@ -396,7 +396,7 @@ S><script type="text/template" id="login-template">
   </th>
   <td>
     <div class="field">
-      <input  type="checkbox" {{#if subscribed}}checked{{/if}} id="{{term_id}}_subscription_status" class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO"/>
+      <input  type="checkbox" {{#if subscribed}}checked{{/if}} id="{{term_id}}_subscription_status" class="make-switch switch-small" data-on="success" data-off="warning" data-on-label="YES" data-off-label="NO">
     </div>
   </td>
 </script>
@@ -407,6 +407,7 @@ S><script type="text/template" id="login-template">
       <a class="list-group-item {{#if tab.overview}}active{{/if}}" href="#overview" data-toggle="tab">Overview</a>
       <a class="list-group-item {{#if tab.instructor}}active{{/if}}" href="#instructor" data-toggle="tab">Instructor</a>
       <a class="list-group-item {{#if tab.outline}}active{{/if}}" href="#outline" data-toggle="tab">Outline</a>
+      <a class="list-group-item {{#if tab.outline}}active{{/if}}" href="#outline2" data-toggle="tab">Outline</a>
     </div>
     <div class="tab-content col-md-9">
       <div class="tab-pane {{#if tab.overview}}active{{/if}}" id="overview">
@@ -483,8 +484,8 @@ S><script type="text/template" id="login-template">
                               <li><a href="#">Post CT</a></li>
                             </ul>
                           </div>
-                          <input type="hidden" value="CT 1" id="topic_ct_status"/>
-                          <input type="text" value="" class="form-control" placeholder="SubTopic Title" id="topic_title"/>
+                          <input type="hidden" value="CT 1" id="topic_ct_status">
+                          <input type="text" value="" class="form-control" placeholder="SubTopic Title" id="topic_title">
                         </div>
                       </div>
                       <div class="field">
@@ -518,6 +519,111 @@ S><script type="text/template" id="login-template">
           </div>
           <br><br>
         {{/if}}
+      </div>
+      <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline2">
+        <ul class="nav nav-tabs">
+          <li><h4>Outline Of Topics</h4></li>
+          <li class="active pull-right"><a href="#edit_outline" data-toggle="tab">Edit</a></li>
+          <li class="pull-right"><a href="#view_outline" data-toggle="tab">View</a></li>
+        </ul>
+        <div class="tab-content" style="border: 0;">
+          <div class="tab-pane fade" id="view_outline">
+            {{#if term.sections}}
+              <ul>
+                {{#each term.sections}}
+                  <li>
+                    {{title}}
+                    <ul>
+                      {{#each topics}}
+                        <li>{{title}}<span class="text-muted"> - {{ct_status}}</span></li>
+                      {{/each}}
+                    </ul>
+                  </li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <p>Sorry, this course doesn&#39;t seem to have topics.</p>
+            {{/if}}
+          </div>
+          <div class="tab-pane fade in active" id="edit_outline">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Sections</div>
+                  <div class="list-group">
+                    {{#each term.sections}}
+                      <a class="list-group-item" href="#_section_{{id}}" data-toggle="tab">{{title}}</a>
+                    {{/each}}
+                    <div class="list-group-item">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Add New Section">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="tab-content" style="padding: 0; border: 0;">
+                  <div class="tab-pane active">
+                      <div class="panel panel-default">
+                        <div class="panel-heading" style="padding-top: 100px; padding-bottom:100px; text-align: center; ">
+                          <p class="lead">Select a Section from the left.</p>
+                        </div>
+                      </div>
+                  </div>
+
+                  {{#each term.sections}}
+                    <div class="tab-pane" id="_section_{{id}}">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">{{title}}</div>
+                        <ul class="list-group">
+                          {{#each topics}}
+                            <li class="list-group-item">
+                              {{title}}
+                              <span class="text-muted">- {{ct_status}}</span>
+                            </li>
+                          {{/each}}
+
+                          <li class="list-group-item">
+                            <form id="add_subtopic_{{id}}" class="create_subtopic" section-id="{{id}}">
+                              <div class="field">
+                                <div class="input-group input-group-sm">
+                                  <div class="input-group-btn ct_select_btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                      <span>CT 1</span>
+                                      <i class="caret"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#">CT 1</a></li>
+                                      <li><a href="#">CT 2</a></li>
+                                      <li><a href="#">Post CT</a></li>
+                                    </ul>
+                                  </div>
+                                  <input type="hidden" value="CT 1" id="topic_ct_status">
+                                  <input type="text" value="" class="form-control" placeholder="SubTopic Title" id="topic_title">
+                                  <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-success">Add <i class="glyphicon glyphicon-chevron-right"></i></button>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </li>
+
+
+                        </ul>
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -631,8 +737,8 @@ S><script type="text/template" id="login-template">
                   <li><a href="#">Post CT</a></li>
                 </ul>
               </div>
-              <input type="hidden" value="{{topic.ct_status}}" id="topic_ct_{{topic.id}}"/>
-              <input type="text" value="{{topic.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{topic.id}}"/>
+              <input type="hidden" value="{{topic.ct_status}}" id="topic_ct_{{topic.id}}">
+              <input type="text" value="{{topic.title}}" class="form-control" placeholder="Topic Title" id="topic_title_{{topic.id}}">
             </div>
           </div>
           <div class="field">
@@ -778,7 +884,7 @@ S><script type="text/template" id="login-template">
                   </table>
                 </td>
                 {{#if this.cover}}
-                  <td><img src="{{this.cover}}"/></td>
+                  <td><img src="{{this.cover}}"></td>
                 {{else}}
                   <td></td>
                 {{/if}}
@@ -829,7 +935,7 @@ S><script type="text/template" id="login-template">
       <div class="row">
         <div class="col-md-3">
           <div class="field">
-            <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar"/>
+            <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar">
           </div>
           <div class="field">
             <div id="upload_avatar"></div>
@@ -840,16 +946,16 @@ S><script type="text/template" id="login-template">
             <fieldset>
               <legend>Edit Profile Info</legend>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name"/>
+                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name">
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled/>
+                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled>
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled/>
+                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled>
               </div>
               <div class="field">
-                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone"/>
+                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone">
               </div>
               <div class="field">
                 <a class="btn btn-default btn-success" id="save" href="javascript:history.back()">Save</a>
@@ -866,19 +972,19 @@ S><script type="text/template" id="login-template">
                 </select>
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name"/>
+                <input type="text" class="form-control" value="{{info.name}}" placeholder="Name" id="name">
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled/>
+                <input type="text" class="form-control" value="{{info.email}}" id="email" disabled>
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled/>
+                <input type="text" class="form-control" value="{{info.department}}" id="department" disabled>
               </div>
               <div class="field">
-                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone"/>
+                <input type="tel" class="form-control" value="{{info.phone}}" placeholder="Phone" id="phone">
               </div>
               <div class="field">
-                <input type="text" class="form-control" value="{{info.designation}}" placeholder="Designation" id="designation"/>
+                <input type="text" class="form-control" value="{{info.designation}}" placeholder="Designation" id="designation">
               </div>
               <div class="form-group">
                 <p class="help-block small pull-right">*About section is parsed with <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" class="external" target="_blank">Markdown</a></p>
@@ -889,20 +995,20 @@ S><script type="text/template" id="login-template">
               </div>
             </fieldset>
           {{/if}}
-          <br/>
-          <br/>
+          <br>
+          <br>
           <fieldset>
             <legend>Settings</legend>
             <div class="field">
               Send Email Notifications : 
               <div class="make-switch" data-on="success" data-off="warning">
-                <input type="checkbox" checked="checked" disabled/>
+                <input type="checkbox" checked="checked" disabled>
               </div>
             </div>
             <div class="field">
               Send SMS Notifications :
               <div class="make-switch" data-on="success" data-off="warning">
-                <input type="checkbox" disabled/>
+                <input type="checkbox" disabled>
               </div>
             </div>
           </fieldset>
@@ -916,7 +1022,7 @@ S><script type="text/template" id="login-template">
       {{/if}}
       <div class="row">
         <div class="col-md-3">
-          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar"/>
+          <img {{#if avatar}}src='{{info.avatar}}'{{else}}src="<%= asset_path 'default_profile.jpg' %>"{{/if}} id="avatar">
         </div>
         <div class="col-md-9">
           <table class="table table-striped">
@@ -945,7 +1051,7 @@ S><script type="text/template" id="login-template">
                       {{#if this.current}}
                         <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
                         -
-                        <i>{{this.year}}</i> - {{this.sem}} semester<br/>
+                        <i>{{this.year}}</i> - {{this.sem}} semester<br>
                       {{/if}}
                     {{/each}}
                   </td>
@@ -958,7 +1064,7 @@ S><script type="text/template" id="login-template">
                         {{#unless this.this_year}}
                           <a href="/terms/{{this.term_id}}" class="text-muted">{{this.course_name}}</a>
                           -
-                          <i>{{this.year}}</i> - {{this.sem}} semester<br/>
+                          <i>{{this.year}}</i> - {{this.sem}} semester<br>
                         {{/unless}}
                       {{/unless}}
                     {{/each}}
@@ -997,7 +1103,7 @@ S><script type="text/template" id="login-template">
                         <a href="/terms/{{this.term_id}}">{{this.course_name}}</a>
                         -
                         <span class="text-info"><i>{{this.year}}</i> - {{this.sem}} semester</span>
-                        <br />
+                        <br>
                       {{/if}}
                     {{/each}}
                   </td>
@@ -1011,7 +1117,7 @@ S><script type="text/template" id="login-template">
                           <a href="/terms/{{this.term_id}}" class="text-muted">{{this.course_name}}</a>
                           -
                           <span><i>{{this.year}}</i> - {{this.sem}} semester</span>
-                          <br />
+                          <br>
                         {{/unless}}
                       {{/unless}}
                     {{/each}}
