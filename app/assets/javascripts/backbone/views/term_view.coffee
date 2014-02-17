@@ -6,7 +6,7 @@ jQuery ->
 
     events:
       "click .row > .list-group > .list-group-item": "switch_active_topic"
-      "click #create_section" : "createSection"
+      "submit .create_section" : "createSection"
       "submit .create_subtopic" : "createSubTopic"
       "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
       "click .delete_section" : "deleteSection"
@@ -72,8 +72,9 @@ jQuery ->
 
     createSection: (e) ->
       e.preventDefault()
-      title = $.trim($("#new_section_title").val())
-      $("#new_section_title").val("")
+      input = $(e.target).find("#new_section_title")
+      title = $.trim($(input).val())
+      $(input).val("")
       @tab["info"] = {"overview":false, "instructor": false, "outline": true}
       if title != ""
         section = new @app.SectionModel
