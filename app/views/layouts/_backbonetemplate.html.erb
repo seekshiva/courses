@@ -579,8 +579,8 @@
       {{/each}}
     </div>
     <div class="tab-content col-md-9">
-      <div id="topic_filter">
-        <div class="pull-right">
+      <div id="topic_filter row">
+        <div class="pull-right col-md-5">
           <label class="muted">Filters:</label>
           <div id="ct_status_selector" class="btn-group" data-toggle="buttons">
             <label class="btn btn-default {{#if selectors.ct_status.ct1}}active{{/if}}">
@@ -594,7 +594,7 @@
             </label>
           </div>
         </div>
-        <div class="input-group">
+        <div class="input-group col-md-6">
           <span class="input-group-addon glyphicon glyphicon-search" style="top: 0;"></span>
           <input type="search" class="form-control" placeholder="Search a Topic" id="search_box" onfocus="this.value = this.value;">
         </div>
