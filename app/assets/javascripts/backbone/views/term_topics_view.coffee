@@ -302,7 +302,8 @@ jQuery ->
       
       $(".selectpicker").selectpicker()
 
-      window.location = window.location.hash
+      if window.location.hash != ""
+        window.location = window.location.hash
 
       if search_text != "" && search_text
         $("#search_box").focus().val(search_text)
