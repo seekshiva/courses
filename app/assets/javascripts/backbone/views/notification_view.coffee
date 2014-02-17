@@ -35,7 +35,9 @@ jQuery ->
       }
       $("#notification-popover").popover("destroy")
       $("#notification-popover").popover(options)
-      $(@el).find("a").click @app.show_local_page
+      $("#notification-popover").on("shown.bs.popover", ()=>
+          $(@el).find("a").click @app.show_local_page
+        )
       @
 
   @app = window.app ? {}
