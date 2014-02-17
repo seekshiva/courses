@@ -579,7 +579,12 @@
                   {{#each term.sections}}
                     <div class="tab-pane" id="_section_{{id}}">
                       <div class="panel panel-default">
-                        <div class="panel-heading">{{title}}</div>
+                        <div class="panel-heading">
+                          <ul class="panel-heading-actions pull-right">
+                            <li class="delete_section" section-id="{{id}}"><i class="glyphicon glyphicon-remove-circle"></i></li>
+                          </ul>
+                          {{title}}
+                        </div>
                         <ul class="list-group">
                           {{#each topics}}
                             <li class="list-group-item">
