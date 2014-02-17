@@ -218,8 +218,6 @@ h1, h2, h3, h4, h5, h6 {
     color:#4183c4;
 }
 
-
-
 ._topic_list .media-object {
     font-size: 2em;
     margin-top: 5px;
@@ -234,4 +232,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .notification-inner-popover {
     width: 300px;
+}
+
+.notification-inner-popover .popover-content{
+    max-height: 350px;
+    overflow-y: auto;
 }

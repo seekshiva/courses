@@ -3,8 +3,9 @@ jQuery ->
     paramRoot: 'notification'
 
     defaults:
+      msg:          null
+      link:         null
       message_id:   null
-      msg:  null
 
     urlRoot: "/notifications/"
 

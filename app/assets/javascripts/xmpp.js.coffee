@@ -6,6 +6,7 @@ jQuery ->
     @passwd = passwd
     @host = host
     @conn = null
+    @app = window.app ? {}
     @connect()
 
   Xmpp::log = (msg) ->
@@ -53,7 +54,7 @@ jQuery ->
     @conn.send($iq({xmlns:'jabber:client', from:@conn.jid, id:'enable1', type: "set"}).c("enable", {xmlns: "urn:xmpp:carbons:2"}))
     # @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
 
-    @sendMessage("vignesh@courseshub", "Hi. How are you?")
+    # @sendMessage("vignesh@courseshub", "Hi. How are you?")
     # @send_ping()
 
   Xmpp::unload_handler = () ->
@@ -93,9 +94,14 @@ jQuery ->
     from = msg.getAttribute('from');
 
     body = elems[0];
+    # @log(msg)
     @log('Got a notification from ' + from + ': ' + Strophe.getText(body));
-    # push notification to backbone view and render
+    resp = JSON.parse($("<div/>").html(Strophe.getText(body)).text())
+    # @log(resp)
 
+    # push notification to backbone view and render
+    @app.notification.notifications.add(new @app.NotificationModel({message_id: resp.message_id, msg: resp.msg, link: resp.link}))
+    @app.notification.render()
     # we must return true to keep the handler alive.  
     # returning false would remove it after it finishes.
     return true;
