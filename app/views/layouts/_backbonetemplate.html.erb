@@ -407,7 +407,6 @@
       <a class="list-group-item {{#if tab.overview}}active{{/if}}" href="#overview" data-toggle="tab">Overview</a>
       <a class="list-group-item {{#if tab.instructor}}active{{/if}}" href="#instructor" data-toggle="tab">Instructor</a>
       <a class="list-group-item {{#if tab.outline}}active{{/if}}" href="#outline" data-toggle="tab">Outline</a>
-      <a class="list-group-item {{#if tab.outline}}active{{/if}}" href="#outline2" data-toggle="tab">Outline</a>
     </div>
     <div class="tab-content col-md-9">
       <div class="tab-pane {{#if tab.overview}}active{{/if}}" id="overview">
@@ -452,75 +451,6 @@
         {{/each}}
       </div>
       <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline">
-        <h4>Outline Of Topics</h4>
-        {{#if term.sections}}
-          <ul>
-            {{#each term.sections}}
-              <li>
-                <div class="delete_section pull-right" section-id="{{this.id}}">
-                  <i class="glyphicon glyphicon-trash glyphicon-white"></i>
-                </div>
-                {{title}}
-                <ul>
-                  {{#each topics}}
-                    <li>
-                      {{title}}
-                      <span class="text-muted">- {{ct_status}}</span>
-                    </li>
-                  {{/each}}
-                  <li>
-                    <a href="#add_subtopic_{{id}}" class="small" data-toggle="collapse">[Add subtopic]</a>
-                    <form id="add_subtopic_{{id}}" class="create_subtopic collapse" section-id="{{id}}">
-                      <div class="field">
-                        <div class="input-group">
-                          <div class="input-group-btn ct_select_btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                              <span>CT 1</span>
-                              <i class="caret"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li><a href="#">CT 1</a></li>
-                              <li><a href="#">CT 2</a></li>
-                              <li><a href="#">Post CT</a></li>
-                            </ul>
-                          </div>
-                          <input type="hidden" value="CT 1" id="topic_ct_status">
-                          <input type="text" value="" class="form-control" placeholder="SubTopic Title" id="topic_title">
-                        </div>
-                      </div>
-                      <div class="field">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                      </div>
-                    </form>
-                  </li>
-                </ul>
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <p>Sorry, this course doesn&#39;t seem to have topics.</p>
-        {{/if}}
-        {{#if term.faculty}}
-          <hr>
-          <h4>Add new topic</h4>
-          <div class="row">
-            <div class="col-md-9">
-              <form class="form-inline">
-                <div class="input-group">
-                  <input type="text" class="form-control" id="new_section_title" placeholder="New Topic Title">
-                  <div class="input-group-btn">
-                    <button type="submit" class="form-action btn btn-primary" id="create_section">
-                      Add <i class="glyphicon glyphicon-chevron-right"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <br><br>
-        {{/if}}
-      </div>
-      <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline2">
         <ul class="nav nav-tabs">
           <li><h4>Outline Of Topics</h4></li>
           <li class="active pull-right"><a href="#edit_outline" data-toggle="tab">Edit</a></li>
@@ -535,7 +465,7 @@
                     {{title}}
                     <ul>
                       {{#each topics}}
-                        <li>{{title}}<span class="text-muted"> - {{ct_status}}</span></li>
+                        <li><span class="text-muted">{{ct_status}} - </span>{{title}}</li>
                       {{/each}}
                     </ul>
                   </li>
@@ -591,15 +521,14 @@
                           </ul>
                           {{title}}
                         </div>
-                        <ul class="list-group">
+                        <div class="list-group">
                           {{#each topics}}
-                            <li class="list-group-item">
-                              {{title}}
-                              <span class="text-muted">- {{ct_status}}</span>
-                            </li>
+                            <span class="list-group-item">
+                              {{title}}<span class="text-muted"> - {{ct_status}}</span>
+                            </span>
                           {{/each}}
 
-                          <li class="list-group-item">
+                          <div class="list-group-item">
                             <form id="add_subtopic_{{id}}" class="create_subtopic" section-id="{{id}}">
                               <div class="field">
                                 <div class="input-group input-group-sm">
@@ -622,10 +551,8 @@
                                 </div>
                               </div>
                             </form>
-                          </li>
-
-
-                        </ul>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   {{/each}}
