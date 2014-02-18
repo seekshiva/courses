@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe RegistrationsController do
 
-  describe "GET to #new" do
+  describe "on GET to #new" do
     before do
       get :new
     end
@@ -12,14 +12,24 @@ describe RegistrationsController do
         sign_out :user
       end
 
-      it "should redirect user to login_path" do
-        response.should be_redirect
-      end
+      it { should respond_with(:redirect) }
+      it { should redirect_to(login_path) }
+
     end
   end
 
-  describe "POST to #create" do
-    pending
+  describe "on POST to #create" do
+    before do
+      post :create
+    end
+
+    context "with valid attributes" do
+      pending
+    end
+
+    context "with invalid attributes" do
+      pending
+    end
   end
 
 end
