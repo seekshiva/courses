@@ -57,7 +57,7 @@ jQuery ->
 
     deleteSection: (e) ->
       e.preventDefault()
-      unless confirm("Are you sure you want to delete this?")
+      unless confirm("You are about to delete this topic and all sub-topics within it\n\n Are you sure you want to do this?")
         return
       section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
       section = new @app.SectionModel({id : section_id})
