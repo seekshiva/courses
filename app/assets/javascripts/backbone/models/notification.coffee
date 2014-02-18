@@ -6,6 +6,7 @@ jQuery ->
       msg:          null
       link:         null
       message_id:   null
+      time:         null
 
     urlRoot: "/notifications/"
 

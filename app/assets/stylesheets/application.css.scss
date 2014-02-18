@@ -231,19 +231,31 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0.5px 0px 6px #aaa;
 }
 
+#notification-popover{
+    color: #777;
+}
+#notification-popover:hover{
+    color: #555;
+}
 .notification-inner-popover {
     width: 300px;
 }
 
 .notification-inner-popover .popover-content{
-    max-height: 350px;
+    height: 350px;
     overflow-y: auto;
 }
 
 .notification-message {
-    border-bottom: #eee solid;
+    padding: 10px 16px 10px 10px;
+    color: #444;
+    border-bottom: 1px #ccc solid;
+}
+.notification-message:hover {
+    color: #111;
+    background: #BCE8F1;
+    text-decoration: none;
 }
 
-.notification-inner-popover .popover-content .nano-content { padding: 16px; }
 .notification-inner-popover .popover-content .nano-pane   { background: #bbb; }
 .notification-inner-popover .popover-content .nano-slider { background: #777; }

@@ -100,7 +100,8 @@ jQuery ->
     # @log(resp)
 
     # push notification to backbone view and render
-    @app.notification.notifications.add(new @app.NotificationModel({message_id: resp.message_id, msg: resp.msg, link: resp.link}))
+    if not @app.notification.notifications.where({message_id: resp.message_id}).length
+      @app.notification.notifications.add(new @app.NotificationModel({message_id: resp.message_id, msg: resp.msg, link: resp.link}), {at: 0})
     @app.notification.render()
     # we must return true to keep the handler alive.  
     # returning false would remove it after it finishes.
@@ -109,6 +110,9 @@ jQuery ->
   Xmpp::sendMessage = (to, msg) ->
     @log("Sending msg to: "+to+" msg: "+msg)
     @conn.send($msg({to: to, type:"chat"}).c('body').t(msg))
+    @
+
+  Xmpp::getArchieves = (from, start, end, max) ->
     @
 
   @app.Xmpp = Xmpp

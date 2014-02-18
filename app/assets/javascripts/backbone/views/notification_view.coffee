@@ -21,7 +21,7 @@ jQuery ->
 
       @notifications.models.map (msg) ->
         console.log(msg)
-        content += "<div class='notification-message'><a href='"+msg.get("link")+"'>"+msg.get("msg")+"</a></div>"
+        content += "<a href='"+msg.get("link")+"'><div class='notification-message'>"+msg.get("msg")+"</div></a>"
 
       $(@el).html @template
       
@@ -37,7 +37,8 @@ jQuery ->
       $("#notification-popover").popover(options)
       $("#notification-popover").on("shown.bs.popover", ()=>
           $(@el).find("a").click @app.show_local_page
-          $(".nano").nanoScroller();
+          $("#notifications-container .nano").nanoScroller();
+          # $("#notifications-container .nano").debounce("scrollend", () -> return false; , 100);
         )
       @
 
