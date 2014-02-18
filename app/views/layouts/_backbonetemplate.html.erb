@@ -453,11 +453,13 @@
       <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline">
         <ul class="nav nav-tabs">
           <li><h4>Outline Of Topics</h4></li>
-          <li class="active pull-right"><a href="#edit_outline" data-toggle="tab">Edit</a></li>
-          <li class="pull-right"><a href="#view_outline" data-toggle="tab">View</a></li>
+          {{#if term.faculty}}
+            <li class="pull-right"><a href="#edit_outline" data-toggle="tab">Edit</a></li>
+            <li class="active pull-right"><a href="#view_outline" data-toggle="tab">View</a></li>
+          {{/if}}
         </ul>
         <div class="tab-content" style="border: 0;">
-          <div class="tab-pane fade" id="view_outline">
+          <div class="tab-pane fade in active" id="view_outline">
             {{#if term.sections}}
               <ul>
                 {{#each term.sections}}
@@ -475,7 +477,7 @@
               <p>Sorry, this course doesn&#39;t seem to have topics.</p>
             {{/if}}
           </div>
-          <div class="tab-pane fade in active" id="edit_outline">
+          <div class="tab-pane fade" id="edit_outline">
             <div class="row">
               <div class="col-md-4">
                 <div class="panel panel-info">
