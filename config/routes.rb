@@ -6,8 +6,8 @@ Courses::Application.routes.draw do
   }
   
   devise_scope :user do
-    post 'login',    to: 'sessions#create'
-    get  'signout',  to: 'sessions#destroy'
+    post 'login',            to: 'sessions#create',    as: "login"
+    get  'signout',          to: 'sessions#destroy',   as: "signout"
   end
   
   namespace :admin do
@@ -41,9 +41,9 @@ Courses::Application.routes.draw do
   resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
 
-  get 'getting_started',      to: 'home#getting_started',   as: "getting_started"
   get 'admin',                to: 'admin/departments#index'
   get 'login',                to: 'home#index'
+  get 'getting_started',      to: 'registration#new',       as: "getting_started"
 
   get 'download/:id(/:name)', to: 'download#show'
 
