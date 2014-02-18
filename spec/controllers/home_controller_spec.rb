@@ -2,18 +2,14 @@ require 'spec_helper'
 
 describe HomeController do
 
-  describe "#index" do
+  describe "on GET to #index" do
     before do
       get :index
     end
 
-    it "should return status_code 200" do
-      response.code.should == '200'
-    end
+    it { should respond_with 200 }
+    it { should render_template 'home/dashboard' }
 
-    it "should render home/dashboard template" do
-      response.should render_template("home/dashboard")
-    end
   end
 
 end
