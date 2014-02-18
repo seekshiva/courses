@@ -5,12 +5,16 @@ jQuery ->
     el: "#content"
 
     events:
-      "click .row > .list-group > .list-group-item": "switch_active_topic"
-      "submit .create_section" : "createSection"
-      "submit .create_subtopic" : "createSubTopic"
-      "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
-      "click .delete_section" : "deleteSection"
-      "click .edit_section" : "updateSection"
+      # Filter options for term-topic
+      "click .row > .list-group > .list-group-item" : "switch_active_topic"
+      "click .ct_select_btn.input-group-btn li"     :   "updateCTSelection"
+
+      # Section edit, in the "Outline" tab
+      "click .toggle_section_edit" :    "editSection"
+      "click .delete_section"      :  "deleteSection"
+      "submit .edit_section"       :  "updateSection"
+      "submit .create_section"     :  "createSection"
+      "submit .create_subtopic"    : "createSubTopic"
     
     initialize: (options) ->
       @app = window.app ? {}
@@ -31,14 +35,15 @@ jQuery ->
       $(target).addClass("active")
 
     updateSection: (e) ->
+      console.log "hehe"
       e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      title = $.trim($("#section_title_"+section_id).val())
+      section_id = $(e.target).attr("section-id")
+      title = $.trim($(e.target).find("input[type=text]").val())
       if title != ""
-        section = new @term_view.app.SectionModel({id: section_id, title: title})
+        section = new @app.SectionModel({id: section_id, title: title})
         that = this
         section.save null, success: (model, resp) ->
-          term_attributes = that.term_view.term.attributes
+          term_attributes = that.term.attributes
           elem = _.find term_attributes.sections, (obj) ->
             return obj.id.toString() == section_id.toString()
           elem.title = title
@@ -53,6 +58,11 @@ jQuery ->
       btn = $(e.target).closest(".ct_select_btn")
       $(btn).find("button > span").text(val)
       $(btn).siblings("[type=hidden]").val(val)
+      @
+
+    editSection: (e) ->
+      section = $(e.target).closest(".toggle_section_edit").attr("section-id")
+      $("._section_title_" + section).toggleClass("collapse")
       @
 
     deleteSection: (e) ->

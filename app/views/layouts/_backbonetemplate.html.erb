@@ -516,10 +516,22 @@
                       <div class="panel panel-info">
                         <div class="panel-heading">
                           <ul class="panel-heading-actions pull-right">
-                            <li class="edit_section" section-id="{{id}}"><i class="glyphicon glyphicon-pencil"></i></li>
                             <li class="delete_section" section-id="{{id}}"><i class="glyphicon glyphicon-remove-circle"></i></li>
                           </ul>
-                          {{title}}
+                          <ul class="panel-heading-actions pull-left">
+                            <li class="toggle_section_edit" section-id="{{id}}"><i class="glyphicon glyphicon-pencil"></i></li>
+                          </ul>
+                          <strong class="_section_title_{{id}}">{{title}}</strong>
+                          <strong class="_section_title_{{id}} collapse">
+                            <form class="edit_section form-inline" section-id="{{id}}">
+                              <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" value="{{title}}">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default">Change<i class="glyphicon glyphicon-chevron-right"></i></button>
+                                </span>
+                              </div>
+                            </form>
+                          </strong>
                         </div>
                         <div class="list-group">
                           {{#each topics}}
