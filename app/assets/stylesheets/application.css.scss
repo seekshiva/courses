@@ -239,3 +239,11 @@ h1, h2, h3, h4, h5, h6 {
     max-height: 350px;
     overflow-y: auto;
 }
+
+.notification-message {
+    border-bottom: #eee solid;
+}
+
+.notification-inner-popover .popover-content .nano-content { padding: 16px; }
+.notification-inner-popover .popover-content .nano-pane   { background: #bbb; }
+.notification-inner-popover .popover-content .nano-slider { background: #777; }

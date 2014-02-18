@@ -21,7 +21,7 @@ jQuery ->
 
       @notifications.models.map (msg) ->
         console.log(msg)
-        content += "<div><a href='"+msg.get("link")+"'>"+msg.get("msg")+"</a></div><hr/>"
+        content += "<div class='notification-message'><a href='"+msg.get("link")+"'>"+msg.get("msg")+"</a></div>"
 
       $(@el).html @template
       
@@ -30,13 +30,14 @@ jQuery ->
         html: true,
         placement: "bottom",
         title: "Notifications",
-        content: content,
-        template: '<div class="popover notification-inner-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+        content: "<div class='nano-content'>"+content+"</div>",
+        template: '<div class="popover notification-inner-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content nano"><p></p></div></div></div>'
       }
       $("#notification-popover").popover("destroy")
       $("#notification-popover").popover(options)
       $("#notification-popover").on("shown.bs.popover", ()=>
           $(@el).find("a").click @app.show_local_page
+          $(".nano").nanoScroller();
         )
       @
 
