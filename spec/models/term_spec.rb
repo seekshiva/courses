@@ -34,49 +34,61 @@ describe Term do
   end
 
   describe "#current?" do
-    it "should be true if term is happening in current semester" do
-      course = FactoryGirl.build(:course)
-      year = Time.now.year.to_i
-      year -= Time.now.month<6 ? 1 : 0
-      semester = Time.now.month<6 ? 2 : 1
-      term = FactoryGirl.build(:term, course: course, academic_year: year, semester: semester)
-      term.current?.should be_true
+    context "if term happens in current semester" do
+      it "should return true" do
+        course = FactoryGirl.build(:course)
+        year = Time.now.year.to_i
+        year -= Time.now.month<6 ? 1 : 0
+        semester = Time.now.month<6 ? 2 : 1
+        term = FactoryGirl.build(:term, course: course, academic_year: year, semester: semester)
+        term.current?.should be_true
+      end
     end
 
-    it "should be false if term is not happening in current semester" do
-      course = FactoryGirl.build(:course)
-      term = FactoryGirl.build(:term, course: course, academic_year: (Time.now.year.to_i-2) )
-      term.current?.should be_false
+    context "if term is doesn't happen in current semester" do
+      it "should return false" do
+        course = FactoryGirl.build(:course)
+        term = FactoryGirl.build(:term, course: course, academic_year: (Time.now.year.to_i-2) )
+        term.current?.should be_false
+      end
     end
   end
 
   describe "#this_year?" do
-    it "should be true if term occurred in current academic year" do
-      course = FactoryGirl.build(:course)
-      year = Time.now.year.to_i
-      year -= Time.now.month<6 ? 1 : 0
-      term = FactoryGirl.build(:term, course: course, academic_year: year)
-      term.this_year?.should be_true
+    context "if term happens in current academic year" do
+      it "should return true" do
+        course = FactoryGirl.build(:course)
+        year = Time.now.year.to_i
+        year -= Time.now.month<6 ? 1 : 0
+        term = FactoryGirl.build(:term, course: course, academic_year: year)
+        term.this_year?.should be_true
+      end
     end
 
-    it "should be false if term did not occur in current academic year" do
-      course = FactoryGirl.build(:course)
-      term = FactoryGirl.build(:term, course: course, academic_year: (Time.now.year.to_i-2) )
-      term.this_year?.should be_false
+    context "if term doesn't happen in current academic year" do
+      it "should return false" do
+        course = FactoryGirl.build(:course)
+        term = FactoryGirl.build(:term, course: course, academic_year: (Time.now.year.to_i-2) )
+        term.this_year?.should be_false
+      end
     end
   end
 
   describe "#odd_term?" do
-    it "should be true if term happens in odd semester" do
-      course = FactoryGirl.build(:course)
-      term = FactoryGirl.build(:term, course: course, semester: 1 )
-      term.odd_term?.should be_true
+    context "if term happens in odd semester" do
+      it "should return true" do
+        course = FactoryGirl.build(:course)
+        term = FactoryGirl.build(:term, course: course, semester: 1 )
+        term.odd_term?.should be_true
+      end
     end
 
-    it "should be false if term happens in even semester" do
-      course = FactoryGirl.build(:course)
-      term = FactoryGirl.build(:term, course: course, semester: 2 )
-      term.odd_term?.should be_false
+    context "if term happens in even semester" do
+      it "should return false" do
+        course = FactoryGirl.build(:course)
+        term = FactoryGirl.build(:term, course: course, semester: 2 )
+        term.odd_term?.should be_false
+      end
     end
   end
 end

@@ -28,14 +28,14 @@ describe User do
   end
 
   describe "#admin?" do
-    context "user is admin" do
+    context "if admin" do
       it "should return true" do
         user = FactoryGirl.build(:admin)
         user.should be_admin
       end
     end
-
-    context "user is not admin" do
+    
+    context "if not admin" do
       it "should return false" do
         user = FactoryGirl.build(:user)
         user.should_not be_admin
@@ -44,39 +44,40 @@ describe User do
   end
 
   describe "#activated?" do
-    it "should be true if user has logged in before" do
-      user = FactoryGirl.build(:user, activated: true)
-      user.activated?.should be_true
+    context "user has logged in before" do
+      it "should return true" do
+        user = FactoryGirl.build(:user, activated: true)
+        user.activated?.should be_true
+      end
     end
     
-    it "return false if user is logging in for the first time" do
-      user = FactoryGirl.build(:user, activated: false)
-      user.activated?.should be_false
+    context "user is logging in for the first time" do
+      it "should return false" do
+        user = FactoryGirl.build(:user, activated: false)
+        user.activated?.should be_false
+      end
     end
   end
 
   describe "#student?" do
-    it "return true if user is a student" do
-      user = FactoryGirl.build(:user, email: "106109087")
-      user.should be_student
+    context "if student" do
+      it "should return true" do
+        user = FactoryGirl.build(:user, email: "106109087")
+        user.should be_student
+      end
     end
     
-    it "return false if user is not a student" do
-      user = FactoryGirl.build(:user, email: "123.some.string.123")
-      user.should_not be_student
+    context "if not student" do
+      it "should return false" do
+        user = FactoryGirl.build(:user, email: "123.some.string.123")
+        user.should_not be_student
+      end
     end
   end
 
   describe "#nth_year" do
-    context "faculty" do
-      it "return nil if user is faculty" do
-        user = FactoryGirl.build(:user, email: "faculty.mail")
-        user.nth_year.should be_nil
-      end
-    end
-
-    context "student" do
-      it "return year if user is student" do
+    context "if student" do
+      it " should return year that the student is in" do
         roll_nos = ["110112109", "102111040", "108110110", "106109087"]
         roll_nos.each do |roll_no|
           user = FactoryGirl.build(:user, email: roll_no)
@@ -84,9 +85,16 @@ describe User do
         end
       end
     end
+
+    context "if not student" do
+      it "should return nil" do
+        user = FactoryGirl.build(:user, email: "faculty.mail")
+        user.nth_year.should be_nil
+      end
+    end
   end
 
   describe "#update_access_token" do
-    pending
+    pending "write spec for this method"
   end
 end
