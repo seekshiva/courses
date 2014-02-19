@@ -5,7 +5,16 @@ jQuery ->
     el: "#content"
 
     events:
-      "click .row > .list-group > .list-group-item": "switch_active_topic"
+      # Filter options for term-topic
+      "click .row > .list-group > .list-group-item" : "switch_active_topic"
+      "click .ct_select_btn.input-group-btn li"     :   "updateCTSelection"
+
+      # Section edit, in the "Outline" tab
+      "click .toggle_section_edit" :    "editSection"
+      "click .delete_section"      :  "deleteSection"
+      "submit .edit_section"       :  "updateSection"
+      "submit .create_section"     :  "createSection"
+      "submit .create_subtopic"    : "createSubTopic"
     
     initialize: (options) ->
       @app = window.app ? {}
@@ -15,7 +24,7 @@ jQuery ->
       @term.bind "change", @render, @
       @term.fetch()
       @tab = {}
-      @tab["info"] = {"overview":true, "instructor": false, "outline": true}
+      @tab["info"] = {"overview":true, "instructor": false, "outline": false}
       @tab["reference"] = {"books": true, "notes": false}
       @
 
@@ -24,14 +33,100 @@ jQuery ->
       target = $(e.target).closest("a")
       $(target).siblings().filter(".active").removeClass("active")
       $(target).addClass("active")
-      
+
+    updateSection: (e) ->
+      e.preventDefault()
+      section_id = $(e.target).attr("section-id")
+      title = $.trim($(e.target).find("input[type=text]").val())
+      if title != ""
+        section = new @app.SectionModel({id: section_id, title: title})
+        that = this
+        section.save null, success: (model, resp) ->
+          term_attributes = that.term.attributes
+          elem = _.find term_attributes.sections, (obj) ->
+            return obj.id.toString() == section_id.toString()
+          elem.title = title
+          that.section_id = null
+          that.render()
+
+      @
+
+    updateCTSelection: (e)->
+      e.preventDefault()
+      val = $(e.target).text()
+      btn = $(e.target).closest(".ct_select_btn")
+      $(btn).find("button > span").text(val)
+      $(btn).siblings("[type=hidden]").val(val)
+      @
+
+    editSection: (e) ->
+      section = $(e.target).closest(".toggle_section_edit").attr("section-id")
+      $("._section_title_" + section).toggleClass("collapse")
+      @
+
+    deleteSection: (e) ->
+      e.preventDefault()
+      unless confirm("You are about to delete this topic and all sub-topics within it\n\n Are you sure you want to do this?")
+        return
+      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
+      section = new @app.SectionModel({id : section_id})
+      section.destroy()
+      elem = _.find @term.attributes.sections, (obj) ->
+        return obj.id.toString() == section_id.toString()
+      index = @term.attributes.sections.indexOf(elem)
+      @tab["info"] = {"overview":false, "instructor": false, "outline": true}
+      @term.attributes.sections.splice(index, 1)
+      @render()
+      @
+
+    createSection: (e) ->
+      e.preventDefault()
+      if($(e.target).closest("#term_"+@term_id).length)
+        input = $(e.target).find("#new_section_title")
+        title = $.trim($(input).val())
+        $(input).val("")
+        @tab["info"] = {"overview":false, "instructor": false, "outline": true}
+        if title != ""
+          section = new @app.SectionModel
+            title   : title
+            term_id : @term_id
+          that = this
+          section.save(null, {success: (model, resp) ->
+            that.term.attributes.sections.push(section.attributes)
+            that.render()
+          })
+      @
+
+    createSubTopic: (e) ->
+      e.preventDefault()
+      if($(e.target).closest("#term_"+@term_id).length)
+        target = e.target
+        section_id = parseInt($(target).attr("section-id"))
+        topic_title = $.trim($(target).find("#topic_title").val())
+        topic_ct = $.trim($(target).find("#topic_ct_status").val())
+        if topic_title != ""
+          topic = new @app.TopicModel({
+            title:          topic_title,
+            ct_status:      topic_ct,
+            description:    "",
+            section_id:     section_id
+          })
+          that = this
+          @tab["info"] = {"overview":false, "instructor": false, "outline": true}
+          topic.save null, success: (model, resp) ->
+            term = that.term
+            elem = _.find term.attributes.sections, (obj) ->
+              return obj.id == section_id
+            elem.topics.push(topic.attributes)
+            that.render()
+      @
+
     render: =>
       find_template = (type)->
         Handlebars.compile $("#term-" + type + "-template").html()
 
       $(@el).html @template
         term: @term.attributes
-        edit_mode: if @view.id == "edit" then "edit_mode" else ""
 
       $("#TermSubModal").modal({"backdrop":"static","show":false});
       $(@el).find("#specialized_view_selector li").removeClass("active")
@@ -44,7 +139,6 @@ jQuery ->
       else
         $("#specialized_view").html find_template(@view.type)
           term:          @term.attributes
-          edit_mode:     if @view.id == "edit" then "edit_mode" else ""
           term_sections: @term_sections
           host:          window.location.host
           tab:           @tab[@view.type]
@@ -83,6 +177,7 @@ jQuery ->
         });
         
       else if @view.type == "info"
+        @tab["info"] = {"overview":true, "instructor": false, "outline": false}
         @term_sub_status = new @app.TermSubscriptionView
         @term_sub_status.initialize(@)
         @term_sub_status.render()
