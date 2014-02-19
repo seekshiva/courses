@@ -2,11 +2,14 @@ require 'spec_helper'
 
 describe BookCover do
 
-  it { should have_one(:book) }
+  context "associations" do
+    it { should have_one(:book) }
+    it { should have_attached_file(:cover) }
+  end
 
-  it { should have_attached_file(:cover) }
-
-  it { should allow_mass_assignment_of(:cover) }
-  it { should allow_mass_assignment_of(:uploaded_by) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:cover) }
+    it { should allow_mass_assignment_of(:uploaded_by) }
+  end
 
 end

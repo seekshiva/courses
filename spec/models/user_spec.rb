@@ -2,44 +2,49 @@ require 'spec_helper'
 
 describe User do
 
-  it { should belong_to(:avatar) }
-  it { should belong_to(:department) }
+  context "associations" do
+    it { should belong_to(:avatar) }
+    it { should belong_to(:department) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
+    it { should have_many(:terms).through(:subscriptions) }
+    it { should have_many(:courses).through(:terms) }
+  end
 
-  it { should have_many(:subscriptions).dependent(:destroy) }
-  it { should have_many(:terms).through(:subscriptions) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:name) }
+    it { should allow_mass_assignment_of(:email) }
+    it { should allow_mass_assignment_of(:department_id) }
+    it { should allow_mass_assignment_of(:phone) }
+    it { should allow_mass_assignment_of(:avatar_id) }
+    it { should allow_mass_assignment_of(:activated) }
+    it { should allow_mass_assignment_of(:admin) }
+    it { should allow_mass_assignment_of(:doc_access_token) }
+    it { should allow_mass_assignment_of(:sign_in_count) }
+    it { should allow_mass_assignment_of(:current_sign_in_at) }
+    it { should allow_mass_assignment_of(:last_sign_in_at) }
+    it { should allow_mass_assignment_of(:current_sign_in_ip) }
+    it { should allow_mass_assignment_of(:last_sign_in_ip) }
+    it { should validate_uniqueness_of(:email) }
+  end
 
-  it { should have_many(:courses).through(:terms) }
-  
-  it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:email) }
-  it { should allow_mass_assignment_of(:department_id) }
-  it { should allow_mass_assignment_of(:phone) }
-  it { should allow_mass_assignment_of(:avatar_id) }
-  it { should allow_mass_assignment_of(:activated) }
-  it { should allow_mass_assignment_of(:admin) }
-  it { should allow_mass_assignment_of(:doc_access_token) }
-  it { should allow_mass_assignment_of(:sign_in_count) }
-  it { should allow_mass_assignment_of(:current_sign_in_at) }
-  it { should allow_mass_assignment_of(:last_sign_in_at) }
-  it { should allow_mass_assignment_of(:current_sign_in_ip) }
-  it { should allow_mass_assignment_of(:last_sign_in_ip) }
-
-  it { should validate_uniqueness_of(:email) }
-
-  context "#admin?" do
-    it "return true if user is admin" do
-      user = FactoryGirl.build(:admin)
-      user.should be_admin
+  describe "#admin?" do
+    context "user is admin" do
+      it "should return true" do
+        user = FactoryGirl.build(:admin)
+        user.should be_admin
+      end
     end
-    
-    it "return false if user is not admin" do
-      user = FactoryGirl.build(:user)
-      user.should_not be_admin
+
+    context "user is not admin" do
+      it "should return false" do
+        user = FactoryGirl.build(:user)
+        user.should_not be_admin
+      end
     end
   end
 
-  context "#activated?" do
-    it "return true if user has logged in before" do
+  describe "#activated?" do
+    it "should be true if user has logged in before" do
       user = FactoryGirl.build(:user, activated: true)
       user.activated?.should be_true
     end
@@ -50,7 +55,7 @@ describe User do
     end
   end
 
-  context "#student?" do
+  describe "#student?" do
     it "return true if user is a student" do
       user = FactoryGirl.build(:user, email: "106109087")
       user.should be_student
@@ -62,7 +67,7 @@ describe User do
     end
   end
 
-  context "#nth_year" do
+  describe "#nth_year" do
     context "faculty" do
       it "return nil if user is faculty" do
         user = FactoryGirl.build(:user, email: "faculty.mail")
@@ -81,7 +86,7 @@ describe User do
     end
   end
 
-  context "#update_access_token" do
+  describe "#update_access_token" do
     pending
   end
 end

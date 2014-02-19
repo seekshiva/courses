@@ -2,14 +2,16 @@ require 'spec_helper'
 
 describe Author do
 
-  it { should have_many(:book_authors).dependent(:destroy) }
+  context "associations" do
+    it { should have_many(:book_authors).dependent(:destroy) }
+    it { should have_many(:books).through(:book_authors) }
+  end
 
-  it { should have_many(:books).through(:book_authors) }
-  
-  it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:about) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:name) }
+    it { should allow_mass_assignment_of(:about) }
+    it { should validate_presence_of(:name).with_message("-> not present") }
+    it { should validate_uniqueness_of(:name) }
+  end
 
-  it { should validate_presence_of(:name).with_message("-> not present") }
-
-  it { should validate_uniqueness_of(:name) }
 end
