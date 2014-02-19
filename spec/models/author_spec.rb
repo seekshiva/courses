@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Author do
 
+  xit "should have a factory" do
+    FactoryGirl.build(:author).should be_valid
+  end
+
   context "associations" do
     it { should have_many(:book_authors).dependent(:destroy) }
     it { should have_many(:books).through(:book_authors) }

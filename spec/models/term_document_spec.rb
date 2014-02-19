@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe TermDocument do
 
+  it "should have a factory" do
+    FactoryGirl.build(:term_document).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:term) }
     it { should belong_to(:document) }

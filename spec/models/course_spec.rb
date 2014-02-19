@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Course do
 
+  it "should have a factory" do
+    FactoryGirl.build(:course).should be_valid
+  end
+
   context "associations" do
     it { should have_many(:terms).dependent(:destroy) }
     it { should have_many(:subscriptions).through(:terms) }

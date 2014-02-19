@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe BookCover do
 
+  xit "should have a factory" do
+    FactoryGirl.build(:book_cover).should be_valid
+  end
+
   context "associations" do
     it { should have_one(:book) }
     it { should have_attached_file(:cover) }

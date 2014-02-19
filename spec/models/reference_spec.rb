@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Reference do
 
+  it "should have a factory" do
+    FactoryGirl.build(:reference).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:term_reference) }
     it { should belong_to(:topic) }

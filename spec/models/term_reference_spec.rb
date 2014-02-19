@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe TermReference do
 
+  it "should have a factory" do
+    FactoryGirl.build(:term_reference).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:term) }
     it { should belong_to(:book) }

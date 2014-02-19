@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Section do
 
+  it "should have a factory" do
+    FactoryGirl.build(:section).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:term) }
     it { should have_many(:topics).dependent(:destroy) }

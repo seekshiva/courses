@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Subscription do
 
+  xit "should have a factory" do
+    FactoryGirl.build(:subscription).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:user) }
     it { should belong_to(:term) }

@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe BookAuthor do
 
+  xit "should have a factory" do
+    FactoryGirl.build(:book_author).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:book) }
     it { should belong_to(:author) }

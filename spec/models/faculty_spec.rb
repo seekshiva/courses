@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Faculty do
 
+  it "should have a factory" do
+    FactoryGirl.build(:faculty).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:user) }
   end

@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  
+  # Sequences
+  sequence :subject_code, 400 do |n|
+    "CS#{n}"
+  end
+
+
   # Book
   
   factory :book do
@@ -13,7 +20,7 @@ FactoryGirl.define do
   # Course
 
   factory :course do
-    subject_code "CS401"
+    subject_code
     name         "Distributed Systems"
     credits       3
     about         ""
@@ -45,6 +52,11 @@ FactoryGirl.define do
 
   factory :section_document do
     section
+    document
+  end
+
+  factory :topic_document do
+    topic
     document
   end
 

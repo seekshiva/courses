@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Term do
 
+  it "should have a factory" do
+    FactoryGirl.build(:term).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:course) }
     it { should have_many(:sections).dependent(:destroy) }

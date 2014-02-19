@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Document do
 
+  it "should have a factory" do
+    FactoryGirl.build(:document).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:user).with_foreign_key("uploaded_by")}
     it { should have_many(:topic_documents).dependent(:destroy)}

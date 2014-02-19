@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe User do
 
+  it "should have a factory" do
+    FactoryGirl.build(:user).should be_valid
+  end
+
   context "associations" do
     it { should belong_to(:avatar) }
     it { should belong_to(:department) }
