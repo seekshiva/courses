@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',               '>= 4.0.2'
+gem 'rails',               '>= 4.0.3'
 
 # Legacy Rails features, remove me!
 
@@ -11,11 +11,11 @@ gem 'protected_attributes'
 
 # caches_page
 gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+gem 'actionpack-action_caching', '>= 1.1.1'
 
 # Appserver
 
-gem 'unicorn',             '>= 4.7'
+gem 'unicorn',             '~> 4.8.2'
 
 # Authentication
 
@@ -33,19 +33,19 @@ gem 'sass-rails',          '~> 4.0.1'
 
 # Database
 
-gem 'mysql2',              '~> 0.3.14'
+gem 'mysql2',              '~> 0.3.15'
 
 # File uploading
 
 gem 'mime-types'
-gem 'paperclip',           '~> 3.5.2'
+gem 'paperclip',           '~> 4.1.0'
 
 # Javascript/Coffeescript
 
 gem 'execjs'
-gem 'jquery-rails'
-gem 'therubyracer',        '~> 0.12.0'
-gem 'rails-backbone',      '~> 0.9.10'
+gem 'jquery-rails',        '~> 3.1.0'
+gem 'therubyracer',        '~> 0.12.1'
+gem 'rails-backbone',       github: "codebrew/backbone-rails"
 gem 'coffee-rails',        '~> 4.0.1'
 
 # Markdown support
@@ -58,7 +58,7 @@ gem 'lisbn',               '~> 0.2.0'
 
 # Compression
 
-gem 'uglifier',            '~> 1.3.0'
+gem 'uglifier',            '~> 2.4.0'
 
 # Static Pages
 
@@ -67,9 +67,9 @@ gem 'high_voltage',        '~> 2.1.0'
 group :development do
   # Deployment
 
-  gem "capistrano-rails"
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
+  gem "capistrano-rails",   '~> 1.1.1'
+  gem 'capistrano-rvm',     '~> 0.1.1'
+  gem 'capistrano-bundler', '~> 1.1.2'
 
   # Coffeescript Sourcemap debugging
 
@@ -81,14 +81,18 @@ group :test do
   gem 'shoulda-matchers',  '2.5.0'
 
   # Cucumber (integration tests)
-  gem 'capybara',          '2.2.0'
-  gem 'database_cleaner',  '1.1.0'
+  gem 'capybara',          '2.2.1'
+  gem 'database_cleaner',  '1.2.0'
 
-  # Coverage testing
-  gem 'coveralls', github: 'lemurheavy/coveralls-ruby', require: false
+  # Coverage stats
+  # Remove link to githubwhen v0.7.1 get available
+  gem 'coveralls',           github: 'lemurheavy/coveralls-ruby', require: false
+
+  # Run tests automatically
+  gem 'guard-rspec',        '4.2.6'
 
   # General helpers
-  gem 'factory_girl_rails', '4.3.0'
+  gem 'factory_girl_rails', '4.4.0'
 end
 
 group :development, :test do

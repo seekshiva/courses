@@ -1,6 +1,15 @@
 Courses::Application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {
+    registrations: "registrations",
+    sessions:      "sessions"
+  }
+  
+  devise_scope :user do
+    post 'login',            to: 'sessions#create',    as: "login"
+    get  'signout',          to: 'sessions#destroy',   as: "signout"
+  end
+  
   namespace :admin do
     resources :users
     resources :faculties
@@ -32,15 +41,13 @@ Courses::Application.routes.draw do
   resources :term_documents, :section_document, :topic_documents
   resources :subscriptions
 
+  get 'admin',                to: 'admin/departments#index'
+  get 'login',                to: 'home#index'
+  get 'getting_started',      to: 'registration#new',       as: "getting_started"
+
   get 'download/:id(/:name)', to: 'download#show'
 
-  post 'upload/:tab', to: 'upload#create'
-  post 'authenticate', to: 'home#authenticate'
-
-  get 'me', to: 'home#me'
-  get 'admin', to: 'admin/departments#index'
-  get 'login', to: 'home#index'
-  get 'signout', to: 'home#signout'
+  post 'upload/:tab',         to: 'upload#create'
 
   get 'about' => 'high_voltage/pages#show', id: 'about'
   get 'contact-us' => 'high_voltage/pages#show', id: 'contact-us'
