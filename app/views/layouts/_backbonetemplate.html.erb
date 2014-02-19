@@ -1,6 +1,6 @@
 <script type="text/template" id="login-template">
   <div class="container">
-    <form action="/authenticate" method="post" role="form" class="col-md-3 form-signin" style="text-align: center; ">
+    <form action="<%= login_path %>" method="post" role="form" class="col-md-3 form-signin" style="text-align: center; ">
       <h2 class="form-signin-heading">Sign In</H2>
       <% unless flash[:notice].nil? %>
         <div class="alert <%= flash[:notice_type] %>">

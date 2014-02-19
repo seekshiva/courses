@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     self.admin == true
   end
   
-  def account_activated?
+  def activated?
     self.activated == true
   end
   
@@ -33,6 +33,12 @@ class User < ActiveRecord::Base
       return Time.now.year%100 - self[:email][4..5].to_i
     else
       nil
+    end
+  end
+
+  def update_access_token
+    if (!self.current_sign_in_at.nil? && self.current_sign_in_at - Time.now() > 1.week) || self.doc_access_token.nil?
+      self.update_attributes doc_access_token: Digest::MD5.hexdigest(self.email+Time.now().to_s)
     end
   end
 
