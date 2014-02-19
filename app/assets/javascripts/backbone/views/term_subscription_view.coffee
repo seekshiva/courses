@@ -32,7 +32,8 @@ jQuery ->
       @
 
     updateCollection: (model, resp) ->
-      @app.menu_view.subscriptions.remove({id: @sub_status.id}).add(@sub_status.attributes)
+      @app.menu_view.subscriptions.remove({id: @sub_status.id})
+      @app.menu_view.subscriptions.add(@sub_status.attributes)
 
     render: ->
       sub = false
