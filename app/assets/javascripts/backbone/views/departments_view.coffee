@@ -6,7 +6,7 @@ jQuery ->
     initialize: ->
       @app = window.app ? {} 
       @departments = new @app.DepartmentsCollection()  
-      @departments.bind "reset", @render, @
+      @departments.bind "sync", @render, @
       @departments.fetch()
       @
 
