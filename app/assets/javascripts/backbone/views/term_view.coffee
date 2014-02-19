@@ -35,7 +35,6 @@ jQuery ->
       $(target).addClass("active")
 
     updateSection: (e) ->
-      console.log "hehe"
       e.preventDefault()
       section_id = $(e.target).attr("section-id")
       title = $.trim($(e.target).find("input[type=text]").val())
@@ -82,42 +81,44 @@ jQuery ->
 
     createSection: (e) ->
       e.preventDefault()
-      input = $(e.target).find("#new_section_title")
-      title = $.trim($(input).val())
-      $(input).val("")
-      @tab["info"] = {"overview":false, "instructor": false, "outline": true}
-      if title != ""
-        section = new @app.SectionModel
-          title   : title
-          term_id : @term_id
-        that = this
-        section.save(null, {success: (model, resp) ->
-          that.term.attributes.sections.push(section.attributes)
-          that.render()
-        })
+      if($(e.target).closest("#term_"+@term_id).length)
+        input = $(e.target).find("#new_section_title")
+        title = $.trim($(input).val())
+        $(input).val("")
+        @tab["info"] = {"overview":false, "instructor": false, "outline": true}
+        if title != ""
+          section = new @app.SectionModel
+            title   : title
+            term_id : @term_id
+          that = this
+          section.save(null, {success: (model, resp) ->
+            that.term.attributes.sections.push(section.attributes)
+            that.render()
+          })
       @
 
     createSubTopic: (e) ->
       e.preventDefault()
-      target = e.target
-      section_id = parseInt($(e.target).attr("section-id"))
-      topic_title = $.trim($(target).find("#topic_title").val())
-      topic_ct = $.trim($("#topic_ct_status").val())
-      if topic_title != ""
-        topic = new @app.TopicModel({
-          title:          topic_title,
-          ct_status:      topic_ct,
-          description:    "",
-          section_id:     section_id
-        })
-        that = this
-        @tab["info"] = {"overview":false, "instructor": false, "outline": true}
-        topic.save null, success: (model, resp) ->
-          term = that.term
-          elem = _.find term.attributes.sections, (obj) ->
-            return obj.id == section_id
-          elem.topics.push(topic.attributes)
-          that.render()
+      if($(e.target).closest("#term_"+@term_id).length)
+        target = e.target
+        section_id = parseInt($(target).attr("section-id"))
+        topic_title = $.trim($(target).find("#topic_title").val())
+        topic_ct = $.trim($(target).find("#topic_ct_status").val())
+        if topic_title != ""
+          topic = new @app.TopicModel({
+            title:          topic_title,
+            ct_status:      topic_ct,
+            description:    "",
+            section_id:     section_id
+          })
+          that = this
+          @tab["info"] = {"overview":false, "instructor": false, "outline": true}
+          topic.save null, success: (model, resp) ->
+            term = that.term
+            elem = _.find term.attributes.sections, (obj) ->
+              return obj.id == section_id
+            elem.topics.push(topic.attributes)
+            that.render()
       @
 
     render: =>

@@ -6,7 +6,7 @@ jQuery ->
     initialize: ->
       @app = window.app ? {}
       @subscriptions = new @app.SubscriptionsCollection()
-      @subscriptions.bind "reset", @render, @
+      @subscriptions.bind "sync", @render, @
       @subscriptions.bind "add", @render, @
       @subscriptions.bind "remove", @render, @
       @subscriptions.fetch()
