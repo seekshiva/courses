@@ -45,7 +45,7 @@ gem 'paperclip',           '~> 4.1.0'
 gem 'execjs'
 gem 'jquery-rails',        '~> 3.1.0'
 gem 'therubyracer',        '~> 0.12.1'
-gem 'rails-backbone',       github: "codebrew/backbone-rails"
+gem 'rails-backbone',      :git => "http://github.com/codebrew/backbone-rails"
 gem 'coffee-rails',        '~> 4.0.1'
 
 # Markdown support

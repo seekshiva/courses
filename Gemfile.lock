@@ -1,14 +1,4 @@
 GIT
-  remote: git://github.com/codebrew/backbone-rails.git
-  revision: 995af310d45ade882c284a7aaf299e577dae2cbb
-  specs:
-    rails-backbone (1.1.0)
-      coffee-script
-      ejs
-      jquery-rails
-      railties
-
-GIT
   remote: git://github.com/lemurheavy/coveralls-ruby.git
   revision: 6678dbae8b8f846491b9a2b13c6be3f6a67b84d7
   specs:
@@ -18,6 +8,16 @@ GIT
       simplecov (>= 0.7)
       term-ansicolor
       thor
+
+GIT
+  remote: http://github.com/codebrew/backbone-rails
+  revision: 995af310d45ade882c284a7aaf299e577dae2cbb
+  specs:
+    rails-backbone (1.1.0)
+      coffee-script
+      ejs
+      jquery-rails
+      railties
 
 GEM
   remote: https://rubygems.org/
