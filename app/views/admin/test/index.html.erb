@@ -1,0 +1,18 @@
+<div>
+  <% unless flash[:notice].nil? %>
+    <div class="alert <%= flash[:notice_type] %>">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <h3>Test Components</h3>
+  <form action="<% admin_tests_url %>" method="post">
+    <div class="form-group">
+      <div class="input-group">
+        <input type="text" name="username" class="form-control" placeholder="webmail id" autofocus>
+        <span class="input-group-addon">@nitt.edu</span>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Send mail</button>
+    <%= token_tag %>
+  </form>
+</div>

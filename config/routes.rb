@@ -27,6 +27,7 @@ Courses::Application.routes.draw do
       get ":tab" => "courses#show"
     end
     resources :books, :authors, :book_authors, :references
+    resources :tests, controller: "test"
     post 'switch_to', to: 'users#switch_to'
   end
 
