@@ -25,7 +25,12 @@ class User < ActiveRecord::Base
   end
   
   def student?
-    return self[:email].to_i.to_s == self[:email]
+    self[:email].to_i.to_s == self[:email]
+  end
+
+  def faculty?
+    faculty = Faculty.where(user_id: id)
+    not ( faculty.nil? and faculty.empty? )
   end
   
   def nth_year

@@ -36,4 +36,28 @@ describe Faculty do
       faculty.department.should eq dept
     end
   end
+
+  describe "#as_json" do
+    before do
+      user    = FactoryGirl.create( :user )
+      @faculty = FactoryGirl.create( :faculty, user: user )
+    end
+    
+    it "should have key `about`" do
+      about = "<p>Some intro about the prof</p>\n"
+      @faculty.as_json[:about].should be_eql( about )
+    end
+    
+    it "should have key `email`" do
+      mail = "john.doe"
+      @faculty.as_json[:email].should be_eql( mail )
+    end
+    
+    it "should have key `instructor`" do
+      about = BlueCloth.new("Some intro about the prof").to_html
+      @faculty.as_json[:instructor].should be_eql( "Ms. John Doe" )
+    end
+
+  end
+
 end

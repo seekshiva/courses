@@ -42,4 +42,9 @@ describe Course do
   describe "#latest_term" do
     pending
   end
+
+  describe "#as_json" do
+    pending
+  end
+
 end

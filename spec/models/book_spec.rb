@@ -37,5 +37,9 @@ describe Book do
       book.isbn_13.should eq Lisbn.new(book.isbn).isbn13
     end
   end
-
+  
+  describe "#as_json" do
+    pending
+  end
+  
 end

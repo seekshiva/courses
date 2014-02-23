@@ -20,4 +20,8 @@ describe Document do
     it { should allow_mass_assignment_of(:uploaded_by) }
   end
 
+  describe "#as_json" do
+    pending
+  end
+  
 end

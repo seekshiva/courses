@@ -57,5 +57,15 @@ class Course < ActiveRecord::Base
     end
     latest
   end
+
+  def as_json
+    {
+      id:      id,
+      code:    subject_code,
+      name:    name,
+      about:   BlueCloth.new(about).to_html,
+      credits: credits,
+    }
+  end
   
 end
