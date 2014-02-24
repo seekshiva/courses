@@ -54,7 +54,6 @@ describe Faculty do
     end
     
     it "should have key `instructor`" do
-      about = BlueCloth.new("Some intro about the prof").to_html
       @faculty.as_json[:instructor].should be_eql( "Ms. John Doe" )
     end
 

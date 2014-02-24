@@ -79,6 +79,44 @@ describe User do
     end
   end
 
+  describe "#faculty?" do
+    context "if email in faculty table" do
+      context "if student" do
+        it "should return true" do
+          user = FactoryGirl.create(:user, email: "106109087")
+          faculty = FactoryGirl.create(:faculty, user: user)
+
+          user.should be_faculty
+        end
+      end
+
+      context "if not student" do
+        it "should return true" do
+          user = FactoryGirl.create(:user, email: "faculty_1")
+          faculty = FactoryGirl.create(:faculty, user: user)
+
+          user.should be_faculty
+        end
+      end
+    end
+    
+    context "if email not in faculty table" do
+      context "if student" do
+        it "should return true" do
+          user = FactoryGirl.create(:user, email: "106109088")
+          user.should_not be_faculty
+        end
+      end
+
+      context "if not student" do
+        it "should return true" do
+          user = FactoryGirl.create(:user, email: "faculty_2")
+          user.should_not be_faculty
+        end
+      end
+    end
+  end
+
   describe "#nth_year" do
     context "if student" do
       it " should return year that the student is in" do
