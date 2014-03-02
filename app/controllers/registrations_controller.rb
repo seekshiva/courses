@@ -85,7 +85,7 @@ class RegistrationsController < ApplicationController
         })
         
         if Rails.env.production?
-          UserMailer.welcome_email(@user).deliver
+          UserMailer.delay.welcome_email(@user)
         end
         
         if @user.student?

@@ -16,7 +16,7 @@ class Admin::TestController < Admin::BaseController
     flash[:notice_type] = "alert-success"
     flash[:notice] = 'Mail was sent successfully'
     begin
-      UserMailer.test_email(params[:username]+"@nitt.edu").deliver
+      UserMailer.delay.test_email(params[:username]+"@nitt.edu")
     rescue => msg
       flash[:notice] = 'Mail failed'+msg.inspect
       flash[:notice_type] = "alert-danger"

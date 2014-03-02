@@ -64,6 +64,10 @@ gem 'uglifier',            '~> 2.4.0'
 
 gem 'high_voltage',        '~> 2.1.0'
 
+# Process queue
+
+gem 'sidekiq'
+
 group :development do
   # Deployment
 
