@@ -12,6 +12,8 @@ class Avatar < ActiveRecord::Base
   
   attr_accessible :pic
 
+  validates_attachment_content_type :pic, :content_type => %w(image/jpeg image/jpg image/png)
+
   def file_dimensions
     dimensions = Paperclip::Geometry.from_file(pic.queued_for_write[:original].path)
     if dimensions.width > 4096 && dimensions.height > 2160
