@@ -17,6 +17,10 @@ gem 'actionpack-action_caching', '>= 1.1.1'
 
 gem 'unicorn',             '~> 4.8.2'
 
+# Session Store
+
+gem 'activerecord-session_store'
+
 # Authentication
 
 gem 'devise'

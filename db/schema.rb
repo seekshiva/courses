@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140203203202) do
+ActiveRecord::Schema.define(version: 20140306215914) do
 
   create_table "authors", force: true do |t|
     t.string   "name"
@@ -87,10 +87,14 @@ ActiveRecord::Schema.define(version: 20140203203202) do
     t.string   "subject_code"
     t.string   "name"
     t.integer  "credits"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.text     "about"
+    t.boolean  "is_laboratory", default: false, null: false
   end
+
+  add_index "courses", ["subject_code"], name: "subject_code", unique: true, using: :btree
+  add_index "courses", ["subject_code"], name: "subject_code_2", unique: true, using: :btree
 
   create_table "departments", force: true do |t|
     t.string   "name"
@@ -122,6 +126,7 @@ ActiveRecord::Schema.define(version: 20140203203202) do
   end
 
   add_index "faculties", ["user_id"], name: "index_faculties_on_user_id", using: :btree
+  add_index "faculties", ["user_id"], name: "user_id", unique: true, using: :btree
 
   create_table "references", force: true do |t|
     t.integer  "term_reference_id"
@@ -147,6 +152,16 @@ ActiveRecord::Schema.define(version: 20140203203202) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer  "term_id"
@@ -200,6 +215,7 @@ ActiveRecord::Schema.define(version: 20140203203202) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "venue"
+    t.string   "slot"
   end
 
   add_index "terms", ["course_id"], name: "index_terms_on_course_id", using: :btree
