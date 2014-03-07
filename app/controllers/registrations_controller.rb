@@ -41,6 +41,8 @@ class RegistrationsController < ApplicationController
         else 
           @user.department_id = 0
         end
+
+        render "home/getting_started"
       else
         redirect_to login_path
       end

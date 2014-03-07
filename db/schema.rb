@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306215914) do
+ActiveRecord::Schema.define(version: 20140307202716) do
 
   create_table "authors", force: true do |t|
     t.string   "name"
@@ -256,6 +256,8 @@ ActiveRecord::Schema.define(version: 20140306215914) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "doc_access_token"
+    t.boolean  "blacklist",              default: false
+    t.text     "blacklist_log"
   end
 
   add_index "users", ["department_id"], name: "index_users_on_department_id", using: :btree

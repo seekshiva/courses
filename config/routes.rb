@@ -44,7 +44,7 @@ Courses::Application.routes.draw do
 
   get 'admin',                to: 'admin/departments#index'
   get 'login',                to: 'home#index'
-  get 'getting_started',      to: 'registration#new',       as: "getting_started"
+  get 'getting_started',      to: 'registrations#new',       as: "getting_started"
 
   get 'download/:id(/:name)', to: 'download#show'
 

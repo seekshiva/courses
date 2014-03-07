@@ -40,8 +40,10 @@ class SessionsController < Devise::SessionsController
     if session[:admin_user_id].nil?
       @user.update_attributes({ :doc_access_token => nil })      
       session[:user_id] = nil
+      flash[:notice] = "You have successfully logged out."
+      flash[:notice_type] = "alert-success"
 
-      redirect_to root_url, notice: "You have successfully logged out.", notice_type: "alert-success"
+      redirect_to root_url
     else
       session[:user_id] = session[:admin_user_id]
       session[:admin_user_id] = nil

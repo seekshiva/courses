@@ -23,6 +23,8 @@ describe User do
   it { should allow_mass_assignment_of(:last_sign_in_at) }
   it { should allow_mass_assignment_of(:current_sign_in_ip) }
   it { should allow_mass_assignment_of(:last_sign_in_ip) }
+  it { should allow_mass_assignment_of(:blacklist) }
+  it { should allow_mass_assignment_of(:blacklist_log) }
 
   it { should validate_uniqueness_of(:email) }
 

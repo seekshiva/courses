@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :courses, :through => :terms
 
-  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin, :doc_access_token, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip
+  attr_accessible :name, :email, :department_id, :phone, :avatar_id, :activated, :admin, :doc_access_token, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :blacklist, :blacklist_log
 
   validates :email, :uniqueness => true
 
@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
   
   def student?
     return self[:email].to_i.to_s == self[:email]
+  end
+
+  def blacklisted?
+    self.blacklist == true
   end
   
   def nth_year
