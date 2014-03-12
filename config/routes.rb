@@ -6,10 +6,10 @@ Courses::Application.routes.draw do
   }
   
   devise_scope :user do
-    post 'login',            to: 'sessions#create',    as: "login"
+    post 'login(.:format)',            to: 'sessions#create',    as: "login"
     get  'signout',          to: 'sessions#destroy',   as: "signout"
   end
-  
+
   namespace :admin do
     resources :users
     resources :faculties

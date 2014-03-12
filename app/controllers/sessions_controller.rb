@@ -7,6 +7,7 @@ class SessionsController < Devise::SessionsController
     @username = params[:username]
     @redirect_url = params[:redirect_url]
 
+
     respond_to do |format|
       format.html do
 
@@ -30,6 +31,31 @@ class SessionsController < Devise::SessionsController
         else
           flash[:notice_type] = "alert-danger"
           redirect_to login_path, notice: "Username or Password is Invalid"
+        end
+      end
+
+      format.json do
+        if authenticate(@username, params[:password])
+          @user = User.find_by email: @username
+          if @user.nil?
+            @user = User.new email: @username, name: "", activated: false, admin: false
+            @user.save
+          end
+
+          if @user.activated?
+            p "asdf"
+            p format
+            signin_as @user
+            # 1 - authenticated successfully
+            render :json => {status: 1, user_id: @user.id} 
+          else
+            # 2 - authenticated but not activated
+            render :json => {status: 2} 
+          end
+          
+        else
+          # 0 - authentication failed
+          render :json => {status: 0} 
         end
       end
     end
