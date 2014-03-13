@@ -133,6 +133,7 @@ jQuery ->
       $(@el).find("#view_term_" + @view.type).addClass("active")
 
       document.title = @term.attributes.course.name
+      $(".tool_tip").tooltip({html: true})
 
       if @view.type == "topics"
         (new @app.TermTopicsView).render(@)

@@ -308,6 +308,8 @@ jQuery ->
       if search_text != "" && search_text
         $("#search_box").focus().val(search_text)
       $("#search_box").bind("input", _.bind(@render,@))
+
+      $(".tool_tip").tooltip({html: true})
       @
 
     updateCurrentSection: (e) =>

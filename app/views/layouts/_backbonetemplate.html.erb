@@ -72,7 +72,7 @@
 
 <script type="text/template" id="department-template">
   <h3 style="font-weight: 400; ">
-    <a href="/departments" class="btn btn-default btn-sm" title="Department List">
+    <a href="/departments" class="btn btn-default btn-sm tool_tip" title="Back to <br/>Departments List" data-toggle="tooltip" data-placement="right">
       <i class="glyphicon glyphicon-chevron-left"></i>
     </a>
     <small>{{dept.short}}</small>
@@ -339,7 +339,7 @@
   <div id="term_{{term.id}}">
     <h3>
       {{#if term.faculty}}
-        <button data-target="#TermSubModal" role="button" class="btn btn-success btn-sm" data-toggle="modal">
+        <button data-target="#TermSubModal" role="button" class="btn btn-success btn-sm tool_tip" title="Students attending<br/> this course." data-placement="right" data-toggle="modal">
           <i class="glyphicon glyphicon-list"></i>
         </button>
         <div class="modal fade" id="TermSubModal" tabindex="-1" role="dialog" aria-hidden="true">    
@@ -667,8 +667,8 @@
       {{#if faculty}}
         <div class="pull-right">
           <ul class="panel-heading-actions">
-            <li><i class="glyphicon glyphicon-pencil toggle_edit_topic" topic-id="{{topic.id}}"></i></li>
-            <li><i class="glyphicon glyphicon-remove-circle delete_topic" topic-id="{{topic.id}}"></i></li>
+            <li class="tool_tip" title="Edit" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-pencil toggle_edit_topic" topic-id="{{topic.id}}"></i></li>
+            <li class="tool_tip" title="Delete" data-toggle="tooltip" data-placement="bottom"><i class="glyphicon glyphicon-remove-circle delete_topic" topic-id="{{topic.id}}"></i></li>
           </ul>
         </div>
       {{/if}}

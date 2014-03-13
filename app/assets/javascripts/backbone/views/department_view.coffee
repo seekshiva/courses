@@ -24,6 +24,7 @@ jQuery ->
 
       @app.hide_loading()
       $(@el).find("a").click @app.show_local_page
+      $(".tool_tip").tooltip({html: true})
       @
 
   @app = window.app ? {}
