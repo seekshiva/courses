@@ -7,6 +7,8 @@ jQuery ->
     @host = host
     @conn = null
     @app = window.app ? {}
+    @ns = "http://www.xmpp.org/extensions/xep-0136.html#ns"
+    @notifi_col = new Array()
     @connect()
 
   Xmpp::log = (msg) ->
@@ -42,6 +44,8 @@ jQuery ->
     # Handler Syntax
     # addHandler(function_name, ns, name, type, id, from)
     @conn.addHandler(@handle_pong.bind(@), null, 'iq', null, 'ping1')
+    @conn.addHandler(@handle_notification_list.bind(@), null, 'iq', null, 'list')
+    @conn.addHandler(@handle_ret_notifi.bind(@), null, 'iq', null, 'ret_not')
     @conn.addHandler(@handle_iq.bind(@), null, 'iq')
     @conn.addHandler(@handle_message.bind(@), null, 'message')
 
@@ -52,7 +56,8 @@ jQuery ->
     
     # Enable carbon copy
     @conn.send($iq({xmlns:'jabber:client', from:@conn.jid, id:'enable1', type: "set"}).c("enable", {xmlns: "urn:xmpp:carbons:2"}))
-    # @conn.send($iq({type: "get", id:"version2", to: @domain}).c("query", {xmlns: "http://jabber.org/protocol/disco#info"}))
+    @conn.send($iq({type: "get", id:"pref"}).c("pref", {xmlns: @ns}))
+    @conn.send($iq({type: "get", id:"list"}).c("list", {xmlns: @ns, with: "courseshub"})).c({"set", xmlns: "http://jabber.org/protocol/rsm"})
 
     # @sendMessage("vignesh@courseshub", "Hi. How are you?")
     # @send_ping()
@@ -60,6 +65,39 @@ jQuery ->
   Xmpp::unload_handler = () ->
     console.log("disconnecting xmpp connection")
     @conn.disconnect()
+
+  Xmpp::handle_notification_list = (iq) ->
+    @log("Got notification list")
+    @log(iq)
+    chat = iq.getElementsByTagName("chat")
+
+    for msg in chat
+      @log(msg)
+      @notifi_col.push(msg.getAttribute("start"))
+
+    @log(@notifi_col)
+    @log("calling retrieve")
+    @retrieve_notification()
+    return true
+
+  Xmpp::retrieve_notification = () ->
+    if not @notifi_col.empty?
+      @log("retrieving notification")
+      len = @notifi_col.length
+      start = @notifi_col[len-1]
+      @notifi_col.splice(len-1,1)
+      @conn.send($iq({type: "get", id:"ret_not"}).c("retrieve", {xmlns: @ns, with: "courseshub@courseshub/courseshub", start: start})).c({"set", xmlns: "http://jabber.org/protocol/rsm"}).c({"max"}).t("100")
+
+  Xmpp::handle_ret_notifi = (iq) ->
+    @log("return notifi handler")
+    @log(iq)
+    msgs = iq.getElementsByTagName("body");
+    for msg in msgs
+      resp = JSON.parse(msg.innerHTML)
+      if not @app.notification.notifications.where({message_id: resp.message_id}).length
+        @app.notification.notifications.add(new @app.NotificationModel({message_id: resp.message_id, msg: resp.msg, link: resp.link}), {at: 0})
+      @app.notification.render()
+    return true
 
   Xmpp::send_ping = () ->
     @domain = Strophe.getDomainFromJid(@conn.jid)

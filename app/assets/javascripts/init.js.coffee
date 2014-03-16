@@ -66,4 +66,4 @@ jQuery ->
 
     $(".selectpicker").selectpicker()
     
-    xmpp = new @app.Xmpp(app["xmpp_user"], app["xmpp_pass"], window.location.host)
+    @app.xmpp_client = new @app.Xmpp(app["xmpp_user"], app["xmpp_pass"], window.location.host)
