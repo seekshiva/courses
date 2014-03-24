@@ -43,20 +43,20 @@ describe Faculty do
       @faculty = FactoryGirl.create( :faculty, user: user )
     end
     
-    it "should have key `about`" do
-      about = "<p>Some intro about the prof</p>\n"
-      @faculty.as_json[:about].should be_eql( about )
+    it "should have key `name`" do
+      @faculty.as_json[:name].should be_eql( "Ms. John Doe" )
     end
-    
+
     it "should have key `email`" do
       mail = "john.doe"
       @faculty.as_json[:email].should be_eql( mail )
     end
     
-    it "should have key `instructor`" do
-      @faculty.as_json[:instructor].should be_eql( "Ms. John Doe" )
+    it "should have key `about`" do
+      about = "<p>Some intro about the prof</p>\n"
+      @faculty.as_json[:about].should be_eql( about )
     end
-
+    
   end
 
 end

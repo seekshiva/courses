@@ -60,20 +60,24 @@ class Term < ActiveRecord::Base
 
   def as_json( args = {} )
 
-    {
-      id:              id,
-      course:          course.as_json,
-      departments:     departments,
-      classes:         classes.map         { |cl|            cl.as_json },
-      sections:        sections.map        { |section|  section.as_json },
-      attachments:     documents.map       { |doc|          doc.as_json },
-      instructors:     faculties.map       { |faculty|  faculty.as_json },
-      reference_books: term_references.map { |item|        item.as_json },
-      attendees:       subscriptions.map   { |sub|     sub.user.as_json(only: [:name, :email]) },
-      subscription:    subscription_for( args[:current_user] ),
-      faculty:         args[:current_user].faculty?
-    }
+    if args[:current_user]          # Return with detailed term info
+      {
+        id:              id,
+        course:          course.as_json,
+        departments:     departments,
+        classes:         classes.map         { |cl|            cl.as_json },
+        sections:        sections.map        { |section|  section.as_json },
+        attachments:     documents.map       { |doc|          doc.as_json },
+        instructors:     faculties.map       { |faculty|  faculty.as_json },
+        reference_books: term_references.map { |item|        item.as_json },
+        attendees:       subscriptions.map   { |sub|     sub.user.as_json(only: [:name, :email]) },
+        subscription:    subscription_for( args[:current_user] ),
+        faculty:         args[:current_user].faculty?
+      }
 
+    else                            # Return with high-level overview
+      self.course.as_json(exclude: :about, include: {term: self})
+    end
   end
 
 end

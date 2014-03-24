@@ -13,11 +13,17 @@ class Faculty < ActiveRecord::Base
   end
 
   def as_json( options = {} )
-    {
-      about:       BlueCloth.new(about).to_html,
-      email:       user.email,
-      instructor: "#{prefix} #{user.name}"
+    faculty = {
+      id:    id,
+      name:  full_name,
+      email: user.email
     }
+    
+    unless options[:exclude] == :about
+      faculty[:about] = BlueCloth.new(about).to_html
+    end
+    
+    faculty
   end
   
 end

@@ -58,14 +58,27 @@ class Course < ActiveRecord::Base
     latest
   end
 
-  def as_json
-    {
+  def as_json( options = {} )
+    course = {
       id:      id,
       code:    subject_code,
       name:    name,
-      about:   BlueCloth.new(about).to_html,
       credits: credits,
     }
+
+    unless options[:exclude] == :about
+      course[:about] = BlueCloth.new(about).to_html
+    end
+
+    if options[:include]
+      unless options[:include][:term].nil?
+        term = options[:include][:term]
+        course[:term_id] = term.id
+        course[:instructors] = term.faculties.collect { |f| f.as_json(exclude: :about) }
+      end
+    end
+
+    course
   end
   
 end
