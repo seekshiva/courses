@@ -14,15 +14,20 @@ class Topic < ActiveRecord::Base
   attr_accessible :title, :description, :ct_status, :section_id
   
   def as_json( options = {} )
-    {
+    options[:only] ||= {}
+
+
+    j = {
       id:          id,
       title:       title,
       description: description,
       ct_status:   ct_status,
-      notes:       notes.as_json,
       references:  references.as_json,
-      classes:     classrooms.as_json
     }
+
+    unless options[:only] == :references
+      j[:notes] = notes.as_json
+    end
   end
   
 end

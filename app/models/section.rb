@@ -15,11 +15,13 @@ class Section < ActiveRecord::Base
   end
 
   def as_json( options = {} )
+    options[:include] ||= {}
+    options[:include][:topics] ||= {}
     {
       id:               id,
       title:            title,
       short_title:      short_title,
-      topics:           topics.map { |topic| topic.as_json }
+      topics:           topics.map { |topic| topic.as_json(options[:include][:topics]) }
     }
   end
   
