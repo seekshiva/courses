@@ -3,21 +3,10 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { render "home/dashboard" }
       
-      format.json { 
+      format.json do
         course = Course.find(params[:id])
-
-        render json: {
-          id:              course.id,
-          code:            course.subject_code,
-          name:            course.name,
-          about:           BlueCloth.new(course.about).to_html,
-          credits:         course.credits,
-          departments:     course.departments,
-          sections:        course.latest_term.sections.as_json(generic: true),
-          reference_books: course.books.as_json
-        }
-
-      } 
+        render json: course.as_json(include: {all: true})
+      end
     end
   end
 end

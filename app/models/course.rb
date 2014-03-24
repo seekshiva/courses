@@ -76,6 +76,12 @@ class Course < ActiveRecord::Base
         course[:term_id] = term.id
         course[:instructors] = term.faculties.collect { |f| f.as_json(exclude: :about) }
       end
+
+      unless options[:include][:all].nil?
+        course[:departments]     = self.departments
+        course[:sections]        = latest_term.sections.as_json(generic: true)
+        course[:reference_books] = books.as_json
+      end
     end
 
     course
