@@ -29,8 +29,11 @@ class User < ActiveRecord::Base
   end
 
   def faculty?
-    faculty = Faculty.find_by(user: self)
     not faculty.nil?
+  end
+  
+  def faculty
+    Faculty.find_by(user: self)
   end
   
   def nth_year

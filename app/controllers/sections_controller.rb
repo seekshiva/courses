@@ -9,15 +9,8 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       if section.save
-        ret = {
-          id:               section.id,
-          title:            section.title,
-          short_title:      section.title.length > 30 ? "#{section.title[0,28]}..." : section.title,
-          show_short_title: section.title.length > 30,
-          topics:           Array.new
-        }
         format.html #{ redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render json: ret, status: :created, location: section }
+        format.json { render json: section.as_json, status: :created, location: section }
       else
         format.html #{ render action: "new" }
         format.json { render json: section.errors, status: :unprocessable_entity }

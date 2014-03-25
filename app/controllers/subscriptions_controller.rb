@@ -11,38 +11,17 @@ class SubscriptionsController < ApplicationController
         format.json { render json: { status: "Request cannot be processed", note: "User not logged in" } }
       end
     else
-      faculty = Faculty.where(:user_id => @user.id).first
-      if faculty.nil?
-        @subscriptions = Subscription.where(:user_id => @user.id)
-
-        subs = @subscriptions.collect do |sub|
-          {
-            id:           sub.id, 
-            term_id:      sub.term_id,
-            user_id:      @user.id,
-            attending:    sub.attending,
-            course_name:  sub.term.course.name,
-            course_id:    sub.term.course_id,
-            current:      sub.term.current?
-          }
-        end
-      else
-        term_faculties = TermFaculty.where(:faculty_id => faculty.id)
-        
-        subs = term_faculties.collect do |term_fac|
-          {
-            term_id:      term_fac.term_id,
-            user_id:      @user.id,
-            course_name:  term_fac.term.course.name,
-            course_id:    term_fac.term.course_id,
-            current:      term_fac.term.current?
-          }
-        end
-      end
 
       respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: subs }
+        format.json do
+          if @user.faculty?
+            term_faculties = TermFaculty.where(:faculty_id => @user.faculty.id)
+            render json: term_faculties.collect(&:as_json)
+          else
+            subscriptions = Subscription.where(:user_id => @user.id)
+            render json: subscriptions.collect(&:as_json)
+          end
+        end
       end
     end
   end
@@ -52,19 +31,9 @@ class SubscriptionsController < ApplicationController
   def show
     sub = Subscription.find(params[:id])
 
-    ret = {
-      id:           sub.id, 
-      term_id:      sub.term_id,
-      user_id:      sub.user_id,
-      attending:    sub.attending,
-      course_name:  sub.term.course.name,
-      course_id:    sub.term.course_id,
-      current:      sub.term.current?
-    }
-
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: ret }
+      format.json { render json: sub.as_json }
     end
   end
 
@@ -75,17 +44,8 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if sub.save
-        ret = {
-          id:           sub.id, 
-          term_id:      sub.term_id,
-          user_id:      sub.user_id,
-          attending:    sub.attending,
-          course_name:  sub.term.course.name,
-          course_id:    sub.term.course_id,
-          current:      sub.term.current?
-        }
         format.html { redirect_to ret, notice: 'Subscription was successfully created.' }
-        format.json { render json: ret, status: :created, location: @subscription }
+        format.json { render json: sub.as_json, status: :created, location: @subscription }
       else
         format.html { render action: "new" }
         format.json { render json: sub.errors, status: :unprocessable_entity }
