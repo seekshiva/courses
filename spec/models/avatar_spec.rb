@@ -2,11 +2,18 @@ require 'spec_helper'
 
 describe Avatar do
 
-  it { should have_one(:user) }
+  xit "should have a factory" do
+    FactoryGirl.build(:avatar).should be_valid
+  end
 
-  it { should have_attached_file(:pic) }
+  context "associations" do
+    it { should have_one(:user) }
+    it { should have_attached_file(:pic) }
+  end
 
-  it { should allow_mass_assignment_of(:pic) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:pic) }
+  end
 
   describe ".file_dimension" do
     pending

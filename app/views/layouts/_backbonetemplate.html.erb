@@ -588,7 +588,7 @@
     <div class="list-group local-nav col-md-3">
       <a class="list-group-item {{#if show_all}}active{{/if}}" href="#_all_sections" data-toggle="tab">All</a>
       {{#each term_sections}}
-        <a class="list-group-item {{#if this.active}}active{{/if}}" href="#_section_{{this.id}}" data-toggle="tab"{{#if this.show_short_title}} title="{{this.title}}"{{/if}}>
+        <a class="list-group-item {{#if this.active}}active{{/if}}" href="#_section_{{this.id}}" data-toggle="tab" title="{{this.title}}">
           <span class="badge">{{this.topics.length}}</span>
           {{this.short_title}}
         </a>

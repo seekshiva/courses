@@ -2,12 +2,20 @@ require 'spec_helper'
 
 describe Subscription do
 
-  it { should belong_to(:user) }
-  it { should belong_to(:term) }
+  xit "should have a factory" do
+    FactoryGirl.build(:subscription).should be_valid
+  end
 
-  it { should allow_mass_assignment_of(:attending) }
-  it { should allow_mass_assignment_of(:term_id) }
-  it { should allow_mass_assignment_of(:user_id) }
+  context "associations" do
+    it { should belong_to(:user) }
+    it { should belong_to(:term) }
+  end
 
-  it { should validate_uniqueness_of(:term_id).scoped_to(:user_id) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:attending) }
+    it { should allow_mass_assignment_of(:term_id) }
+    it { should allow_mass_assignment_of(:user_id) }
+    it { should validate_uniqueness_of(:term_id).scoped_to(:user_id) }
+  end
+
 end

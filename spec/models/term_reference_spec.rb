@@ -1,14 +1,22 @@
 require 'spec_helper'
 
 describe TermReference do
-  it { should belong_to(:term) }
-  it { should belong_to(:book) }
 
-  it { should have_many(:references) }
-  it { should have_many(:topics).through(:references) }
+  it "should have a factory" do
+    FactoryGirl.build(:term_reference).should be_valid
+  end
 
-  it { should allow_mass_assignment_of(:book_id) }
-  it { should allow_mass_assignment_of(:term_id) }
+  context "associations" do
+    it { should belong_to(:term) }
+    it { should belong_to(:book) }
+    it { should have_many(:references) }
+    it { should have_many(:topics).through(:references) }
+  end
 
-  it { should validate_uniqueness_of(:book_id).scoped_to(:term_id) }
+  context "validaitons" do
+    it { should allow_mass_assignment_of(:book_id) }
+    it { should allow_mass_assignment_of(:term_id) }
+    it { should validate_uniqueness_of(:book_id).scoped_to(:term_id) }
+  end
+
 end

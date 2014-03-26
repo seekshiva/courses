@@ -2,11 +2,18 @@ require 'spec_helper'
 
 describe BookCover do
 
-  it { should have_one(:book) }
+  xit "should have a factory" do
+    FactoryGirl.build(:book_cover).should be_valid
+  end
 
-  it { should have_attached_file(:cover) }
+  context "associations" do
+    it { should have_one(:book) }
+    it { should have_attached_file(:cover) }
+  end
 
-  it { should allow_mass_assignment_of(:cover) }
-  it { should allow_mass_assignment_of(:uploaded_by) }
+  context "validations" do
+    it { should allow_mass_assignment_of(:cover) }
+    it { should allow_mass_assignment_of(:uploaded_by) }
+  end
 
 end

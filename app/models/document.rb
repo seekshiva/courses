@@ -17,4 +17,12 @@ class Document < ActiveRecord::Base
 
   attr_accessible :document, :uploaded_by, :no_of_hits
 
+  def as_json(options = {})
+    {
+      id:         self.id,
+      name:       self.document.original_filename,
+      url:        self.document.url
+    }
+  end
+
 end

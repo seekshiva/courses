@@ -119,7 +119,7 @@ jQuery ->
             that = this
             ref.save(null, { success: (model, resp) ->
               term_attributes = that.term_view.term.attributes
-              book = _.find term_attributes.course.reference_books, (elem) ->
+              book = _.find term_attributes.reference_books, (elem) ->
                 return elem.id == ref.attributes.book_id
 
               for section in that.term_view.term.attributes.sections
@@ -226,7 +226,7 @@ jQuery ->
               topic["ct_select"] = {}
               topic["ct_select"][status] = true
               books = []
-              for book in @term_view.term.attributes.course.reference_books
+              for book in @term_view.term.attributes.reference_books
                 ref_book = _.find topic["reference"], (ele) ->
                   return ele.book_id.toString() == book.id.toString()
 

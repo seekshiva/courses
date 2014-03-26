@@ -17,15 +17,23 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
 
   def admin?
-    self.admin == true
+    admin == true
   end
   
   def activated?
-    self.activated == true
+    activated == true
   end
   
   def student?
-    return self[:email].to_i.to_s == self[:email]
+    email.to_i.to_s == email
+  end
+
+  def faculty?
+    not faculty.nil?
+  end
+  
+  def faculty
+    Faculty.find_by(user: self)
   end
 
   def blacklisted?
@@ -33,16 +41,12 @@ class User < ActiveRecord::Base
   end
   
   def nth_year
-    if self.student?
-      return Time.now.year%100 - self[:email][4..5].to_i
-    else
-      nil
-    end
+    (Time.now.year%100 - email[4..5].to_i) if student?
   end
 
   def update_access_token
-    if (!self.current_sign_in_at.nil? && self.current_sign_in_at - Time.now() > 1.week) || self.doc_access_token.nil?
-      self.update_attributes doc_access_token: Digest::MD5.hexdigest(self.email+Time.now().to_s)
+    if ( ( !current_sign_in_at.nil? && current_sign_in_at < 1.week.ago ) || doc_access_token.nil? )
+      update_attributes doc_access_token: Digest::MD5.hexdigest( email + Time.now().to_s )
     end
   end
 

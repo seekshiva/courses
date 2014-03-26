@@ -1,11 +1,20 @@
 require 'spec_helper'
 
 describe TermDocument do
-  it { should belong_to(:term) }
-  it { should belong_to(:document) }
 
-  it { should allow_mass_assignment_of(:term_id) }
-  it { should allow_mass_assignment_of(:document_id) }
+  it "should have a factory" do
+    FactoryGirl.build(:term_document).should be_valid
+  end
 
-  it { should validate_uniqueness_of(:term_id).scoped_to(:document_id) }
+  context "associations" do
+    it { should belong_to(:term) }
+    it { should belong_to(:document) }
+  end
+
+  context "validations" do
+    it { should allow_mass_assignment_of(:term_id) }
+    it { should allow_mass_assignment_of(:document_id) }
+    it { should validate_uniqueness_of(:term_id).scoped_to(:document_id) }
+  end
+
 end
