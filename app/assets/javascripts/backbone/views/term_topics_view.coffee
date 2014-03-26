@@ -2,87 +2,20 @@ jQuery ->
   class TermTopicsView extends Backbone.View
     el: "#specialized_view"
     template: Handlebars.compile($("#term-topics-template").html())
+    topic_template: Handlebars.compile($("#topic-template").html())
     events:
       "click #ct_status_selector > .btn": "updateSelector"
       "click .row > .list-group > .list-group-item": "updateCurrentSection"
-      "click .delete_section" : "deleteSection"
       "click .delete_topic" : "deleteTopic"
-      "click #create_section" : "createSection"
-      "click .create_topic" : "createTopic"
-      "click .toggle_edit_section" : "toggleSectionEdit"
       "click .toggle_edit_topic" : "toggleTopicEdit"
-      "click .edit_section" : "updateSection"
       "click .edit_topic" : "updateTopic"
+      "click .ct_select_btn.input-group-btn li" : "updateCTSelection"
+      
     selectors:
       ct_status:
         "ct1": false
         "ct2": false
         "postct": false
-    
-    createSection: (e) ->
-      e.preventDefault()
-      title = $.trim($("#new_section_title").val())
-      $("#new_section_title").val("")
-      if title != ""
-        section = new @term_view.app.SectionModel
-          title   : title
-          term_id : @term_view.term.id
-        that = @
-        section.save(null, {success: (model, resp) ->
-          that.term_view.term.attributes.sections.push(section.attributes)
-          that.render()
-        })
-      @
-
-    createTopic: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id").toString()
-      topic_title = $.trim($("#topic_title_"+section_id).val())
-      topic_ct = $.trim($("#topic_ct_"+section_id).val())
-      topic_description = $.trim($("#topic_description_"+section_id).val())
-      if topic_title != ""
-        topic = new @term_view.app.TopicModel({
-          title:          topic_title,
-          ct_status:      topic_ct,
-          description:    topic_description,
-          section_id:     parseInt(section_id)
-        })
-        that = this
-        topic.save null, success: (model, resp) ->
-          term = that.term_view.term
-          elem = _.find term.attributes.sections, (obj) ->
-            return obj.id.toString() == section_id
-          elem.topics.push(topic.attributes)
-          that.render()
-      @
-    
-    toggleSectionEdit: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      if @section_id == section_id
-        @section_id = null
-      else
-        @section_id = section_id
-      @topic_id = null
-      @render()
-      @
-
-    updateSection: (e) ->
-      e.preventDefault()
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      title = $.trim($("#section_title_"+section_id).val())
-      if title != ""
-        section = new @term_view.app.SectionModel({id: section_id, title: title})
-        that = this
-        section.save null, success: (model, resp) ->
-          term_attributes = that.term_view.term.attributes
-          elem = _.find term_attributes.sections, (obj) ->
-            return obj.id.toString() == section_id.toString()
-          elem.title = title
-          that.section_id = null
-          that.render()
-
-      @
 
     toggleTopicEdit: (e) ->
       e.preventDefault()
@@ -220,20 +153,6 @@ jQuery ->
 
       @
       
-    deleteSection: (e) ->
-      e.preventDefault()
-      unless confirm("Are you sure you want to delete this?")
-        return
-      section_id = $(e.target).attr("section-id") || $(e.target).parent().attr("section-id")
-      section = new @term_view.app.SectionModel({id : section_id})
-      section.destroy()
-      elem = _.find @term_view.term.attributes.sections, (obj) ->
-        return obj.id.toString() == section_id.toString()
-      index = @term_view.term.attributes.sections.indexOf(elem)
-      @term_view.term.attributes.sections.splice(index, 1)
-      @render()
-      @
-
     deleteTopic: (e) ->
       e.preventDefault()
       unless confirm("Are you sure you want to delete this?")
@@ -250,6 +169,14 @@ jQuery ->
           @term_view.term.attributes.sections[section_index].topics.splice(topic_index, 1)
           break
       @render()
+      @
+
+    updateCTSelection: (e)->
+      e.preventDefault()
+      val = $(e.target).text()
+      btn = $(e.target).closest(".ct_select_btn")
+      $(btn).find("button > span").text(val)
+      $(btn).siblings("[type=hidden]").val(val)
       @
 
     updateSelector: (e)->
@@ -352,25 +279,37 @@ jQuery ->
           else
             section_clone.active = false
 
-      edit_mode = ""
-      if @term_view.view.id == "edit" && @term_view.term.attributes.faculty == true
-        edit_mode = "edit_mode"
+      that =
+        term_topics: @
+        faculty: @term_view.term.attributes.faculty
+        
+        
+      Handlebars.registerHelper "show_topic",  ->
+        that.term_topics.topic_template
+          topic: @
+          faculty: that.faculty
 
       $(@el).html @template
-        term:          @term_view.term.attributes
-        edit_mode:     edit_mode
-        term_sections: @term_sections
-        selectors:     @selectors
-        show_all:      flag
-        faculty:       @term_view.term.attributes.faculty
+        term:            @term_view.term.attributes
+        topic_template:  @topic_template
+        term_sections:   @term_sections
+        selectors:       @selectors
+        show_all:        flag
+        faculty:         @term_view.term.attributes.faculty
+        host:            window.location.host
 
       @app.hide_loading()
       
       $(".selectpicker").selectpicker()
 
+      if window.location.hash != ""
+        window.location = window.location.hash
+
       if search_text != "" && search_text
         $("#search_box").focus().val(search_text)
       $("#search_box").bind("input", _.bind(@render,@))
+
+      $(".tool_tip").tooltip({html: true})
       @
 
     updateCurrentSection: (e) =>

@@ -17,6 +17,10 @@ gem 'actionpack-action_caching', '>= 1.1.1'
 
 gem 'unicorn',             '~> 4.8.2'
 
+# Session Store
+
+gem 'activerecord-session_store'
+
 # Authentication
 
 gem 'devise'
@@ -45,7 +49,7 @@ gem 'paperclip',           '~> 4.1.0'
 gem 'execjs'
 gem 'jquery-rails',        '~> 3.1.0'
 gem 'therubyracer',        '~> 0.12.1'
-gem 'rails-backbone',       github: "codebrew/backbone-rails"
+gem 'rails-backbone',      :git => "http://github.com/codebrew/backbone-rails"
 gem 'coffee-rails',        '~> 4.0.1'
 
 # Markdown support
@@ -63,6 +67,10 @@ gem 'uglifier',            '~> 2.4.0'
 # Static Pages
 
 gem 'high_voltage',        '~> 2.1.0'
+
+# Process queue
+
+gem 'sidekiq'
 
 group :development do
   # Deployment

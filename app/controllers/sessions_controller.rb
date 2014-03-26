@@ -7,6 +7,7 @@ class SessionsController < Devise::SessionsController
     @username = params[:username]
     @redirect_url = params[:redirect_url]
 
+
     respond_to do |format|
       format.html do
 
@@ -32,6 +33,31 @@ class SessionsController < Devise::SessionsController
           redirect_to login_path, notice: "Username or Password is Invalid"
         end
       end
+
+      format.json do
+        if authenticate(@username, params[:password])
+          @user = User.find_by email: @username
+          if @user.nil?
+            @user = User.new email: @username, name: "", activated: false, admin: false
+            @user.save
+          end
+
+          if @user.activated?
+            p "asdf"
+            p format
+            signin_as @user
+            # 1 - authenticated successfully
+            render :json => {status: 1, user_id: @user.id} 
+          else
+            # 2 - authenticated but not activated
+            render :json => {status: 2} 
+          end
+          
+        else
+          # 0 - authentication failed
+          render :json => {status: 0} 
+        end
+      end
     end
   end
 
@@ -40,8 +66,10 @@ class SessionsController < Devise::SessionsController
     if session[:admin_user_id].nil?
       @user.update_attributes({ :doc_access_token => nil })      
       session[:user_id] = nil
+      flash[:notice] = "You have successfully logged out."
+      flash[:notice_type] = "alert-success"
 
-      redirect_to root_url, notice: "You have successfully logged out.", notice_type: "alert-success"
+      redirect_to root_url
     else
       session[:user_id] = session[:admin_user_id]
       session[:admin_user_id] = nil

@@ -8,6 +8,7 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require bootstrap
  *= require bootstrap-select
  *= require bootstrap-switch
  *= require font-awesome
@@ -15,8 +16,6 @@
  *= require_self
  *= require_tree .
  */
-
-@import "bootstrap";
 
 html, body {
     height: 100%;
@@ -195,6 +194,13 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
 }
 
+.panel-heading-actions.pull-left {
+    padding-left: 0;
+    margin-left: -.6em;
+    padding-right: .7em;
+    list-style-type: none;
+}
+
 .panel-heading-actions li {
     list-style-type: none;
     float: left;
@@ -218,8 +224,6 @@ h1, h2, h3, h4, h5, h6 {
     color:#4183c4;
 }
 
-
-
 ._topic_list .media-object {
     font-size: 2em;
     margin-top: 5px;
@@ -233,7 +237,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // Help pages
-
 #help_page_selector a.thumbnail {
     transition: all 0.15s ease-in;
     -webkit-transition: all 0.15s ease-in 0;

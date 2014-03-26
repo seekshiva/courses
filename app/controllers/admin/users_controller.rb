@@ -79,7 +79,8 @@ class Admin::UsersController < Admin::BaseController
 
     # :admin param is not getting sent from browser if checkbox is off
     # so, forcing :admin to false if the field is not found in payload
-    params[:user][:admin] = "false" if params[:user][:admin].nil?
+    params[:user][:admin]     = "false" if params[:user][:admin].nil?
+    params[:user][:blacklist] = "false" if params[:user][:blacklist].nil?
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

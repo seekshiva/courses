@@ -9,4 +9,6 @@ class BookCover < ActiveRecord::Base
 		:path => ':rails_root/public/system/books/cover_pic/:style/:hash.:extension',
 		:hash_secret => Courses::Application.config.secret_token
 
+  validates_attachment_content_type :cover, :content_type => %w(image/jpeg image/jpg image/png)
+
 end

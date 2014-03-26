@@ -9,7 +9,7 @@ Access detailed information about college course; like course syllabus, project 
 
 ## App Link
 
-We're not live yet! This space will be updated with a link to the app.
+The app is live at http://courseshub.in
 
 ## Terms of use
 

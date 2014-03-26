@@ -10,4 +10,10 @@ class UserMailer < ActionMailer::Base
     end
     mail(to: "#{@user.name} <#{@user.email}@nitt.edu>", subject: "Welcome to Courseshub")
   end
+
+  def test_email(user)
+    @user = user
+    @host = "http://courseshub.in/"
+    mail(to: "#{@user}", subject: "Testing mail from courseshub")
+  end
 end

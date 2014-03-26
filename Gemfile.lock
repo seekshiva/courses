@@ -1,14 +1,4 @@
 GIT
-  remote: git://github.com/codebrew/backbone-rails.git
-  revision: 995af310d45ade882c284a7aaf299e577dae2cbb
-  specs:
-    rails-backbone (1.1.0)
-      coffee-script
-      ejs
-      jquery-rails
-      railties
-
-GIT
   remote: git://github.com/lemurheavy/coveralls-ruby.git
   revision: 6678dbae8b8f846491b9a2b13c6be3f6a67b84d7
   specs:
@@ -18,6 +8,16 @@ GIT
       simplecov (>= 0.7)
       term-ansicolor
       thor
+
+GIT
+  remote: http://github.com/codebrew/backbone-rails
+  revision: 995af310d45ade882c284a7aaf299e577dae2cbb
+  specs:
+    rails-backbone (1.1.0)
+      coffee-script
+      ejs
+      jquery-rails
+      railties
 
 GEM
   remote: https://rubygems.org/
@@ -44,6 +44,10 @@ GEM
       activesupport (= 4.0.3)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
+    activerecord-session_store (0.1.0)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
     activesupport (4.0.3)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -95,6 +99,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    connection_pool (1.2.0)
     cucumber (1.3.10)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -216,6 +221,9 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
+    redis (3.0.7)
+    redis-namespace (1.4.1)
+      redis (~> 3.0.4)
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -242,6 +250,12 @@ GEM
       sprockets-rails (~> 2.0.0)
     shoulda-matchers (2.5.0)
       activesupport (>= 3.0.0)
+    sidekiq (2.17.7)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 1.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -295,6 +309,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching (>= 1.1.1)
   actionpack-page_caching
+  activerecord-session_store
   bluecloth
   bootstrap-sass (~> 3.1.1.0)
   capistrano-bundler (~> 1.1.2)
@@ -325,6 +340,7 @@ DEPENDENCIES
   rspec-rails (= 2.14.1)
   sass-rails (~> 4.0.1)
   shoulda-matchers (= 2.5.0)
+  sidekiq
   therubyracer (~> 0.12.1)
   uglifier (~> 2.4.0)
   unicorn (~> 4.8.2)

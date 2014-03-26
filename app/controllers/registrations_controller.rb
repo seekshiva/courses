@@ -41,6 +41,8 @@ class RegistrationsController < ApplicationController
         else 
           @user.department_id = 0
         end
+
+        render "home/getting_started"
       else
         redirect_to login_path
       end
@@ -85,7 +87,7 @@ class RegistrationsController < ApplicationController
         })
         
         if Rails.env.production?
-          UserMailer.welcome_email(@user).deliver
+          UserMailer.delay.welcome_email(@user)
         end
         
         if @user.student?

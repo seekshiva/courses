@@ -8,7 +8,8 @@ worker_processes 2
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen "/tmp/courseshub.socket", :backlog => 64
+# listen "/tmp/courseshub.socket", :backlog => 64
+listen 4321
 
 # Preload our app for more speed
 preload_app true

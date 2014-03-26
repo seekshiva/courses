@@ -6,10 +6,10 @@ Courses::Application.routes.draw do
   }
   
   devise_scope :user do
-    post 'login',            to: 'sessions#create',    as: "login"
+    post 'login(.:format)',            to: 'sessions#create',    as: "login"
     get  'signout',          to: 'sessions#destroy',   as: "signout"
   end
-  
+
   namespace :admin do
     resources :users
     resources :faculties
@@ -27,6 +27,7 @@ Courses::Application.routes.draw do
       get ":tab" => "courses#show"
     end
     resources :books, :authors, :book_authors, :references
+    resources :tests, controller: "test"
     post 'switch_to', to: 'users#switch_to'
   end
 
@@ -43,7 +44,7 @@ Courses::Application.routes.draw do
 
   get 'admin',                to: 'admin/departments#index'
   get 'login',                to: 'home#index'
-  get 'getting_started',      to: 'registration#new',       as: "getting_started"
+  get 'getting_started',      to: 'registrations#new',       as: "getting_started"
 
   get 'download/:id(/:name)', to: 'download#show'
 
