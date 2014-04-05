@@ -28,23 +28,11 @@ class Course < ActiveRecord::Base
   validates :credits, :numericality => {:greater_than_or_equal_to => 0} # zero credit courses can exist
 
   def current_term
-    current = []
-    self.terms.each do |term|
-      if term.current?
-        current << term
-      end
-    end
-    current
+    self.terms.select(&:current?)
   end
 
   def this_year
-    current = []
-    self.terms.each do |term|
-      if term.this_year?
-        current << term
-      end
-    end
-    current
+    self.terms.select(&:this_year?)
   end
 
   def latest_term
