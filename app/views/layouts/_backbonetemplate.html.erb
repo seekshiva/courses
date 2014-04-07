@@ -385,7 +385,7 @@
       <!-- <li id="view_term_classes"><a href="/terms/{{term.id}}/classes">Classes</a></li> -->
       <li id="view_term_reference"><a href="/terms/{{term.id}}/reference">
         Reference Material
-        <small class="badge">{{term.course.reference_books.length}}{{#if term.attachments.length}} + {{term.attachments.length}}{{/if}}</small>
+        <small class="badge">{{term.reference_books.length}}{{#if term.attachments.length}} + {{term.attachments.length}}{{/if}}</small>
       </a></li>
     </ul>
     <div id="specialized_view"></div>
@@ -806,15 +806,15 @@
 <script type="text/template" id="term-reference-template">
   <div class="row">
     <div class="list-group local-nav col-md-3">
-      <a href="#_reference_books" class="list-group-item {{#if tab.books}}active{{/if}}" data-toggle="tab">Books <small class="badge">{{term.course.reference_books.length}}</small></a>
+      <a href="#_reference_books" class="list-group-item {{#if tab.books}}active{{/if}}" data-toggle="tab">Books <small class="badge">{{term.reference_books.length}}</small></a>
       <a href="#_reference_notes" class="list-group-item {{#if tab.notes}}active{{/if}}" data-toggle="tab">Notes <small class="badge">{{term.attachments.length}}</small></a>
     </div>
     <div class="tab-content col-md-9">
       <div class="tab-pane {{#if tab.books}}active{{/if}} _reference_list" id="_reference_books">
-        {{#if term.course.reference_books.length}}
+        {{#if term.reference_books.length}}
           <table class="table bottom_line">
             <tbody>
-              {{#each term.course.reference_books}}
+              {{#each term.reference_books}}
                 <tr><td style="padding-right: 20px; ">
                   <h4>{{title}} <small>({{year}})</small></h4>
                   <table class="table table-striped table-condensed">
