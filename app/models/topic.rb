@@ -28,6 +28,8 @@ class Topic < ActiveRecord::Base
     unless options[:only] == :references
       j[:notes] = notes.as_json
     end
+
+    j
   end
   
 end

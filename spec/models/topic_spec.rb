@@ -24,4 +24,8 @@ describe Topic do
     it { should allow_mass_assignment_of(:section_id) }
   end
 
+  context "#as_json" do
+    pending
+  end
+
 end
