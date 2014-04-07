@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SectionDocument do
 
   it "should have a factory" do
-    FactoryGirl.build(:section_document).should be_valid
+    expect(build :section_document).to be_valid
   end
 
   context "associations" do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TopicDocument do
 
   it "should have a factory" do
-    FactoryGirl.build(:topic_document).should be_valid
+    expect(build :topic_document).to be_valid
   end
 
   context "associations" do

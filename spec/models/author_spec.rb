@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Author do
 
   xit "should have a factory" do
-    FactoryGirl.build(:author).should be_valid
+    expect(build :author).to be_valid
   end
 
   context "associations" do

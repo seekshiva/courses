@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Faculty do
 
   it "should have a factory" do
-    FactoryGirl.build(:faculty).should be_valid
+    expect(build :faculty).to be_valid
   end
 
   context "associations" do
@@ -20,41 +20,40 @@ describe Faculty do
 
   describe "#fullname" do
     it "should return the full name, with prefix" do
-      user = FactoryGirl.create(:user, name: "John Doe")
-      faculty = FactoryGirl.create(:faculty, user: user, prefix: "NewPrefix.")
+      user    = create(:user, name: "John Doe")
+      faculty = create(:faculty, user: user, prefix: "NewPrefix.")
 
-      faculty.full_name.should eq "NewPrefix. John Doe"
+      expect(faculty.full_name).to eq "NewPrefix. John Doe"
     end
   end
 
   describe "#department" do
     it "should return the department of the associated :user" do
-      dept = FactoryGirl.create(:department)
-      user = FactoryGirl.create(:user, department: dept)
-      faculty = FactoryGirl.create(:faculty, user: user)
+      dept    = create(:department)
+      user    = create(:user, department: dept)
+      faculty = create(:faculty, user: user)
 
-      faculty.department.should eq dept
+      expect(faculty.department).to eq dept
     end
   end
 
   describe "#as_json" do
     before do
-      user    = FactoryGirl.create( :user )
-      @faculty = FactoryGirl.create( :faculty, user: user )
+      user     = create(:user)
+      @faculty = create(:faculty, user: user)
     end
     
     it "should have key `name`" do
-      @faculty.as_json[:name].should be_eql( "Ms. John Doe" )
+      expect(@faculty.as_json[:name]).to be_eql( @faculty.full_name )
     end
 
     it "should have key `email`" do
-      mail = "john.doe"
-      @faculty.as_json[:email].should be_eql( mail )
+      expect(@faculty.as_json[:email]).to be_eql( @faculty.user.email )
     end
     
     it "should have key `about`" do
       about = "<p>Some intro about the prof</p>\n"
-      @faculty.as_json[:about].should be_eql( about )
+      expect(@faculty.as_json[:about]).to be_eql( about )
     end
     
   end

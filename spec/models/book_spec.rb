@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Book do
 
   it "should have a factory" do
-    FactoryGirl.build(:book).should be_valid
+    expect(build :book).to be_valid
   end
 
   context "associations" do
@@ -26,15 +26,15 @@ describe Book do
 
   describe "#isbn_10" do
     it "should return valid isbn-10 value of the book" do
-      book = FactoryGirl.create(:book)
-      book.isbn_10.should eq Lisbn.new(book.isbn).isbn10
+      book = create(:book)
+      expect(book.isbn_10).to eq Lisbn.new(book.isbn).isbn10
     end
   end
 
   describe "#isbn_13" do
     it "should return valid isbn-13 value of the book" do
-      book = FactoryGirl.create(:book)
-      book.isbn_13.should eq Lisbn.new(book.isbn).isbn13
+      book = create(:book)
+      expect(book.isbn_13).to eq Lisbn.new(book.isbn).isbn13
     end
   end
   

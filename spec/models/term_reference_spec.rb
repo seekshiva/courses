@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TermReference do
 
   it "should have a factory" do
-    FactoryGirl.build(:term_reference).should be_valid
+    expect(build :term_reference).to be_valid
   end
 
   context "associations" do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Reference do
 
   it "should have a factory" do
-    FactoryGirl.build(:reference).should be_valid
+    expect(build :reference).to be_valid
   end
 
   context "associations" do

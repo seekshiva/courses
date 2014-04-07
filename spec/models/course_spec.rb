@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Course do
 
   it "should have a factory" do
-    FactoryGirl.build(:course).should be_valid
+    expect(build :course).to be_valid
   end
 
   context "associations" do

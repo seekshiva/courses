@@ -3,7 +3,7 @@ require 'spec_helper'
 describe BookCover do
 
   xit "should have a factory" do
-    FactoryGirl.build(:book_cover).should be_valid
+    expect(build :book_cover).to be_valid
   end
 
   context "associations" do

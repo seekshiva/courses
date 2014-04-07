@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
 
   it "should have a factory" do
-    FactoryGirl.build(:user).should be_valid
+    expect(build :user).to be_valid
   end
 
   context "associations" do
@@ -34,15 +34,15 @@ describe User do
   describe "#admin?" do
     context "if admin" do
       it "should return true" do
-        user = FactoryGirl.build(:admin)
-        user.should be_admin
+        user = build(:admin)
+        expect(user).to be_admin
       end
     end
     
     context "if not admin" do
       it "should return false" do
-        user = FactoryGirl.build(:user)
-        user.should_not be_admin
+        user = build(:user)
+        expect(user).to_not be_admin
       end
     end
   end
@@ -50,15 +50,15 @@ describe User do
   describe "#activated?" do
     context "user has logged in before" do
       it "should return true" do
-        user = FactoryGirl.build(:user, activated: true)
-        user.activated?.should be_true
+        user = build(:user, activated: true)
+        expect(user.activated?).to be_true
       end
     end
     
     context "user is logging in for the first time" do
       it "should return false" do
-        user = FactoryGirl.build(:user, activated: false)
-        user.activated?.should be_false
+        user = build(:user, activated: false)
+        expect(user.activated?).to be_false
       end
     end
   end
@@ -66,15 +66,15 @@ describe User do
   describe "#student?" do
     context "if student" do
       it "should return true" do
-        user = FactoryGirl.build(:user, email: "106109087")
-        user.should be_student
+        user = build(:user, email: "106109087")
+        expect(user).to be_student
       end
     end
     
     context "if not student" do
       it "should return false" do
-        user = FactoryGirl.build(:user, email: "123.some.string.123")
-        user.should_not be_student
+        user = build(:user, email: "123.some.string.123")
+        expect(user).to_not be_student
       end
     end
   end
@@ -83,19 +83,19 @@ describe User do
     context "if email in faculty table" do
       context "if student" do
         it "should return true" do
-          user = FactoryGirl.create(:user, email: "106109087")
-          faculty = FactoryGirl.create(:faculty, user: user)
+          user = create(:user, email: "106109087")
+          faculty = create(:faculty, user: user)
 
-          user.should be_faculty
+          expect(user).to be_faculty
         end
       end
 
       context "if not student" do
         it "should return true" do
-          user = FactoryGirl.create(:user, email: "faculty_1")
-          faculty = FactoryGirl.create(:faculty, user: user)
+          user = create(:user, email: "faculty_1")
+          faculty = create(:faculty, user: user)
 
-          user.should be_faculty
+          expect(user).to be_faculty
         end
       end
     end
@@ -103,15 +103,15 @@ describe User do
     context "if email not in faculty table" do
       context "if student" do
         it "should return true" do
-          user = FactoryGirl.create(:user, email: "106109088")
-          user.should_not be_faculty
+          user = create(:user, email: "106109088")
+          expect(user).to_not be_faculty
         end
       end
 
       context "if not student" do
         it "should return true" do
-          user = FactoryGirl.create(:user, email: "faculty_2")
-          user.should_not be_faculty
+          user = create(:user, email: "faculty_2")
+          expect(user).to_not be_faculty
         end
       end
     end
@@ -119,19 +119,19 @@ describe User do
 
   describe "#nth_year" do
     context "if student" do
-      it " should return year that the student is in" do
+      it "should return year that the student is in" do
         roll_nos = ["110112109", "102111040", "108110110", "106109087"]
         roll_nos.each do |roll_no|
-          user = FactoryGirl.build(:user, email: roll_no)
-          user.nth_year.should be Time.now.year%100 - user[:email][4..5].to_i
+          user = build(:user, email: roll_no)
+          expect(user.nth_year).to be Time.now.year%100 - user[:email][4..5].to_i
         end
       end
     end
 
     context "if not student" do
       it "should return nil" do
-        user = FactoryGirl.build(:user, email: "faculty.mail")
-        user.nth_year.should be_nil
+        user = build(:user, email: "faculty.mail")
+        expect(user.nth_year).to be_nil
       end
     end
   end

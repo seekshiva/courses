@@ -38,6 +38,9 @@ RSpec.configure do |config|
 
   # Matchers for Paperclip methods
   config.include Paperclip::Shoulda::Matchers
+
+  # FactoryGirl Methods
+  config.include FactoryGirl::Syntax::Methods
 end
 
 # https://makandracards.com/makandra/950-speed-up-rspec-by-deferring-garbage-collection

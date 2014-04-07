@@ -1,8 +1,16 @@
 FactoryGirl.define do
 
+  sequence :name do |n|
+    "First Last_#{n}"
+  end
+
+  sequence :email do |n|
+    "user.mail.#{n}"
+  end
+
   factory :user do
-    name      "John Doe"
-    email     "john.doe"
+    name
+    email
     phone     "9876543210"
     activated  true
     admin      false
@@ -10,8 +18,6 @@ FactoryGirl.define do
   end
 
   factory :admin, class: User do
-    name   "Admin SuperName"
-    email  "me.admin"
     admin  true
   end
 

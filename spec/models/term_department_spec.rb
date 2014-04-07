@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TermDepartment do
 
   it "should have a factory" do
-    FactoryGirl.build(:term_department).should be_valid
+    expect(build :term_department).to be_valid
   end
 
   context "associations" do

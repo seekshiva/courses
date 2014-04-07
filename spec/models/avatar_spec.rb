@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Avatar do
 
   xit "should have a factory" do
-    FactoryGirl.build(:avatar).should be_valid
+    expect(build :avatar).to be_valid
   end
 
   context "associations" do
