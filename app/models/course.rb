@@ -52,17 +52,14 @@ class Course < ActiveRecord::Base
       code:    subject_code,
       name:    name,
       credits: credits,
+      about:   Kramdown::Document.new(about || "").to_html
     }
-
-    unless options[:exclude] == :about
-      course[:about] = Kramdown::Document.new(about).to_html
-    end
 
     if options[:include]
       unless options[:include][:term].nil?
         term = options[:include][:term]
         course[:term_id] = term.id
-        course[:instructors] = term.faculties.collect { |f| f.as_json(exclude: :about) }
+        course[:instructors] = term.faculties.collect { |f| f.as_json(exclude: [:about]) }
       end
 
       unless options[:include][:all].nil?
@@ -72,7 +69,7 @@ class Course < ActiveRecord::Base
       end
     end
 
-    course
+    course.except(options[:exclude])
   end
   
 end

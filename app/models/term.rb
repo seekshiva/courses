@@ -76,7 +76,7 @@ class Term < ActiveRecord::Base
       }
 
     else                            # Return with high-level overview
-      self.course.as_json(exclude: :about, include: {term: self})
+      self.course.as_json(exclude: [:about], include: {term: self})
     end
   end
 

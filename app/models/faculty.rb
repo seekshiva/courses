@@ -16,15 +16,11 @@ class Faculty < ActiveRecord::Base
     faculty = {
       id:    id,
       name:  full_name,
-      email: user.email
+      email: user.email,
+      about: Kramdown::Document.new(about || "").to_html
     }
     
-    unless options[:exclude] == :about
-      about = "" if about.nil?
-      faculty[:about] = Kramdown::Document.new(about).to_html
-    end
-    
-    faculty
+    faculty.except(options[:exclude])
   end
   
 end
