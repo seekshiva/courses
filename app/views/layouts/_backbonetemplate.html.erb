@@ -374,7 +374,7 @@
       <p>
         <strong>Course Instructor:</strong>
         {{#each term.instructors}}
-        <span><a href="/profile/{{this.email}}">{{this.instructor}}</a></span>
+        <span><a href="/profile/{{email}}">{{name}}</a></span>
         {{/each}}
       </p>
     {{/if}}
@@ -423,7 +423,7 @@
             </th>
             <td>
               {{#each term.instructors}}
-              <a href="/profile/{{this.email}}">{{this.instructor}}</a>
+              <a href="/profile/{{email}}">{{name}}</a>
               {{/each}}
           </td></tr>
           <tr><th>
@@ -448,8 +448,8 @@
       </div>
       <div class="tab-pane {{#if tab.instructor}}active{{/if}}" id="instructor">
         {{#each term.instructors}}
-          <h4>{{this.instructor}} <small>({{this.email}})</small></h4>
-          {{{this.about}}}
+          <h4>{{name}} <small>({{email}})</small></h4>
+          {{{about}}}
         {{/each}}
       </div>
       <div class="tab-pane {{#if tab.outline}}active{{/if}}" id="outline">
