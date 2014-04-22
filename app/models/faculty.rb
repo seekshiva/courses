@@ -20,7 +20,8 @@ class Faculty < ActiveRecord::Base
     }
     
     unless options[:exclude] == :about
-      faculty[:about] = BlueCloth.new(about).to_html
+      about = "" if about.nil?
+      faculty[:about] = Kramdown::Document.new(about).to_html
     end
     
     faculty

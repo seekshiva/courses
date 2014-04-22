@@ -54,7 +54,7 @@ gem 'coffee-rails',        '~> 4.0.1'
 
 # Markdown support
 
-gem 'bluecloth'
+gem 'kramdown'
 
 # ISBN Library
 

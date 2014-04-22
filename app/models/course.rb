@@ -55,7 +55,7 @@ class Course < ActiveRecord::Base
     }
 
     unless options[:exclude] == :about
-      course[:about] = BlueCloth.new(about).to_html
+      course[:about] = Kramdown::Document.new(about).to_html
     end
 
     if options[:include]

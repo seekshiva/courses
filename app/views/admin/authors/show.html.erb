@@ -6,7 +6,7 @@
 </p>
 <p>
   <b>About:</b>
-  <%= BlueCloth.new(@author.about).to_html.html_safe %>
+  <%= Kramdown::Document.new(@author.about).to_html.html_safe %>
 </p>
 <p>
   <b>Books Referenced:</b>

@@ -79,7 +79,7 @@
           </tr>
           <tr>
             <td colspan="2">
-            <%= BlueCloth.new(@course.about).to_html.html_safe %>
+            <%= Kramdown::Document.new(@course.about).to_html.html_safe %>
             </td>
           </tr>
         </tbody>
