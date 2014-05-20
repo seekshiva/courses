@@ -5,14 +5,15 @@ jQuery ->
 
     initialize: (term_view) ->
       return if not term_view
-      @term_id = term_view.term.attributes.subscription.term_id
+      @term_view = term_view
+      @term_id = term_view.term.attributes.id
       @app = term_view.app
       @sub_status = new term_view.app.SubscriptionModel()
       if term_view.term.attributes.subscription.id
         @sub_status.set({id : term_view.term.attributes.subscription.id})
         @sub_status.fetch()
       else
-        @sub_status.set({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.subscription.term_id })
+        @sub_status.set({ user_id : term_view.term.attributes.subscription.user_id, term_id : term_view.term.attributes.id })
       @
 
     updateSubscription: (e, data) ->
@@ -20,6 +21,7 @@ jQuery ->
       if not data.value
         @app.menu_view.subscriptions.remove({id: @sub_status.id})
         @sub_status.destroy()
+        delete @term_view.term.attributes.subscription.id
         delete @sub_status.id
         delete @sub_status.attributes.id
         delete @sub_status.attributes.attending
@@ -32,6 +34,7 @@ jQuery ->
       @
 
     updateCollection: (model, resp) ->
+      @term_view.term.attributes.subscription.id = @sub_status.id
       @app.menu_view.subscriptions.remove({id: @sub_status.id})
       @app.menu_view.subscriptions.add(@sub_status.attributes)
 

@@ -42,6 +42,8 @@ class SubscriptionsController < ApplicationController
   def create
     sub = Subscription.new(params[:subscription].except(:course_name, :course_id, :current))
 
+    sub.user_id = @user.id
+
     respond_to do |format|
       if sub.save
         format.html { redirect_to ret, notice: 'Subscription was successfully created.' }
